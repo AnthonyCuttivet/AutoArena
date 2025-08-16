@@ -1,0 +1,74 @@
+[gd_scene load_steps=10 format=3 uid="uid://b2u3oyrvbqxxu"]
+
+[ext_resource type="Script" uid="uid://dki7xxpgal88e" path="res://Prefabs/Weapons/Armory/Qiang/weapon_qiang.gd" id="1_yo00f"]
+[ext_resource type="AudioStream" uid="uid://s0ojcc88wft6" path="res://Audio/SFX/BattleBalls/se_marth_hit_s.wav" id="2_3p3eg"]
+[ext_resource type="Texture2D" uid="uid://cj3174c1vhaci" path="res://Graphics/_Addons/Icons/fc17040.png" id="2_yo00f"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="3_cr2d1"]
+[ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="3_knf70"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vo2u0"]
+random_pitch = 1.05
+streams_count = 1
+stream_0/stream = ExtResource("2_3p3eg")
+
+[sub_resource type="Resource" id="Resource_3p3eg"]
+script = ExtResource("3_cr2d1")
+audio_stream = SubResource("AudioStreamRandomizer_vo2u0")
+volume = -28.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
+radius = 6.0
+height = 38.0516
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yo00f"]
+radius = 5.65685
+height = 15.0
+
+[node name="WeaponQiang" type="Node2D" node_paths=PackedStringArray("hitbox_low", "hitbox_high", "sprite_2d", "hitboxes")]
+script = ExtResource("1_yo00f")
+hitbox_low = NodePath("Sprite2D/WeaponHitboxLow")
+hitbox_high = NodePath("Sprite2D/WeaponHitboxHigh")
+tipper_hitstop_multiplier = 7.0
+tipper_sfx = SubResource("Resource_3p3eg")
+tipper_damage = 5
+non_tipper_dmg = 0.1
+sprite_2d = NodePath("Sprite2D")
+hitboxes = [NodePath("Sprite2D/WeaponHitboxLow"), NodePath("Sprite2D/WeaponHitboxHigh")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(40, 0)
+rotation = 0.785398
+texture = ExtResource("2_yo00f")
+
+[node name="WeaponHitboxLow" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("weapon", "collider")]
+rotation = 0.785398
+script = ExtResource("3_knf70")
+weapon = NodePath("../..")
+collider = NodePath("CollisionShape2D")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitboxLow"]
+position = Vector2(3, -8)
+rotation = 0.0599477
+shape = SubResource("CapsuleShape2D_1fhci")
+debug_color = Color(0.834743, 0.839844, 0.186996, 0.42)
+
+[node name="WeaponHitboxHigh" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("weapon", "collider")]
+rotation = 0.785398
+script = ExtResource("3_knf70")
+weapon = NodePath("../..")
+collider = NodePath("CollisionShape2D")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitboxHigh"]
+position = Vector2(3.00001, -32)
+rotation = -0.785398
+shape = SubResource("CapsuleShape2D_yo00f")
+debug_color = Color(1, 0, 0, 0.42)
+
+[connection signal="area_entered" from="Sprite2D/WeaponHitboxLow" to="Sprite2D/WeaponHitboxLow" method="_on_area_entered"]
+[connection signal="area_exited" from="Sprite2D/WeaponHitboxLow" to="Sprite2D/WeaponHitboxLow" method="_on_area_exited"]
+[connection signal="area_entered" from="Sprite2D/WeaponHitboxHigh" to="Sprite2D/WeaponHitboxHigh" method="_on_area_entered"]
+[connection signal="area_exited" from="Sprite2D/WeaponHitboxHigh" to="Sprite2D/WeaponHitboxHigh" method="_on_area_exited"]

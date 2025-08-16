@@ -1,0 +1,73 @@
+[gd_scene load_steps=11 format=3 uid="uid://dqlmmd6svemrt"]
+
+[ext_resource type="Script" uid="uid://ca5eqor7agmjm" path="res://Prefabs/Weapons/Armory/BOSS_Arcanist/weapon_arcanist.gd" id="1_5mnpp"]
+[ext_resource type="PackedScene" uid="uid://bxkippv7yfpx1" path="res://Prefabs/Weapons/Armory/Projectiles/P_BlackThunderStrike.tscn" id="2_5mnpp"]
+[ext_resource type="AudioStream" uid="uid://bhq52hdhektab" path="res://Audio/SFX/BattleBalls/se_demon_final04.wav" id="3_p1lwa"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="4_khino"]
+[ext_resource type="Texture2D" uid="uid://vqgy7uf7l3mi" path="res://Graphics/_Addons/Icons/fc157600.png" id="5_p1lwa"]
+[ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="6_ugjry"]
+[ext_resource type="PackedScene" uid="uid://bccu5y7pduia6" path="res://Prefabs/Weapons/Armory/BOSS_Arcanist/black_red_spark.tscn" id="7_svtfk"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_t38pn"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("3_p1lwa")
+
+[sub_resource type="Resource" id="Resource_fdhct"]
+script = ExtResource("4_khino")
+audio_stream = SubResource("AudioStreamRandomizer_t38pn")
+volume = -34.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
+radius = 15.0
+
+[node name="WeaponArcanist" type="Node2D" node_paths=PackedStringArray("rotating_sparks", "rotating_sparks_parent", "sprite_2d", "hitboxes")]
+script = ExtResource("1_5mnpp")
+thunders_needed = 3
+thunderstrike_prefab = ExtResource("2_5mnpp")
+thunderstrike_duration = 0.35
+closed = true
+sfx_thunderstrike = SubResource("Resource_fdhct")
+spawn_thunder_each_hp_lost = 50
+rotating_spark_prefab = ExtResource("7_svtfk")
+rotating_dist = 200.0
+rotating_speed = 1.0
+rotating_sparks = [NodePath("RotatingSparks/BlackRedSpark"), NodePath("RotatingSparks/BlackRedSpark2"), NodePath("RotatingSparks/BlackRedSpark3")]
+rotating_sparks_parent = NodePath("RotatingSparks")
+sprite_2d = NodePath("Sprite2D")
+hitboxes = [NodePath("Sprite2D/WeaponHitbox")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(34, 0)
+rotation = 0.785398
+texture = ExtResource("5_p1lwa")
+
+[node name="WeaponHitbox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("weapon", "collider")]
+position = Vector2(3.53553, -7.77817)
+rotation = 2.35619
+script = ExtResource("6_ugjry")
+weapon = NodePath("../..")
+collider = NodePath("CollisionShape2D")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
+position = Vector2(-18, -3.00008)
+shape = SubResource("CapsuleShape2D_1fhci")
+
+[node name="PSpawn" type="Node2D" parent="."]
+position = Vector2(97, 0)
+
+[node name="RotatingSparks" type="Node2D" parent="."]
+
+[node name="BlackRedSpark" parent="RotatingSparks" instance=ExtResource("7_svtfk")]
+
+[node name="BlackRedSpark2" parent="RotatingSparks" instance=ExtResource("7_svtfk")]
+rotation = 2.0944
+
+[node name="BlackRedSpark3" parent="RotatingSparks" instance=ExtResource("7_svtfk")]
+rotation = 4.18879
+
+[connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_entered"]
+[connection signal="area_exited" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_exited"]

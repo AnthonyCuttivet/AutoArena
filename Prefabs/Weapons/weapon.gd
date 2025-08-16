@@ -1,0 +1,194 @@
+class_name Weapon extends Node2D
+
+@export var sprite_2d: Sprite2D;
+@export var hitboxes: Array[Hitbox];
+@export var custom_damage:bool = false;
+@export var custom_sfx:bool = false;
+
+var settings:WeaponSettings;
+
+var melee:bool = false;
+var ranged:bool = false;
+
+var rotation_direction:int = 0;
+var rotation_speed:float = 0.0;
+var damage:int = 0;
+var knockback:float = 0.0;
+var attack_speed:float = 0.0;
+var shoot_speed:float = 0.0;
+var size:float = 0.0;
+var projectiles:int = 0;
+var projectile_speed:float = 0.0;
+var projectile_scale:float = 0.75;
+var shoot_duration:float = 1.0;
+var hitstop:float = 0.0;
+var rot_speed_bounce_boost:bool = false;
+
+var scaling_stat_value:float = 0.0;
+var stat_scale_value:float = 0.0;
+
+var ball_owner:BattleBall;
+
+var attack_speed_elapsed:float = 0.0;
+var shoot_speed_elapsed:float = 0.0;
+var shoots_remaining:int = 0;
+
+var no_shoot:bool = false;
+
+func init(s:WeaponSettings, owner:BattleBall) -> void:
+
+	ball_owner = owner;
+
+	if(s == null):
+		sprite_2d.texture = null;
+		for hitbox in hitboxes:
+			if(hitbox != null):
+				hitbox.monitorable = false;
+				hitbox.monitoring = false;
+		return;
+
+	settings = s;
+
+	melee = settings.melee;
+	ranged = settings.ranged;
+
+	rotation_direction = settings.base_rotation_direction;
+	rotation_speed = settings.base_rotation_speed;
+	damage = settings.base_damage;
+	knockback = settings.base_knockback;
+	attack_speed = settings.base_attack_speed;
+	attack_speed_elapsed = (1.0 / attack_speed);
+	shoot_speed = settings.base_shoot_speed;
+	shoot_speed_elapsed = (1.0 / shoot_speed);
+	size = settings.base_attack_speed;
+	projectiles = settings.base_projectiles;
+	projectile_speed = settings.base_projectile_speed;
+	projectile_scale = settings.base_projectile_scale;
+	shoot_duration = settings.base_shoot_duration;
+	hitstop = settings.base_hitstop;
+	shoots_remaining = projectiles;
+	rot_speed_bounce_boost = settings.base_rot_speed_bounce_boost;
+
+	stat_scale_value = settings.stat_scale_value;
+
+	if(rotation_direction == -1 && settings.flip):
+		flip_sprite();
+
+	init_scaling_stat();
+
+	for hitbox in hitboxes:
+		if(hitbox != null):
+			hitbox.ball_owner = owner;
+			hitbox.init();
+
+func _physics_process(delta: float) -> void:
+
+	if(ball_owner.dead || ball_owner.stop): return;
+
+	if(!ball_owner.end_game && ranged && shoots_remaining > 0 && !ball_owner.freeze):
+		shoot_speed_elapsed += delta * ball_owner.time_scale;
+		if(shoot_speed_elapsed >= (1.0 / shoot_speed)):
+			shoots_remaining -= 1;
+			shoot_projectile();
+			if(shoots_remaining > 0):
+				shoot_speed_elapsed = (1.0 / shoot_speed) - (shoot_duration / projectiles);
+			else:
+				shoot_speed_elapsed = 0.0;
+				reset_shoots();
+
+func reset_shoots():
+	shoots_remaining = projectiles;
+
+func add_remaining_shoot():
+	shoots_remaining += 1;
+
+func on_weapon_hit(other:BattleBall, hit_pos:Vector2, hitbox_id:int, projectile_hit:bool = false) -> void:
+	if(other.is_invincible()):
+		# print(other.name + " is INVINCIBLE");
+		return;
+
+	if(ball_owner.is_in_same_team(other)):
+		return;
+
+	AudioManager.play_sfx(settings.sfx_hit, "SFX");
+
+	var d:int = get_custom_damage_value() if custom_damage else damage;
+
+	var kb_dist:float = knockback + other.linear_velocity.length() if !ball_owner.is_boss else 0.0;
+
+	var kb:Vector2 = (other.global_position - ball_owner.global_position).normalized() * kb_dist;
+
+	if(projectile_hit):
+		kb = (hit_pos - ball_owner.global_position).normalized() * kb_dist;
+
+	other.affect_health(-d, ball_owner);
+
+	if(!projectile_hit):
+		ball_owner.start_hitstop(0.01, hitstop);
+
+	other.start_hitstop(0.0, hitstop, kb);
+	other.hitflash(hitstop);
+	other.hit_pos = hit_pos;
+
+	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id());
+	pass;
+
+func on_weapon_clash(other:BattleBall, projectile_hit:bool = false):
+	# if(ball_owner.is_in_same_team(other)):
+	# 	return;
+
+	AudioManager.play_sfx(settings.sfx_clash, "SFX");
+
+	var kb:Vector2 = Vector2.ZERO;
+
+	if(!projectile_hit):
+		kb = (ball_owner.global_position - other.global_position).normalized() * ball_owner.linear_velocity.length() * 1.5;
+		reverse_rotation();
+
+	ball_owner.start_hitstop(0.0, 0.15, kb);
+	# other.start_hitstop(0.0, 0.15, -kb);
+
+	EventBus.ball_weapon_clash.emit(ball_owner.get_instance_id());
+	# EventBus.ball_weapon_clash.emit(other.get_instance_id());
+	pass;
+
+func reverse_rotation():
+	if(settings.no_rotation_change):
+		return;
+
+	rotation_direction *= -1;
+
+	if(settings.flip):
+		flip_sprite();
+
+func flip_sprite():
+	sprite_2d.rotation_degrees += (90.0 * sprite_2d.scale.x);
+	sprite_2d.scale.x *= -1.0;
+
+func init_scaling_stat():
+	pass;
+
+func scale_stat():
+	pass;
+
+func shoot_projectile():
+	if(settings.projectile_prefab == null):return;
+
+	AudioManager.play_sfx(settings.sfx_shoot, "SFX");
+
+	var p:Projectile = settings.projectile_prefab.instantiate();
+	p.global_position = sprite_2d.global_position;
+	p.rotation = ball_owner.weapon_slot.global_rotation;
+	p.scale = ball_owner.weapon_slot.scale * ball_owner.root.scale * projectile_scale;
+	p.init(ball_owner, projectile_speed, 0, 0);
+	p.weapon_owner = self;
+	get_tree().root.add_child(p);
+
+func on_listened_event_received(id:int):
+	pass;
+
+func get_custom_damage_value() -> int:
+	return 0;
+
+func get_custom_stat_format() -> String:
+	return "";

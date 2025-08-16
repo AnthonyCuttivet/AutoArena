@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dovhtlh8rrl28"]
+
+[sub_resource type="Curve" id="Curve_w6bdg"]
+_data = [Vector2(0.089701, 0.106469), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.67736, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_at0vl"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[node name="Trail" type="Line2D"]
+physics_interpolation_mode = 2
+points = PackedVector2Array(0, 0, -10, 0)
+width_curve = SubResource("Curve_w6bdg")
+gradient = SubResource("Gradient_at0vl")

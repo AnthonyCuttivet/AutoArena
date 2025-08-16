@@ -1,0 +1,110 @@
+[gd_scene load_steps=14 format=3 uid="uid://dq1w5q1d2hbls"]
+
+[ext_resource type="Script" uid="uid://cp82leg5g74mt" path="res://Prefabs/Ball/battle_ball.gd" id="1_0l4tw"]
+[ext_resource type="Texture2D" uid="uid://bfvdgok43dr2p" path="res://Graphics/Images/circle-svgrepo-com.svg" id="1_lj2f6"]
+[ext_resource type="FontFile" uid="uid://bglbd1ylrt02k" path="res://Graphics/Fonts/big_noodle_titling.ttf" id="2_0l4tw"]
+[ext_resource type="Shader" uid="uid://dtyu4fqs87aw3" path="res://Graphics/Shaders/hitflash.gdshader" id="4_5hbfo"]
+[ext_resource type="Script" uid="uid://d2dw2w8owaf37" path="res://Prefabs/Ball/hurtbox.gd" id="5_x46jw"]
+[ext_resource type="Script" uid="uid://c0yo17knk84wp" path="res://Prefabs/Ball/trail.gd" id="6_5hbfo"]
+[ext_resource type="Script" uid="uid://dohcthnjvwg7e" path="res://Prefabs/Ball/afterimage.gd" id="7_yvhfn"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5hbfo"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j21cw"]
+radius = 370.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yvhfn"]
+resource_local_to_scene = true
+shader = ExtResource("4_5hbfo")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_intensity = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x46jw"]
+radius = 350.0
+
+[sub_resource type="Curve" id="Curve_yvhfn"]
+_data = [Vector2(0, 0), 0.0, 0.263679, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_yvhfn"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0.286275)
+
+[node name="BattleBall" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 3
+physics_material_override = SubResource("PhysicsMaterial_5hbfo")
+lock_rotation = true
+continuous_cd = 2
+contact_monitor = true
+max_contacts_reported = 50
+linear_damp_mode = 1
+script = ExtResource("1_0l4tw")
+start_dir = Vector2(-0.5, 0)
+clash_invincibility = 0.15
+max_speed = 2300.0
+
+[node name="Root" type="CollisionShape2D" parent="."]
+scale = Vector2(0.16, 0.16)
+shape = SubResource("CircleShape2D_j21cw")
+debug_color = Color(0.7, 0, 0, 0)
+
+[node name="WeaponSlot" type="Node2D" parent="Root"]
+scale = Vector2(22, 22)
+
+[node name="CircleBG" type="Sprite2D" parent="Root"]
+modulate = Color(0, 0, 0, 1)
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("1_lj2f6")
+
+[node name="Circle" type="Sprite2D" parent="Root"]
+material = SubResource("ShaderMaterial_yvhfn")
+texture = ExtResource("1_lj2f6")
+
+[node name="HP_Text" type="RichTextLabel" parent="Root"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -190.0
+offset_right = 350.0
+offset_bottom = 190.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("2_0l4tw")
+theme_override_font_sizes/normal_font_size = 450
+text = "999"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Hurtbox" type="Area2D" parent="Root" node_paths=PackedStringArray("ball_owner")]
+script = ExtResource("5_x46jw")
+ball_owner = NodePath("../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Root/Hurtbox"]
+shape = SubResource("CircleShape2D_x46jw")
+
+[node name="Trail" type="Line2D" parent="Root"]
+show_behind_parent = true
+scale = Vector2(6.25, 6.25)
+width = 35.0
+width_curve = SubResource("Curve_yvhfn")
+gradient = SubResource("Gradient_yvhfn")
+joint_mode = 2
+begin_cap_mode = 2
+round_precision = 32
+antialiased = true
+script = ExtResource("6_5hbfo")
+length = 10
+
+[node name="Afterimage" type="Node2D" parent="Root" node_paths=PackedStringArray("source_sprite")]
+script = ExtResource("7_yvhfn")
+source_sprite = NodePath("../Circle")
+spawn_interval = 0.01
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

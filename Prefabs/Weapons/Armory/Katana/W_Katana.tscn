@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://bqti5e5rv8fne"]
+
+[ext_resource type="Script" uid="uid://jo4tp2rdayyn" path="res://Prefabs/Weapons/Armory/Katana/weapon_katana.gd" id="1_wmo0m"]
+[ext_resource type="Texture2D" uid="uid://cwf4at5rm7o78" path="res://Graphics/_Addons/Icons/fc1453.png" id="2_wmo0m"]
+[ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="3_ar5bq"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
+radius = 6.0
+height = 70.0
+
+[node name="WeaponKatana" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]
+script = ExtResource("1_wmo0m")
+sprite_2d = NodePath("Sprite2D")
+hitboxes = [NodePath("Sprite2D/WeaponHitbox")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(40, 0)
+rotation = 0.785398
+texture = ExtResource("2_wmo0m")
+
+[node name="WeaponHitbox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("weapon", "collider")]
+rotation = 0.785398
+script = ExtResource("3_ar5bq")
+weapon = NodePath("../..")
+collider = NodePath("CollisionShape2D")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
+position = Vector2(2.14577e-06, -6)
+shape = SubResource("CapsuleShape2D_1fhci")
+
+[node name="SpriteCharged" type="Sprite2D" parent="Sprite2D"]
+self_modulate = Color(0.639216, 0.156863, 0.345098, 0)
+texture_filter = 1
+texture = ExtResource("2_wmo0m")
+
+[connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_entered"]
+[connection signal="area_exited" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_exited"]

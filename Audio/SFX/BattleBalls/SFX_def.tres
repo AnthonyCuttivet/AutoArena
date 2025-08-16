@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SFX" load_steps=4 format=3 uid="uid://byw56r10hp1ve"]
+
+[ext_resource type="AudioStream" uid="uid://bhq52hdhektab" path="res://Audio/SFX/BattleBalls/se_demon_final04.wav" id="1_hlms8"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="1_viy8h"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_pxflp"]
+random_pitch = 1.05
+streams_count = 1
+stream_0/stream = ExtResource("1_hlms8")
+
+[resource]
+script = ExtResource("1_viy8h")
+audio_stream = SubResource("AudioStreamRandomizer_pxflp")
+volume = -30.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"

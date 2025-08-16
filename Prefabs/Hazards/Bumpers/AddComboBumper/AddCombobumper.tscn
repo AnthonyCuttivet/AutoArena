@@ -1,0 +1,49 @@
+[gd_scene load_steps=4 format=3 uid="uid://bv4qoil80bx5k"]
+
+[ext_resource type="Script" uid="uid://dukeonm2oolm5" path="res://Prefabs/Hazards/Bumpers/AddComboBumper/AddCombobumper.gd" id="1_30fgv"]
+[ext_resource type="FontFile" uid="uid://bt2qq5v7nibma" path="res://Graphics/Fonts/PPFraktionMono-Bold.otf" id="3_2es4d"]
+[ext_resource type="PackedScene" uid="uid://dbeo43xnrhita" path="res://Prefabs/Hazards/Bumpers/_Bumper/bumper.tscn" id="4_gamng"]
+
+[node name="AddComboBumper" type="Node2D"]
+
+[node name="Bumper" parent="." instance=ExtResource("4_gamng")]
+script = ExtResource("1_30fgv")
+add_combo_value = 1
+bump_multiplier = 1.5
+duration = 0.1
+
+[node name="Outer" parent="Bumper/Visual" index="0"]
+self_modulate = Color(1, 0.814331, 0.0859375, 1)
+
+[node name="BG" parent="Bumper/Visual" index="1"]
+self_modulate = Color(1, 0.900909, 0.253906, 1)
+
+[node name="Label" type="RichTextLabel" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 0
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_outline_size = 2
+theme_override_fonts/normal_font = ExtResource("3_2es4d")
+theme_override_font_sizes/normal_font_size = 32
+text = "+X"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[editable path="Bumper"]

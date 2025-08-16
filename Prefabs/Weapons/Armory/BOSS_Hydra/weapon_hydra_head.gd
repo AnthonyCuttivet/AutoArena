@@ -1,0 +1,39 @@
+class_name WeaponHydraHead extends Weapon
+
+@export var projectile:PackedScene;
+@export var shoot_delay:float;
+@export var sfx_shoot:SFX;
+@export var sfx_hit:SFX;
+
+var shoot_delay_remaining:float;
+
+func _init() -> void:
+	EventBus.ball_weapon_hit.connect(on_weapon_hit_received);
+	EventBus.ball_damaged.connect(on_ball_damaged_received);
+
+	shoot_delay_remaining = shoot_delay;
+
+func init_scaling_stat():
+	scaling_stat_value = rotation_speed;
+	ball_owner.update_stat_text();
+
+func scale_stat():
+	rotation_speed += stat_scale_value;
+	init_scaling_stat();
+
+func on_weapon_hit_received(id:int):
+	if(id != ball_owner.get_instance_id()): return;
+	scale_stat();
+	pass;
+
+func on_ball_damaged_received(id:int, amount:int, from:int):
+	if(id != ball_owner.get_instance_id()): return;
+
+func can_shoot(dt:float) -> bool:
+	shoot_delay_remaining -= dt;
+
+	if(shoot_delay_remaining <= 0):
+		shoot_delay_remaining = shoot_delay;
+		return true;
+
+	return false;

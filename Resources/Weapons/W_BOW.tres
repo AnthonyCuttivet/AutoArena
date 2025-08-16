@@ -1,0 +1,74 @@
+[gd_resource type="Resource" script_class="WeaponSettings" load_steps=14 format=3 uid="uid://vf0ik06r5ypg"]
+
+[ext_resource type="PackedScene" uid="uid://d1v11yrn0my32" path="res://Prefabs/Weapons/Armory/Projectiles/P_Arrow.tscn" id="1_odt31"]
+[ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="2_1gh3n"]
+[ext_resource type="AudioStream" uid="uid://wb7cigowqlsv" path="res://Audio/SFX/BattleBalls/WeaponClash.mp3" id="3_1gh3n"]
+[ext_resource type="PackedScene" uid="uid://mn7uqjjyuygw" path="res://Prefabs/Weapons/Armory/Bow/W_Bow.tscn" id="3_6o23i"]
+[ext_resource type="AudioStream" uid="uid://civ2fehii8id6" path="res://Audio/SFX/BattleBalls/BowShoot.mp3" id="4_6o23i"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="4_dk7v7"]
+[ext_resource type="AudioStream" uid="uid://ct67ps4utyeo3" path="res://Audio/SFX/BattleBalls/se_edge_smash_L03.wav" id="5_dk7v7"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_i3erk"]
+random_pitch = 2.0
+streams_count = 1
+stream_0/stream = ExtResource("3_1gh3n")
+
+[sub_resource type="Resource" id="Resource_1es3c"]
+script = ExtResource("4_dk7v7")
+audio_stream = SubResource("AudioStreamRandomizer_i3erk")
+volume = -29.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_dk7v7"]
+random_pitch = 1.02
+streams_count = 1
+stream_0/stream = ExtResource("5_dk7v7")
+
+[sub_resource type="Resource" id="Resource_1vor1"]
+script = ExtResource("4_dk7v7")
+audio_stream = SubResource("AudioStreamRandomizer_dk7v7")
+volume = -28.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1vor1"]
+random_pitch = 1.05
+streams_count = 1
+stream_0/stream = ExtResource("4_6o23i")
+
+[sub_resource type="Resource" id="Resource_i3erk"]
+script = ExtResource("4_dk7v7")
+audio_stream = SubResource("AudioStreamRandomizer_1vor1")
+volume = -30.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[resource]
+script = ExtResource("2_1gh3n")
+name = "BOW"
+melee = false
+ranged = true
+flip = false
+offset = 25.0
+base_rotation_direction = -1
+base_rotation_speed = 0.7
+base_damage = 1
+base_knockback = 20.0
+base_attack_speed = 1.0
+base_shoot_speed = 1.4
+base_size = 14.0
+base_hitstop = 0.15
+base_projectiles = 1
+base_projectile_speed = 1500.0
+base_projectile_scale = 0.6
+base_shoot_duration = 0.2
+base_rot_speed_bounce_boost = false
+stat_scale_value = 1.0
+stat_scale_name = "Arrows"
+scaling_stat_float = false
+no_rotation_change = false
+weapon_prefab = ExtResource("3_6o23i")
+projectile_prefab = ExtResource("1_odt31")
+details = ""
+sfx_clash = SubResource("Resource_1es3c")
+sfx_hit = SubResource("Resource_1vor1")
+sfx_shoot = SubResource("Resource_i3erk")
+metadata/_custom_type_script = "uid://c1biydo2yju8x"

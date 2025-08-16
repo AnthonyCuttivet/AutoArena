@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="BallSettings" load_steps=4 format=3 uid="uid://cx6bv7s7apt5s"]
+
+[ext_resource type="AudioStream" uid="uid://c2jgryvsfx66o" path="res://Audio/SFX/SatisfyingSounds/Pop/Pop1.wav" id="1_kpvv3"]
+[ext_resource type="Script" uid="uid://birgnmjru0yw2" path="res://Prefabs/Ball/ball_settings.gd" id="1_qxq6l"]
+[ext_resource type="AudioStream" uid="uid://dpxffflev3y2j" path="res://Audio/SFX/sword-clash-joshua-chivers-1-00-00.mp3" id="2_7he1s"]
+
+[resource]
+script = ExtResource("1_qxq6l")
+player_name = "YES"
+player_color = Color(0.419608, 0.788235, 0.423529, 1)
+player_audio_bounce = ExtResource("1_kpvv3")
+player_audio_hit = ExtResource("2_7he1s")
+neutral_fx = false
+base_speed = 1000.0
+base_speed_unit = 1.0
+max_speed_multiplier = 3.0
+max_speed_multiplier_unit = 0.01
+combo_acceleration = 0.05
+combo_acceleration_unit = 0.01
+max_health = 50
+max_health_unit = 1
+other_ball_nudge_force_ratio = 0.1
+other_ball_nudge_force_ratio_unit = 0.003
+size_per_max_health_unit = 1.0
+metadata/_custom_type_script = "uid://birgnmjru0yw2"

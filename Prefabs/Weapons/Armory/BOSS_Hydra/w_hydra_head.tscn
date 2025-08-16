@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://cnvhqe5pnkxss"]
+
+[ext_resource type="Texture2D" uid="uid://d4l1y4s7l5txd" path="res://Graphics/_Addons/Icons/fc226.png" id="1_3mc8v"]
+[ext_resource type="Script" uid="uid://bbiy3ap26pd4q" path="res://Prefabs/Weapons/Armory/BOSS_Hydra/weapon_hydra_head.gd" id="1_a78xx"]
+[ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="2_a78xx"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
+radius = 18.0
+height = 53.04
+
+[node name="WHydraHead" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]
+script = ExtResource("1_a78xx")
+sprite_2d = NodePath("Sprite2D")
+hitboxes = [NodePath("Sprite2D/WeaponHitbox")]
+custom_damage = true
+custom_sfx = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, 2)
+rotation = -1.5708
+texture = ExtResource("1_3mc8v")
+flip_h = true
+
+[node name="WeaponHitbox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("weapon", "collider")]
+script = ExtResource("2_a78xx")
+weapon = NodePath("../..")
+collider = NodePath("CollisionShape2D")
+metadata/owner = NodePath("../../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
+position = Vector2(2.17, -1.345)
+shape = SubResource("CapsuleShape2D_1fhci")
+
+[connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_entered"]
+[connection signal="area_exited" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_exited"]

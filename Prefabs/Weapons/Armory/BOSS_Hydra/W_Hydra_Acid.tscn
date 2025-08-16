@@ -1,0 +1,53 @@
+[gd_scene load_steps=12 format=3 uid="uid://b5hfgcoellgso"]
+
+[ext_resource type="Script" uid="uid://cany3gx5v3g1k" path="res://Prefabs/Weapons/Armory/BOSS_Hydra/weapon_hydra.gd" id="1_tnbbn"]
+[ext_resource type="PackedScene" uid="uid://c3n3fgbc7kp77" path="res://Prefabs/Weapons/Armory/Projectiles/P_Poison.tscn" id="3_6wyis"]
+[ext_resource type="PackedScene" uid="uid://cnvhqe5pnkxss" path="res://Prefabs/Weapons/Armory/BOSS_Hydra/w_hydra_head.tscn" id="3_nuxho"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="4_jr314"]
+[ext_resource type="Texture2D" uid="uid://d4l1y4s7l5txd" path="res://Graphics/_Addons/Icons/fc226.png" id="7_ngnwt"]
+[ext_resource type="AudioStream" uid="uid://d16qoock7o2b6" path="res://Audio/SFX/BattleBalls/dart-trap-shot-1.mp3" id="8_shj4s"]
+[ext_resource type="AudioStream" uid="uid://msfme585qmvn" path="res://Audio/SFX/BattleBalls/poison-ogg.mp3" id="11_4tud7"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ii1p6"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("8_shj4s")
+
+[sub_resource type="Resource" id="Resource_t1e8h"]
+script = ExtResource("4_jr314")
+audio_stream = SubResource("AudioStreamRandomizer_ii1p6")
+volume = -37.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4oocv"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("11_4tud7")
+
+[sub_resource type="Resource" id="Resource_h56q7"]
+script = ExtResource("4_jr314")
+audio_stream = SubResource("AudioStreamRandomizer_4oocv")
+volume = -30.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[node name="WeaponHydraAcid" type="Node2D" node_paths=PackedStringArray("heads_root", "sprite_2d")]
+script = ExtResource("1_tnbbn")
+heads_colors = Array[Color]([Color(0.350708, 0.863281, 0.528401, 1), Color(0.350708, 0.863281, 0.528401, 1), Color(0.350708, 0.863281, 0.528401, 1)])
+spawn_head_each_hp_lost = 25
+heads_projectiles = Array[PackedScene]([ExtResource("3_6wyis"), ExtResource("3_6wyis"), ExtResource("3_6wyis")])
+heads_shoot_delay = Array[float]([0.6, 0.6, 0.6])
+head_prefab = ExtResource("3_nuxho")
+heads_root = NodePath("Heads")
+head_offset = 50.0
+sfxs_shoot = Array[ExtResource("4_jr314")]([SubResource("Resource_t1e8h"), SubResource("Resource_t1e8h"), SubResource("Resource_t1e8h")])
+sfxs_hit = Array[ExtResource("4_jr314")]([SubResource("Resource_h56q7"), SubResource("Resource_h56q7"), SubResource("Resource_h56q7")])
+sprite_2d = NodePath("Sprite2D")
+custom_damage = true
+custom_sfx = true
+
+[node name="Heads" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(1e-05, 1)
+texture = ExtResource("7_ngnwt")

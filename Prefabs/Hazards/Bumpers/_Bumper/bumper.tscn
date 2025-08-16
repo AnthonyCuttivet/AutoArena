@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://dbeo43xnrhita"]
+
+[ext_resource type="Script" uid="uid://c8wdnkntkqxo3" path="res://Prefabs/Hazards/Bumpers/_Bumper/bumper.gd" id="1_kg7jm"]
+[ext_resource type="Texture2D" uid="uid://bfvdgok43dr2p" path="res://Graphics/Images/circle-svgrepo-com.svg" id="2_l625o"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_344ge"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6bp64"]
+radius = 46.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_21xkr"]
+radius = 50.0
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_7jmky"]
+polygon = PackedVector2Array(50, -50, 50, 50, -50, 50, -50, -50)
+
+[node name="Bumper" type="StaticBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_344ge")
+script = ExtResource("1_kg7jm")
+bump_multiplier = 1.2
+duration = 0.05
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_6bp64")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_21xkr")
+debug_color = Color(0.7, 0.426562, 0, 0.42)
+
+[node name="Visual" type="Node2D" parent="."]
+
+[node name="Outer" type="Sprite2D" parent="Visual"]
+self_modulate = Color(0.472656, 0.472656, 0.472656, 1)
+scale = Vector2(0.142, 0.142)
+texture = ExtResource("2_l625o")
+
+[node name="BG" type="Sprite2D" parent="Visual"]
+scale = Vector2(0.11, 0.11)
+texture = ExtResource("2_l625o")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+show_behind_parent = true
+occluder = SubResource("OccluderPolygon2D_7jmky")

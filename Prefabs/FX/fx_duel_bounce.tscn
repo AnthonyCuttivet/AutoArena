@@ -1,0 +1,66 @@
+[gd_scene load_steps=11 format=3 uid="uid://sg14k4ckbk3k"]
+
+[ext_resource type="Texture2D" uid="uid://bfvdgok43dr2p" path="res://Graphics/Images/circle-svgrepo-com.svg" id="1_j1m2c"]
+
+[sub_resource type="Curve" id="Curve_hs4i3"]
+_data = [Vector2(0, 1), 0.0, 0.0378346, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ds5mw"]
+curve = SubResource("Curve_hs4i3")
+
+[sub_resource type="Curve" id="Curve_723wr"]
+_limits = [-200.0, 201.365, 0.0, 1.0]
+_data = [Vector2(0, 201.365), 0.0, 0.0, 0, 0, Vector2(1, -200), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_qgwju"]
+curve = SubResource("Curve_723wr")
+
+[sub_resource type="Curve" id="Curve_lyhv5"]
+_data = [Vector2(0, 0.423208), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_rho13"]
+_limits = [0.0, 10.0, 0.0, 1.0]
+_data = [Vector2(0, 6.78328), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_ensol"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_oclsh"]
+curve_x = SubResource("Curve_lyhv5")
+curve_y = SubResource("Curve_rho13")
+curve_z = SubResource("Curve_ensol")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lyhv5"]
+lifetime_randomness = 0.2
+particle_flag_align_y = true
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 100.0
+initial_velocity_max = 300.0
+linear_accel_min = 17.07
+linear_accel_max = 100.0
+linear_accel_curve = SubResource("CurveTexture_qgwju")
+scale_min = 0.01
+scale_max = 0.02
+scale_curve = SubResource("CurveXYZTexture_oclsh")
+alpha_curve = SubResource("CurveTexture_ds5mw")
+turbulence_noise_strength = 8.86
+
+[node name="FXClash" type="GPUParticles2D"]
+self_modulate = Color(1, 0.992188, 0.992188, 1)
+emitting = false
+amount = 12
+texture = ExtResource("1_j1m2c")
+lifetime = 0.3
+one_shot = true
+speed_scale = 1.1
+explosiveness = 1.0
+fixed_fps = 60
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_lyhv5")

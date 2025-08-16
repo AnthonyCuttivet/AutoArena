@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="BallSettings" load_steps=2 format=3 uid="uid://crpjqq2jhclxs"]
+
+[ext_resource type="Script" uid="uid://birgnmjru0yw2" path="res://Prefabs/Ball/ball_settings.gd" id="1_2fycb"]
+
+[resource]
+script = ExtResource("1_2fycb")
+player_name = "THE QUICKSTER"
+player_color = Color(0.466667, 0.517647, 0.894118, 1)
+neutral_fx = true
+base_speed = 2000.0
+base_speed_unit = 1.0
+max_speed_multiplier = 3.0
+max_speed_multiplier_unit = 0.01
+combo_acceleration = 0.05
+combo_acceleration_unit = 0.01
+max_health = 50
+max_health_unit = 1
+other_ball_nudge_force_ratio = 0.1
+other_ball_nudge_force_ratio_unit = 0.003
+size_per_max_health_unit = 1.0
+metadata/_custom_type_script = "uid://birgnmjru0yw2"

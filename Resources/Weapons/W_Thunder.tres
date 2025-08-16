@@ -1,0 +1,74 @@
+[gd_resource type="Resource" script_class="WeaponSettings" load_steps=14 format=3 uid="uid://c5eexc502l0ip"]
+
+[ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="1_08nkc"]
+[ext_resource type="PackedScene" uid="uid://b2nqrnreb6pns" path="res://Prefabs/Weapons/Armory/Projectiles/P_Thunder.tscn" id="1_ddo1p"]
+[ext_resource type="PackedScene" uid="uid://dovrvmaoapjvt" path="res://Prefabs/Weapons/Armory/Thunder/W_Thunder.tscn" id="2_0t81g"]
+[ext_resource type="AudioStream" uid="uid://cc6lfmqrq4msf" path="res://Audio/SFX/BattleBalls/se_reflet_attackair_L01.wav" id="3_kfxyf"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="3_tc42g"]
+[ext_resource type="AudioStream" uid="uid://do25o43fqbltx" path="res://Audio/SFX/BattleBalls/se_reflet_attackair_B02.wav" id="4_1wp16"]
+[ext_resource type="AudioStream" uid="uid://bb8deiq7i4eof" path="res://Audio/SFX/BattleBalls/se_reflet_finalhit_elec.wav" id="4_ahd6p"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1wp16"]
+random_pitch = 1.05
+streams_count = 1
+stream_0/stream = ExtResource("3_kfxyf")
+
+[sub_resource type="Resource" id="Resource_ahd6p"]
+script = ExtResource("3_tc42g")
+audio_stream = SubResource("AudioStreamRandomizer_1wp16")
+volume = -29.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_kfxyf"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("4_ahd6p")
+
+[sub_resource type="Resource" id="Resource_dt5h3"]
+script = ExtResource("3_tc42g")
+audio_stream = SubResource("AudioStreamRandomizer_kfxyf")
+volume = -32.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_2kqmn"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("4_1wp16")
+
+[sub_resource type="Resource" id="Resource_o05x3"]
+script = ExtResource("3_tc42g")
+audio_stream = SubResource("AudioStreamRandomizer_2kqmn")
+volume = -42.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[resource]
+script = ExtResource("1_08nkc")
+name = "THUNDER"
+melee = false
+ranged = true
+flip = true
+offset = 8.0
+base_rotation_direction = 1
+base_rotation_speed = 0.5
+base_damage = 3
+base_knockback = 0.0
+base_attack_speed = 1.0
+base_shoot_speed = 1.2
+base_size = 15.0
+base_hitstop = 0.42
+base_projectiles = 1
+base_projectile_speed = 0.0
+base_projectile_scale = 0.75
+base_shoot_duration = 0.35
+base_rot_speed_bounce_boost = false
+stat_scale_value = 0.1
+stat_scale_name = "Linger"
+scaling_stat_float = true
+no_rotation_change = false
+weapon_prefab = ExtResource("2_0t81g")
+projectile_prefab = ExtResource("1_ddo1p")
+details = "Lightning strike every 2 casts"
+sfx_clash = SubResource("Resource_ahd6p")
+sfx_hit = SubResource("Resource_dt5h3")
+sfx_shoot = SubResource("Resource_o05x3")
+metadata/_custom_type_script = "uid://c1biydo2yju8x"

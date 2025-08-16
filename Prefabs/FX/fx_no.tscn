@@ -1,0 +1,54 @@
+[gd_scene load_steps=10 format=3 uid="uid://dyjledxxiln8d"]
+
+[ext_resource type="Texture2D" uid="uid://b720vksj3dguu" path="res://Graphics/Images/tx_no.png" id="1_o7r2i"]
+
+[sub_resource type="Curve" id="Curve_o7r2i"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.14067, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_b4tg4"]
+curve = SubResource("Curve_o7r2i")
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_bv3nt"]
+
+[sub_resource type="Curve" id="Curve_723wr"]
+_limits = [-200.0, 1000.0, 0.0, 1.0]
+_data = [Vector2(0, 1000), 0.0, 0.0, 0, 0, Vector2(1, -200), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_qgwju"]
+curve = SubResource("Curve_723wr")
+
+[sub_resource type="Curve" id="Curve_i0seo"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_5juf1"]
+curve = SubResource("Curve_i0seo")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_723wr"]
+particle_flag_disable_z = true
+direction = Vector3(0, -100, 0)
+spread = 27.842
+flatness = 0.196
+initial_velocity_min = 407.67
+initial_velocity_max = 1000.0
+directional_velocity_min = 1.0
+directional_velocity_max = 1.0
+directional_velocity_curve = SubResource("CurveXYZTexture_bv3nt")
+gravity = Vector3(0, 980, 0)
+linear_accel_curve = SubResource("CurveTexture_qgwju")
+scale_curve = SubResource("CurveTexture_5juf1")
+alpha_curve = SubResource("CurveTexture_b4tg4")
+
+[node name="GPUParticles2D" type="GPUParticles2D"]
+rotation = 1.5708
+amount = 50
+texture = ExtResource("1_o7r2i")
+lifetime = 3.0
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_723wr")

@@ -1,0 +1,49 @@
+[gd_resource type="Resource" script_class="TimeAttackLeaderboard" load_steps=9 format=3 uid="uid://d08dgi8n4wq5c"]
+
+[ext_resource type="Script" uid="uid://m3rw1428wsq2" path="res://Scripts/time_attack_data.gd" id="1_bqsmn"]
+[ext_resource type="Texture2D" uid="uid://cwf4at5rm7o78" path="res://Graphics/_Addons/Icons/fc1453.png" id="2_0cwh5"]
+[ext_resource type="Texture2D" uid="uid://bt3ogvpb85cbm" path="res://Graphics/_Addons/Icons/fc9999.png" id="2_acsbu"]
+[ext_resource type="Script" uid="uid://bentp5io1j8mf" path="res://Scripts/time_attack_leaderboard.gd" id="2_c3jkq"]
+[ext_resource type="Texture2D" uid="uid://cj3174c1vhaci" path="res://Graphics/_Addons/Icons/fc17040.png" id="3_1y12c"]
+[ext_resource type="Texture2D" uid="uid://cju35wtqmbnmq" path="res://Graphics/_Addons/Icons/fc1588.png" id="3_7j3o3"]
+
+[sub_resource type="Resource" id="Resource_ol7al"]
+script = ExtResource("1_bqsmn")
+time = 44.0982
+ball_1_name = "Katana"
+ball_1_color = Color(1, 0.721569, 0.47451, 1)
+ball_1_sprite = ExtResource("2_0cwh5")
+ball_1_flip_h = false
+ball_1_rot = 2.35619
+ball_1_offset = 25.0
+ball_1_damage = 109
+ball_2_name = "Sword"
+ball_2_color = Color(1, 0.843137, 0, 1)
+ball_2_sprite = ExtResource("3_7j3o3")
+ball_2_flip_h = false
+ball_2_rot = 0.785398
+ball_2_offset = 23.0
+ball_2_damage = 45
+
+[sub_resource type="Resource" id="Resource_0cwh5"]
+script = ExtResource("1_bqsmn")
+time = 67.114
+ball_1_name = "Thunder"
+ball_1_color = Color(0.933333, 0.560784, 0.796078, 1)
+ball_1_sprite = ExtResource("2_acsbu")
+ball_1_flip_h = false
+ball_1_rot = 2.35619
+ball_1_offset = 23.0
+ball_1_damage = 27
+ball_2_name = "Qiang"
+ball_2_color = Color(0.0709534, 0.726563, 0.488514, 1)
+ball_2_sprite = ExtResource("3_1y12c")
+ball_2_flip_h = false
+ball_2_rot = 0.785398
+ball_2_offset = 41.0
+ball_2_damage = 125
+
+[resource]
+script = ExtResource("2_c3jkq")
+rankings = Array[ExtResource("1_bqsmn")]([SubResource("Resource_ol7al"), SubResource("Resource_0cwh5")])
+metadata/_custom_type_script = "uid://bentp5io1j8mf"

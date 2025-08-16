@@ -1,0 +1,53 @@
+[gd_scene load_steps=10 format=3 uid="uid://dovrvmaoapjvt"]
+
+[ext_resource type="Script" uid="uid://dak0ykgaft1xr" path="res://Prefabs/Weapons/Armory/Thunder/weapon_thunder.gd" id="1_q13ri"]
+[ext_resource type="PackedScene" uid="uid://bypmtjpsrnsm8" path="res://Prefabs/Weapons/Armory/Projectiles/P_ThunderStrike.tscn" id="2_ce7qo"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="3_8ikxs"]
+[ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="3_jnpq2"]
+[ext_resource type="AudioStream" uid="uid://bb2e1k5pw3rjd" path="res://Audio/SFX/BattleBalls/se_pikachu_special_L02.wav" id="3_ud1rv"]
+[ext_resource type="Texture2D" uid="uid://bt3ogvpb85cbm" path="res://Graphics/_Addons/Icons/fc9999.png" id="5_8ikxs"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ud1rv"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("3_ud1rv")
+
+[sub_resource type="Resource" id="Resource_qsj5p"]
+script = ExtResource("3_8ikxs")
+audio_stream = SubResource("AudioStreamRandomizer_ud1rv")
+volume = -35.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
+radius = 15.0
+
+[node name="WeaponThunder" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]
+script = ExtResource("1_q13ri")
+thunderstrike_prefab = ExtResource("2_ce7qo")
+thunderstrike_duration = 0.3
+sfx_thunderstrike = SubResource("Resource_qsj5p")
+sprite_2d = NodePath("Sprite2D")
+hitboxes = [NodePath("Sprite2D/WeaponHitbox")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(34, 0)
+rotation = 0.785398
+texture = ExtResource("5_8ikxs")
+
+[node name="WeaponHitbox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("weapon", "collider")]
+rotation = 2.35619
+script = ExtResource("3_jnpq2")
+weapon = NodePath("../..")
+collider = NodePath("CollisionShape2D")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
+position = Vector2(-18, -3.00008)
+shape = SubResource("CapsuleShape2D_1fhci")
+
+[node name="PSpawn" type="Node2D" parent="."]
+position = Vector2(86, 3)
+
+[connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_entered"]
+[connection signal="area_exited" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_exited"]

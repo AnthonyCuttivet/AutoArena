@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://4q44tc8j4lwc"]
+
+[ext_resource type="Script" uid="uid://bkmdqj5uwbu44" path="res://Prefabs/Weapons/Armory/Vector/projectile_scissors.gd" id="1_vlave"]
+[ext_resource type="Shader" uid="uid://dewdqohxf515x" path="res://Graphics/Shaders/dissolve.gdshader" id="2_mnum8"]
+[ext_resource type="Texture2D" uid="uid://bmlwae5vcyou" path="res://Graphics/_Addons/Icons/fc95300.png" id="3_mnum8"]
+
+[sub_resource type="Curve" id="Curve_vlave"]
+bake_resolution = 1
+_data = [Vector2(0, 0), 0.0, 1.4, 0, 0, Vector2(0.375415, 0.903639), 1.95633, 1.95633, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6uwhm"]
+resource_local_to_scene = true
+shader = ExtResource("2_mnum8")
+shader_parameter/sensitivity = 0.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
+radius = 13.0
+height = 58.0
+
+[node name="ProjectileScissors" type="Node2D" node_paths=PackedStringArray("hitbox")]
+script = ExtResource("1_vlave")
+move_duration = 0.5
+fixed_lifetime = 5.0
+acceleration_curve = SubResource("Curve_vlave")
+rotation_speed = 720.0
+hitbox = NodePath("Sprite2D/ProjectileHitbox")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_6uwhm")
+rotation = 0.785398
+texture = ExtResource("3_mnum8")
+
+[node name="ProjectileHitbox" type="Area2D" parent="Sprite2D"]
+rotation = 0.785398
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/ProjectileHitbox"]
+position = Vector2(2.86102e-06, -8)
+shape = SubResource("CapsuleShape2D_1fhci")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(-6, 0)
+rotation = -1.5708
+hit_from_inside = true
+
+[connection signal="area_entered" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_area_entered"]
+[connection signal="area_exited" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_area_exited"]
+[connection signal="body_entered" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_body_entered"]

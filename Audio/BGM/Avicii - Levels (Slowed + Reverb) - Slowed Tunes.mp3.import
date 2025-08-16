@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cf5jl0nu0c05y"
+path="res://.godot/imported/Avicii - Levels (Slowed + Reverb) - Slowed Tunes.mp3-cbbdfef8a55472cfd3bd80b4f4796001.mp3str"
+
+[deps]
+
+source_file="res://Audio/BGM/Avicii - Levels (Slowed + Reverb) - Slowed Tunes.mp3"
+dest_files=["res://.godot/imported/Avicii - Levels (Slowed + Reverb) - Slowed Tunes.mp3-cbbdfef8a55472cfd3bd80b4f4796001.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

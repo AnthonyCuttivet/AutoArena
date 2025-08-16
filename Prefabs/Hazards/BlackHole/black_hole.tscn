@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://eixvbb1srpm1"]
+
+[ext_resource type="Script" uid="uid://dman2w72i1fvn" path="res://Prefabs/Hazards/BlackHole/black_hole.gd" id="1_aqqdc"]
+[ext_resource type="Shader" uid="uid://chlna1b5kva25" path="res://Graphics/Shaders/black_hole.gdshader" id="2_4km41"]
+[ext_resource type="Texture2D" uid="uid://dg8qub65q04g0" path="res://Graphics/Images/1x1.png" id="3_2rn0e"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2rn0e"]
+shader = ExtResource("2_4km41")
+shader_parameter/hole_color = Color(0.364513, 0.251953, 0.5, 1)
+shader_parameter/hole_radius = 0.435
+shader_parameter/glow_radius = 0.475
+shader_parameter/glow_intensity = 2.18
+shader_parameter/swirl_strength = 1000.0
+shader_parameter/time_speed = 1.0
+
+[node name="BlackHole" type="Node2D"]
+script = ExtResource("1_aqqdc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_2rn0e")
+scale = Vector2(250, 250)
+texture = ExtResource("3_2rn0e")

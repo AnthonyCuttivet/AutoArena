@@ -1,0 +1,39 @@
+[gd_scene load_steps=11 format=3 uid="uid://dyw3wx1w7t64b"]
+
+[ext_resource type="Texture2D" uid="uid://cbudk7wrw5e00" path="res://Graphics/Textures/Fire/T_1_pixel.jpg" id="1_c1gh5"]
+[ext_resource type="Shader" uid="uid://v73pmvuk6gtj" path="res://Prefabs/Fire/shader_fire.tres" id="1_snwwv"]
+[ext_resource type="Texture2D" uid="uid://de6a5oxj6usw5" path="res://Prefabs/Fire/tx_gradient_fire.tres" id="2_i7plk"]
+[ext_resource type="Texture2D" uid="uid://diyhnmc5d0n50" path="res://Graphics/Textures/Fire/T_VFX_Noise_465.png" id="2_wr7oj"]
+[ext_resource type="Texture2D" uid="uid://caaujaxn6uian" path="res://Graphics/Textures/Fire/T_Gradient_circle22.jpg" id="3_i7plk"]
+
+[sub_resource type="Gradient" id="Gradient_i7plk"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mwy5g"]
+gradient = SubResource("Gradient_i7plk")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_73npl"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_i7plk"]
+gradient = SubResource("Gradient_73npl")
+fill_from = Vector2(1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fw3gp"]
+resource_local_to_scene = true
+shader = ExtResource("1_snwwv")
+shader_parameter/Scale = Vector2(1, 1)
+shader_parameter/Speed = Vector2(0.2, 1)
+shader_parameter/Texture_MAIN = ExtResource("2_wr7oj")
+shader_parameter/intensity = 1.0
+shader_parameter/Texture_ADD = SubResource("GradientTexture2D_mwy5g")
+shader_parameter/Texture_MULT = ExtResource("3_i7plk")
+shader_parameter/Texture_SUB = SubResource("GradientTexture2D_i7plk")
+shader_parameter/Texture_COLOR = ExtResource("2_i7plk")
+
+[node name="Fire" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(1.5, 1, 1, 1)
+material = SubResource("ShaderMaterial_fw3gp")
+scale = Vector2(50, 50)
+texture = ExtResource("1_c1gh5")

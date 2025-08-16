@@ -1,0 +1,76 @@
+[gd_scene load_steps=9 format=3 uid="uid://c3gnc38hlfdt0"]
+
+[ext_resource type="Script" uid="uid://r85q8sq0eq6a" path="res://Scenes/break_block.gd" id="1_hhla4"]
+[ext_resource type="FontFile" uid="uid://bt2qq5v7nibma" path="res://Graphics/Fonts/PPFraktionMono-Bold.otf" id="2_5dts5"]
+[ext_resource type="AudioStream" uid="uid://bnf2n2labv4au" path="res://Audio/SFX/BattleBalls/Break.wav" id="2_gq1pn"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="2_pdg6g"]
+[ext_resource type="Script" uid="uid://dtqgj8e3uki5c" path="res://Scenes/dynamic_text.gd" id="3_pdg6g"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_gq1pn"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("2_gq1pn")
+
+[sub_resource type="Resource" id="Resource_o1451"]
+script = ExtResource("2_pdg6g")
+audio_stream = SubResource("AudioStreamRandomizer_gq1pn")
+volume = -30.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cm4p0"]
+size = Vector2(20, 21.6)
+
+[node name="BreakBlock" type="RigidBody2D"]
+collision_mask = 2
+mass = 100.0
+gravity_scale = 0.0
+lock_rotation = true
+continuous_cd = 2
+contact_monitor = true
+max_contacts_reported = 32
+script = ExtResource("1_hhla4")
+block_death_shake = 0.3
+sfx_break = SubResource("Resource_o1451")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(37, 2)
+shape = SubResource("RectangleShape2D_cm4p0")
+debug_color = Color(0, 0.6, 0.701961, 0.666667)
+
+[node name="Polygon2D2" type="Polygon2D" parent="CollisionShape2D"]
+scale = Vector2(1.01, 1.08)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-10, 10, -10, -10, 10, -10, 10, 10)
+
+[node name="Polygon2D" type="Polygon2D" parent="CollisionShape2D"]
+polygon = PackedVector2Array(-10, 10, -10, -10, 10, -10, 10, 10)
+
+[node name="PolygonColorOverlay" type="Polygon2D" parent="CollisionShape2D"]
+polygon = PackedVector2Array(-10, 10, -10, -10, 10, -10, 10, 10)
+
+[node name="Value" type="RichTextLabel" parent="."]
+self_modulate = Color(0, 0, 0, 1)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -133.5
+offset_top = -34.0
+offset_right = 133.5
+offset_bottom = 34.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/normal_font = ExtResource("2_5dts5")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = " %s "
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("3_pdg6g")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

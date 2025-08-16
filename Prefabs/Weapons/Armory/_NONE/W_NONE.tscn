@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://bn0dqaj5jmw3f"]
+
+[ext_resource type="Script" uid="uid://bntuyxjxoici0" path="res://Prefabs/Weapons/Armory/Mace/weapon_mace.gd" id="1_lfvsa"]
+[ext_resource type="Texture2D" uid="uid://cfdltyx8y6d03" path="res://Graphics/_Addons/Icons/fc364.png" id="2_03yse"]
+[ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="3_eoeu6"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
+radius = 8.48528
+height = 71.561
+
+[node name="WeaponNONE" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]
+script = ExtResource("1_lfvsa")
+sprite_2d = NodePath("Sprite2D")
+hitboxes = [NodePath("Sprite2D/WeaponHitbox")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(32, -32)
+texture = ExtResource("2_03yse")
+
+[node name="WeaponHitbox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("weapon", "collider")]
+rotation = 0.785398
+script = ExtResource("3_eoeu6")
+weapon = NodePath("../..")
+collider = NodePath("CollisionShape2D")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
+position = Vector2(1.66893e-06, -4.76837e-07)
+shape = SubResource("CapsuleShape2D_1fhci")
+
+[connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_entered"]
+[connection signal="area_exited" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_exited"]

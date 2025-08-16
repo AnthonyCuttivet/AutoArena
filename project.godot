@@ -1,0 +1,59 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Auto_Arena"
+run/main_scene="uid://cmsck3y43hvak"
+config/features=PackedStringArray("4.4", "Forward Plus")
+run/max_fps=60
+config/icon="res://icon.svg"
+
+[autoload]
+
+EventBus="*res://Scripts/events.gd"
+Components="*res://Scripts/components.gd"
+AudioManager="*res://Scripts/AudioManager/audio_manager.gd"
+DebugDraw2D="*res://addons/debugdraw2d/DebugDraw2D.gd"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/window_width_override=960
+window/size/window_height_override=540
+window/vsync/vsync_mode=2
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/debugdraw2d/plugin.cfg", "res://addons/midi/plugin.cfg")
+
+[global_group]
+
+BALL=""
+RESET_ZONE=""
+WALL=""
+DEADZONE=""
+
+[physics]
+
+2d/run_on_separate_thread=true
+common/physics_ticks_per_second=240
+common/max_physics_steps_per_frame=32
+common/physics_jitter_fix=2.0
+2d/default_gravity_vector=Vector2(-1, 0)
+2d/solver/solver_iterations=64
+common/physics_interpolation=true
+common/enable_object_picking=false
+
+[rendering]
+
+viewport/hdr_2d=true
+anti_aliasing/quality/screen_space_aa=1

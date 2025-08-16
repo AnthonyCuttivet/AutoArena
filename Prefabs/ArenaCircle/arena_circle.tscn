@@ -1,0 +1,437 @@
+[gd_scene load_steps=30 format=3 uid="uid://byu5qdnrksu08"]
+
+[ext_resource type="Script" uid="uid://jw2roqen5fhl" path="res://Prefabs/ArenaCircle/arena_circle.gd" id="1_as5ny"]
+[ext_resource type="Script" uid="uid://1scsrsdu7u7b" path="res://Scripts/Types/elapser.gd" id="2_qae6c"]
+[ext_resource type="AudioStream" uid="uid://bb6axn4qdti1h" path="res://Audio/SFX/SatisfyingSounds/Thock/Thock1.wav" id="3_7stie"]
+[ext_resource type="Shader" uid="uid://bohgr0dcnu8mq" path="res://Graphics/Shaders/radial.gdshader" id="3_46ijk"]
+[ext_resource type="PackedScene" uid="uid://36bbd2ugq46c" path="res://Prefabs/Ball/ball_gravity.tscn" id="4_as5ny"]
+[ext_resource type="AudioStream" uid="uid://bi7inx20qabib" path="res://Audio/SFX/SatisfyingSounds/Thock/Thock2.wav" id="4_cnro5"]
+[ext_resource type="PackedScene" uid="uid://d1eaf36rn5ylk" path="res://Prefabs/FX/fx_circle_yes.tscn" id="5_46ijk"]
+[ext_resource type="AudioStream" uid="uid://c30nnu4532vrt" path="res://Audio/SFX/SatisfyingSounds/Thock/Thock3.wav" id="5_fwven"]
+[ext_resource type="FontFile" uid="uid://bglbd1ylrt02k" path="res://Graphics/Fonts/big_noodle_titling.ttf" id="6_nmq6f"]
+[ext_resource type="AudioStream" uid="uid://b88ifd20esu57" path="res://Audio/SFX/SatisfyingSounds/Thock/Thock4.wav" id="6_yb3je"]
+[ext_resource type="PackedScene" uid="uid://crct3ww7ifwxy" path="res://Prefabs/FX/fx_circle_no.tscn" id="7_37k8a"]
+[ext_resource type="Texture2D" uid="uid://bwgjjuorbk4a8" path="res://Graphics/Textures/tx_light.tres" id="7_nlp1y"]
+[ext_resource type="AudioStream" uid="uid://b6dns3jjesfqm" path="res://Audio/SFX/SatisfyingSounds/Thock/Thock5.wav" id="7_yr558"]
+[ext_resource type="AudioStream" uid="uid://02we5tp6n17h" path="res://Audio/SFX/SatisfyingSounds/Thock/Thock6.wav" id="8_n5f7j"]
+[ext_resource type="AudioStream" uid="uid://c2h3neiyifqw3" path="res://Audio/SFX/SatisfyingSounds/Thock/Thock7.wav" id="9_pot2j"]
+[ext_resource type="AudioStream" uid="uid://ct1bgwpmoyswh" path="res://Audio/SFX/SatisfyingSounds/Thock/Thock8.wav" id="10_d2pak"]
+[ext_resource type="AudioStream" uid="uid://buh2bdsgsa2i" path="res://Audio/SFX/SatisfyingSounds/oh_no_1.mp3" id="11_smcup"]
+[ext_resource type="AudioStream" uid="uid://dhn2d8gsi6qod" path="res://Audio/SFX/SatisfyingSounds/falcon-yes.mp3" id="12_grnei"]
+[ext_resource type="FontFile" uid="uid://bt2qq5v7nibma" path="res://Graphics/Fonts/PPFraktionMono-Bold.otf" id="19_grnei"]
+[ext_resource type="Script" uid="uid://bhk4nhs8q0cx5" path="res://Prefabs/Ball/ball_manager.gd" id="20_gwbjd"]
+[ext_resource type="Texture2D" uid="uid://bfvdgok43dr2p" path="res://Graphics/Images/circle-svgrepo-com.svg" id="21_7stie"]
+[ext_resource type="PackedScene" uid="uid://c402w36ex054v" path="res://Prefabs/FX/fx_death_no.tscn" id="21_fwven"]
+[ext_resource type="PackedScene" uid="uid://dovhtlh8rrl28" path="res://trail.tscn" id="22_cnro5"]
+[ext_resource type="PackedScene" uid="uid://dwhwmq033hkl" path="res://Prefabs/FX/fx_death_yes.tscn" id="22_yb3je"]
+
+[sub_resource type="Resource" id="Resource_37k8a"]
+script = ExtResource("2_qae6c")
+duration = 50.0
+metadata/_custom_type_script = "uid://1scsrsdu7u7b"
+
+[sub_resource type="Resource" id="Resource_smcup"]
+script = ExtResource("2_qae6c")
+duration = 15.0
+metadata/_custom_type_script = "uid://1scsrsdu7u7b"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nmq6f"]
+shader = ExtResource("3_46ijk")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/radius = 0.35
+shader_parameter/thickness = 0.005
+shader_parameter/gap_start_deg = 0.0
+shader_parameter/gap_end_deg = 0.001
+shader_parameter/aa_width = 0.001
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gxwgk"]
+size = Vector2(1000, 1000)
+
+[sub_resource type="Environment" id="Environment_33g6l"]
+background_mode = 3
+tonemap_mode = 1
+glow_enabled = true
+glow_levels/1 = 12.0
+glow_levels/2 = 9.0
+glow_levels/3 = 6.0
+glow_levels/4 = 1.0
+glow_levels/6 = 1.0
+glow_levels/7 = 1.0
+glow_normalized = true
+glow_intensity = 0.5
+glow_strength = 0.4
+glow_bloom = 0.1
+glow_blend_mode = 1
+adjustment_enabled = true
+adjustment_brightness = 0.9
+adjustment_saturation = 1.5
+
+[node name="ArenaCircle" type="Node2D" node_paths=PackedStringArray("balls_manager", "spawn", "yes_score", "no_score", "timer_label", "rules_label", "ball_count_label", "yes_result", "no_result", "timer_parent", "spawns")]
+script = ExtResource("1_as5ny")
+balls_manager = NodePath("BallsManager")
+balls_limit = 5000
+starting_balls = 1000
+gravity = 8.0
+circle_radius = 350.0
+gap_angle_start = 240.0
+gap_angle_end = 280.0
+ball_out_shake_strength = 3.0
+spawn = NodePath("Spawns/Spawn_A")
+timer = SubResource("Resource_37k8a")
+sfx = Array[AudioStream]([ExtResource("3_7stie"), ExtResource("4_cnro5"), ExtResource("5_fwven"), ExtResource("6_yb3je"), ExtResource("7_yr558"), ExtResource("8_n5f7j"), ExtResource("9_pot2j"), ExtResource("10_d2pak")])
+sfx_yes_no = Array[AudioStream]([ExtResource("11_smcup"), ExtResource("12_grnei")])
+after_result_duration = SubResource("Resource_smcup")
+ball_radius = 20.0
+starting_velocity_x_rnd = Vector2(-500, 500)
+max_y_vel = 1500.0
+ball_gravity_prefab = ExtResource("4_as5ny")
+yes_score = NodePath("HUD/HBoxContainer/YesBG/YesScore")
+no_score = NodePath("HUD/HBoxContainer/NoBG/NoScore")
+timer_label = NodePath("HUD/HBoxContainer/TimerBG/Timer")
+rules_label = NodePath("HUD/Rules")
+ball_count_label = NodePath("HUD/BallCount")
+yes_result = NodePath("HUD/Result/YesResult")
+no_result = NodePath("HUD/Result/NoResult")
+timer_parent = NodePath("HUD/HBoxContainer/TimerBG")
+spawns = [NodePath("Spawns/Spawn_A")]
+
+[node name="Env" type="Node2D" parent="."]
+
+[node name="BG" type="Polygon2D" parent="Env"]
+position = Vector2(-750, -1500)
+color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+polygon = PackedVector2Array(0, 0, 1500, 0, 1500, 3000, 0, 3000)
+
+[node name="Circle" type="ColorRect" parent="Env"]
+modulate = Color(100, 100, 100, 1)
+self_modulate = Color(100, 100, 100, 1)
+material = SubResource("ShaderMaterial_nmq6f")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -500.0
+offset_top = -500.0
+offset_right = 500.0
+offset_bottom = 500.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0, 0, 1)
+
+[node name="Spawns" type="Node2D" parent="."]
+
+[node name="Spawn_A" type="Node2D" parent="Spawns"]
+position = Vector2(0, -200)
+
+[node name="SizeGuide" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SizeGuide"]
+shape = SubResource("RectangleShape2D_gxwgk")
+disabled = true
+debug_color = Color(0, 0.6, 0.7, 0)
+
+[node name="Lights" type="Node2D" parent="."]
+visible = false
+
+[node name="PointLight2D" type="PointLight2D" parent="Lights"]
+position = Vector2(500, -500)
+shadow_enabled = true
+texture = ExtResource("7_nlp1y")
+texture_scale = 20.0
+
+[node name="PointLight2D2" type="PointLight2D" parent="Lights"]
+position = Vector2(-500, -500)
+shadow_enabled = true
+texture = ExtResource("7_nlp1y")
+texture_scale = 20.0
+
+[node name="PointLight2D3" type="PointLight2D" parent="Lights"]
+position = Vector2(-500, 500)
+shadow_enabled = true
+texture = ExtResource("7_nlp1y")
+texture_scale = 20.0
+
+[node name="PointLight2D4" type="PointLight2D" parent="Lights"]
+position = Vector2(500, 500)
+shadow_enabled = true
+texture = ExtResource("7_nlp1y")
+texture_scale = 20.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_33g6l")
+
+[node name="FX" type="Node2D" parent="."]
+
+[node name="FXCircleYEs" parent="FX" instance=ExtResource("5_46ijk")]
+visible = false
+rotation = 0.0
+
+[node name="FXCircleNO" parent="FX" instance=ExtResource("7_37k8a")]
+visible = false
+rotation = 0.0
+
+[node name="BallsManager" type="Node2D" parent="."]
+script = ExtResource("20_gwbjd")
+ball_texture = ExtResource("21_7stie")
+ball_pool_size = 50000
+fx_pool_size = 1000
+trail_prefab = ExtResource("22_cnro5")
+fx_0 = ExtResource("21_fwven")
+fx_1 = ExtResource("22_yb3je")
+
+[node name="HUD" type="Control" parent="."]
+z_index = 100
+custom_minimum_size = Vector2(1000, 1500)
+layout_mode = 3
+anchors_preset = 0
+offset_left = -500.0
+offset_top = -1000.0
+offset_right = 500.0
+offset_bottom = 500.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -475.0
+offset_top = 485.0
+offset_right = 475.0
+offset_bottom = 585.0
+grow_horizontal = 2
+theme_override_constants/separation = 70
+alignment = 1
+
+[node name="YesBG" type="ColorRect" parent="HUD/HBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+color = Color(0.430298, 0.734375, 0.556205, 1)
+
+[node name="YesScore" type="RichTextLabel" parent="HUD/HBoxContainer/YesBG"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -18.0
+offset_top = -27.0
+offset_right = 7.0
+offset_bottom = 27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/normal_font = ExtResource("6_nmq6f")
+theme_override_font_sizes/normal_font_size = 71
+bbcode_enabled = true
+text = " Yes : {s}"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimerBG" type="ColorRect" parent="HUD/HBoxContainer"]
+custom_minimum_size = Vector2(250, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Timer" type="RichTextLabel" parent="HUD/HBoxContainer/TimerBG"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/normal_font = ExtResource("6_nmq6f")
+theme_override_font_sizes/normal_font_size = 71
+bbcode_enabled = true
+text = "Time : {s}"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Crash" type="RichTextLabel" parent="HUD/HBoxContainer/TimerBG"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -199.5
+offset_top = 56.0
+offset_right = 199.5
+offset_bottom = 93.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/normal_font = ExtResource("6_nmq6f")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "or until my PC Crashes"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NoBG" type="ColorRect" parent="HUD/HBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+color = Color(0.734375, 0.430298, 0.430298, 1)
+
+[node name="NoScore" type="RichTextLabel" parent="HUD/HBoxContainer/NoBG"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/normal_font = ExtResource("6_nmq6f")
+theme_override_font_sizes/normal_font_size = 71
+bbcode_enabled = true
+text = "No : {s}"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Rules" type="RichTextLabel" parent="HUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 562.0
+offset_bottom = 872.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/normal_font = ExtResource("19_grnei")
+theme_override_font_sizes/normal_font_size = 35
+bbcode_enabled = true
+text = "[color=gold]Spawns {s} balls[/color] each time a ball escapes
+
+[wave amp=40.0 freq=5.0 connected=1][color=#25f4ee]0 new followers yesterday[/color][/wave] 
+=
+[color=#ff6383]2 starting balls today[/color]"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BallCount" type="RichTextLabel" parent="HUD"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 226.0
+offset_bottom = 270.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/normal_font = ExtResource("19_grnei")
+theme_override_font_sizes/normal_font_size = 35
+bbcode_enabled = true
+text = "{s}"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Debug" type="RichTextLabel" parent="HUD"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 2.0
+offset_top = 645.0
+offset_right = 2.0
+offset_bottom = 689.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/normal_font = ExtResource("19_grnei")
+theme_override_font_sizes/normal_font_size = 60
+bbcode_enabled = true
+text = "9999 - 60fps"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Result" type="Control" parent="HUD"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="YesResult" type="RichTextLabel" parent="HUD/Result"]
+visible = false
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 137.0
+offset_bottom = 368.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0.349197, 0.777344, 0.385991, 1)
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/normal_font = ExtResource("6_nmq6f")
+theme_override_font_sizes/normal_font_size = 300
+bbcode_enabled = true
+text = "[wave amp=100.0 freq=10.0 connected=1]YES[/wave]"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NoResult" type="RichTextLabel" parent="HUD/Result"]
+visible = false
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 137.0
+offset_bottom = 368.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(1, 0.273438, 0.273438, 1)
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/normal_font = ExtResource("6_nmq6f")
+theme_override_font_sizes/normal_font_size = 300
+bbcode_enabled = true
+text = "[wave amp=100.0 freq=10.0 connected=1]NO[/wave]"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1

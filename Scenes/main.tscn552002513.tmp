@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bc4c5eyi5rchn"]
+
+[ext_resource type="Script" uid="uid://bxs4ydmnqee6m" path="res://Scripts/game_manager.gd" id="1_bo1nx"]
+[ext_resource type="PackedScene" uid="uid://bl8psxedykw73" path="res://Prefabs/Arena/arena.tscn" id="1_jjgbg"]
+[ext_resource type="PackedScene" uid="uid://desp2o8bsurlm" path="res://Prefabs/Ball/ball.tscn" id="2_8gbba"]
+
+[node name="Main" type="Node2D"]
+
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("arena")]
+script = ExtResource("1_bo1nx")
+arena = NodePath("../Arena")
+ball_prefab = ExtResource("2_8gbba")
+
+[node name="Arena" parent="." instance=ExtResource("1_jjgbg")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(360, 640)

@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://cqc1d084cqj6u"]
+
+[ext_resource type="Script" uid="uid://o0ktko700pmf" path="res://Prefabs/Hazards/Bumpers/BlackHoleBumper/BlackHoleBumper.gd" id="1_4pgkb"]
+[ext_resource type="PackedScene" uid="uid://bv4qoil80bx5k" path="res://Prefabs/Hazards/Bumpers/AddComboBumper/AddCombobumper.tscn" id="1_rqw1g"]
+[ext_resource type="PackedScene" uid="uid://eixvbb1srpm1" path="res://Prefabs/Hazards/BlackHole/black_hole.tscn" id="2_3qsj7"]
+
+[node name="BlackHoleBumper" type="Node2D" node_paths=PackedStringArray("bumper", "black_hole")]
+script = ExtResource("1_4pgkb")
+bumper = NodePath("AddComboBumper")
+black_hole = NodePath("BlackHole")
+
+[node name="AddComboBumper" parent="." instance=ExtResource("1_rqw1g")]
+
+[node name="BlackHole" parent="." instance=ExtResource("2_3qsj7")]
+show_behind_parent = true

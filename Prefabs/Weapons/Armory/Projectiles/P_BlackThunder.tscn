@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://nmt554t57ksc"]
+
+[ext_resource type="Script" uid="uid://ta5lif15v75h" path="res://Prefabs/Weapons/projectile.gd" id="1_1h1b1"]
+[ext_resource type="Texture2D" uid="uid://lcgxd7fece4u" path="res://Graphics/_Addons/Icons/fc1394.png" id="2_q8j7t"]
+[ext_resource type="Texture2D" uid="uid://b61affbi4whxy" path="res://Graphics/_Addons/Icons/fc1188.png" id="3_71ldl"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
+radius = 0.005
+height = 0.01
+
+[node name="ProjectileBlackThunder" type="Node2D" node_paths=PackedStringArray("hitbox")]
+script = ExtResource("1_1h1b1")
+pierce_count = 999
+p_scale = 0.5
+rotation_speed = 0.15
+absolute = true
+hitbox = NodePath("Sprite2D/ProjectileHitbox")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+rotation = -1.5708
+texture = ExtResource("2_q8j7t")
+
+[node name="Highlights" type="Sprite2D" parent="Sprite2D"]
+texture_filter = 1
+position = Vector2(-3.00001, 2.99999)
+rotation = -0.869174
+scale = Vector2(0.59, 0.59)
+texture = ExtResource("3_71ldl")
+
+[node name="ProjectileHitbox" type="Area2D" parent="Sprite2D"]
+position = Vector2(-8.74228e-07, 20)
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/ProjectileHitbox"]
+position = Vector2(-2, -19)
+shape = SubResource("CapsuleShape2D_1fhci")
+disabled = true
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(33, 0)
+rotation = -1.5708
+hit_from_inside = true
+
+[connection signal="area_entered" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_area_entered"]
+[connection signal="area_exited" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_area_exited"]
+[connection signal="body_entered" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_body_entered"]

@@ -1,0 +1,104 @@
+[gd_scene load_steps=16 format=3 uid="uid://desp2o8bsurlm"]
+
+[ext_resource type="Script" uid="uid://hf12pfm3wv16" path="res://Prefabs/Ball/ball.gd" id="1_drpfa"]
+[ext_resource type="Script" uid="uid://bud00uvpjkgvu" path="res://Prefabs/Ball/fire_root.gd" id="3_immbr"]
+[ext_resource type="Shader" uid="uid://dtyu4fqs87aw3" path="res://Graphics/Shaders/hitflash.gdshader" id="3_whifb"]
+[ext_resource type="Texture2D" uid="uid://d12qk1yk1ydra" path="res://Graphics/Images/right-arrow-svgrepo-com.svg" id="5_37bt7"]
+[ext_resource type="Texture2D" uid="uid://bwgjjuorbk4a8" path="res://Graphics/Textures/tx_light.tres" id="5_e3wjq"]
+[ext_resource type="Script" uid="uid://c0yo17knk84wp" path="res://Prefabs/Ball/trail.gd" id="7_6kd58"]
+[ext_resource type="Texture2D" uid="uid://bfvdgok43dr2p" path="res://Graphics/Images/circle-svgrepo-com.svg" id="9_immbr"]
+[ext_resource type="PackedScene" uid="uid://dyw3wx1w7t64b" path="res://Prefabs/Fire/fire.tscn" id="10_mbrtc"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_6bp64"]
+bounce = 1.0
+
+[sub_resource type="Curve" id="Curve_w6bdg"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.67736, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_w6bdg"]
+resource_local_to_scene = true
+colors = PackedColorArray(1, 1, 1, 0.4, 0.367, 0.367, 0.367, 0.15)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8gbba"]
+radius = 32.0
+
+[sub_resource type="Gradient" id="Gradient_37bt7"]
+resource_local_to_scene = true
+offsets = PackedFloat32Array(0.149813, 0.5)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_w6bdg"]
+resource_local_to_scene = true
+gradient = SubResource("Gradient_37bt7")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6kd58"]
+shader = ExtResource("3_whifb")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_intensity = 0.0
+
+[node name="Ball" type="RigidBody2D" node_paths=PackedStringArray("root") groups=["BALL"]]
+collision_layer = 32769
+collision_mask = 32769
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_6bp64")
+gravity_scale = 0.0
+lock_rotation = true
+continuous_cd = 1
+contact_monitor = true
+max_contacts_reported = 5
+script = ExtResource("1_drpfa")
+root = NodePath("CollisionShape2D")
+
+[node name="Trail" type="Line2D" parent="."]
+width = 35.0
+width_curve = SubResource("Curve_w6bdg")
+default_color = Color(1, 1, 1, 0.315)
+gradient = SubResource("Gradient_w6bdg")
+antialiased = true
+script = ExtResource("7_6kd58")
+length = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.5, 0.5)
+shape = SubResource("CircleShape2D_8gbba")
+
+[node name="FireRoot" type="Node2D" parent="CollisionShape2D"]
+scale = Vector2(4.375, 4.375)
+script = ExtResource("3_immbr")
+fire_color_gradient = SubResource("GradientTexture1D_w6bdg")
+
+[node name="Fire" parent="CollisionShape2D/FireRoot" instance=ExtResource("10_mbrtc")]
+position = Vector2(-12.5714, -1.71429)
+rotation = -1.5708
+
+[node name="Arrow" type="Node2D" parent="CollisionShape2D"]
+
+[node name="ArrowSprite" type="Sprite2D" parent="CollisionShape2D/Arrow"]
+self_modulate = Color(1, 0.721569, 0.47451, 1)
+position = Vector2(60, 0)
+scale = Vector2(0.15, 0.075)
+texture = ExtResource("5_37bt7")
+
+[node name="InvincibilitySprite" type="Sprite2D" parent="CollisionShape2D"]
+visible = false
+self_modulate = Color(0.278, 0.881547, 1, 0.6)
+scale = Vector2(0.12, 0.12)
+texture = ExtResource("9_immbr")
+
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+clip_children = 2
+material = SubResource("ShaderMaterial_6kd58")
+scale = Vector2(0.092, 0.092)
+texture = ExtResource("9_immbr")
+
+[node name="Sprite2D2" type="Sprite2D" parent="CollisionShape2D/Sprite2D"]
+material = SubResource("ShaderMaterial_6kd58")
+scale = Vector2(1.4, 1.4)
+
+[node name="PointLight2D" type="PointLight2D" parent="CollisionShape2D"]
+color = Color(1, 0, 0, 1)
+energy = 0.1
+shadow_enabled = true
+texture = ExtResource("5_e3wjq")
+texture_scale = 40.0

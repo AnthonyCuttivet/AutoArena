@@ -1,0 +1,339 @@
+[gd_scene load_steps=10 format=3 uid="uid://bl8psxedykw73"]
+
+[ext_resource type="Script" uid="uid://cqfpsmhtx4onu" path="res://Prefabs/Arena/arena.gd" id="1_ky8tj"]
+[ext_resource type="PackedScene" uid="uid://dbeo43xnrhita" path="res://Prefabs/Hazards/Bumpers/_Bumper/bumper.tscn" id="2_0bjwx"]
+[ext_resource type="Script" uid="uid://o0ktko700pmf" path="res://Prefabs/Hazards/Bumpers/BlackHoleBumper/BlackHoleBumper.gd" id="2_f47q4"]
+[ext_resource type="PackedScene" uid="uid://bv4qoil80bx5k" path="res://Prefabs/Hazards/Bumpers/AddComboBumper/AddCombobumper.tscn" id="4_33g6l"]
+[ext_resource type="Script" uid="uid://6kbijwvceop5" path="res://Scripts/orbiting.gd" id="4_57lvj"]
+[ext_resource type="PackedScene" uid="uid://eixvbb1srpm1" path="res://Prefabs/Hazards/BlackHole/black_hole.tscn" id="4_yj20t"]
+[ext_resource type="Texture2D" uid="uid://bwgjjuorbk4a8" path="res://Graphics/Textures/tx_light.tres" id="6_57lvj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gxwgk"]
+size = Vector2(1000, 1000)
+
+[sub_resource type="Environment" id="Environment_33g6l"]
+background_mode = 3
+tonemap_mode = 1
+glow_enabled = true
+glow_levels/1 = 12.0
+glow_levels/2 = 9.0
+glow_levels/3 = 6.0
+glow_levels/4 = 1.0
+glow_levels/6 = 1.0
+glow_levels/7 = 1.0
+glow_normalized = true
+glow_intensity = 0.5
+glow_strength = 0.4
+glow_bloom = 0.1
+glow_blend_mode = 1
+adjustment_enabled = true
+adjustment_brightness = 0.9
+adjustment_saturation = 1.5
+
+[node name="Arena" type="Node2D" node_paths=PackedStringArray("spawns")]
+script = ExtResource("1_ky8tj")
+spawns = [NodePath("Spawns/Spawn_A"), NodePath("Spawns/Spawn_B")]
+
+[node name="Env" type="Node2D" parent="."]
+position = Vector2(-500, -500)
+
+[node name="BG" type="Polygon2D" parent="Env"]
+color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+polygon = PackedVector2Array(0, 0, 1000, 0, 1000, 1000, 0, 1000)
+
+[node name="ResetZoneTop" type="Node2D" parent="Env"]
+position = Vector2(500, 30)
+scale = Vector2(1.5, 1.5)
+
+[node name="ResetZoneBot" type="Node2D" parent="Env"]
+position = Vector2(500, 970)
+rotation = 3.14159
+scale = Vector2(1.5, 1.5)
+
+[node name="BlackHoleBumper" type="Node2D" parent="." node_paths=PackedStringArray("arena", "bumper", "black_hole")]
+script = ExtResource("2_f47q4")
+arena = NodePath("..")
+bumper = NodePath("AddComboBumper")
+black_hole = NodePath("BlackHole")
+
+[node name="AddComboBumper" parent="BlackHoleBumper" instance=ExtResource("4_33g6l")]
+
+[node name="Bumper" parent="BlackHoleBumper/AddComboBumper" index="0"]
+scale = Vector2(0.25, 0.25)
+add_combo_value = -9999
+bump_multiplier = 2.0
+
+[node name="Outer" parent="BlackHoleBumper/AddComboBumper/Bumper/Visual" index="0"]
+self_modulate = Color(0.143148, 0.0810242, 0.351563, 1)
+
+[node name="BG" parent="BlackHoleBumper/AddComboBumper/Bumper/Visual" index="1"]
+self_modulate = Color(0.517647, 0.396078, 0.92549, 1)
+
+[node name="BlackHole" parent="BlackHoleBumper" instance=ExtResource("4_yj20t")]
+show_behind_parent = true
+strength = 0.05
+max_range = 300.0
+
+[node name="Entities" type="Node2D" parent="."]
+position = Vector2(-1576, 0)
+
+[node name="Bumper8" parent="Entities" instance=ExtResource("2_0bjwx")]
+position = Vector2(1576, 500)
+bump_multiplier = 2.0
+
+[node name="Bumper9" parent="Entities" instance=ExtResource("2_0bjwx")]
+position = Vector2(2076, 0)
+bump_multiplier = 2.0
+
+[node name="Bumper10" parent="Entities" instance=ExtResource("2_0bjwx")]
+position = Vector2(1076, 0)
+bump_multiplier = 2.0
+
+[node name="Bumper12" parent="Entities" instance=ExtResource("2_0bjwx")]
+position = Vector2(1576, -500)
+bump_multiplier = 2.0
+
+[node name="Orbiting" type="Node2D" parent="Entities"]
+position = Vector2(1576, 0)
+script = ExtResource("4_57lvj")
+speed = 65.0
+
+[node name="AddComboBumper" parent="Entities/Orbiting" instance=ExtResource("4_33g6l")]
+position = Vector2(0, 200)
+scale = Vector2(0.5, 0.5)
+
+[node name="Bumper" parent="Entities/Orbiting/AddComboBumper" index="0"]
+add_combo_value = 3
+
+[node name="Orbiting2" type="Node2D" parent="Entities"]
+position = Vector2(1576, 0)
+script = ExtResource("4_57lvj")
+speed = 100.0
+
+[node name="AddComboBumper2" parent="Entities/Orbiting2" instance=ExtResource("4_33g6l")]
+position = Vector2(0, -395)
+scale = Vector2(0.5, 0.5)
+
+[node name="Bumper" parent="Entities/Orbiting2/AddComboBumper2" index="0"]
+add_combo_value = 3
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="Bit" type="StaticBody2D" parent="Walls"]
+position = Vector2(503, -503)
+rotation = 0.785398
+scale = Vector2(0.028, 0.075)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Walls/Bit"]
+show_behind_parent = true
+polygon = PackedVector2Array(-540, 0, 540, 0, 540, 400, -540, 400)
+
+[node name="Polygon2D" type="Polygon2D" parent="Walls/Bit/Collision"]
+antialiased = true
+polygon = PackedVector2Array(-540, 0, 540, 0, 540, 400, -540, 400)
+uv = PackedVector2Array(3.58997, -106.9, 10.7172, -106.258)
+
+[node name="Bit2" type="StaticBody2D" parent="Walls"]
+position = Vector2(-475, -503)
+rotation = 0.785398
+scale = Vector2(0.028, 0.075)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Walls/Bit2"]
+show_behind_parent = true
+polygon = PackedVector2Array(-540, 0, 540, 0, 540, 400, -540, 400)
+
+[node name="Polygon2D" type="Polygon2D" parent="Walls/Bit2/Collision"]
+antialiased = true
+polygon = PackedVector2Array(-540, 0, 540, 0, 540, 400, -540, 400)
+uv = PackedVector2Array(3.58997, -106.9, 10.7172, -106.258)
+
+[node name="Bit3" type="StaticBody2D" parent="Walls"]
+position = Vector2(-474, 482)
+rotation = 0.785398
+scale = Vector2(0.028, 0.075)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Walls/Bit3"]
+show_behind_parent = true
+polygon = PackedVector2Array(-540, 0, 540, 0, 540, 400, -540, 400)
+
+[node name="Polygon2D" type="Polygon2D" parent="Walls/Bit3/Collision"]
+antialiased = true
+polygon = PackedVector2Array(-540, 0, 540, 0, 540, 400, -540, 400)
+uv = PackedVector2Array(3.58997, -106.9, 10.7172, -106.258)
+
+[node name="Bit4" type="StaticBody2D" parent="Walls"]
+position = Vector2(503, 482)
+rotation = 0.785398
+scale = Vector2(0.028, 0.075)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Walls/Bit4"]
+show_behind_parent = true
+polygon = PackedVector2Array(-540, 0, 540, 0, 540, 400, -540, 400)
+
+[node name="Polygon2D" type="Polygon2D" parent="Walls/Bit4/Collision"]
+antialiased = true
+polygon = PackedVector2Array(-540, 0, 540, 0, 540, 400, -540, 400)
+uv = PackedVector2Array(3.58997, -106.9, 10.7172, -106.258)
+
+[node name="Bit5" type="StaticBody2D" parent="Walls"]
+position = Vector2(280, -280)
+rotation = 0.785398
+scale = Vector2(0.028, 0.075)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Walls/Bit5"]
+show_behind_parent = true
+polygon = PackedVector2Array(-540, 0, 540, 0, 540, 400, -540, 400)
+
+[node name="Polygon2D" type="Polygon2D" parent="Walls/Bit5/Collision"]
+antialiased = true
+polygon = PackedVector2Array(-540, 0, 540, 0, 540, 400, -540, 400)
+uv = PackedVector2Array(3.58997, -106.9, 10.7172, -106.258)
+
+[node name="Bit6" type="StaticBody2D" parent="Walls"]
+position = Vector2(280, 280)
+rotation = 0.785398
+scale = Vector2(0.028, 0.075)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Walls/Bit6"]
+show_behind_parent = true
+polygon = PackedVector2Array(-540, 0, 540, 0, 540, 400, -540, 400)
+
+[node name="Polygon2D" type="Polygon2D" parent="Walls/Bit6/Collision"]
+antialiased = true
+polygon = PackedVector2Array(-540, 0, 540, 0, 540, 400, -540, 400)
+uv = PackedVector2Array(3.58997, -106.9, 10.7172, -106.258)
+
+[node name="Bit7" type="StaticBody2D" parent="Walls"]
+position = Vector2(-280, 280)
+rotation = 0.785398
+scale = Vector2(0.028, 0.075)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Walls/Bit7"]
+show_behind_parent = true
+polygon = PackedVector2Array(-540, 0, 540, 0, 540, 400, -540, 400)
+
+[node name="Polygon2D" type="Polygon2D" parent="Walls/Bit7/Collision"]
+antialiased = true
+polygon = PackedVector2Array(-540, 0, 540, 0, 540, 400, -540, 400)
+uv = PackedVector2Array(3.58997, -106.9, 10.7172, -106.258)
+
+[node name="Bit8" type="StaticBody2D" parent="Walls"]
+position = Vector2(-280, -280)
+rotation = 0.785398
+scale = Vector2(0.028, 0.075)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Walls/Bit8"]
+show_behind_parent = true
+polygon = PackedVector2Array(-540, 0, 540, 0, 540, 400, -540, 400)
+
+[node name="Polygon2D" type="Polygon2D" parent="Walls/Bit8/Collision"]
+antialiased = true
+polygon = PackedVector2Array(-540, 0, 540, 0, 540, 400, -540, 400)
+uv = PackedVector2Array(3.58997, -106.9, 10.7172, -106.258)
+
+[node name="ArenaWallBot2" type="StaticBody2D" parent="Walls"]
+position = Vector2(490, 0)
+rotation = -1.5708
+
+[node name="Collision" type="CollisionPolygon2D" parent="Walls/ArenaWallBot2"]
+show_behind_parent = true
+polygon = PackedVector2Array(-540, 0, 540, 0, 540, 400, -540, 400)
+
+[node name="Polygon2D" type="Polygon2D" parent="Walls/ArenaWallBot2/Collision"]
+color = Color(0, 0, 0, 1)
+antialiased = true
+polygon = PackedVector2Array(-540, 0, 540, 0, 540, 400, -540, 400)
+uv = PackedVector2Array(3.58997, -106.9, 10.7172, -106.258)
+
+[node name="ArenaWallBot5" type="StaticBody2D" parent="Walls"]
+position = Vector2(0, 492)
+scale = Vector2(1, 0.075)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Walls/ArenaWallBot5"]
+show_behind_parent = true
+polygon = PackedVector2Array(-540, 0, 540, 0, 540, 400, -540, 400)
+
+[node name="Polygon2D" type="Polygon2D" parent="Walls/ArenaWallBot5/Collision"]
+color = Color(0, 0, 0, 1)
+antialiased = true
+polygon = PackedVector2Array(-540, 0, 540, 0, 544, 1146.67, -542, 1106.67)
+uv = PackedVector2Array(3.58997, -106.9, 10.7172, -106.258)
+
+[node name="ArenaWallBot6" type="StaticBody2D" parent="Walls"]
+position = Vector2(0, -522)
+scale = Vector2(1, 0.075)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Walls/ArenaWallBot6"]
+show_behind_parent = true
+polygon = PackedVector2Array(-540, 0, 540, 0, 540, 400, -540, 400)
+
+[node name="Polygon2D" type="Polygon2D" parent="Walls/ArenaWallBot6/Collision"]
+color = Color(0, 0, 0, 1)
+antialiased = true
+polygon = PackedVector2Array(-542, -720, 549, -853.333, 540, 400, -540, 400)
+uv = PackedVector2Array(3.58997, -106.9, 10.7172, -106.258)
+
+[node name="ArenaWallBot8" type="StaticBody2D" parent="Walls"]
+position = Vector2(-884, 0)
+rotation = -1.5708
+
+[node name="Collision" type="CollisionPolygon2D" parent="Walls/ArenaWallBot8"]
+show_behind_parent = true
+polygon = PackedVector2Array(-540, 0, 540, 0, 540, 400, -540, 400)
+
+[node name="Polygon2D" type="Polygon2D" parent="Walls/ArenaWallBot8/Collision"]
+color = Color(0, 0, 0, 1)
+antialiased = true
+polygon = PackedVector2Array(-540, 0, 540, 0, 540, 400, -540, 400)
+uv = PackedVector2Array(3.58997, -106.9, 10.7172, -106.258)
+
+[node name="Spawns" type="Node2D" parent="."]
+
+[node name="Spawn_A" type="Node2D" parent="Spawns"]
+position = Vector2(-346, -369)
+
+[node name="Spawn_B" type="Node2D" parent="Spawns"]
+position = Vector2(373, 348)
+
+[node name="SizeGuide" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SizeGuide"]
+shape = SubResource("RectangleShape2D_gxwgk")
+debug_color = Color(0, 0.6, 0.7, 0)
+
+[node name="Lights" type="Node2D" parent="."]
+visible = false
+
+[node name="PointLight2D" type="PointLight2D" parent="Lights"]
+position = Vector2(500, -500)
+shadow_enabled = true
+texture = ExtResource("6_57lvj")
+texture_scale = 20.0
+
+[node name="PointLight2D2" type="PointLight2D" parent="Lights"]
+position = Vector2(-500, -500)
+shadow_enabled = true
+texture = ExtResource("6_57lvj")
+texture_scale = 20.0
+
+[node name="PointLight2D3" type="PointLight2D" parent="Lights"]
+position = Vector2(-500, 500)
+shadow_enabled = true
+texture = ExtResource("6_57lvj")
+texture_scale = 20.0
+
+[node name="PointLight2D4" type="PointLight2D" parent="Lights"]
+position = Vector2(500, 500)
+shadow_enabled = true
+texture = ExtResource("6_57lvj")
+texture_scale = 20.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_33g6l")
+
+[editable path="BlackHoleBumper/AddComboBumper"]
+[editable path="BlackHoleBumper/AddComboBumper/Bumper"]
+[editable path="Entities/Orbiting/AddComboBumper"]
+[editable path="Entities/Orbiting/AddComboBumper/Bumper"]
+[editable path="Entities/Orbiting2/AddComboBumper2"]
+[editable path="Entities/Orbiting2/AddComboBumper2/Bumper"]

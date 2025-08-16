@@ -1,0 +1,70 @@
+[gd_scene load_steps=11 format=3 uid="uid://bypmtjpsrnsm8"]
+
+[ext_resource type="Script" uid="uid://ntl4dqbkvp60" path="res://Prefabs/Weapons/Armory/Thunder/projectile_thunderstrike.gd" id="1_imm4n"]
+[ext_resource type="Shader" uid="uid://bqw8t1j4f7yi7" path="res://Graphics/Shaders/lightning.gdshader" id="2_imm4n"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_umtk3"]
+radius = 4.0
+height = 200.0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_imm4n"]
+frequency = 0.022
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_imm4n"]
+noise = SubResource("FastNoiseLite_imm4n")
+
+[sub_resource type="Gradient" id="Gradient_m1x6r"]
+colors = PackedColorArray(0.122512, 0.0846252, 0.183594, 1, 0.139042, 0.0150146, 0.320313, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6k7i7"]
+gradient = SubResource("Gradient_m1x6r")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_m1x6r"]
+frequency = 0.0168
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_m1x6r"]
+noise = SubResource("FastNoiseLite_m1x6r")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m1x6r"]
+shader = ExtResource("2_imm4n")
+shader_parameter/lightning_noise = SubResource("NoiseTexture2D_m1x6r")
+shader_parameter/background_noise = SubResource("NoiseTexture2D_imm4n")
+shader_parameter/color_gradient = SubResource("GradientTexture1D_6k7i7")
+shader_parameter/use_color_gradient = true
+shader_parameter/color_effect_mod = 0.25
+shader_parameter/intensive = 0.85
+shader_parameter/lightning_thin = 0.435
+shader_parameter/number_lightning = 1
+shader_parameter/speed = 0.076
+shader_parameter/position = 0.5
+
+[node name="ProjectileThunderStrike" type="Node2D" node_paths=PackedStringArray("hitbox")]
+script = ExtResource("1_imm4n")
+pierce_count = 999
+absolute = true
+hitbox = NodePath("Sprite2D/ProjectileHitbox")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.95)
+texture_filter = 1
+
+[node name="ProjectileHitbox" type="Area2D" parent="Sprite2D"]
+rotation = 1.5708
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/ProjectileHitbox"]
+shape = SubResource("CapsuleShape2D_umtk3")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(33, 0)
+rotation = -1.5708
+hit_from_inside = true
+
+[node name="ThunderStrikeLine" type="Line2D" parent="."]
+material = SubResource("ShaderMaterial_m1x6r")
+points = PackedVector2Array(-100, 0, 100, 0)
+texture_mode = 2
+
+[connection signal="area_entered" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_area_entered"]
+[connection signal="area_exited" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_area_exited"]
+[connection signal="body_entered" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_body_entered"]

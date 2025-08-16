@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://d1v11yrn0my32"]
+
+[ext_resource type="Script" uid="uid://ta5lif15v75h" path="res://Prefabs/Weapons/projectile.gd" id="1_tc23m"]
+[ext_resource type="Texture2D" uid="uid://dlt588ko3imtk" path="res://Graphics/_Addons/Icons/fc2154.png" id="2_dl2h1"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
+radius = 11.0
+height = 62.0
+
+[node name="ProjectileArrow" type="Node2D" node_paths=PackedStringArray("hitbox")]
+script = ExtResource("1_tc23m")
+hitbox = NodePath("Sprite2D/ProjectileHitbox")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(29, 0)
+rotation = 0.785398
+texture = ExtResource("2_dl2h1")
+
+[node name="ProjectileHitbox" type="Area2D" parent="Sprite2D"]
+rotation = 0.785398
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/ProjectileHitbox"]
+position = Vector2(9.53674e-07, -3)
+shape = SubResource("CapsuleShape2D_1fhci")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(33, 0)
+rotation = -1.5708
+hit_from_inside = true
+
+[connection signal="area_entered" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_area_entered"]
+[connection signal="area_exited" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_area_exited"]
+[connection signal="body_entered" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_body_entered"]

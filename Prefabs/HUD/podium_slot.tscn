@@ -1,0 +1,174 @@
+[gd_scene load_steps=10 format=3 uid="uid://co37vbnh5d0l7"]
+
+[ext_resource type="Script" uid="uid://d4hxdnoeracop" path="res://Prefabs/HUD/podium_slot.gd" id="1_oy62m"]
+[ext_resource type="Texture2D" uid="uid://bfvdgok43dr2p" path="res://Graphics/Images/circle-svgrepo-com.svg" id="1_po3ky"]
+[ext_resource type="Shader" uid="uid://dtyu4fqs87aw3" path="res://Graphics/Shaders/hitflash.gdshader" id="3_ouqan"]
+[ext_resource type="Texture2D" uid="uid://b6w1xcngywbfd" path="res://Graphics/_Addons/Icons/fc1506.png" id="4_mrv6o"]
+[ext_resource type="Texture2D" uid="uid://d24rekvi3bj41" path="res://Graphics/_Addons/Icons/fc15.png" id="5_ebs0q"]
+[ext_resource type="FontFile" uid="uid://bt2qq5v7nibma" path="res://Graphics/Fonts/PPFraktionMono-Bold.otf" id="6_uu6q0"]
+[ext_resource type="Script" uid="uid://dtqgj8e3uki5c" path="res://Scenes/dynamic_text.gd" id="7_uv6qk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j21cw"]
+radius = 370.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_habdg"]
+resource_local_to_scene = true
+shader = ExtResource("3_ouqan")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_intensity = 0.0
+
+[node name="PodiumSlot" type="Control"]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 3
+anchors_preset = 0
+pivot_offset = Vector2(150, 150)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_oy62m")
+
+[node name="Balls" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BattleBall2" type="Node2D" parent="Balls"]
+position = Vector2(28, -10)
+
+[node name="Root" type="CollisionShape2D" parent="Balls/BattleBall2"]
+rotation = -0.349066
+scale = Vector2(0.15, 0.15)
+shape = SubResource("CircleShape2D_j21cw")
+debug_color = Color(0.7, 0, 0, 0)
+
+[node name="WeaponSlot" type="Node2D" parent="Balls/BattleBall2/Root"]
+scale = Vector2(12, 12)
+
+[node name="Sprite2D" type="Sprite2D" parent="Balls/BattleBall2/Root/WeaponSlot"]
+texture_filter = 1
+position = Vector2(32, 0)
+rotation = 0.785398
+texture = ExtResource("4_mrv6o")
+flip_h = true
+
+[node name="CircleBG" type="Sprite2D" parent="Balls/BattleBall2/Root"]
+modulate = Color(0, 0, 0, 1)
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("1_po3ky")
+
+[node name="Circle" type="Sprite2D" parent="Balls/BattleBall2/Root"]
+self_modulate = Color(0.65625, 0.65625, 0.65625, 1)
+material = SubResource("ShaderMaterial_habdg")
+texture = ExtResource("1_po3ky")
+
+[node name="BattleBall" type="Node2D" parent="Balls"]
+position = Vector2(-29, 11)
+
+[node name="Root" type="CollisionShape2D" parent="Balls/BattleBall"]
+rotation = 3.83972
+scale = Vector2(0.15, 0.15)
+shape = SubResource("CircleShape2D_j21cw")
+debug_color = Color(0.7, 0, 0, 0)
+
+[node name="WeaponSlot" type="Node2D" parent="Balls/BattleBall/Root"]
+position = Vector2(400, 0)
+scale = Vector2(12, 12)
+
+[node name="Sprite2D" type="Sprite2D" parent="Balls/BattleBall/Root/WeaponSlot"]
+texture_filter = 1
+rotation = 0.785398
+texture = ExtResource("4_mrv6o")
+flip_h = true
+
+[node name="CircleBG" type="Sprite2D" parent="Balls/BattleBall/Root"]
+modulate = Color(0, 0, 0, 1)
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("1_po3ky")
+
+[node name="Circle" type="Sprite2D" parent="Balls/BattleBall/Root"]
+self_modulate = Color(0.402344, 0.402344, 0.402344, 1)
+material = SubResource("ShaderMaterial_habdg")
+texture = ExtResource("1_po3ky")
+
+[node name="Crown" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -67.0
+offset_right = 32.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.5, 1.5)
+pivot_offset = Vector2(32, 32)
+texture = ExtResource("5_ebs0q")
+
+[node name="Texts" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -51.0
+offset_bottom = -51.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="TimeText" type="RichTextLabel" parent="Texts"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = -25.0
+offset_right = 96.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("6_uu6q0")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[wave amp=25.0 freq=%s][color=%s]%s[/color][/wave]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("7_uv6qk")
+
+[node name="Damage_Done" type="RichTextLabel" parent="Texts"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = 15.0
+offset_right = 80.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("6_uu6q0")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[color=%s]%s[/color]※[color=%s]%s[/color]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("7_uv6qk")

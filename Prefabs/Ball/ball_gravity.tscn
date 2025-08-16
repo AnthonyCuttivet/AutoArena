@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=3 uid="uid://36bbd2ugq46c"]
+
+[ext_resource type="Script" uid="uid://d0xvn1y0stta2" path="res://Prefabs/Ball/ball_gravity.gd" id="1_6w8sp"]
+[ext_resource type="Script" uid="uid://c0yo17knk84wp" path="res://Prefabs/Ball/trail.gd" id="2_kaxnr"]
+[ext_resource type="Texture2D" uid="uid://bfvdgok43dr2p" path="res://Graphics/Images/circle-svgrepo-com.svg" id="6_418ne"]
+[ext_resource type="PackedScene" uid="uid://c402w36ex054v" path="res://Prefabs/FX/fx_death_no.tscn" id="6_ypale"]
+[ext_resource type="PackedScene" uid="uid://dwhwmq033hkl" path="res://Prefabs/FX/fx_death_yes.tscn" id="8_yf8uf"]
+
+[sub_resource type="Curve" id="Curve_w6bdg"]
+_data = [Vector2(0.089701, 0.106469), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.67736, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_w6bdg"]
+resource_local_to_scene = true
+colors = PackedColorArray(1, 1, 1, 0.4, 0.367, 0.367, 0.367, 0.15)
+
+[node name="BallGravity" type="Node2D" groups=["BALL"]]
+physics_interpolation_mode = 2
+script = ExtResource("1_6w8sp")
+
+[node name="Trail" type="Line2D" parent="."]
+light_mask = 0
+width = 20.0
+width_curve = SubResource("Curve_w6bdg")
+default_color = Color(1, 0, 0, 1)
+gradient = SubResource("Gradient_w6bdg")
+script = ExtResource("2_kaxnr")
+length = 10
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.046, 0.046)
+texture = ExtResource("6_418ne")
+
+[node name="FX" type="Node2D" parent="."]
+
+[node name="FXDeathYes" parent="FX" instance=ExtResource("8_yf8uf")]
+rotation = 0.0
+
+[node name="FXDeathNo" parent="FX" instance=ExtResource("6_ypale")]
+rotation = 0.0

@@ -1,0 +1,60 @@
+[gd_resource type="Resource" script_class="WeaponSettings" load_steps=10 format=3 uid="uid://dngq5if36y8sd"]
+
+[ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="1_v4bjt"]
+[ext_resource type="AudioStream" uid="uid://wb7cigowqlsv" path="res://Audio/SFX/BattleBalls/WeaponClash.mp3" id="2_dtbvl"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="3_4jogt"]
+[ext_resource type="AudioStream" uid="uid://d1hfi6ib3w2xs" path="res://Audio/SFX/BattleBalls/se_marth_attackl_L01.wav" id="4_v4bjt"]
+[ext_resource type="PackedScene" uid="uid://b2u3oyrvbqxxu" path="res://Prefabs/Weapons/Armory/Qiang/W_Qiang.tscn" id="5_v4bjt"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4eslf"]
+random_pitch = 2.0
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("2_dtbvl")
+
+[sub_resource type="Resource" id="Resource_4ivty"]
+script = ExtResource("3_4jogt")
+audio_stream = SubResource("AudioStreamRandomizer_4eslf")
+volume = -33.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4ivty"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("4_v4bjt")
+
+[sub_resource type="Resource" id="Resource_dtbvl"]
+script = ExtResource("3_4jogt")
+audio_stream = SubResource("AudioStreamRandomizer_4ivty")
+volume = -31.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[resource]
+script = ExtResource("1_v4bjt")
+name = "QIANG"
+melee = true
+ranged = false
+flip = true
+offset = 26.0
+base_rotation_direction = -1
+base_rotation_speed = 0.65
+base_damage = 1
+base_knockback = 600.0
+base_attack_speed = 1.0
+base_shoot_speed = 1.0
+base_size = 15.0
+base_hitstop = 0.1
+base_projectiles = 0
+base_projectile_speed = 1000.0
+base_projectile_scale = 0.75
+base_shoot_duration = 0.35
+base_rot_speed_bounce_boost = false
+stat_scale_value = 5.0
+stat_scale_name = "Tip DMG"
+scaling_stat_float = false
+no_rotation_change = false
+weapon_prefab = ExtResource("5_v4bjt")
+details = "Tip +5 dmg else 10% dmg"
+sfx_clash = SubResource("Resource_4ivty")
+sfx_hit = SubResource("Resource_dtbvl")
+metadata/_custom_type_script = "uid://c1biydo2yju8x"
