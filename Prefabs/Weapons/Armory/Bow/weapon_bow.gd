@@ -12,7 +12,7 @@ func scale_stat():
 	init_scaling_stat();
 	add_remaining_shoot();
 
-func on_listened_event_received(id:int):
+func on_listened_event_received(id:int, to:int, is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	scale_stat();
 	pass;

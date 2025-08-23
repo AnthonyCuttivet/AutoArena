@@ -43,6 +43,7 @@ script = ExtResource("1_imm4n")
 pierce_count = 999
 absolute = true
 hitbox = NodePath("Sprite2D/ProjectileHitbox")
+destroy_on_hit_delay = 0.25
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.95)

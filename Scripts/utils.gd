@@ -184,3 +184,21 @@ static func scale_number(ball:BattleBall):
 
 static func pf() -> String:
 	return "["+str(Engine.get_frames_drawn())+"]";
+
+static func format_float(value: float, decimals: int = 2) -> String:
+	var factor = pow(10, decimals)
+	var rounded = round(value * factor) / factor
+	# Convert to string and enforce fixed decimal places
+	var s = str(rounded)
+
+	# Force trailing zeros if missing
+	if "." in s:
+		var parts = s.split(".")
+		while parts[1].length() < decimals:
+			parts[1] += "0"
+		s = parts[0] + "." + parts[1]
+	else:
+		# Add ".00" if there was no decimal part
+		s += "." + "0".repeat(decimals)
+
+	return s

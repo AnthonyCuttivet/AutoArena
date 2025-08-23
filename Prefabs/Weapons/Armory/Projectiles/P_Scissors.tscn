@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://4q44tc8j4lwc"]
 
-[ext_resource type="Script" uid="uid://bkmdqj5uwbu44" path="res://Prefabs/Weapons/Armory/Vector/projectile_scissors.gd" id="1_vlave"]
+[ext_resource type="Script" uid="uid://bkmdqj5uwbu44" path="res://Prefabs/Weapons/Armory/Scissors/projectile_scissors.gd" id="1_vlave"]
 [ext_resource type="Shader" uid="uid://dewdqohxf515x" path="res://Graphics/Shaders/dissolve.gdshader" id="2_mnum8"]
 [ext_resource type="Texture2D" uid="uid://bmlwae5vcyou" path="res://Graphics/_Addons/Icons/fc95300.png" id="3_mnum8"]
 

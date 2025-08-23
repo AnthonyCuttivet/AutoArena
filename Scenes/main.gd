@@ -14,6 +14,9 @@ class_name Main extends Node2D
 @export var time_attack_endgame_delay:float = 2.0;
 @export var time_attack_ranking_duration:float = 15.0;
 
+@export var forced_start_dir:Vector2 = Vector2.ZERO;
+@export var dead_ui_color:Color;
+
 @export var balls: Array[BattleBall];
 @export var fx_hit_prefab: PackedScene;
 @export var fx_death_prefab: PackedScene;
@@ -38,9 +41,9 @@ class_name Main extends Node2D
 @export var non_boss_weapon_scale:float = 18.0;
 @export var attraction_point:Node2D;
 
-@onready var name_l: DynamicText = $UI/Top/Boss/WeaponLeft/Name
-@onready var sprite_l: TextureRect = $UI/Top/Boss/WeaponLeft/Sprite
-@onready var boss_details: DynamicText = $UI/Top/Boss/BossDetails
+@onready var name_boss_1: DynamicText = $UI/Top/Boss/WeaponLeft/Name
+@onready var sprite_boss_1: TextureRect = $UI/Top/Boss/WeaponLeft/Sprite
+@onready var boss_details_1: DynamicText = $UI/Top/Boss/BossDetails
 @onready var stat_left: DynamicText = $UI/Bottom/StatLeft
 
 @onready var name_1: DynamicText = $UI/Top/WeaponRight/WeaponAlly/Name
@@ -90,6 +93,10 @@ class_name Main extends Node2D
 @onready var time_attack_leaderboard_ui: TimeAttackLeaderboardUI = $TimeAttackLeaderboard
 
 @onready var special_effects_parent: Node2D = $SpecialEffectsParent
+@onready var projectiles_bg_parent: Node2D = $ProjectilesBGParent
+
+@onready var confettis: Node2D = $Confettis
+@onready var chromatic_aberration: ColorRect = $ChromaticAberration
 
 var balls_ids: Dictionary[int, int];
 var teams_alive_members: Dictionary[int, int];
@@ -126,6 +133,7 @@ func _ready() -> void:
 	EventBus.ball_dead.connect(on_ball_dead);
 	EventBus.ball_bounce.connect(sfx_play_bounce);
 	EventBus.ball_weapon_clash.connect(on_ball_clash);
+	EventBus.set_chromatic_aberration.connect(set_chromatic_aberration);
 
 	if(earclacks_mode):
 		set_earclacks_mode();
@@ -145,8 +153,9 @@ func _ready() -> void:
 	for i in range(balls.size()):
 		balls_ids[balls[i].get_instance_id()] = i;
 		teams_alive_members[balls[i].team] += 1;
-		balls[i].weapon_slot.global_rotation_degrees = randf_range(0.0,360.0);
-		if(i==0):
+		# balls[i].weapon_slot.global_rotation_degrees = randf_range(0.0,360.0);
+		balls[i].weapon_slot.global_rotation_degrees = 0.0;
+		if(i==0 && balls.size() > 1):
 			balls[0].target = balls[1];
 		else:
 			balls[i].target = balls[0];
@@ -238,6 +247,9 @@ func start_game():
 
 	var d:Vector2 = Vector2.ONE.rotated(deg_to_rad(randf_range(-50.0,-160.0)));
 
+	if(forced_start_dir != Vector2.ZERO):
+		d = forced_start_dir;
+
 	for ball in balls:
 		d = d.bounce(Vector2.UP);
 		ball.start(self, d);
@@ -255,6 +267,10 @@ func end_game():
 
 	var record_elapsed:float = (Time.get_ticks_msec() + (obs_delay * 1000.0)) / 1000.0;
 	var time_to_stop:float = max(obs_delay, 80.0 - record_elapsed);
+
+	if(!balls[0].is_boss):
+		for confetti:MultiFX in confettis.get_children():
+			confetti.emit();
 
 	if(process_timer):
 		process_timer = false;
@@ -276,12 +292,12 @@ func end_game():
 func init_ui():
 	time_attack_leaderboard_ui.visible = false;
 
-	name_l.format([balls[0].weapon_settings.name]);
-	name_l.self_modulate = balls[0].color;
-	sprite_l.texture = balls[0].weapon.sprite_2d.texture;
-	boss_details.format([balls[0].weapon_settings.details]);
-	boss_details.modulate = balls[0].color;
-	if(boss_details.text == ""):boss_details.text = " ";
+	name_boss_1.format([balls[0].weapon_settings.name]);
+	name_boss_1.self_modulate = balls[0].color;
+	sprite_boss_1.texture = balls[0].weapon.sprite_2d.texture;
+	boss_details_1.format([balls[0].weapon_settings.details]);
+	boss_details_1.modulate = balls[0].color;
+	if(boss_details_1.text == ""):boss_details_1.text = " ";
 
 	balls[0].stat_text = stat_left;
 	balls[0].stat_text.self_modulate = balls[0].color;
@@ -305,8 +321,9 @@ func init_ui():
 		balls[1].stat_text.self_modulate = balls[1].color;
 		balls[1].update_stat_text();
 
-	else:
+	elif(balls.size() == 3):
 		boss_2.visible = false;
+		stat_right.visible = false;
 
 		name_1.format([balls[1].weapon_settings.name]);
 		name_1.self_modulate = balls[1].color;
@@ -338,6 +355,92 @@ func init_ui():
 	if(time_attack_mode):
 		ta_record.format([Utils.convert_time_to_string(time_attack_leaderboards[balls[0].weapon_settings.name.to_upper()].rankings[0].time)]);
 
+func set_weapon_ui_sprite(id:int, color:Color = Color.WHITE):
+	var ball:BattleBall = get_ball_by_id(id);
+	var local_id:int = balls_ids[id];
+
+	var tx:TextureRect = null;
+
+	if(balls.size() == 1):
+		tx = sprite_boss_1;
+	if(balls.size() == 2):
+		tx = sprite_boss_1 if local_id == 0 else sprite_boss_2;
+	else:
+		if(local_id == 0):
+			tx = sprite_boss_1;
+		else:
+			tx = sprite_1 if local_id == 1 else sprite_2;
+
+	tx.texture = ball.weapon.sprite_2d.texture;
+	tx.self_modulate = color;
+
+func set_weapon_ui_name(id:int, color:Color, t:String = ""):
+	var ball:BattleBall = get_ball_by_id(id);
+	var local_id:int = balls_ids[id];
+
+	var text:DynamicText = null;
+
+	if(balls.size() == 1):
+		text = name_boss_1;
+	elif(balls.size() == 2):
+		text = name_boss_1 if local_id == 0 else name_boss_2;
+	else:
+		if(local_id == 0):
+			text = name_boss_1;
+		else:
+			text = name_1 if local_id == 1 else name_2;
+
+	if(t == ""):
+		text.format([ball.weapon_settings.name]);
+	else:
+		text.text = t;
+
+	text.self_modulate = color;
+
+func set_weapon_ui_stat(id:int, color:Color):
+	var ball:BattleBall = get_ball_by_id(id);
+	var local_id:int = balls_ids[id];
+
+	var text:DynamicText = null;
+
+	if(balls.size() == 1):
+		text = stat_left;
+	elif(balls.size() == 2):
+		text = stat_left if local_id == 0 else stat_right;
+	else:
+		if(local_id == 0):
+			text = stat_left;
+		else:
+			text = stat_ally_1 if local_id == 1 else stat_ally_2;
+
+	text.format([ball.weapon_settings.name]);
+
+	text.self_modulate = color;
+
+func set_weapon_ui_details(id:int, color:Color, raw:bool = false):
+	var ball:BattleBall = get_ball_by_id(id);
+	var local_id:int = balls_ids[id];
+
+	var text:DynamicText = null;
+
+	if(balls.size() == 1):
+		text = boss_details_1;
+	elif(balls.size() == 2):
+		text = boss_details_1 if local_id == 0 else boss_details_2;
+	else:
+		if(local_id == 0):
+			text = boss_details_1;
+		else:
+			text = weapon_details_1 if local_id == 1 else weapon_details_2;
+
+	if(!raw):
+		text.format([ball.weapon_settings.details]);
+	else:
+		text.text = ball.weapon_settings.details;
+
+	text.modulate = color;
+
+
 func on_ball_damaged(id: int, amount:int, from:int):
 	if(!balls_ids.has(id)):
 		return;
@@ -349,6 +452,7 @@ func on_ball_damaged(id: int, amount:int, from:int):
 
 	var fx: GPUParticles2D = fx_hit_prefab.instantiate();
 	var ball:BattleBall = get_ball_by_id(id);
+
 	get_tree().current_scene.add_child(fx);
 	fx.position = Vector2.ZERO;
 	fx.global_position = ball.global_position;
@@ -387,7 +491,7 @@ func on_ball_dead(id: int):
 	for ball in balls:
 		ball.start_hitstop(0.01,0.6);
 
-	AudioManager.play_sfx(sfx_death, "SFX", 0.0, 0.0, true);
+	AudioManager.play_sfx(sfx_death, "SFX", 1.0, 0.0, 0.0, true);
 	EventBus.camera_trigger_shake.emit(death_shake);
 
 	for i in range(6):
@@ -444,7 +548,10 @@ func setup_fight():
 
 func place_fighting_balls():
 
-	if(balls.size() == 2):
+	if(balls.size() == 1):
+		balls[0].global_position = arena_center.global_position;
+
+	elif(balls.size() == 2):
 		balls[0].global_position = _1v1_spots[0];
 		balls[1].global_position = _1v1_spots[1];
 
@@ -454,7 +561,7 @@ func place_fighting_balls():
 		balls[0].team = 0
 		balls[1].team = 1;
 
-	if(balls.size() == 3):
+	elif(balls.size() == 3):
 		balls[0].global_position = _1v2_spots[0];
 		balls[1].global_position = _1v2_spots[1];
 		balls[2].global_position = _1v2_spots[2];
@@ -470,8 +577,11 @@ func place_fighting_balls():
 		balls[1].gravity_strength *= 0.25;
 		balls[2].gravity_strength *= 0.25;
 
-		balls[1].max_speed *= 0.75;
-		balls[2].max_speed *= 0.75;
+		# balls[1].max_speed *= 0.75;
+		# balls[2].max_speed *= 0.75;
+
+		balls[1].root.scale *= 0.75;
+		balls[2].root.scale *= 0.75;
 
 	for ball in balls:
 		ball.dead = false;
@@ -502,7 +612,7 @@ func update_damage_dealt_UI():
 func add_time_attack_result():
 	var boss_name:String = balls[0].weapon_settings.name.to_upper();
 	var data:TimeAttackLeaderboard = time_attack_leaderboards[boss_name];
-	data.add_line(time_attack_elapsed, [balls[1], balls[2]], [damage_dealt[balls[1].get_instance_id()], damage_dealt[balls[2].get_instance_id()]]);
+	data.add_line(time_attack_elapsed, [balls[1], balls[2]], [damage_dealt[balls[1].get_instance_id()], damage_dealt[balls[2].get_instance_id()]], boss_name);
 
 	time_attack_leaderboard_ui.update_leaderboard_ui(data);
 	time_attack_leaderboard_ui.boss_name_text.format([balls[0].color.to_html(), boss_name]);
@@ -515,3 +625,29 @@ func show_time_attack_rankings():
 	tween.tween_property(time_attack_leaderboard_ui, "position:x", 0.0, 1.0).set_trans(Tween.TRANS_SPRING);
 	var t_stop_record:SceneTreeTimer = get_tree().create_timer(time_attack_ranking_duration);
 	t_stop_record.timeout.connect(stop_record);
+
+func set_chromatic_aberration(v: float, d:float):
+	var tween: Tween = create_tween();
+
+	tween.parallel().tween_property(chromatic_aberration, "material:shader_parameter/r_displacement", Vector2(v, v), d / 2.0);
+	tween.parallel().tween_property(chromatic_aberration, "material:shader_parameter/b_displacement", Vector2(-v, v), d / 2.0);
+	tween.parallel().tween_property(chromatic_aberration, "material:shader_parameter/r_displacement", Vector2(0.2, 0.2), d / 2.0).set_delay(d / 2.0);
+	tween.parallel().tween_property(chromatic_aberration, "material:shader_parameter/b_displacement", Vector2(-0.2, -0.2), d / 2.0).set_delay(d / 2.0);
+
+func set_time_scale(v: float, d:float):
+	var t:Timer = Timer.new();
+	t.ignore_time_scale = true;
+	t.one_shot = true;;
+	t.autostart = true;
+	t.wait_time = d;
+	t.timeout.connect(func(): Engine.time_scale = 1.0);
+	get_tree().current_scene.add_child(t);
+
+	Engine.time_scale = v;
+
+func set_time_scale_smooth(v: float, d:float, burst:float):
+	var tween: Tween = get_tree().create_tween();
+	tween.custom_step(0.016);
+	tween.set_parallel(true);
+	tween.tween_property(Engine, "time_scale", v, burst);
+	tween.tween_property(Engine, "time_scale", 1.0, d-burst).set_delay(burst);

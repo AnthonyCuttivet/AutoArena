@@ -1,27 +1,44 @@
-[gd_resource type="Resource" script_class="WeaponSettings" load_steps=6 format=3 uid="uid://dvig1hbsj8myn"]
+[gd_resource type="Resource" script_class="WeaponSettings" load_steps=10 format=3 uid="uid://dvig1hbsj8myn"]
 
 [ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="1_asju3"]
-[ext_resource type="AudioStream" uid="uid://wb7cigowqlsv" path="res://Audio/SFX/BattleBalls/WeaponClash.mp3" id="2_glpnl"]
+[ext_resource type="AudioStream" uid="uid://dhyo23c8um3kp" path="res://Audio/SFX/BattleBalls/se_brave_throw_f02.wav" id="2_o3hyd"]
 [ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="3_o3hyd"]
+[ext_resource type="AudioStream" uid="uid://d0w8ervnspl05" path="res://Audio/SFX/BattleBalls/se_master_attackhard_L02.wav" id="4_8f1rw"]
 [ext_resource type="PackedScene" uid="uid://byk6s2sthux1h" path="res://Prefabs/Weapons/Armory/BOSS_Hydra/W_Hydra.tscn" id="4_o3hyd"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_o3hyd"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("2_o3hyd")
 
 [sub_resource type="Resource" id="Resource_o3hyd"]
 script = ExtResource("3_o3hyd")
-audio_stream = ExtResource("2_glpnl")
+audio_stream = SubResource("AudioStreamRandomizer_o3hyd")
 volume = -29.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8f1rw"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("4_8f1rw")
+
+[sub_resource type="Resource" id="Resource_8f1rw"]
+script = ExtResource("3_o3hyd")
+audio_stream = SubResource("AudioStreamRandomizer_8f1rw")
+volume = -28.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [resource]
 script = ExtResource("1_asju3")
 name = "HYDRA"
-melee = false
+melee = true
 ranged = true
 flip = false
 offset = 0.0
 base_rotation_direction = 1
 base_rotation_speed = 0.5
 base_damage = 1
-base_knockback = 0.0
+base_knockback = 3000.0
 base_attack_speed = 1.0
 base_shoot_speed = 100.0
 base_size = 10.0
@@ -36,6 +53,8 @@ stat_scale_name = "Dmg / Head"
 scaling_stat_float = false
 no_rotation_change = true
 weapon_prefab = ExtResource("4_o3hyd")
+bg_projectile = false
 details = "+1 head every 50hp lost"
 sfx_clash = SubResource("Resource_o3hyd")
+sfx_hit = SubResource("Resource_8f1rw")
 metadata/_custom_type_script = "uid://c1biydo2yju8x"

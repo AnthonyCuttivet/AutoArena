@@ -7,7 +7,7 @@ signal ball_dead(id: int);
 signal match_over(winner: int);
 signal round_timeout();
 signal ball_got_low_health(id: int);
-signal set_chromatic_aberration(v: float);
+signal set_chromatic_aberration(v: float, d:float);
 
 signal play_sound(name: String);
 signal play_player_sfx(player_id: int, name: String);
@@ -21,7 +21,7 @@ signal start_audio_fade_in(instance_id: int, fade_in: float);
 signal stop_record();
 
 signal ball_damaged(id:int, amount:int, from:int);
-signal ball_weapon_hit(id:int);
+signal ball_weapon_hit(id:int, to:int, is_projectile:bool);
 signal ball_weapon_clash(id:int);
 signal ball_update_stat(id:int);
 signal ball_bounce(id:int);

@@ -1,0 +1,94 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3asfx7u2p3x8"]
+
+[ext_resource type="Script" uid="uid://bpavkef7phn4f" path="res://Prefabs/FX/multi_fx.gd" id="1_da10k"]
+
+[sub_resource type="Curve" id="Curve_bbs2e"]
+_data = [Vector2(0, 0.256826), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_da10k"]
+curve = SubResource("Curve_bbs2e")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bbs2e"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 35.0
+initial_velocity_min = 30.0
+initial_velocity_max = 130.0
+angular_velocity_min = 280.0
+angular_velocity_max = 280.0
+orbit_velocity_min = -0.0999999
+orbit_velocity_max = 0.1
+gravity = Vector3(0, 150, 0)
+linear_accel_min = 10.0
+linear_accel_max = 30.0
+scale_max = 10.0
+scale_curve = SubResource("CurveTexture_da10k")
+
+[node name="FxConfettis" type="Node2D" node_paths=PackedStringArray("sub_fxs")]
+script = ExtResource("1_da10k")
+sub_fxs = [NodePath("Emitter1"), NodePath("Emitter2"), NodePath("Emitter3"), NodePath("Emitter4"), NodePath("Emitter5")]
+
+[node name="Emitter1" type="GPUParticles2D" parent="."]
+self_modulate = Color(0.8, 0.258824, 0.368627, 1)
+emitting = false
+amount = 32
+one_shot = true
+explosiveness = 0.6
+randomness = 0.3
+fixed_fps = 60
+local_coords = true
+draw_order = 0
+process_material = SubResource("ParticleProcessMaterial_bbs2e")
+
+[node name="Emitter2" type="GPUParticles2D" parent="."]
+self_modulate = Color(1, 0.843137, 0, 1)
+emitting = false
+amount = 12
+lifetime = 0.7
+one_shot = true
+explosiveness = 0.8
+randomness = 0.4
+fixed_fps = 60
+local_coords = true
+draw_order = 0
+process_material = SubResource("ParticleProcessMaterial_bbs2e")
+
+[node name="Emitter3" type="GPUParticles2D" parent="."]
+self_modulate = Color(0.552941, 0.717647, 1, 1)
+emitting = false
+amount = 26
+lifetime = 0.8
+one_shot = true
+explosiveness = 0.9
+randomness = 0.2
+fixed_fps = 60
+local_coords = true
+draw_order = 0
+process_material = SubResource("ParticleProcessMaterial_bbs2e")
+
+[node name="Emitter4" type="GPUParticles2D" parent="."]
+self_modulate = Color(0.670588, 0.866667, 0.392157, 1)
+emitting = false
+amount = 25
+lifetime = 0.9
+one_shot = true
+explosiveness = 0.9
+randomness = 0.2
+fixed_fps = 60
+local_coords = true
+draw_order = 0
+process_material = SubResource("ParticleProcessMaterial_bbs2e")
+
+[node name="Emitter5" type="GPUParticles2D" parent="."]
+self_modulate = Color(0.753146, 0.458221, 0.902344, 1)
+emitting = false
+amount = 25
+lifetime = 0.6
+one_shot = true
+explosiveness = 0.9
+randomness = 0.2
+fixed_fps = 60
+local_coords = true
+draw_order = 0
+process_material = SubResource("ParticleProcessMaterial_bbs2e")

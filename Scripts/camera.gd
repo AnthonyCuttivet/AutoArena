@@ -17,4 +17,4 @@ func _process(delta: float):
 func trigger_shake(strength: float):
 	if (strength <= shake_strength): return ;
 	shake_strength = strength;
-	EventBus.set_chromatic_aberration.emit(3.0);
+	# EventBus.set_chromatic_aberration.emit(3.0);

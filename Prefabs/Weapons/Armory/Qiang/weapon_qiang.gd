@@ -55,11 +55,11 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, hitbox_id:int, projectile_
 	other.affect_health(-d, ball_owner);
 
 	if(!projectile_hit):
-		ball_owner.start_hitstop(0.05, h);
+		ball_owner.start_hitstop(0.01, h, Vector2.ZERO, true, true);
 
-	other.start_hitstop(0.01, h, kb);
+	other.start_hitstop(0.00, h, kb, true, true);
 	other.hitflash(h);
 	other.hit_pos = hit_pos;
 
-	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id());
+	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit);
 	pass;

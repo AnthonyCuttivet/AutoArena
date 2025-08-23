@@ -122,6 +122,7 @@ stat_scale_name = "Damage"
 scaling_stat_float = false
 no_rotation_change = false
 weapon_prefab = ExtResource("11_cm4p0")
+bg_projectile = false
 details = ""
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 
@@ -150,6 +151,7 @@ stat_scale_name = "Damage"
 scaling_stat_float = false
 no_rotation_change = false
 weapon_prefab = ExtResource("11_cm4p0")
+bg_projectile = false
 details = ""
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 
@@ -195,6 +197,7 @@ stat_scale_name = "Damage"
 scaling_stat_float = false
 no_rotation_change = false
 weapon_prefab = ExtResource("11_cm4p0")
+bg_projectile = false
 details = ""
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 
@@ -240,6 +243,7 @@ stat_scale_name = "Damage"
 scaling_stat_float = false
 no_rotation_change = false
 weapon_prefab = ExtResource("11_cm4p0")
+bg_projectile = false
 details = ""
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 
@@ -268,6 +272,7 @@ stat_scale_name = "Damage"
 scaling_stat_float = false
 no_rotation_change = false
 weapon_prefab = ExtResource("11_cm4p0")
+bg_projectile = false
 details = ""
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 
@@ -322,6 +327,7 @@ stat_scale_name = "Damage"
 scaling_stat_float = false
 no_rotation_change = false
 weapon_prefab = ExtResource("11_cm4p0")
+bg_projectile = false
 details = ""
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 
@@ -364,6 +370,7 @@ stat_scale_name = "Damage"
 scaling_stat_float = false
 no_rotation_change = false
 weapon_prefab = ExtResource("11_cm4p0")
+bg_projectile = false
 details = ""
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 

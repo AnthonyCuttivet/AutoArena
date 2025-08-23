@@ -1,0 +1,48 @@
+[gd_resource type="Resource" script_class="WeaponSettings" load_steps=7 format=3 uid="uid://dckqlakpbmee2"]
+
+[ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="1_cscb6"]
+[ext_resource type="AudioStream" uid="uid://dsobqkj25wqe7" path="res://Audio/SFX/BattleBalls/ding_coins.wav" id="2_gbm62"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="3_yvfc0"]
+[ext_resource type="PackedScene" uid="uid://dcc18wxrtf4ne" path="res://Prefabs/Weapons/Armory/Gems/W_Gems.tscn" id="5_cscb6"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_t0wfu"]
+random_pitch = 1.01
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("2_gbm62")
+
+[sub_resource type="Resource" id="Resource_my0nd"]
+script = ExtResource("3_yvfc0")
+audio_stream = SubResource("AudioStreamRandomizer_t0wfu")
+volume = -23.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[resource]
+script = ExtResource("1_cscb6")
+name = "GEMS"
+melee = true
+ranged = false
+flip = false
+offset = 40.0
+base_rotation_direction = -1
+base_rotation_speed = 0.35
+base_damage = 1
+base_knockback = 1000.0
+base_attack_speed = 25.0
+base_shoot_speed = 1.0
+base_size = 16.0
+base_hitstop = 0.5
+base_projectiles = 0
+base_projectile_speed = 1000.0
+base_projectile_scale = 0.75
+base_shoot_duration = 0.35
+base_rot_speed_bounce_boost = false
+stat_scale_value = 0.1
+stat_scale_name = "Damage"
+scaling_stat_float = true
+no_rotation_change = false
+weapon_prefab = ExtResource("5_cscb6")
+bg_projectile = false
+details = "Hit : Random・Max : Level UP"
+sfx_clash = SubResource("Resource_my0nd")
+metadata/_custom_type_script = "uid://c1biydo2yju8x"

@@ -21,9 +21,9 @@ func scale_stat():
 	rotation_speed += stat_scale_value;
 	init_scaling_stat();
 
-func on_weapon_hit_received(id:int):
+func on_weapon_hit_received(id:int, to:int, is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
-	scale_stat();
+	AudioManager.play_sfx(ball_owner.weapon.settings.sfx_hit, "SFX");
 	pass;
 
 func on_ball_damaged_received(id:int, amount:int, from:int):
@@ -37,3 +37,6 @@ func can_shoot(dt:float) -> bool:
 		return true;
 
 	return false;
+
+func get_custom_damage_value() -> int:
+	return ball_owner.weapon.heads.size();

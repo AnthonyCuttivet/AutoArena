@@ -5,8 +5,11 @@ class_name TimeAttackLeaderboard extends Resource
 
 @export var rankings: Array[TimeAttackData];
 
-func add_line(time:float, balls:Array[BattleBall], damage:Array[int]):
+func add_line(time:float, balls:Array[BattleBall], damage:Array[int], boss_name:String):
 	var l:TimeAttackData = TimeAttackData.new();
+
+	l.boss = boss_name;
+
 	l.time = time;
 
 	var b0:BattleBall = balls[0];
@@ -47,7 +50,7 @@ func save_res(l: TimeAttackData):
 
 	# Use safe filename (replace ':' to avoid Windows errors)
 	var timestamp = Time.get_time_string_from_system().replace(":", "-")
-	var save_path = dir_path + "/TA_" + timestamp + ".tres"
+	var save_path = dir_path + "/TA_" + l.boss + "_" + timestamp + ".tres"
 
 	var error = ResourceSaver.save(l, save_path)
 

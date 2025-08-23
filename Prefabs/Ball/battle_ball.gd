@@ -29,6 +29,9 @@ class_name BattleBall extends RigidBody2D
 @export var gravity_strength: float = 1400.0
 @export var drag_force: float = 0.02
 @export var bounce_boost: float = 250.0;
+@export var relative_bounce_boost:float = 0.0;
+@export var acceleration:float = 1.0;
+@export var knockback_resistance:bool = false;
 @export var ghost:bool = false;
 @export var lock:bool = false;
 
@@ -49,7 +52,8 @@ class_name BattleBall extends RigidBody2D
 
 var main:Main = null;
 var is_init:bool = false;
-var time_scale = 1.0;
+var time_scale:float = 1.0;
+var physics_time_scale:float = 1.0;
 var accumulated_forces:Vector2 = Vector2.ZERO;
 var invincible_for:float = false;
 var hit_pos:Vector2 = Vector2.ZERO;
@@ -60,12 +64,15 @@ var prev_linear_velocity:Vector2 = Vector2.ZERO;
 var target:BattleBall = null;
 
 var hitstop_remaining:float = 0.0;
+var absolute_hitstop:bool = false;
 
 var stat_text:DynamicText = null;
 var vel_to_apply:Vector2 = Vector2.ZERO;
-var lose_hp_timer:Timer;
+var lose_hp_timer:Timer = null;
 
 var drift_dir: float = 1.0 # left (-1) or right (+1)
+var base_drag_force:float = 0.0;
+var base_max_speed:float = 0.0;
 
 var lock_pos:bool = false;
 var locked_pos:Vector2;
@@ -73,6 +80,8 @@ var block_weapon_rot:bool = false;
 
 var scaling_index:int = 0;
 var scaling_damage:int = 1;
+
+# var aled:bool = false;
 
 func _ready() -> void:
 	spawn_weapon();
@@ -90,6 +99,8 @@ func _ready() -> void:
 	angular_damp = 0.0;
 	gravity_scale = 0.0;
 	drift_dir = -1.0 if randf() < 0.5 else 1.0
+	base_drag_force = drag_force;
+	base_max_speed = max_speed;
 
 	current_target_attraction = base_target_attraction;
 
@@ -113,11 +124,11 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	var vel := linear_velocity
 
 	# --- Manual gravity ---
-	vel.x -= gravity_strength * state.step
+	vel.x -= gravity_strength * state.step * acceleration;
 
 	# --- Keep minimal sideways motion alive ---
 	if abs(vel.y) < min_horizontal:
-		vel.y += drift_dir * 30.0  # gentle nudge
+		vel.y += drift_dir * acceleration * 30.0  # gentle nudge
 
 	# --- Soft speed cap (drag-based) ---
 	var speed = vel.length()
@@ -126,17 +137,23 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		var excess_ratio = (speed - max_speed) / max_speed
 		vel *= 1.0 - (drag_force * excess_ratio)
 
-	linear_velocity = vel
+	linear_velocity = vel * physics_time_scale;
 
 func _physics_process(delta: float) -> void:
 	if(debug_physics):
 		debug_collisions();
 	if(!is_init): return;
 	if(weapon == null): return;
+	if(dead): return;
 	if(lock_pos):
 		freeze = true;
 		global_position = locked_pos;
 		return;
+
+	if(hitstop_remaining <= 0.0 && freeze && time_scale >= 0.0 && accumulated_forces != Vector2.ZERO):
+		set_deferred("freeze", false);
+		apply_impulse(accumulated_forces);
+		accumulated_forces = Vector2.ZERO;
 
 	if(invincible_for > 0.0):
 		invincible_for -= delta;
@@ -173,11 +190,7 @@ func start(m:Main, dir:Vector2):
 	apply_impulse(dir * max_speed);
 
 	if(lose_hp_per_s > 0):
-		lose_hp_timer = Timer.new();
-		lose_hp_timer.wait_time = 1.0 / lose_hp_per_s;
-		lose_hp_timer.timeout.connect(lose_hp_timeout);
-		add_child(lose_hp_timer);
-		lose_hp_timer.start();
+		set_hp_lost_per_s(lose_hp_per_s);
 
 func start_duel():
 	if(debug_mode):return;
@@ -204,19 +217,20 @@ func spawn_weapon() -> Weapon:
 func update_health_text():
 	hp_text.text = str(health);
 
-func update_stat_text():
+func update_stat_text(no_bump:bool = false):
 	if(stat_text == null): return;
 
 	var s:String = weapon.get_custom_stat_format();
 
 	if(s == ""):
 		if(weapon_settings.scaling_stat_float):
-			s = str("%0.2f" % weapon.scaling_stat_value);
+			s = Utils.format_float(weapon.scaling_stat_value, 1);
 		else:
 			s = str(int(weapon.scaling_stat_value));
 
 	stat_text.format([weapon_settings.stat_scale_name, s]);
-	stat_text.bump(1.08, 0.08);
+	if(!no_bump):
+		stat_text.bump(1.08, 0.08);
 
 func update_scaling_stat_text():
 	if(stat_text == null): return;
@@ -231,22 +245,23 @@ func update_scaling_stat_text():
 	stat_text.format([weapon_settings.stat_scale_name, Utils.format_number_with_dots(scaling_damage)]);
 	stat_text.bump(1.08, 0.08);
 
-func affect_health(v:int, from:BattleBall):
+func affect_health(v:int, from:BattleBall, silent:bool = false):
 	if(is_invincible()):return;
 	health += v;
 	update_health_text();
 
-	if(v < 0):
+	if(v < 0 && !silent):
 		EventBus.ball_damaged.emit(get_instance_id(), abs(v), from.get_instance_id());
 
 	if(health <= 0 && !dead):
+		main.set_time_scale(0.1, 0.5);
 		death();
 
-func start_hitstop(t:float, duration: float, knockback:Vector2 = Vector2.ZERO):
+func start_hitstop(t:float, duration: float, knockback:Vector2 = Vector2.ZERO, override:bool = true, absolute:bool = false):
 	#Add override bool
 	# if(freeze && !debug_mode): return;
 
-	if(hitstop_remaining > 0.0):
+	if(override && hitstop_remaining > 0.0):
 		override_hitstop(t,duration, knockback);
 		return;
 
@@ -265,16 +280,20 @@ func start_hitstop(t:float, duration: float, knockback:Vector2 = Vector2.ZERO):
 	# set_freeze(true);
 
 	hitstop_remaining = duration;
+	absolute_hitstop = absolute;
 
 func override_hitstop(t:float, duration:float, knockback:Vector2 = Vector2.ZERO):
+	if(absolute_hitstop):
+		return;
+
 	time_scale = t;
 	hitstop_remaining = duration;
 	accumulated_forces = knockback;
 
 func stop_hitstop():
 	time_scale = 1.0;
+	absolute_hitstop = false;
 	call_deferred("set_freeze", false);
-	# set_freeze(false);
 
 func set_freeze(v: bool):
 	freeze = v;
@@ -285,8 +304,15 @@ func set_freeze(v: bool):
 		if(debug_hitstop):
 			print(Utils.pf() + " Hitstop Stop (" + str(accumulated_forces)+")");
 
-		if(accumulated_forces.length() == 0.0 || is_boss):
+		if(accumulated_forces == Vector2.ZERO || is_boss):
 			accumulated_forces = prev_linear_velocity;
+
+		if(knockback_resistance):
+			accumulated_forces = prev_linear_velocity.normalized() * base_max_speed;
+		elif(accumulated_forces.length() < base_max_speed):
+			accumulated_forces = linear_velocity.normalized() * base_max_speed;
+
+		# print(name + " Hitstop stop impulse " + str(accumulated_forces.length()));
 
 		apply_impulse(accumulated_forces);
 
@@ -300,6 +326,8 @@ func _on_body_entered(other: Node) -> void:
 	EventBus.ball_bounce.emit(get_instance_id());
 
 	var dir = (global_position - other.global_position).normalized()
+	if(relative_bounce_boost > 0.0):
+		bounce_boost = max_speed * relative_bounce_boost;
 	linear_velocity += dir * bounce_boost;  # Knockback boost
 
 	if(other.is_in_group("WALL")):
@@ -336,14 +364,24 @@ func death():
 	dead = true;
 	visible = false;
 	set_process(false);
-	global_position = Vector2.ONE * 99999;
+	set_deferred("global_position", Vector2.ONE * 9999);
 	set_deferred("freeze", true);
 	sleeping = true;
 	root.set_deferred("disabled", true);
+	for hitbox:Hitbox in weapon.hitboxes:
+		hitbox.set_deferred("monitorable", false);
+		hitbox.set_deferred("monitoring", false);
+		pass
+
+	if(main != null):
+		main.set_weapon_ui_name(get_instance_id(), main.dead_ui_color);
+		main.set_weapon_ui_details(get_instance_id(), main.dead_ui_color);
+		main.set_weapon_ui_sprite(get_instance_id(), main.dead_ui_color);
+		main.set_weapon_ui_stat(get_instance_id(), main.dead_ui_color);
 
 func lose_hp_timeout():
-	affect_health(-1,self);
-	if(health <= 50): lose_hp_timer.stop();
+	if(self.health == 1): return;
+	affect_health(-1,self, true);
 
 func show_trail_for(d:float, additionnal_length:int = 0):
 	trail_2d.length += additionnal_length;
@@ -387,3 +425,31 @@ func lock_position(s:bool):
 	lock_pos = s;
 	if(s):
 		locked_pos = self.global_position;
+
+func set_hp_lost_per_s(v:int):
+	if(lose_hp_timer == null):
+		lose_hp_timer = Timer.new();
+		lose_hp_timer.ignore_time_scale = true;
+		lose_hp_timer.autostart = true;
+		lose_hp_timer.wait_time = 1.0 / v;
+		lose_hp_timer.timeout.connect(lose_hp_timeout);
+		add_child(lose_hp_timer);
+
+	if(v == 0.0):
+		lose_hp_timer.stop();
+	else:
+		lose_hp_timer.wait_time = 1.0 / v;
+		lose_hp_timer.start();
+
+	lose_hp_per_s = v;
+
+func set_physics_time_scale(v: float, d:float):
+	var t:Timer = Timer.new();
+	t.ignore_time_scale = true;
+	t.one_shot = true;;
+	t.autostart = true;
+	t.wait_time = d;
+	t.timeout.connect(func(): physics_time_scale = 1.0; linear_velocity = linear_velocity.normalized() * max_speed; drag_force = base_drag_force);
+	get_tree().current_scene.add_child(t);
+
+	physics_time_scale = v;

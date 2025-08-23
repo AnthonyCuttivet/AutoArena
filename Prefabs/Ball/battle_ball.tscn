@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dq1w5q1d2hbls"]
+[gd_scene load_steps=15 format=3 uid="uid://dq1w5q1d2hbls"]
 
 [ext_resource type="Script" uid="uid://cp82leg5g74mt" path="res://Prefabs/Ball/battle_ball.gd" id="1_0l4tw"]
 [ext_resource type="Texture2D" uid="uid://bfvdgok43dr2p" path="res://Graphics/Images/circle-svgrepo-com.svg" id="1_lj2f6"]
@@ -25,11 +25,15 @@ shader_parameter/flash_intensity = 0.0
 radius = 350.0
 
 [sub_resource type="Curve" id="Curve_yvhfn"]
-_data = [Vector2(0, 0), 0.0, 0.263679, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_yvhfn"]
 colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0.286275)
+
+[sub_resource type="Gradient" id="Gradient_ecnwd"]
+offsets = PackedFloat32Array(0, 0.33, 0.66, 1)
+colors = PackedColorArray(1, 0.109375, 0.109375, 1, 1, 0.709473, 0.335938, 1, 0.734467, 0.414, 0.92, 1, 0.408, 0.842633, 0.85, 1)
 
 [node name="BattleBall" type="RigidBody2D"]
 collision_layer = 2
@@ -89,9 +93,9 @@ ball_owner = NodePath("../..")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Root/Hurtbox"]
 shape = SubResource("CircleShape2D_x46jw")
 
-[node name="Trail" type="Line2D" parent="Root"]
+[node name="Trail" type="Line2D" parent="Root" node_paths=PackedStringArray("pos_reference")]
 show_behind_parent = true
-scale = Vector2(6.25, 6.25)
+top_level = true
 width = 35.0
 width_curve = SubResource("Curve_yvhfn")
 gradient = SubResource("Gradient_yvhfn")
@@ -101,10 +105,12 @@ round_precision = 32
 antialiased = true
 script = ExtResource("6_5hbfo")
 length = 10
+pos_reference = NodePath("../..")
 
 [node name="Afterimage" type="Node2D" parent="Root" node_paths=PackedStringArray("source_sprite")]
 script = ExtResource("7_yvhfn")
 source_sprite = NodePath("../Circle")
 spawn_interval = 0.01
+gradient = SubResource("Gradient_ecnwd")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

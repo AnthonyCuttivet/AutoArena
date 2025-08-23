@@ -6,7 +6,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
 radius = 8.48528
-height = 71.561
+height = 46.669
 
 [node name="WeaponNONE" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]
 script = ExtResource("1_lfvsa")
@@ -26,7 +26,7 @@ collider = NodePath("CollisionShape2D")
 metadata/owner = NodePath("../../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
-position = Vector2(1.66893e-06, -4.76837e-07)
+position = Vector2(3.8147e-06, -12.7279)
 shape = SubResource("CapsuleShape2D_1fhci")
 
 [connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_entered"]

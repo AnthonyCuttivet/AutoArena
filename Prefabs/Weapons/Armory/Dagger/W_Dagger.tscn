@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://cdhj2fynyln0c"]
+
+[ext_resource type="Script" uid="uid://b7w6pnnl3sn6w" path="res://Prefabs/Weapons/Armory/Dagger/weapon_dagger.gd" id="1_0uivq"]
+[ext_resource type="Texture2D" uid="uid://2lhd2x1lrlww" path="res://Graphics/_Addons/Icons/fc1694.png" id="2_0uivq"]
+[ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="3_jh3i0"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
+height = 70.0
+
+[node name="WeaponDagger" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]
+script = ExtResource("1_0uivq")
+scale_divider = 2.0
+self_hitstop_delay = 0.01
+sprite_2d = NodePath("Sprite2D")
+hitboxes = [NodePath("Sprite2D/WeaponHitbox")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(31, -3)
+rotation = 0.785398
+texture = ExtResource("2_0uivq")
+
+[node name="WeaponHitbox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("weapon", "collider")]
+rotation = 0.785398
+script = ExtResource("3_jh3i0")
+weapon = NodePath("../..")
+collider = NodePath("CollisionShape2D")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
+position = Vector2(3, 1)
+shape = SubResource("CapsuleShape2D_1fhci")
+
+[node name="SpriteCharged" type="Sprite2D" parent="Sprite2D"]
+self_modulate = Color(0.67, 1, 0.9285, 0)
+texture_filter = 1
+texture = ExtResource("2_0uivq")
+
+[connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_entered"]
+[connection signal="area_exited" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_exited"]

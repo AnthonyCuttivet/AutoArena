@@ -28,7 +28,7 @@ func scale_stat():
 	damage += 2;
 	init_scaling_stat();
 
-func on_weapon_hit_received(id:int):
+func on_weapon_hit_received(id:int, to:int, is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	damage = max(1, damage-3);
 	# tmp_damage = 0;

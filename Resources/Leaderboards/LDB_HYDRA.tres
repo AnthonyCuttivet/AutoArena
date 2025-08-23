@@ -1,13 +1,15 @@
-[gd_resource type="Resource" script_class="TimeAttackLeaderboard" load_steps=8 format=3 uid="uid://o13yfa8og5fl"]
+[gd_resource type="Resource" script_class="TimeAttackLeaderboard" load_steps=10 format=3 uid="uid://o13yfa8og5fl"]
 
 [ext_resource type="Script" uid="uid://m3rw1428wsq2" path="res://Scripts/time_attack_data.gd" id="1_d5lvs"]
 [ext_resource type="Texture2D" uid="uid://b6w1xcngywbfd" path="res://Graphics/_Addons/Icons/fc1506.png" id="2_0jv5s"]
 [ext_resource type="Script" uid="uid://bentp5io1j8mf" path="res://Scripts/time_attack_leaderboard.gd" id="2_kwaul"]
 [ext_resource type="Texture2D" uid="uid://cwf4at5rm7o78" path="res://Graphics/_Addons/Icons/fc1453.png" id="2_uu47f"]
 [ext_resource type="Texture2D" uid="uid://b6mqwj6vvm3q4" path="res://Graphics/_Addons/Icons/fc1789.png" id="3_uu47f"]
+[ext_resource type="Texture2D" uid="uid://bmlwae5vcyou" path="res://Graphics/_Addons/Icons/fc95300.png" id="4_sh04o"]
 
 [sub_resource type="Resource" id="Resource_sh04o"]
 script = ExtResource("1_d5lvs")
+boss = "BOSS_NAME"
 time = 38.5151
 ball_1_name = "Katana"
 ball_1_color = Color(1, 0.721569, 0.47451, 1)
@@ -24,8 +26,27 @@ ball_2_rot = 0.785398
 ball_2_offset = 39.0
 ball_2_damage = 6
 
+[sub_resource type="Resource" id="Resource_spass"]
+script = ExtResource("1_d5lvs")
+boss = "HYDRA"
+time = 39.9817
+ball_1_name = "Unarmed"
+ball_1_color = Color(0.77, 0.77, 0.77, 1)
+ball_1_flip_h = false
+ball_1_rot = 0.0
+ball_1_offset = 25.0
+ball_1_damage = 139
+ball_2_name = "Reaper"
+ball_2_color = Color(0.341176, 1, 0.498039, 1)
+ball_2_sprite = ExtResource("4_sh04o")
+ball_2_flip_h = false
+ball_2_rot = 0.785398
+ball_2_offset = 40.0
+ball_2_damage = 11
+
 [sub_resource type="Resource" id="Resource_0jv5s"]
 script = ExtResource("1_d5lvs")
+boss = "BOSS_NAME"
 time = 102.513
 ball_1_name = "Mace"
 ball_1_color = Color(0.517647, 0.396078, 0.92549, 1)
@@ -44,5 +65,5 @@ ball_2_damage = 80
 
 [resource]
 script = ExtResource("2_kwaul")
-rankings = Array[ExtResource("1_d5lvs")]([SubResource("Resource_sh04o"), SubResource("Resource_0jv5s")])
+rankings = Array[ExtResource("1_d5lvs")]([SubResource("Resource_sh04o"), SubResource("Resource_spass"), SubResource("Resource_0jv5s")])
 metadata/_custom_type_script = "uid://bentp5io1j8mf"

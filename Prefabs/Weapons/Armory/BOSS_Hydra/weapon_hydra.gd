@@ -44,9 +44,10 @@ func shoot_projectile():
 func get_custom_damage_value() -> int:
 	return damage / heads.size();
 
-func on_weapon_hit_received(id:int):
+func on_weapon_hit_received(id:int, to:int, is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
-	scale_stat();
+	if(is_projectile):
+		scale_stat();
 	pass;
 
 func on_ball_damaged_received(id:int, amount:int, from:int):

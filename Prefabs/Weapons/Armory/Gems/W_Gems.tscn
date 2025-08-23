@@ -1,0 +1,91 @@
+[gd_scene load_steps=22 format=3 uid="uid://dcc18wxrtf4ne"]
+
+[ext_resource type="Script" uid="uid://ct01qe22gfbu1" path="res://Prefabs/Weapons/Armory/Gems/weapon_gems.gd" id="1_ncujg"]
+[ext_resource type="Texture2D" uid="uid://dcywhm3m2qbd4" path="res://Graphics/_Addons/Icons/fc196.png" id="2_inf5s"]
+[ext_resource type="Texture2D" uid="uid://d8ykxo1gyfq8" path="res://Graphics/_Addons/Icons/fc214.png" id="3_mquw1"]
+[ext_resource type="Texture2D" uid="uid://b6evq06wve5y3" path="res://Graphics/_Addons/Icons/fc169.png" id="4_7e28c"]
+[ext_resource type="Texture2D" uid="uid://b7yyw88x5e8te" path="res://Graphics/_Addons/Icons/fc172.png" id="5_6oea4"]
+[ext_resource type="Texture2D" uid="uid://cjl617r1e3ot" path="res://Graphics/_Addons/Icons/fc173.png" id="6_fxbr1"]
+[ext_resource type="Texture2D" uid="uid://dky7gxnfuc2jv" path="res://Graphics/_Addons/Icons/fc162.png" id="7_0at3q"]
+[ext_resource type="Texture2D" uid="uid://dhjruwyqnrgjc" path="res://Graphics/_Addons/Icons/fc164.png" id="8_hsome"]
+[ext_resource type="Texture2D" uid="uid://b7nie652hbyg0" path="res://Graphics/_Addons/Icons/fc176.png" id="9_o74on"]
+[ext_resource type="AudioStream" uid="uid://mhwjhrlnb5ve" path="res://Audio/SFX/BattleBalls/Duel_Win.wav" id="10_fbnha"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="11_lpbos"]
+[ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="12_2d3n8"]
+[ext_resource type="AudioStream" uid="uid://y0t1b1gvm1dq" path="res://Audio/SFX/BattleBalls/playful-casino-slot-machine-bonus-2-183919.mp3" id="12_7e28c"]
+[ext_resource type="AudioStream" uid="uid://dew1b14mf6yam" path="res://Audio/SFX/BattleBalls/se_master_special_H07_kick_hit.wav" id="13_7e28c"]
+[ext_resource type="PackedScene" uid="uid://c3asfx7u2p3x8" path="res://Prefabs/FX/fx_confettis.tscn" id="13_inf5s"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_r16fi"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("10_fbnha")
+
+[sub_resource type="Resource" id="Resource_kqwtn"]
+script = ExtResource("11_lpbos")
+audio_stream = SubResource("AudioStreamRandomizer_r16fi")
+volume = -12.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7e28c"]
+streams_count = 1
+stream_0/stream = ExtResource("12_7e28c")
+
+[sub_resource type="Resource" id="Resource_6oea4"]
+script = ExtResource("11_lpbos")
+audio_stream = SubResource("AudioStreamRandomizer_7e28c")
+volume = -38.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="Resource" id="Resource_7e28c"]
+script = ExtResource("11_lpbos")
+audio_stream = ExtResource("13_7e28c")
+volume = -30.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
+radius = 19.799
+height = 41.0122
+
+[node name="WeaponGems" type="Node2D" node_paths=PackedStringArray("fx_confettis", "sprite_2d", "hitboxes")]
+script = ExtResource("1_ncujg")
+dice_textures = Array[Texture]([ExtResource("2_inf5s"), ExtResource("3_mquw1"), ExtResource("4_7e28c"), ExtResource("5_6oea4"), ExtResource("6_fxbr1"), ExtResource("7_0at3q"), ExtResource("8_hsome"), ExtResource("9_o74on")])
+dice_values = Array[int]([2, 4, 6, 8, 10, 12, 20, 100])
+dice_rotations = Array[float]([90.0, 0.0, 45.0, 45.0, 45.0, 90.0, 90.0, 45.0])
+sfx_upgrade = SubResource("Resource_kqwtn")
+sfx_dice_roll = SubResource("Resource_6oea4")
+sfx_hit = SubResource("Resource_7e28c")
+sfxs_hit_pitch = 0.11
+dice_upgrade_effect_duration = 0.4
+dice_roll_duration = 0.3
+max_roll_color = Color(1, 0.87451, 0.67451, 1)
+roulette_colors = Array[Color]([Color(0.866667, 1, 0.996875, 1), Color(0.866667, 0.894118, 1, 1), Color(0.927083, 0.866667, 1, 1)])
+fx_confettis = NodePath("Sprite2D/FxConfettis")
+levels_colors = Array[Color]([Color(1, 0.802344, 0.730469, 1), Color(0.824219, 0.824219, 0.824219, 1), Color(1, 0.496094, 0.496094, 1), Color(0.6, 0.906667, 1, 1), Color(0.831238, 0.691406, 1, 1), Color(0.690643, 1, 0.636719, 1), Color(1, 0.906667, 0.6, 1), Color(1, 0.6, 0.6, 1)])
+sprite_2d = NodePath("Sprite2D")
+hitboxes = [NodePath("Sprite2D/WeaponHitbox")]
+custom_sfx = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+rotation = 1.5708
+texture = ExtResource("2_inf5s")
+flip_h = true
+
+[node name="WeaponHitbox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("weapon", "collider")]
+rotation = 0.785398
+script = ExtResource("12_2d3n8")
+weapon = NodePath("../..")
+collider = NodePath("CollisionShape2D")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
+shape = SubResource("CapsuleShape2D_1fhci")
+debug_color = Color(0, 0.595, 0.7, 0.294118)
+
+[node name="FxConfettis" parent="Sprite2D" instance=ExtResource("13_inf5s")]
+rotation = -1.5708
+scale = Vector2(4, 4)
+
+[connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_entered"]
+[connection signal="area_exited" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_exited"]

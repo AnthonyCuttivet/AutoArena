@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="4_onar2"]
 [ext_resource type="AudioStream" uid="uid://b24s7p40a8vl8" path="res://Audio/SFX/BattleBalls/se_edge_smash_L04.wav" id="5_t4joa"]
 [ext_resource type="AudioStream" uid="uid://dvjax4ihvanbi" path="res://Audio/SFX/BattleBalls/holy3.wav" id="6_t4joa"]
-[ext_resource type="PackedScene" uid="uid://ccbg8hckn25qv" path="res://Prefabs/Weapons/Armory/Vector/W_Scissors.tscn" id="7_t4joa"]
+[ext_resource type="PackedScene" uid="uid://ccbg8hckn25qv" path="res://Prefabs/Weapons/Armory/Scissors/W_Scissors.tscn" id="7_t4joa"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_onar2"]
 random_pitch = 1.1
@@ -48,12 +48,12 @@ melee = true
 ranged = true
 flip = false
 offset = 30.0
-base_rotation_direction = 1
-base_rotation_speed = 0.75
+base_rotation_direction = -1
+base_rotation_speed = 0.8
 base_damage = 1
 base_knockback = 20.0
-base_attack_speed = 50.0
-base_shoot_speed = 1.25
+base_attack_speed = 30.0
+base_shoot_speed = 1.1
 base_size = 10.0
 base_hitstop = 0.16
 base_projectiles = 1
@@ -67,6 +67,7 @@ scaling_stat_float = false
 no_rotation_change = false
 weapon_prefab = ExtResource("7_t4joa")
 projectile_prefab = ExtResource("1_t4joa")
+bg_projectile = true
 details = "+2 Snip DMG on Snip"
 sfx_clash = SubResource("Resource_40vsq")
 sfx_hit = SubResource("Resource_onar2")

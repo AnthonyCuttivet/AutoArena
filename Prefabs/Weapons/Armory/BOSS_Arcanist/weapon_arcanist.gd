@@ -56,7 +56,7 @@ func scale_stat():
 	damage += stat_scale_value;
 	init_scaling_stat();
 
-func on_listened_event_received(id:int):
+func on_listened_event_received(id:int, to:int, is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	if(scaled_at == next_thunderstrike_at): return;
 	scaled_at = next_thunderstrike_at;

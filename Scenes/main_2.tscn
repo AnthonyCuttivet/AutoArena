@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=3 uid="uid://cmsck3y43hvak"]
+[gd_scene load_steps=102 format=4 uid="uid://cmsck3y43hvak"]
 
 [ext_resource type="Script" uid="uid://llbx2bxdfjwy" path="res://Scenes/main.gd" id="1_nmkph"]
 [ext_resource type="Shader" uid="uid://m275kdb8v68b" path="res://Graphics/Shaders/balatro.gdshader" id="1_y2yxb"]
@@ -19,7 +19,7 @@
 [ext_resource type="Script" uid="uid://0fuba61sagm3" path="res://Scripts/camera.gd" id="11_87gun"]
 [ext_resource type="Resource" uid="uid://vf0ik06r5ypg" path="res://Resources/Weapons/W_BOW.tres" id="11_per8v"]
 [ext_resource type="Resource" uid="uid://dvig1hbsj8myn" path="res://Resources/Weapons/W_HYDRA.tres" id="11_uot50"]
-[ext_resource type="AudioStream" uid="uid://b8uvv30ypoiro" path="res://Audio/SFX/BattleBalls/Announcer/ElevenLabs_2025-08-16T11_41_57_Liam_pre_sp100_s50_sb75_v3.mp3" id="12_0qwvu"]
+[ext_resource type="AudioStream" uid="uid://cb16ii5lrpwnd" path="res://Audio/SFX/BattleBalls/Announcer/download1755944241622 (audio-extractor (mp3cut.net).mp3" id="12_d4oku"]
 [ext_resource type="Texture2D" uid="uid://crarm12ndl2en" path="res://Graphics/_Addons/Icons/fc7.png" id="12_hvjex"]
 [ext_resource type="FontFile" uid="uid://bt2qq5v7nibma" path="res://Graphics/Fonts/PPFraktionMono-Bold.otf" id="12_p1oyv"]
 [ext_resource type="FontFile" uid="uid://bglbd1ylrt02k" path="res://Graphics/Fonts/big_noodle_titling.ttf" id="12_per8v"]
@@ -46,7 +46,12 @@
 [ext_resource type="Script" uid="uid://ckxf1aiw26v1v" path="res://Scenes/cameo.gd" id="31_qas6s"]
 [ext_resource type="Texture2D" uid="uid://2ki0ut25fcs4" path="res://Graphics/_Addons/Icons/fc1590.png" id="33_0o7lx"]
 [ext_resource type="Script" uid="uid://c50pcpoy1hh6r" path="res://Scenes/animfuncs.gd" id="34_ee1k8"]
+[ext_resource type="Resource" uid="uid://dckqlakpbmee2" path="res://Resources/Weapons/W_GEMS.tres" id="34_g7d4c"]
+[ext_resource type="PackedScene" uid="uid://cusidgv7v4vpc" path="res://Prefabs/Weapons/Armory/Unarmed/W_Unarmed.tscn" id="34_pegen"]
+[ext_resource type="AudioStream" uid="uid://ddx8pstv0i4qf" path="res://Audio/SFX/BattleBalls/se_demon_hit_catchattack.wav" id="35_qtgyu"]
 [ext_resource type="Texture2D" uid="uid://cj3174c1vhaci" path="res://Graphics/_Addons/Icons/fc17040.png" id="36_76u2v"]
+[ext_resource type="PackedScene" uid="uid://dj8vboys4os4r" path="res://Prefabs/Weapons/Armory/Sandevistan/W_SANDEVISTAN.tscn" id="36_d4oku"]
+[ext_resource type="Resource" uid="uid://dgbpfdn8qku06" path="res://Resources/Weapons/W_DAGGER.tres" id="38_6fdjq"]
 [ext_resource type="Script" uid="uid://bv40hjciy84bb" path="res://Scenes/mover.gd" id="43_shkiq"]
 [ext_resource type="PackedScene" uid="uid://co37vbnh5d0l7" path="res://Prefabs/HUD/podium_slot.tscn" id="46_w5ut2"]
 [ext_resource type="Texture2D" uid="uid://d24rekvi3bj41" path="res://Graphics/_Addons/Icons/fc15.png" id="47_7gphk"]
@@ -54,6 +59,8 @@
 [ext_resource type="Texture2D" uid="uid://b1ru8jv7lpu68" path="res://Graphics/_Addons/Icons/fc52.png" id="48_poh84"]
 [ext_resource type="Script" uid="uid://bcqswpyfo4fff" path="res://Scripts/time_attack_leaderboard_ui.gd" id="49_0qwvu"]
 [ext_resource type="Texture2D" uid="uid://diyiof7v8elk2" path="res://Graphics/_Addons/Icons/fc54.png" id="49_vp72v"]
+[ext_resource type="PackedScene" uid="uid://c3asfx7u2p3x8" path="res://Prefabs/FX/fx_confettis.tscn" id="57_70hv1"]
+[ext_resource type="Shader" uid="uid://byxemq4tgaq5f" path="res://Graphics/Shaders/chromatic_aberration.gdshader" id="59_hdidk"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_go1jf"]
 random_pitch = 1.1
@@ -89,7 +96,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="Resource" id="Resource_p1oyv"]
 script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("12_0qwvu")
+audio_stream = ExtResource("12_d4oku")
 volume = -20.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
@@ -200,6 +207,7 @@ stat_scale_name = "FISH"
 scaling_stat_float = false
 no_rotation_change = true
 weapon_prefab = ExtResource("25_uhddi")
+bg_projectile = false
 details = ""
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 
@@ -228,6 +236,7 @@ stat_scale_name = "FISH"
 scaling_stat_float = false
 no_rotation_change = true
 weapon_prefab = ExtResource("25_uhddi")
+bg_projectile = false
 details = ""
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 
@@ -256,15 +265,102 @@ stat_scale_name = "FISH"
 scaling_stat_float = false
 no_rotation_change = true
 weapon_prefab = ExtResource("25_uhddi")
+bg_projectile = false
 details = ""
+metadata/_custom_type_script = "uid://c1biydo2yju8x"
+
+[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_pegen"]
+data = PackedByteArray("cW9hZgAAjYABALuAFAAIGAAAAAAAAAAAAAAAAOAAQAAQ0SCCAQQQQBBBIIRDRaKJEJzwkIncJgIXF4mpd/sKlxwVMCKblI25HdGEeYEJETocAXpyBpbm8RrwZoHyfcVaIgFFgw2BgEoWh3srvdu9UCaaqYVG4lCpLWwweNqFuFMcPg7nt/IVuiBRBTIRAZjsKXe4EgAtBUEUJ5uC0EQ/oyIYRJBVQVe6MEgEBplKlBom00mFTA4KSjAaDCZCqlS8cHepEEgEkElcQaQgSC0QUzIrCNW9VSvSObngAmR+NxgyG82C2mN7LkJDTYdwZb24RMkNgLLkkUtTCYGO4oTakk8nN2IqjCdUWGmEJkEAJoVFCGCQEaiUwUKLzIYAJTCfVMxVVqNVxgFkSFSCmBUSCFJVh6YliZ5RUop520b7lBpLCA5dal85rFqZnKsbiDaaUNJr1KotZVxM0kCoE0i0akcwLgkblEKDRnVD7HdTgERSS+YqACACCnIIBBTAIIUHYXIhpl8ZgolEYgSYincWCD3ibgZCeG4dWJrglptCMhhkFQHmQqn3gGAICYLRDFenYFwzojNqlplUTulwmCk3UEpgprDRopJZYEI1NJMAgu5Vy1KGC4bKETYJO9xaspsTYNNNMU5lM0BGgnDsFz6UQkjSLDQY1cErVxhFgEponRtUxZySgSRQxl3SJDlRKaJAVhuVop4BNBhb0CwACKD5STDJ8L+bQ0dlQGb4NNunvCNVJU6jWYRkwUjIsv1IuzRTROvOFxsNctdUGx9uNYrC9VR+PgzsaZDVW5pgRlEEJlROUnuFcfVn/FnTED1O6MjaSJ9RewuhIBs373npPtlvyE1czaBIANwJVMhgWMkkZ7614vHAUE0GCZA1gAALEJRJiuOlNDFZ4kWSgwAgCmnUu4yqCRCIRusLfdGQGjpTqVNzwisXCf4wCGVQTa4E7V38U4ru0JBKJ75wEhCY6UA02XQIINRblIaPaJmNjxMakk1kiRCWiA4U3ExwzCMcyl9kYF1y1qFhmolQGUG3E2g4Jl3BpbkTQcrDXtrEhpsuGqJTEEFnlkElk1VqwKTbZcYBYoJhpklAlNxXcaCkWiEXYkDxT5E9iKTBWgOKgAhWOpt0GCIyiwXNworRsAYIjgYIdggEo0pB4slp8KVUiQal1npDcfxAZRqJV8B8+0r5xQtVge2168EDxW1W8Yia1iIYUDI4KmhcwVpSq1e2gz/n0UbLzB9vTycsUDQO1WTEup92CQQlUSgyA2mYHEYCbwbbXE6sXIr/PdJAZRmRvUp0TlLuDrwlLTmpVthrVAgvOkpQwgzTmqAwilAyMATQFmSObFJAoIskoK9sn3BYWShGClK5k8TZWoFNXrTuQtxbuJ9q0USamwDW1GaduzqRDJKJVo6lXMAJT2heweQACBGmmWlDMI4D5RYzVBYNTqKAlZ5U4fjTp0rGQGbZAJoYFKaLZFwNMIBTJMtkGmWizQ6e/1TYFuTSl0SZgNBEIBEgyIhqusU0Wi58D2TCIsTTowZBUag8j3Gt+jpRkHixLIvVbGCfZatN4ScUekxpNNVSQ27EQUEWEhUrRtZqWbgLJBIZsIAIwuw151z0wmwQDCUPDbjVo1TSo0aRs4lIso1RIXXSSqWqFRe3XsrUWhjtSpJRx+9uRpVhEF7gAq3aRGQmSb2XiRH9hyACuYZXuiAG/Fva0kxZA6VNtKkPcctbAeSHn4l3ogTP9MTCFRtGyCy0DcANJgGi+SJQx0IGXlRAohvC7xA0esG0CMSgtNF5yNrjpQ3b+y+vRs3MCWXICLXElab9k0SLht5a05qsgt0vsUPbI+Q+0kbPoPILbcdysLJp8c4tlAMAJELgwy+syVrQkNpQ2dgURtcK1lVrJ1QMqHnJjRBeFDAkZLU/ojFQMQCBn8pbr8F8PxrFgAoq5CEEzMzfABmH4gfAv2FVbS7IuZ2xC7ZCI/THVNDQSQYbqmIUvJiRQYGiC+7UK0spKy8UwLt8Cp9faJbvytBetwkRo1u26PbbQlr20crDbUNoSYCb1xwoErLBnuXM5AeC3GjIpcpOysTKTHBYwikoJaMlgsvVS2kSUiHEUarIDzQBJtjE0osARJ9zAOHV6MUywXWAIsxUTYiA4AgtyosrWg4thj2+RSXmEO6Zq7DBKxCVqMJZr1rFMsuisjaVG6zsqf2kg4uABebFQff2nPGtVKiGozGeCq6SZZlwzptgRHAYVWg6jiIRsOCD/uCcT3c8WNowRJjNa/PrekDRsB19ZiiYsJXQwSImgAwCWbYMSCSoeV013tAVYQlhQNm5tgBkWC0zM9bWP60dLSICvIVBi+sTdAyttCdWWouKkPZIigkDYKJCqqetBMrM27igTolohe8mytjKgXaArerZqghnRE5CBbe6SEy4kKEgF8tc4ARCitkjs+lTJhJoIk6/UcwDE3KQUYF/rHRqTdbA3S1gdIIsEgivXBWia2kWs7TLQkggck7judyL2JerIZqiCpCLyAl4AYNUnAQoylp4eP86p7GYzJ2moQSiXUiE/LErsEsCK9SLxxSk2BGsaoqfR1Yils38EpFYbwDqbynbqVAKlCoI+sTE49JzSSCQU5ymgLXVAbbKdKzYLl8wDq+KyKRKFC2wP56Uas5GVrLdmzclLfmbGoqGRT7O7Yedv9ajbiJJIJ1DoUnDdOxppD2lt6il4SSiC4DmnNUYbeNQnHmnRzicOGqTFfAjEA+aSKyFJgfK1n1TjI0lhxJ8TXeDUHuqsWehDgEAu4AUAAgY0D3Usdcy4u33ThRw1yg57pJrRNKEiH70hV0AtrEGrRea2A8AoL7UjJT4qixYQzrTpA1BZPrIhoi8KQoGCWccVKSi5UDHVGxnqFBsiQ2hMpGWDoz4LQs47XccgHaH5LSCekrZlhT6NBZ5e3QWBZY9MZfwRaWUUTkkn1hIgGoxBImACAoofe5kk5YhLsqg5MLchR23BAtKWuBtKDzRXlAfAXD9ZE2RkxVWnQtlJ1hJEtGF/FEQkmiUYHiLZBdEx1bScNpt0upBtnJz2IGHKyGjFHLfQIICg37IaAgaguF2LS1kGCyygXTCX2pKI0QY7RBIUmqaV0oJgt1nW7akgURTw2ShgUqCdpQST+kgj0HJzWhQuKgw0MiKildZTSJHExhCWtRT9OBMkIpXCmBoaEy2QmaCAYSkSRILWWFKEEEMhphO9JegDTECAFQAQ58aSIaLQspp4yznFqlIjiG2jyTHAEYsYQaJzD8JSAJFUXcIFwhAyeip0QGHukcasltwRahrUkdOAsYP0MFXrU3f4smKk1QY5ahYMYciT8dGqrJPk41SkIXSQOZIQ0mF71EJ1N72YkEhjEgqs1JUHTorbBqqQFSNIwpLQEZTV1ybnwDNO65uwUmgaoUyWV11LAYJCGT7YIoEN1IIidhcQIXaFuLgLUc+2E6zYbbiYtAhM0mDFXpDjwkiGOcN7Eqm34qBBtQGWUJwpr3eAlFmWFhGCiGjHFBLLY2KgTb8XU0xAEJsRkBgKUkWIPbBCGYXRbASiBbDVEgBcMJwBDxqYiW0QqAiE3ITZYCSLqiZUh2b1lZ1+bJdX12noqqKalTG1HiZoG0bV+tRBswIPppSalknxVCaZmRXJATKJLbQXQClEPojCphUBecYBLO0wUbgFRkehQtPTNzr5KtkqEBIWvq7nCxCu1IijbcITTVNUOAwplhg1DBEOK0C24Ig6lUbIJQTPrAATvooluq0FNhSyFCiVSiiU0FiZZFCRSTYQzkp1hZvVJ9kXHGQSQ4QqEUlZYCRFJQpSxRF2WJPo65E3Qd00ADaNECrbwVL1ngQV7yqgItWK5pOKgAV8F42glKYYJTACA8uVyshFNFgwmhDmp490y3jm0VLBjggYqZKO9CbgA1dDbI2qLf4tKR1GzeWTnn0S4bycpo7jrZdoZtukhzcA0pCAlkBCJUDBFZSUoqglBYJwsM4pl7octI49EbpRJDEBrIiSANU/0holKZDnCH3WgBSNDytneCrYJq9QpJRaFBLONg2U0MA23pggUVUWBLoaBaAQ1pikhIlpJFEWq6wiN9bEkTsMNTUSor7RBCQIIMh0ghK4UjI9WVxWErAOxi8NlLYMbCKcUdjtJRIS6EM0aSVTkqCAQbVlaVRTd1SgYAFMlxLGq0aEd4oyEoYQ1X5+WSiR1gBd0oGvxJTAjIRRQQCSk8JJQ3TJcc8QhIllA1szs1HaCKwyLRUUULNDVQArY5JUOOOYKmyBNtWRC8DLmwSq0fRYrIgODzNT3mqMq4iBJBSSaHACIXQIk8GILVjQb5sQTNWBugpqpZEbU0IGk0HJUlJvRQrqIIgSAkEJb7pp1czRlpixr75YkCWqbXFCXlYQYbw/XVOr0hFDGgwMpRVGju9fCxzF8+uSpIF0jXNpoxHCkhRSKAghTTyXnHgVZ84RgopsKOACwQ+2hc3w7vHEzVN2O3le2IJRucdy5whxwU8YP+glHt3Rz/RRwjCeRViRTkqAtBqulo2gMYR4ZOQXUISLTZixQbFR1mQikKAMOo7D/lFAsBsYUBdAoKxlaeWUxl92yw6oFM4XtNvrTj08lC22EARDYBTVlgOFRSSDBVaSwmogys6A2BCYIQYa4KIR1XLSLz8UJJDLKjKGAIKvE6SaZtOuGD6RplrCHpJE3xLgY1fa7oHNFitPAWbLLcYVRJb/oFoAuJDG/zpngn4wUNAMQy1P4YgWUtIRsGRi1lU5k6Cw+HskUfqku9Eq5HaQJbdT93LusFUaaYXESQpSlUoPdbSg9WlYNIMNVusN0JYDW0ZhWwOUlkBRdpYh0YfWccQAsx7TNtay22SywiGy3aJYoCQFZWKUftYIGs2vrJdPnDyGUHgB3QTJTJLARQ7rBlomwhlBElywWREnRcoaXGnZpqQZmZ9dKIoBkggENtecwJonr3Ee1D1iB5OKBFLdNAHb9sBqMldnOu1N2mUcVAjJPvpG2znZkBtxFgjCkttcGeiCAS7GVa2zJNTTMYrYQl0WaHgF/RNl5WaTaRsMUFoSqpdTqCiUJrtyYavptlimASRJmDVSUzCnYmSlb5HU5JBQhghBphCrcdGAQSrmFdLovLgjAKaVMNqsAUoMqJW6S+kc0VPLVhMbdCZJYWFVhQpFqZphpRVrCl0j21rJFhbBp6KGED7YAJSDisFhqFT3BEZSAyyAlZQDEeCbC/GRV0DOdRZGr1SSgAy8U6ArEM9RdEsUYkKQksksz3ORutUJ88zw1CQEFVbYhSQa8bBWMItllhJGNFCQDRGSsWuGlQ5SaRYSTNXTONBT0GaV+dUSjmPGHKmAlH1z5DCiciJUHfzpq1rrqRVgIDalGuv8GgCqaAEZP6YUlDKJW1nIqlHqvWFA/TQTk2mfscQfrLOUBEmgJtN31BED6CIy6gEy0AADdpYazDwWMg2giKAVWNM5WumsknbfkgBL7JCSxZaRAAHwmoJNpFNyqnAxOs2u1CaK1aYRLThPiuafWDvEBxF7BLiupyRN0E4qj3YoziaAQC7gBQACBi0mLZdt4C4zfmEGCjVXDiUShwtBgPE6mhG3k1d24YnEEqbIcebbjKCSWVAllw4sVpDShCXHIW51UTNuWxPSCd9QGJQpimg7TtOqSjFgDwHFzVMqXiE3sThP65tOY8sZGNGAmisKfujV1hgdRmJLLLDSxySMGIMGtlC0ki2htsXwkQBSizBQARSVKENUMGRLnlKcBmCXmgw2UCOnrGaF3pASJcmQetoroNIsnEi2w00MjvYNHzOJLAlQAgKp6NNkMJGCV0cCmAWqUIDSeIMUd7BROEJB8oOAtVJVCCWY4zKWDkupU4+chteQNJxl0QKwEFKEAxrH0xFUD6HUeuLhVE4VlVC4oJiglBGRD0qPGwkskVq5AgIpqzgVkEpwkihBMNGrBinarKTJkXYEvaiFVYIPNQRpSjpue1AIqvy5UtASzRKFPLtkWFfSu0N99Bp12pGqwyANrvOSjSSX79MC0zaR2gSFNtoFBRXEWQDwkSiWEsERsV9YShIQJkolxIssitUOJcYV7qkLlXVUHciotyBV24jA1gFFoJQRUikAAy+WkG6TGjR6ABrSdOdSZIjukNNOmlTVBAyIUYq6ayZeLYJaoSxioluAIFKZLBiQz2vJ1Ca3x+43i5qW4Jd7xOVg3dVbAkYjmh0EFCFJAbDfagBWJWkDNIR0+ZSuIQS3SUGEExaVDb56GxIRDLwVKh9hKRQSgVYUA+6wkmVYFU0ghV/VNWhpQEA2FBI2r6jg1UEAmIKYJkArqIKTv2BouJJ5YJB72mhVEuQEltAUBYQYOZQeqKsGsRAFMN0SmGoq2HXM3LQrUTDVdSQYlZAlGpJpIFXBPUqIsyhT1pTLBSggBELSsmqGjGMTJhPzT4cSFAExUyTYYHALpcQVOEpK9JokMBSGC4hGYD6UmU1dZQJISDPRdEJF6EhITNFdT3OUaQoyUiUgd57joGRQ1urYAPulqRIzTFJkgANR0/pqSzz9JLWRIPm4oBAIXlKWkGhim+QBEdjYCQXFr7CSBIOUFIJI2hGgCGSWaDhgj7TuIsjgzhSTpstklCJwaFUQgIUUQEmO020lvdUSCDfQeTL6psFccFIpmvaSjjnHTww6KISVYL/RJihAkMB6RtGa49EF3Wl+kWQTBe8rLSTRFMpoAhFqlsxsVQ7AdBvFzV57uxj0AbxQO0iQklwwohC04TAWyuE50RADzqqDQaZUDIB18JRRxxT6WUibSQogkWSrrJAVXjJRk0IstqhmttBEqe4Iu2Vkl4v1kLBYxKdTunLIR4lVxtSKCGEg3AQn1O+KSqNqcOaVNIvjgpBBABR46rE0GmiUTfsKgxRpeInMWyuHUbsNa414wYiv5WiozKahDQUsJzBPouDmsqXJoA2KiE8JW2gYjq1zuDTDKRFMAAiqqHUNEMzE3AmLegcIzLUKLbhBujgNwkFpAq4hkAnCVN/fOVZ+iqH30sWa7U5MNlSM2kLwYs0Ew0LmHE0SUSZdyqsBQKoMpVh5PdpJx8wEGAUSXhiyU5qUiS5oLQAOPeAIVkpv+RNCuHUVAHTYzx2KZJAcqILMSEFloGBmoA40mm2VFVSnDQLSVFEeaHAQhMJtyA0NAhQmE4fZp1/gHJUjoYpgCaddVswtGBklNFDps2PjM8BpEEm2hsKSgS0QlFFCIJe1JM9kWy05NLCf0bExFC1A3JZRtsjLEqxtkFGjECmGuY5UkbOQQ5KXcAgRtlEsJ4Rsp1EmGkCgHWEHj8sIHeb07ckOqEI/1GXFMIy1NXUvizEWzDPWWUFvYhTQBIUksIIpsE4wrmlTYmHCys1JDkYo29FNTwhkRyho401QmV0k3nnOStYmqSlqL3jMHNkHVBuy4IqXLIit/0aHzCmpllMV6BLOIMNWhJGOhoyC6UJSbRS1zDarZZrdBYiL5+aktYdVbs4gQ0AUWECHDsVxdoUjVZcNSNlphJooIhHUISiTS3kkjY/6CjauQlgLt/iTFpWZJU3S8jizVQ8lTToEAubx4czQUgpUBR0FEowzTjKwMOizTBweKbnDhk6QxtOMgBNVNNIQWcxREgz60QyJ76mkqrTOLuXIAMgIENGCWGo4wmGEiJbPlWaQKogQtJQ19xJMfdI0GYs1aCkRT1ldAQIYSKJMQihqXNgmIow3RECE4gGwSgtZxxOFnngMiNKgEMw4tMzQIIggCiqUTRwSAYkQCQLIM7dDpDI+fg0UC50gkaWmzASaoLYxTwTNsQpmMwoF7o6WG0mUkHC2zRLDim8/ziDIozXFzkN+aI6EwAwzKUBIyXRYzwU4YHCNMJFsqJgFcM4EFwBrW0UiCVDBVk4/0yALgluyI4a/zUygiGxSm04CDIKRRSMDbLELFuUENn0iG8wEgHYG6XOmyG+ir4kQzGTNkUErsV1fDgy0gXySO1YgjbOuZfTgIjCLy2q6OOFJ5onc/tdc1utJjWNJbUTNYMJMkoMOkgFroEyAC2iCOKGHjSKamSS/ZA2QgllJgRAKNk2LpoJmbEQkEQRIaoQQy9NNWA6OuNo4Ao06CH1ggVaRDcKSKJJ5STvOMKY14VEAls2oChtSz+QVEBaKVcRKFDxQMmphApqHvJLVJQA0aUQQEBsOYJKEFOPbhRsJotIqppODVAfM6CCKkkeA/goWTUSO/khdY3HIWJPIFSG22iyA0azKbIZLRTtRh4TwElj9UNIkNF5QwqGi0KLAUFQpeQcRN1suJoJEitKkQALWXBq2UTYIGIftrCcMxNGhFNO+3kBALuAFAAIGPuA+qn5tfmb+AEXV9VhNx06CM7OaQ4ie0tprILJYp9ZRtNukNCNLUc9a5e0k2iVkjQpDQSTbLYbOOFRCMpiKtkyUF7BC8M6e0RzrIERKSdRNNxHiOqwKRs6gpAuyLTIZDarNz26CVNDMiF1NBnAxsM9CAykiQkAgD6KYgFiCUDaL//YpJtYEC02HE4QXWii0D4QqSJIIsTgLNwo6uUi4M8o3GktWWob1jHYZB3hiCNrMkhCXMpLgaU+vK8RSBiStFbZJBRDZWQJQP8InUHhrSVG+XBmZloIlEDzfaaeBQmwWI0NkwlqLKNI6wItNCLalFCsCgbpBDrEWQhAE1kIAOtAw9ptE+/T70YbCSy1MGYLRtBFgKTEuqJI7QgL6RijAC77WrXktdYyQAllkt381NM8Oa328kW+1UBEUEr/ZiBQSKmkpSipwsM9Ega6IEi/fEkQJRALDQkTN3sbah7YEVtBkiS2wYYaLFCASihJdrYSTaYB18s10GVSjIoAAGqWBEhTkzBp5OmjS/mKFshQlhhCopb2wHhFAUrJDdbSAQkSMP+8+wxAh5Y892zpgqfOaTD3RmwboAhnN2oIFiywOFozYamgGSwpIDe8sSJZDCKEMlV00FQIBIA2ASQyQGU4JDpLhgxRrZJJJPWBsohlJCUj0jKgSFAX2jLCCYBAJJhLK5gBUol4HGQnuNwC9EFPwyr5XjOkBN7FKFp0kBQoEMsld23QueOvyiqQM5ha0fNbKhqJc2oVQIUryc7whYsNOTKQYaoALyYLOWEBDxiMIwJGyCgQmmFQSDBThAIgFTRIMNhAiQigUQMq4wRo0aEgLDTgINbgbRDONz2OQo9hBVUosGtC0KhQRjaXXRQSZBCEOs1GTdMigFMjqJYPRIwl5SjqiO1BquYYJMrFHukQjFQmSWOhBQWEJCawCabtDSwiIz5/oxVFkyIwCCwkEwUzqy3goSEAbz0sJ07qyIJG5IIs2FiuAkkd+iExahQuYDhgKBNgIFWWvp4jMSiRSUyAkiytfBQSLfiENgEFCkFFRqovmQyilKGGkyIKQarYeumnJUTwlAsr5mMgHSUrHAZSviDnhKeZVjRhIxtglgx4OUQk423CC02DAiQYrT2EbdjjIPw6TTntUtIhAiW6i1I2vCsckTVYsZTQJNEgJEgghsQgyTCikoVVUyAghKZDRBRQIlkoQIlhgFAiOPCkRS0kUyAKKKZZZaUCKhkMtlowhhomGywSaaQSAyFbLDrbZ68YJNhgMUtIF0sigIAGGCmmSSRzRLASRTVTJCIyouEIJpgVXCmWpJkyViAKoIUKJVVTKAFpmFMFlBIgUQEWC6qk9CcKJIsaDQTVIgIRqygQBWEnLG04Yy0ECSYTjRFBADVkIxFMNBMCGFwmkUizZ8HgVSLCUBCaKapDJIopICCARJMkVEoUO2QggBsV0QJ9SELnGz76nazk99YihU1BI1x6WiaUWCTTLHBMIpFARJ1lNsklEsiyMx2dIydAEYLKaYaaJuHACstqwaYnGRZ9QWUAmCJIMCDAQJNLIgGWBo0Mw4Enxc4AgiS3GSllDJCcaLRTIVAMlppCAEsiQAwXHq2wCSJLQSQDLCYYJRB0sothQIggRW2QQgQQCCJJRRBILBiGJhGKqoyJJhMpY0wACiCQ4CIYLASJFRQgIFgE00AFMEgiW27WygASwRJv/9bUuDIEIkVNIQkss2ggsUGmmSCiGSRgSjNYMcJTFErIbbcfLSAkySgwwQkwFChJLdkQZQVdIhIIhAklgFASknqE4DgKfyYgwKYILLIjJEQAFtoM8WswMIW2wQmnGCaICGQITVlDIEsIRqmuFQQnTSgGKnlIiSrbIABCKKBBHIVNSiABoRYgkAmQygoESSIUY5aGkFVDIhAIFUkjGMEiqkIAGwjs9yOeTzDD1zMsIRZoEAtsJEUmhEFWKWSWIiBJhIDTTz6uNYC8VIkIJVMgIxeTIZQUECZqSCqLCaZdJNEAg5JNhsMhPHIbxJEKyyTBKExJZgBbJBqhArpkMIEgSgSKG2Cwoigp9rM0zXv5NCIJmu0skksnazTXWqWQiR/42yfRHTlZMoplwBkLBCk2QyyBkg23XTaW0Sq4oacEJ4oJJMUNFEAgCiCCCGzSzCkdoUSZZdNANKQA01lkBRIo13eLhCEIkyrZRhgDDSCDIhJIhxQBglEoYUWykEiG2x22DNfNHVd5KCIQkElhCBEgQ2QMtHKf0y0KYbTDNNIAHqIF33szB9cmGwwQSii6yiCZaMAbFDZqJwAgttklNEAkUQwwQUoUQBRVH9sIgRMkGLKR39AGhbYYEQm2QBDIExVFCxgISCZIFZELCALrktMZEE0unBEJ5RFLU22OTLKEFoghMMTKJEwRAkIELhFQyBUM6KdNTTRAGS5qlphpiFQVCEIkWU8kixBKgIaQNdTyFxyIimkxRHUcArHEw0X30hCZAm2sMgBaFTQgXfIAEokWmW0coG+rChYLZhhBwkOqHioNVoYpuEAWWjEEykFFhhLJCkiqTjYaGLIOupaBtkAUiASCA26DChDzhKCRRjBIFANqhkbRFhoTKgTwYEpRSxpqcSfZo7oZE11ksccc2msaAyymzUwyTBapbYJBBBLYEQpDWAMGGGIUikYlGmoowxTxkGZTSMITGWZ6hIJCODIQrAQ4ES66QhSe9QyJAQRCF6KASggoqbAXWYAQmpBmKxakAADVQoICEtUJZEm4RAUUBMdnuKUMtAEAu4AUAAgY/Dr8ffzR/Sr4ORd11t05IxwCTFUiGERQGHaJJKCLBFgRBHiAA8IAQRRRQSDkkXTaE4AsjHRAqxgUyigkUUUFACJIaqBIJbDRGBEhx1tiBBgXLgIQgiqChhgAIBRCaAZIFLpoFCJA1iwQitU0EkAHCRShjQKbcEIIGAkkYNqGEOoXJZNnKztEqhCJVRoKcFTYFBBPYoR5qKERa84fHgLy8RMZSK7DiSGyGNobKtw5wpEUBAA0MChicBI9SiIiT/SUJIlt+eB4hkgiy1Eqm7WE0SQlYCABIIIFH/4AyaflImgais5vHYEERiAaaBTVLyKOItoFtiJZrlkkME2SAERS0iKCQJbRQIopFTLstM1sjYIgPXEuapo7xSRUSr5ZTTrbINMs10gIiqsX/3eEGbfxax9oaKUTtpYjEV3TV3GCLG8bzRpHf0Agixid7yXLR0zqEI1ksKQKMksYWloAECmkCSIaKSABDBAJFec1RxgXXaoaBm0984oyjBathhSDMCqGHZ1nOMSwiNAdUyWWKQNBSRMk/VhFaZlEFJR5NPZ81DsUtiz/bRkvqhAXOi2DpzndEJAEBSR5wBEYQfxJpU6iliBYIYYQjjCZH9rZGdpgNSoSntymTHuDCxXCUkEDY/OmIkgmsxYAFVsgkiCUkVVUwh+oaZpJhY46F0gB0UX6logiWCkWWo122B0lPb59JA7oIIusBM0NIlkkgaySyUSCQCYKgIrLbpUmLAGigENogBgiUNgj7W2EgBc23xyQPokQIEkghokpQikiAW2EoAAiwSJD11DLFSWWIN8VFIigBBMo0SkgW6y00SRKURdZSALIFTJLbG9sNkAgQCIIQmBQQBSagViiusNnEuGIoIwJ1gQZE0DHIpIElBYYdtRDTSEjFEtlJJwkpIkQlNIaWos5Vxy2bYGZLDznEUJIJhCF2gYQgAkCkMIkkhhbRgcMADDCFV0AElhoIIkaSUUklWAoRBMKiUZBYaCLFBJpgkgsdIIYE0UZFjKAAhRRQRjKRBFTHFRpilkEkJQSWy0SyAhGqxZbIwDNqCjDEAEEgogtlisU8xS5YCi0wBQBRLaATTTDGNBlghIKqkAUwyRQW7W2GRNZAAZDTIKQEsgIJohAJmsUQGA1UwwQwxTYLjSChVQCFlEAAhJIAgsQaa4YkCAoExQSDTSBWUdLFBqgKonAEhQWCYUSDDEgChMCIIAABZKaEAM1MlgJFEgQowwggKSgihCCTFKYEIBbFkoAlNFAkJIQE0QihEhAgBAyhhAAIaSTFWWCEKwQkCIUS0QmjFki2heUCChRgBACFKIAooEkwQkQYMEgkgACIRBYcKASgBILEAJQRhhBNMIUoGGEUY4UmhMEQRSRQAACFMAhFAIgIIAUwAgCkAUkEBhRjiCggSCAFQwhRROEIQAYSUUQE0wCmhBQCIKKLLQgEQoNEAAByhkSwihACQWWAhSaBKMSEJIOGwIFxqQQAsIUgwkUAglFExRDSABcaBRVGNJxogApFMQRGkEESAUUEhKAABaABYcKEgERZFFBAIgUEAAgQVU00xYQQSKrAKYJEAAJhpwFFEAQgC0gEUEQChIJAcqBbDJCEJgFBOBRKFAWkmAmAQwwyRJNNLLDDbNNF1ttmv2lt00XXXWa22WySxAIYKVjQCKYEJQpoAGGEgIWKEkIo1U9ihoeCgiQAAASEqksKAkzBVoXK3EkUoA44BRAQSFVUaIgFENCJJxogBEU4kUQAqOgIBghAIICSVTCFggUhEEFogkQAAEFAiSIihMAaEUqqIhyEpwkBCOIINEUCQhCA5YEkhILKaCCSBRREIAgQIAFEAkQGumgEElAWhEpR2aaQQRRFINFIEGOEIIU0UCggEUwABBIJRiEaEKZEkw4pArpgAwWgk9YQiimGBRhBjgBcZT1HIxggIAEIwEUSmrCACjrAxAMCILRRCaIGwpFAAElQQgUIgSAgTU0rhuETFBLtyxpHaMkAvg7R2EYgAqxEC8M0BA4qAhLJAJIEIAAqpookkkWimgQWWGRRRKDdtYSYpJJEmts0t10MskQmGy2aC4YSRaYDTUKLDaMEAIooEEgolAYgEVHoEAE0BSMESQCKZIQEAAFIkkkxhAUWkhAU0UgCBCCBBIcKQRBFhoJEBohJ5oUwBDnBAA5UBADCCRKJAQgFBAEFAxIAgMY4UmqmmRMqR4iQIAaCSabEMIYEVAAgJAQy3gY1gv7Ch1QCRRSUECaEkJANIgsoEoWQAmGWymm4xhQJBCIYBACGxwgEJhooEsWiQwESCkGxRjRCSZqYKEAEoAFppBBLZMV0WCpNk6yRBCKEjJRRaISEAgQhFWWGIIWWQoIY0wwlBECfDjCEaYqFpIQpOMR6wwXjIt14IEhGhqCCAEMISEgGNNwAklggAIYpYXNn+UIph2g7aMbBkUGEJoIBgBWNBIRkHadYwmHChRQJNVETAB7GCetRBowF0EQkA62WEBWWxbdZZfYKprNF1kwohgBMFkQSAAgQSA02haIiQKJLIMAEhpowoJIIAAWmjEoUiiAmBICYITBTRSKErPIptOFJAEU0QkEW1EgNhLMS6OyZSQQGFFkgAACNGgWUECEY1UBnBqccZQgCYUIEsgQ54kMhpAQAYY00QAikBRAECBBQLSQF0IIQApIshESgQCAlGGAkBIoJSMYIhTAFEAAgIhlhhESikkAESQUEBAABACRjjAKEooAkIpoopgSAiGmhCmQEBCCIRSYJSaoAQC7gBQACBgCyQLCAqICiPiBFzXW5TkjEhBIJkkoANMWqgASCmiCGhIDBDASCBQCEppARwxBIIgQUU0CDCiGmBDQALLIBALBEEFEFBEAFGMY4UUEAAAFCBIIQRlgUCQTFgAFGFAgJAESUEEEEQwEUxBCCaKcIAQRFFJIISCBKJIQlFBDCiiAEAeyyaCzgW30FBEEIAAlhhkWGSWSUQ04wRBRAKBTAcAAFABgoolBEAgSAgmqmCgSSxAIBBJbLBNDEJs1OmgMU00SyyamCzRW0xBqacaYLRYJFFEEAoBNMEMU0WiEEQ0UihAABThSKaCCEIBBIBFGAJoUY0HGhmmSMRzBMCJQAKKCEwoBEAAAEBAUSCgkAAQimhIQKADRAIIAEFNEIhFFBFAUiAAAAgQQURKaIAAARTgREIpOMgghgloWmrKmCAAHARKMKISQJRCKEABoIAtBqxoP9s8zXdFnEBAIIcKYIABAFkhNMAgBgtAUAiiQUAAWiBAKKACARRQRFAQIooAAAogEBLtUY0w9PxACAAIBBBAAEAEooFAkJSoagAApAiQwghBDCKIBACCAEEMApoIIIIAQAEAAgkAAABKLM2N9gwBDEFooAFFIogEQhEQw4IACCg+wUm2WYQ0GEAhgoBNFAAAUUAigECiEQBQSQIYIRjjQD7R7DYK39UIPmWR3WE2JAwX6uVFkDHyCEkMEEMNUNloWGWCy2SyWWBZZJDTJYYYICCHHdD67bbEE9Fohpi9ttBIIRhRIASRBFNBIogIoJwgQBDHDHCiAAhCBAKCBTQRADuOJIvhhqVMPngh6+th+nxaCACccaIAAEAggCFFAQIEQUkkCEUggABARhQRQCIRhGFFIEEIpoFEYQCAiCAAAmhYKARBAaaIBDLDYar4JxfEQnAE0wnGCChaKABAJYAABEgBBEJpgAAkBthmu9M9AJhBYaaaIRRBIEoBEENAEgkgSAAASGGSAAwXtnY+5sL/CEEEEAIpokWMYUwSCACCAQxRAaaIIIHEkHkIAEkJokkAUhCiQhAQwExRQZAQRBARRFONEIgEIQooXFDxNlb4tiBbJhTTRAJYCEglIgMEIgEoOgdvRygvdVxBBIIRQIBAADXIKr0Tb/3MPbcl//ymC6gYeq/TnPrDIEkkhqsqFW94UunnoB+GQQxRkd4m2xtqpHuobaJlsF3oRskmSWCH2tBNCzKS5UwDdFklAMhpF8rYdtTe6WwsoUBLtNDRTDrYaFlkEtkEglgoSSSQASASwyxBAJDTJZZJIFktlhttNEEkSy2iAiCAAwRCKAAIIASCaDCX/zbbbbZMSSQAmikUQQBARRAICEKKKEhBIAgAhIgMY00QAQCSHDBIBBCCCCKABEIgFEAJAlhgQ00UUAACSywnu2ggoCGe2ElhggAEMsFENP+PTAvuYthARTRDSKCEIFOFBEIIoJMAQinHCgA000xQaJAaYJBIID9WFOTYOSZ4UUUAgA0QAAAmmhg2gRk2WBJNGLbbZZbYQEQigggAiig+0c7Fzyq84BoaFFRAJATYAssHtJJttHASOh22iSCgCDBSLCGBLYBQEIttG0kQY6AYLbHDd/6//D/+d3vn91gcNxwnimumhdwZqe7L9n1XZBJAJn0PYbbALPtttvKOvdQ2wq/8UFnDDApr8bQUen9sLmGGssqiA5hAIAAACKAQKDnLabSY+hIMQUQCQ40SQEBBBBCCKaIRREgAIolOONNASiAAAUUACHBcYASBJASKaFoAABNFFEJAQAQiggiEYUBMIRCAABQCCEAEEABFEBBAU44UUUUUAiAak1Fx066uGDbbbZ7bbbbESEkiAEEUUihIAACKCARQCEoohONFEJoEAQJzzWO7xxw/cJddBSIrDBINDbb0dILgL/RS6OPzcggBm2m2eeaBEEANNBNMBGNENtpLLIoohKAqQSqUmaYTDAAAGMMu0uHQM1xYMxUUgjhAAAAQAIBRSEooBNAhFFFEUUQAQAEAAQAMCasYq9tHXEElhhgkkMMEPOGEcRabEAgAEasdFDLQQCZRSSCTbJIIIcMkmGaENUwrrdRA9/oVlD9l5rlhMMVEAwWvKhZ+6Xgco7LTDaYpcDEHp7SCPCMMEojHskltkhQHgUE285A0gAJRsmRRGIGINDGoh4dmqkQgo/4CAr6WyDgBx7FBIqwoLiA2GlGgiEg0kgDyWEk2pAPQ4waHXPBIIgptlJNNElhAAIAAAZiDLFRIkgBAEEAIUYwQQ0SmmCAHaentA2q/aEENMEtMAtgQaWooXQ0UQmg/zQ00THHYqCl31+v9XesgSGrHGiCgEShECDLZYKkyRF1sNvshENlkWWCQUUQCjEBQRAAhQRSKAEhENGHJn2hQQmQQWaWwyWBCKIJLDJATVDftcUBANmpgKiXBVUoTSHg222G02z3eWDJQ7CGMJSYYCkEBAEkqxVQIaqDVdFNDkAwTJ8NI5oHUChtuxR58vOwFRFXX1wWe6C5xCOPJIJzoOKLBZWK62qAd9HQp/6Ab7Bx4qsMOpxMMAUGvHCGeiEwFBCe8IjyyUB6KJTaPdIQwHHikJc9VU5AOcJXTQIaKaDtWVWNJrpwgBU88s0wQCnAbT3XTjT0AcC5BhxxBFAisEIllRzJkWugaATQUScJwgAFVBZBABLQALHgo5ZY4QQAaqsJDxhIZqBpBMWOBZQJMNcBBDFAjsMAnT2CaueSQKCwBWJAIFWBMEAmmiKLAU1wxjlRDhSACQAhgFIoNdWAQBALuAFAAIGP/5//v//AAA+D0W8da3OSMGnCJcQBjhEAwgUiQCKUTRBAJqwhIgHPEEBnjEsoE88AimSQCSWwhQAZZDSBAMgJoGnGqKKK2z3w//Xno6rbNDBMsVMNWdUCwOW305V12OGgCL3PYZY866DpgNl6qp6gMFVy2qCUWOHAccoZTTSUSKACBDJEAJqwII8iCSBqmAkQQgCEIaq6ICAfeCym1hkDICivHnk4UI8QQbRiGeMEECCRbTCSSCCCIEcchItMkoIgWUSRCCQBCyAUNBIQQSTbQAhBJBFspMMwSKMGESQAQTBMVUIwAd0sEFVWKOQ5V51wRAAoaDjhQABpyIMgHafRIEWGAWKGikWgYqqqaueTjAAoNNBBy4gAEE40Smi1Vc0AKEEKCRQCCSBJBBIIBBOAEAIYgrLHmDcAQUEuuj1hQUCAoPWXOBFy4DIgLgok4QGgYcaNVhAIsYBoxUAAEIQJkA8QUCqmgGAAKBDjAcoZbZBs8dtkMMMMgPPKg195QwWgarzhUUGEGSDPKYYBIYRJQFlAirDAiAUwTY6446ZddrBmvjt1ls00sGqGyUQQ4wWAKUKZQCIbDgBDEJRJIKLKQFtBAkEcUEkgCSTjSiaACAAKAx4xFFAwADpc4HCoEAFACDAGWDRSGeAJAqBIAhghgO3SxRQyxU0wPYb6Z4IYrbBNUUq4gFFNEAIUWKgKAPawg8/nRSiSmyDLSKYYJaJAAAhHPGiW11VQjTa8oq8qIaBzxpoohijngP7+P//6PR0ACAQgym22y0EBFAABFEIogNhsMtpEY8YATTDorfNjXHAtkMsteNVVECgiglAEcIEgCcorXyKdo9BJZOdFJZ7xwEEAYE02WAggaZDjDAAKaqBwpp5whxp5ICGAAgiAcYkgCqaTjgLACDBABOXFEigIACw0yGmGgQyQLZYaqqbVFDAMUOeNR5poEABJAAAnmghATTjxQIIBICAJqoghkdnigPXXQEmWwhAQRwaCgjhSaaBOCKJIJHBDMNjmmAEoUGmAACaoZZLjRYBwCh55ghJogGmmGmmqGQGgoqaZbDQBQKACPOAIBABAoCiCinHAFEYQRUQRTySaeMB655pwIJCIIEUJAkAik4EQCMATTziAKCBIxpBIAAFNAAE0UQUEwGmgBT1QcaaKIABywIppCAIIwCgEEEY4EAUAATTjQDBBAAANVFFNBpxxoAU44QCiLGGgIFDDTTFBJaAkhppppEFOEEZY0QQQSQ0QQKKBBDJaYbA1ujs1ki2pACwEsIAgkkAQgCsCIYBTVjCOWNEONUNEEAQAAAjLHLFAFXzzgcsqBDDXVNEAAIJMEIAQDHrAE44wRBAAARhgARBJJBIQQJIRQEIkohEolgkgEESSiSSikWBJSKKRYSDHEIkEgkEkklDAEEMAgEMABTBAgippkhghgGGGnLKGCSHAsoYJIIaaqoAghphohhggEAw0QS000w0wBDVVlTDTAaBhhNMpyxpooCCCQQUYQAAABQQAKaDjjTCWOOOPNAApwAUEI8UginjAAAQBTRRTVVCONOApwopy4DAkAgEEAkgACSACBQEccBCFAgEAEBgNMJU05dYUEEYwjgQRgQAQQSAIx65opxoooHLGnLGg440QAaaIDDTTDRAEFWNNNNFAAAVY40CnGiigAATRTjjhKcBoFONAopxwoE4QAU44U44wQBThjQDjThAAhoNNNEkNMFQQ1UwU00wAaITzgAa67pCmmk0ssEEOMMUYBBAkkgggDjiCKccKBjCOWByqiqiigGKKrLGmiAiAAARhj1iKAKAhOPfBwogAoAQQ0wwSCHPAIABABTTRTTBOVNNMEByxoGiAQQU001UwAFlDVjRAAKBgFONEBGVMAA00w0400QAQAKKcsKKaARBBAAIoAIoFAEA8c40EUCAwTVVVTDAaqaCyxogFAAxoAEY4UUEUEUCgKKMaqaIIaaCppoECyokNMEwSVZY0wQQQBBDljQcaDjBFEApohz6poHGinHHHHCngsKKAAKKccIABFEAAJxxooHHCinCAAigAAKIAAKcIADBEAEAFNAgpwGnCggC00AAAQBTQAQQABQAIoAAAGPOGMEAgigEEUAEwjQBQATjQBRAAopxoogpoEACA5U0Q5UQAKcaDlTTRAKBogAppyoggAE40U4UUUCgQRRTjQAKccIAAoFAoONEAgA00QGmimiCADjljRAKaaaBohypgghppoGnLGnLCAHLgsaccacusacBxpxxogAAogAU44044040AKcaBRAKIAKAopxwhFFOOMI0AU40HHHHAaBTl1QccccBogAEAAgAFMEQAAAU440CgccaBRAATjQAoopooFAogACAUQCAU040AKcaBTjQKIAApxxopxpy54AWCjHGiAEAQAADQQBBQKsAoNONByxpogAU40GiiAV0QicpqCDVRRDBWNEMEAAhpoCA1Y01UU00wTQIDVjjTTRAAggFEAAgFMI40QCnGiCAQRAKaIBAcaIAFONEFNEFXUEQCnGiCACCAAIIIBTjRADCWNEAgONBywLGnHGmg5ZZQjTjQAKcaBTCNApxoOWOWMEQCmg5Y0QCgcaBTjQKccaAFOONAFOONACnGgCnGgU5QjjRTjQKcscBoFONAgApxoAU40CmiAU4wQKcaBTjQKcBoFONApxoFMI0CnGgU40CgcaBTjQKcaBBONAFONApxwGg4040CnGgQTjQKcaBRAKBxoFONAONOMECnGgU0CnGgEAu4ABgAC4AAIABAADAAP36hZm1sA4sABTjQKcaBTjBApxoFONBxwGgU40HLGiAQABTjQKcaBTCNApxoFONAoHGgU40CnGgQTjQKcaBTjQApxoFONApxoAU40CnGgU0QAKcaIBTjRAApxogFONEAoHGiAU40QCiABTjQKcaBTjBApxoFONApwGgU40CnGgUwjQKcaBTjQKBxoFONApxoEE40CnGgU40AKcaBTjQKcaAFMAAAAAAAA=")
+format = 3
+mix_rate = 48000
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_d4oku"]
+random_pitch = 1.25
+streams_count = 1
+stream_0/stream = SubResource("AudioStreamWAV_pegen")
+
+[sub_resource type="Resource" id="Resource_qtgyu"]
+script = ExtResource("5_1v8r1")
+audio_stream = SubResource("AudioStreamRandomizer_d4oku")
+volume = -28.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="Resource" id="Resource_hdidk"]
+script = ExtResource("24_3p5r5")
+name = "UNARMED"
+melee = true
+ranged = false
+flip = false
+offset = 0.0
+base_rotation_direction = 0
+base_rotation_speed = 0.0
+base_damage = 1
+base_knockback = 0.0
+base_attack_speed = 0.0
+base_shoot_speed = 0.0
+base_size = 25.0
+base_hitstop = 0.05
+base_projectiles = 0
+base_projectile_speed = 0.0
+base_projectile_scale = 0.0
+base_shoot_duration = 0.0
+base_rot_speed_bounce_boost = false
+stat_scale_value = 1.0
+stat_scale_name = "DMG / Max Speed"
+scaling_stat_float = false
+no_rotation_change = false
+weapon_prefab = ExtResource("34_pegen")
+bg_projectile = false
+details = ""
+sfx_hit = SubResource("Resource_qtgyu")
+metadata/_custom_type_script = "uid://c1biydo2yju8x"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lt4ae"]
+random_pitch = 1.25
+streams_count = 1
+stream_0/stream = ExtResource("35_qtgyu")
+
+[sub_resource type="Resource" id="Resource_3duvo"]
+script = ExtResource("5_1v8r1")
+audio_stream = SubResource("AudioStreamRandomizer_lt4ae")
+volume = -28.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="Resource" id="Resource_pegen"]
+script = ExtResource("24_3p5r5")
+name = "UNARMED?"
+melee = true
+ranged = false
+flip = false
+offset = 0.0
+base_rotation_direction = 0
+base_rotation_speed = 0.0
+base_damage = 1
+base_knockback = 1500.0
+base_attack_speed = 0.0
+base_shoot_speed = 0.0
+base_size = 25.0
+base_hitstop = 0.05
+base_projectiles = 0
+base_projectile_speed = 0.0
+base_projectile_scale = 0.0
+base_shoot_duration = 0.0
+base_rot_speed_bounce_boost = false
+stat_scale_value = 0.5
+stat_scale_name = "DMG / Max Speed"
+scaling_stat_float = false
+no_rotation_change = false
+weapon_prefab = ExtResource("36_d4oku")
+bg_projectile = false
+details = "Triggers at 7 / 7 Speed"
+sfx_hit = SubResource("Resource_3duvo")
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 
 [sub_resource type="Environment" id="Environment_p1oyv"]
 background_mode = 3
 adjustment_enabled = true
 adjustment_brightness = 0.9
-adjustment_contrast = 1.1
-adjustment_saturation = 1.6
+adjustment_saturation = 1.5
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_j21cw"]
 radius = 370.0
@@ -561,19 +657,25 @@ shader_parameter/spin_amount = 0.25
 shader_parameter/pixel_filter = 740.0
 shader_parameter/is_rotating = false
 
-[node name="Main2" type="Node2D" node_paths=PackedStringArray("patchnote_pages", "new_challenger_ball", "balls", "attraction_point")]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pegen"]
+shader = ExtResource("59_hdidk")
+shader_parameter/r_displacement = Vector2(0, 0)
+shader_parameter/g_displacement = Vector2(0, 0)
+shader_parameter/b_displacement = Vector2(0, 0)
+
+[node name="Main2" type="Node2D" node_paths=PackedStringArray("new_challenger_ball", "balls", "attraction_point")]
 rotation = 1.5708
 script = ExtResource("1_nmkph")
-devmode = true
+record = true
 patchnote_s_per_page = 23.0
-patchnote_pages = [NodePath("PatchNote/Line"), NodePath("PatchNote/Line2"), NodePath("PatchNote/Line3")]
 new_challenger_ball = NodePath("Balls/Fighters/Reaper")
 time_attack_leaderboards = Dictionary[String, ExtResource("2_poh84")]({
 "HYDRA": ExtResource("3_0qwvu"),
 "WARLOCK": ExtResource("4_g7d4c")
 })
 time_attack_ranking_duration = 10.0
-balls = [NodePath("Balls/Fighters/Reaper"), NodePath("Balls/Fighters/Bow")]
+dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
+balls = [NodePath("Balls/Fighters/Sandevistan"), NodePath("Balls/Fighters/Bow")]
 fx_hit_prefab = ExtResource("2_8wnqf")
 fx_death_prefab = ExtResource("3_uot50")
 fx_clash = ExtResource("4_0o7lx")
@@ -584,7 +686,7 @@ sfx_bounce = SubResource("Resource_7mvmt")
 sfx_bounce_boss = SubResource("Resource_gaafq")
 sfx_death = SubResource("Resource_go1jf")
 ve_announcer = SubResource("Resource_p1oyv")
-obs_delay = 3.0
+obs_delay = 4.0
 earclacks_mode = true
 _1v1_hp = 100
 attraction_point = NodePath("AttractionPoint")
@@ -812,9 +914,9 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -471.999
-offset_top = -95.0003
-offset_right = -91.9992
+offset_left = -487.0
+offset_top = -95.0
+offset_right = -56.0
 offset_bottom = 158.0
 grow_horizontal = 2
 alignment = 1
@@ -831,6 +933,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_outline_size = 30
 theme_override_fonts/normal_font = ExtResource("12_per8v")
 theme_override_font_sizes/normal_font_size = 100
+bbcode_enabled = true
 text = " %s "
 fit_content = true
 scroll_active = false
@@ -873,10 +976,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 72.0007
-offset_top = -93.0022
-offset_right = 482.001
-offset_bottom = 159.998
+offset_left = 32.0
+offset_top = -93.0
+offset_right = 482.0
+offset_bottom = 160.0
 grow_horizontal = 2
 alignment = 1
 
@@ -900,6 +1003,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_outline_size = 30
 theme_override_fonts/normal_font = ExtResource("12_per8v")
 theme_override_font_sizes/normal_font_size = 100
+bbcode_enabled = true
 text = " %s "
 fit_content = true
 scroll_active = false
@@ -990,6 +1094,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_outline_size = 30
 theme_override_fonts/normal_font = ExtResource("12_per8v")
 theme_override_font_sizes/normal_font_size = 100
+bbcode_enabled = true
 text = " %s "
 fit_content = true
 scroll_active = false
@@ -1019,6 +1124,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_outline_size = 30
 theme_override_fonts/normal_font = ExtResource("12_per8v")
 theme_override_font_sizes/normal_font_size = 100
+bbcode_enabled = true
 text = " %s "
 fit_content = true
 scroll_active = false
@@ -1103,7 +1209,7 @@ vertical_alignment = 1
 justification_flags = 0
 
 [node name="TARecord" type="RichTextLabel" parent="UI/Top"]
-self_modulate = Color(0, 0, 0, 1)
+self_modulate = Color(0.121569, 0.0627451, 0.164706, 1)
 layout_mode = 2
 offset_left = 382.998
 offset_top = 263.999
@@ -1148,7 +1254,7 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 20
 theme_override_fonts/normal_font = ExtResource("12_per8v")
-theme_override_font_sizes/normal_font_size = 70
+theme_override_font_sizes/normal_font_size = 50
 bbcode_enabled = true
 text = " %s : %s "
 fit_content = true
@@ -1159,70 +1265,72 @@ vertical_alignment = 1
 script = ExtResource("13_vvmd2")
 
 [node name="StatRight" type="RichTextLabel" parent="UI/Bottom"]
-visible = false
-custom_minimum_size = Vector2(350, 0)
+clip_contents = false
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-offset_left = 664.005
-offset_top = -60.0
-offset_right = 1014.01
-offset_bottom = 80.0001
+offset_left = 1025.01
+offset_top = -27.0037
+offset_right = 1025.01
+offset_bottom = 12.9963
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 20
 theme_override_fonts/normal_font = ExtResource("12_per8v")
-theme_override_font_sizes/normal_font_size = 70
+theme_override_font_sizes/normal_font_size = 50
 bbcode_enabled = true
 text = " %s : %s "
-fit_content = true
 scroll_active = false
 autowrap_mode = 0
 shortcut_keys_enabled = false
 horizontal_alignment = 2
 vertical_alignment = 1
+justification_flags = 160
 script = ExtResource("13_vvmd2")
 
 [node name="StatAlly" type="RichTextLabel" parent="UI/Bottom"]
-custom_minimum_size = Vector2(350, 0)
+clip_contents = false
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-offset_left = 675.006
-offset_top = -59.0037
+offset_left = 1025.01
+offset_top = -27.0037
 offset_right = 1025.01
-offset_bottom = 80.9963
+offset_bottom = 12.9963
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 20
 theme_override_fonts/normal_font = ExtResource("12_per8v")
-theme_override_font_sizes/normal_font_size = 70
+theme_override_font_sizes/normal_font_size = 50
 bbcode_enabled = true
 text = " %s : %s "
-fit_content = true
 scroll_active = false
 autowrap_mode = 0
 shortcut_keys_enabled = false
 horizontal_alignment = 2
 vertical_alignment = 1
+justification_flags = 160
 script = ExtResource("13_vvmd2")
 
 [node name="StatAlly2" type="RichTextLabel" parent="UI/Bottom"]
-custom_minimum_size = Vector2(350, 0)
+clip_contents = false
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-offset_left = 675.006
-offset_top = 33.9963
+offset_left = 1025.01
+offset_top = 44.9963
 offset_right = 1025.01
-offset_bottom = 173.996
+offset_bottom = 84.9963
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 20
 theme_override_fonts/normal_font = ExtResource("12_per8v")
-theme_override_font_sizes/normal_font_size = 70
+theme_override_font_sizes/normal_font_size = 50
 bbcode_enabled = true
 text = " %s : %s "
-fit_content = true
 scroll_active = false
 autowrap_mode = 0
 shortcut_keys_enabled = false
 horizontal_alignment = 2
 vertical_alignment = 1
+justification_flags = 160
 script = ExtResource("13_vvmd2")
 
 [node name="DamageDoneContainer" type="VBoxContainer" parent="UI/Bottom"]
@@ -1306,6 +1414,9 @@ justification_flags = 0
 [node name="SpecialEffectsParent" type="Node2D" parent="."]
 rotation = -1.5708
 
+[node name="ProjectilesBGParent" type="Node2D" parent="."]
+rotation = -1.5708
+
 [node name="Balls" type="Node2D" parent="."]
 
 [node name="Bosses" type="Node2D" parent="Balls"]
@@ -1319,10 +1430,10 @@ color = Color(0.917647, 0.384314, 0.384314, 1)
 team = 1
 stop = true
 is_boss = true
-max_speed = 1500.0
-min_horizontal = 100.0
+max_speed = 1000.0
+min_horizontal = 0.0
 gravity_strength = 0.0
-drag_force = 0.1
+drag_force = 0.2
 
 [node name="Root" parent="Balls/Bosses/HYDRA" index="0"]
 scale = Vector2(0.21, 0.21)
@@ -1478,12 +1589,60 @@ weapon_settings = ExtResource("28_djmp0")
 start_dir = Vector2(-1, 1)
 health = 50
 base_weapon_rotation = 120.0
-color = Color(0.517647, 0.396078, 0.92549, 1)
+color = Color(0.60915, 0.5115, 0.93, 1)
 dead = true
 stop = true
 max_speed = 1800.0
 min_horizontal = 100.0
 drag_force = 0.025
+
+[node name="Unarmed" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2246, 1022.99)
+weapon_settings = SubResource("Resource_hdidk")
+start_dir = Vector2(-1, 1)
+health = 50
+base_weapon_rotation = 120.0
+color = Color(0.77, 0.77, 0.77, 1)
+dead = true
+stop = true
+max_speed = 800.0
+min_horizontal = 0.0
+gravity_strength = 800.0
+drag_force = 0.05
+bounce_boost = 0.0
+relative_bounce_boost = 0.15
+knockback_resistance = true
+
+[node name="Sandevistan" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2246, 1022.99)
+weapon_settings = SubResource("Resource_pegen")
+start_dir = Vector2(-1, 1)
+health = 50
+base_weapon_rotation = 120.0
+color = Color(0.75638, 0.745483, 0.769531, 1)
+dead = true
+stop = true
+max_speed = 800.0
+min_horizontal = 0.0
+gravity_strength = 2000.0
+drag_force = 0.05
+bounce_boost = 0.0
+relative_bounce_boost = 0.4
+
+[node name="Gems" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2246, 1022.99)
+weapon_settings = ExtResource("34_g7d4c")
+start_dir = Vector2(-1, 1)
+health = 50
+base_weapon_rotation = 120.0
+color = Color(0.866667, 0.89375, 1, 1)
+dead = true
+stop = true
+max_speed = 1600.0
+min_horizontal = 100.0
+gravity_strength = 1600.0
+drag_force = 0.025
+bounce_boost = 400.0
 
 [node name="Sword" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2370.47, 297.991)
@@ -1504,11 +1663,12 @@ weapon_settings = ExtResource("22_ee1k8")
 start_dir = Vector2(-1, 1)
 health = 75
 base_weapon_rotation = 120.0
-color = Color(0.0709534, 0.726563, 0.488514, 1)
+color = Color(0.42041, 0.875, 0.70994, 1)
 stop = true
-max_speed = 1800.0
+max_speed = 2000.0
 min_horizontal = 50.0
-drag_force = 0.01
+gravity_strength = 1000.0
+drag_force = 0.1
 
 [node name="Katana" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2355, 666.991)
@@ -1523,6 +1683,20 @@ stop = true
 max_speed = 2000.0
 min_horizontal = 50.0
 
+[node name="Dagger" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2355, 666.991)
+weapon_settings = ExtResource("38_6fdjq")
+start_dir = Vector2(-1, 1)
+health = 50
+base_weapon_rotation = 120.0
+color = Color(0.214005, 0.730469, 0.379434, 1)
+team = 1
+dead = true
+stop = true
+max_speed = 2000.0
+min_horizontal = 0.0
+gravity_strength = 1500.0
+
 [node name="Thunder" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2953, 826.989)
 weapon_settings = ExtResource("23_n5n48")
@@ -1532,8 +1706,8 @@ base_weapon_rotation = 135.0
 color = Color(0.933333, 0.560784, 0.796078, 1)
 stop = true
 max_speed = 1800.0
-min_horizontal = 300.0
-drag_force = 0.01
+min_horizontal = 100.0
+drag_force = 0.05
 
 [node name="Reaper" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(1991, 1197.99)
@@ -2181,6 +2355,23 @@ layout_mode = 2
 
 [node name="RankingLine4" parent="TimeAttackLeaderboard/Ranks" instance=ExtResource("47_d4iat")]
 layout_mode = 2
+
+[node name="Confettis" type="Node2D" parent="."]
+
+[node name="FxConfettis" parent="Confettis" instance=ExtResource("57_70hv1")]
+position = Vector2(75.0006, 1122)
+rotation = 0.261799
+scale = Vector2(12, 12)
+
+[node name="FxConfettis2" parent="Confettis" instance=ExtResource("57_70hv1")]
+position = Vector2(1005, 1122)
+rotation = -0.261799
+scale = Vector2(12, 12)
+
+[node name="ChromaticAberration" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_pegen")
+offset_right = 1080.0
+offset_bottom = 1920.0
 
 [editable path="Balls/Bosses/HYDRA"]
 [editable path="Balls/Bosses/WARLOCK"]

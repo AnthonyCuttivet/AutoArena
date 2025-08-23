@@ -25,7 +25,7 @@ func scale_stat():
 	thunderstrike_duration += stat_scale_value;
 	init_scaling_stat();
 
-func on_listened_event_received(id:int):
+func on_listened_event_received(id:int, to:int, is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	scale_stat();
 	pass;
@@ -35,7 +35,7 @@ func shoot_projectile():
 
 func add_thunder():
 	var p:Projectile = Utils.shoot_projectile(settings.projectile_prefab, ball_owner, ball_owner.weapon_slot.global_rotation, self);
-	p.set_speed(projectile_speed + scaling_stat_value * 100.0);
+	p.set_speed(projectile_speed + scaling_stat_value * 50.0);
 	p.weapon_owner = self;
 	p.global_position = p_spawn.global_position;
 	p.global_rotation = p_spawn.global_rotation;
@@ -101,10 +101,12 @@ func register_thundertrike(p:Projectile):
 func clear_thunderstrike(t, s):
 
 	for i in t:
-		thunders[i].destroy();
+		if(thunders[i] != null):
+			thunders[i].destroy();
 		thunders.erase(i);
 		pass
 
 	for i in s:
-		thunderstrikes[i].destroy();
+		if(thunderstrikes[i] != null):
+			thunderstrikes[i].destroy();
 		thunderstrikes.erase(i);

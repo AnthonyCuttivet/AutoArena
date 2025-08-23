@@ -1,5 +1,6 @@
 class_name TimeAttackData extends Resource
 
+@export var boss:String = "BOSS_NAME";
 @export var time:float = 0.0;
 
 @export var ball_1_name:String;

@@ -7,15 +7,16 @@ class_name Projectile extends Node2D
 @export var rotation_speed:float = 0.0;
 @export var absolute:bool = false;
 @export var hitbox:Area2D;
-
-var custom_damage:int = -1;
-
+@export var destroy_on_hit_delay:float = 0.0;
 @export var ball_owner:BattleBall;
-var weapon_owner:Weapon;
-var velocity: Vector2 = Vector2.ZERO;
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var raycast: RayCast2D = $RayCast2D
+
+var custom_damage:int = -1;
+var weapon_owner:Weapon;
+var velocity: Vector2 = Vector2.ZERO;
+var self_destruct_remaining:float = 0.0;
 
 func init(owner:BattleBall, s:float, p:int = 0, b:int = 0):
 	ball_owner = owner;
@@ -34,6 +35,11 @@ func init(owner:BattleBall, s:float, p:int = 0, b:int = 0):
 func _physics_process(delta: float) -> void:
 	global_position += velocity * delta;
 	global_rotation_degrees += rotation_speed * delta;
+
+	if(self_destruct_remaining > 0.0):
+		self_destruct_remaining = clamp(self_destruct_remaining - delta, 0.0, 100.0);
+		if(self_destruct_remaining == 0.0):
+			destroy();
 
 func set_speed(s:float):
 	speed = s;
@@ -73,6 +79,9 @@ func on_hurtbox_hit(other:BattleBall):
 	pierce_count -= 1;
 	if(pierce_count < 0):
 		destroy();
+
+	if(destroy_on_hit_delay > 0.0 && self_destruct_remaining == 0.0):
+		self_destruct_remaining = destroy_on_hit_delay;
 
 func destroy():
 	on_destroy_effect();

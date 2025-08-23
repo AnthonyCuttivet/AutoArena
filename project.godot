@@ -27,8 +27,8 @@ DebugDraw2D="*res://addons/debugdraw2d/DebugDraw2D.gd"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/window_width_override=960
-window/size/window_height_override=540
+window/size/resizable=false
+window/size/borderless=true
 window/vsync/vsync_mode=2
 
 [editor_plugins]

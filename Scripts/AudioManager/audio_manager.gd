@@ -5,13 +5,13 @@ signal audio_finished(instance_id: int);
 var max_audio_players: int = 20;
 var active_audio_players: int = 0;
 
-func play_sfx(sfx:SFX, bus: StringName = "SFX", offset: float = 0.0, fade_in: float = 0.0, forced:bool = true) -> NodePath:
+func play_sfx(sfx:SFX, bus: StringName = "SFX", pitch:float = 1.0, offset: float = 0.0, fade_in: float = 0.0, forced:bool = true) -> NodePath:
 	if (sfx == null):
 		return NodePath();
 
-	return play_sound(sfx.audio_stream, sfx.volume, bus, offset, fade_in, forced);
+	return play_sound(sfx.audio_stream, sfx.volume, bus, offset, fade_in, forced, pitch);
 
-func play_sound(stream: AudioStream, volume: float, bus: StringName = "Master", offset: float = 0.0, fade_in: float = 0.0, forced:bool = false) -> NodePath:
+func play_sound(stream: AudioStream, volume: float, bus: StringName = "Master", offset: float = 0.0, fade_in: float = 0.0, forced:bool = false, pitch:float = 1.0) -> NodePath:
 	if (!forced && active_audio_players >= max_audio_players):
 		return NodePath();
 
@@ -19,6 +19,7 @@ func play_sound(stream: AudioStream, volume: float, bus: StringName = "Master", 
 	instance.stream = stream;
 	instance.bus = bus;
 	instance.volume_db = volume;
+	instance.pitch_scale = pitch;
 	instance.finished.connect(on_play_sound_finished.bind(instance));
 	add_child(instance);
 	instance.play(offset);

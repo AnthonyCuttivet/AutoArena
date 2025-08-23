@@ -1,0 +1,69 @@
+[gd_scene load_steps=11 format=3 uid="uid://dj8vboys4os4r"]
+
+[ext_resource type="Script" uid="uid://c75vf6wefeht5" path="res://Prefabs/Weapons/Armory/Sandevistan/weapon_sandevistan.gd" id="1_hgdne"]
+[ext_resource type="AudioStream" uid="uid://clrcc2qfchsr6" path="res://Audio/SFX/BattleBalls/se_demon_throwcommand_01.wav" id="2_eisy3"]
+[ext_resource type="AudioStream" uid="uid://c15qeh24i4xw6" path="res://Audio/SFX/BattleBalls/slowmo.mp3" id="2_we158"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="3_eisy3"]
+[ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="3_vh5ht"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hibq6"]
+random_pitch = 1.02
+streams_count = 1
+stream_0/stream = ExtResource("2_eisy3")
+
+[sub_resource type="Resource" id="Resource_qrbmh"]
+script = ExtResource("3_eisy3")
+audio_stream = SubResource("AudioStreamRandomizer_hibq6")
+volume = -27.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wtafd"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("2_we158")
+
+[sub_resource type="Resource" id="Resource_hibq6"]
+script = ExtResource("3_eisy3")
+audio_stream = SubResource("AudioStreamRandomizer_wtafd")
+volume = -35.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
+radius = 20.0
+height = 40.0
+
+[node name="WeaponSandevistan" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]
+script = ExtResource("1_hgdne")
+just_hurt_hit_cd = 0.0
+multi_hit_cd = 0.0
+sandevistan_hp_lost_per_s = 5
+speed_scale = 180.0
+sandevistan_damage_threshold = 7
+sandevistan_trigger_delay = 0.25
+sandevistan_trigger_time_scale = Array[float]([0.1, 1.5])
+sandevistan_name_color = Color(1, 1, 1, 1)
+psychosis_details_color = Color(0.916504, 0.859375, 1, 1)
+afterimages_opacity = Array[float]([0.3, 0.5])
+afterimages_interval = Array[float]([0.01, 0.015])
+sfx_sandevistan_hit = SubResource("Resource_qrbmh")
+sfx_sandevistan_trigger = SubResource("Resource_hibq6")
+sprite_2d = NodePath("Sprite2D")
+hitboxes = [NodePath("Sprite2D/WeaponHitbox")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+centered = false
+
+[node name="WeaponHitbox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("weapon", "collider")]
+script = ExtResource("3_vh5ht")
+weapon = NodePath("../..")
+collider = NodePath("CollisionShape2D")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
+shape = SubResource("CapsuleShape2D_1fhci")
+disabled = true
+debug_color = Color(1, 0, 0, 0.12549)
+
+[connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_entered"]
+[connection signal="area_exited" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_exited"]

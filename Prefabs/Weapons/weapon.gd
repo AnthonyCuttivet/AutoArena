@@ -110,11 +110,12 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, hitbox_id:int, projectile_
 	if(ball_owner.is_in_same_team(other)):
 		return;
 
-	AudioManager.play_sfx(settings.sfx_hit, "SFX");
+	if(!custom_sfx):
+		AudioManager.play_sfx(settings.sfx_hit, "SFX");
 
 	var d:int = get_custom_damage_value() if custom_damage else damage;
 
-	var kb_dist:float = knockback + other.linear_velocity.length() if !ball_owner.is_boss else 0.0;
+	var kb_dist:float = knockback + other.linear_velocity.length() if !other.is_boss else 0.0;
 
 	var kb:Vector2 = (other.global_position - ball_owner.global_position).normalized() * kb_dist;
 
@@ -130,7 +131,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, hitbox_id:int, projectile_
 	other.hitflash(hitstop);
 	other.hit_pos = hit_pos;
 
-	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id());
+	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit);
 	pass;
 
 func on_weapon_clash(other:BattleBall, projectile_hit:bool = false):
@@ -182,9 +183,13 @@ func shoot_projectile():
 	p.scale = ball_owner.weapon_slot.scale * ball_owner.root.scale * projectile_scale;
 	p.init(ball_owner, projectile_speed, 0, 0);
 	p.weapon_owner = self;
-	get_tree().root.add_child(p);
 
-func on_listened_event_received(id:int):
+	if(settings.bg_projectile):
+		ball_owner.main.projectiles_bg_parent.add_child(p);
+	else:
+		get_tree().root.add_child(p);
+
+func on_listened_event_received(id:int, to:int, is_projectile:bool):
 	pass;
 
 func get_custom_damage_value() -> int:
