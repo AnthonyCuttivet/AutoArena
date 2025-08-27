@@ -1,0 +1,75 @@
+[gd_resource type="Resource" script_class="WeaponSettings" load_steps=14 format=3 uid="uid://odj7lywcd7tq"]
+
+[ext_resource type="PackedScene" uid="uid://dlaed02kcebe0" path="res://Prefabs/Weapons/Armory/Projectiles/P_Plume.tscn" id="1_reh5n"]
+[ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="2_lhs5o"]
+[ext_resource type="AudioStream" uid="uid://cipwvqoc7mmtb" path="res://Audio/SFX/BattleBalls/se_master_escapeN.wav" id="3_reh5n"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="4_lky4b"]
+[ext_resource type="AudioStream" uid="uid://yghn4n40ijsr" path="res://Audio/SFX/BattleBalls/se_sheik_jumpround.wav" id="6_lhs5o"]
+[ext_resource type="AudioStream" uid="uid://cm5v51r77gk3i" path="res://Audio/SFX/BattleBalls/se_edge_attackair_L04.wav" id="6_reh5n"]
+[ext_resource type="PackedScene" uid="uid://d1n0femirmj41" path="res://Prefabs/Weapons/Armory/Plume/W_Plume.tscn" id="7_reh5n"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_q6ief"]
+random_pitch = 1.25
+streams_count = 1
+stream_0/stream = ExtResource("3_reh5n")
+
+[sub_resource type="Resource" id="Resource_fjw7t"]
+script = ExtResource("4_lky4b")
+audio_stream = SubResource("AudioStreamRandomizer_q6ief")
+volume = -35.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lhs5o"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("6_reh5n")
+
+[sub_resource type="Resource" id="Resource_qkwvv"]
+script = ExtResource("4_lky4b")
+audio_stream = SubResource("AudioStreamRandomizer_lhs5o")
+volume = -22.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4bqk1"]
+random_pitch = 1.3
+streams_count = 1
+stream_0/stream = ExtResource("6_lhs5o")
+
+[sub_resource type="Resource" id="Resource_nb3kj"]
+script = ExtResource("4_lky4b")
+audio_stream = SubResource("AudioStreamRandomizer_4bqk1")
+volume = -36.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[resource]
+script = ExtResource("2_lhs5o")
+name = "PLUME"
+melee = false
+ranged = true
+flip = false
+offset = 10.0
+base_rotation_direction = 1
+base_rotation_speed = 0.25
+base_damage = 1
+base_knockback = 2000.0
+base_attack_speed = 1.0
+base_shoot_speed = 3.0
+base_size = 10.0
+base_hitstop = 0.2
+base_projectiles = 1
+base_projectile_speed = 2500.0
+base_projectile_scale = 0.8
+base_shoot_duration = 0.3
+base_rot_speed_bounce_boost = false
+stat_scale_value = 1.0
+stat_scale_name = "Recall DMG"
+scaling_stat_float = false
+no_rotation_change = false
+weapon_prefab = ExtResource("7_reh5n")
+projectile_prefab = ExtResource("1_reh5n")
+bg_projectile = false
+details = "5 DMG ⬗ +1 Feather"
+sfx_clash = SubResource("Resource_fjw7t")
+sfx_hit = SubResource("Resource_qkwvv")
+sfx_shoot = SubResource("Resource_nb3kj")
+metadata/_custom_type_script = "uid://c1biydo2yju8x"

@@ -1,0 +1,70 @@
+[gd_scene load_steps=8 format=3 uid="uid://dlaed02kcebe0"]
+
+[ext_resource type="Script" uid="uid://b5g3fif13o3q3" path="res://Prefabs/Weapons/Armory/Plume/projectile_plume.gd" id="1_o1vwt"]
+[ext_resource type="Texture2D" uid="uid://cb2hhyg4cgdwm" path="res://Graphics/_Addons/Icons/fc25900.png" id="2_o1vwt"]
+[ext_resource type="Script" uid="uid://c0yo17knk84wp" path="res://Prefabs/Ball/trail.gd" id="3_t3p6s"]
+
+[sub_resource type="Curve" id="Curve_o1vwt"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 2.76236, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
+radius = 41.0
+height = 170.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t3p6s"]
+radius = 22.0
+height = 96.0
+
+[sub_resource type="Gradient" id="Gradient_t3p6s"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="ProjectilePlume" type="Node2D" node_paths=PackedStringArray("collision_shape_recall", "collision_shape_shoot", "hitbox")]
+script = ExtResource("1_o1vwt")
+acceleration_curve = SubResource("Curve_o1vwt")
+rot_lerp_speed = 10.0
+collision_shape_recall = NodePath("Sprite2D/ProjectileHitbox/CollisionShapeRecall")
+collision_shape_shoot = NodePath("Sprite2D/ProjectileHitbox/CollisionShapeShoot")
+pierce_count = 999
+hitbox = NodePath("Sprite2D/ProjectileHitbox")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(41, 0)
+rotation = 0.785398
+texture = ExtResource("2_o1vwt")
+
+[node name="ProjectileHitbox" type="Area2D" parent="Sprite2D"]
+rotation = 0.785398
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShapeRecall" type="CollisionShape2D" parent="Sprite2D/ProjectileHitbox"]
+position = Vector2(-3.39747e-05, 51)
+shape = SubResource("CapsuleShape2D_1fhci")
+debug_color = Color(0.7, 0, 0, 0.42)
+
+[node name="CollisionShapeShoot" type="CollisionShape2D" parent="Sprite2D/ProjectileHitbox"]
+position = Vector2(-1.2517e-05, -9)
+shape = SubResource("CapsuleShape2D_t3p6s")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(-30, 0)
+rotation = -1.5708
+target_position = Vector2(0, 5)
+hit_from_inside = true
+
+[node name="Trail" type="Line2D" parent="." node_paths=PackedStringArray("pos_reference")]
+show_behind_parent = true
+top_level = true
+gradient = SubResource("Gradient_t3p6s")
+begin_cap_mode = 2
+end_cap_mode = 2
+round_precision = 32
+antialiased = true
+script = ExtResource("3_t3p6s")
+length = 150
+pos_reference = NodePath("..")
+
+[connection signal="area_entered" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_area_entered"]
+[connection signal="area_exited" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_area_exited"]
+[connection signal="body_entered" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_body_entered"]

@@ -10,8 +10,8 @@ var fixed_dir:Vector2 = Vector2.ZERO;
 var position_fixed:bool = false;
 
 
-func init(owner:BattleBall, s:float, p:int = 0, b:int = 0):
-	super.init(owner, s);
+func init(o:BattleBall, s:float, _p:int = 0, _b:int = 0):
+	super.init(o, s);
 
 	fixed_dir = transform.x;
 

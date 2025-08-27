@@ -16,9 +16,9 @@ func _init() -> void:
 	EventBus.ball_damaged.connect(on_damaged);
 	EventBus.ball_bounce_other_ball.connect(on_ball_bounced_other_ball);
 
-func init(s:WeaponSettings, owner:BattleBall) -> void:
-	super.init(s, owner);
-	base_max_speed = owner.max_speed;
+func init(s:WeaponSettings, o:BattleBall) -> void:
+	super.init(s, o);
+	base_max_speed = o.max_speed;
 	ball_owner.afterimage.active = true;
 	ball_owner.afterimage.setup_afterimages(false, afterimages_interval, afterimages_opacity);
 
@@ -43,7 +43,7 @@ func _process(delta: float) -> void:
 
 	ball_owner.update_stat_text(true);
 
-func on_weapon_hit(other:BattleBall, hit_pos:Vector2, hitbox_id:int, projectile_hit:bool = false) -> void:
+func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:bool = false) -> void:
 	# if(other.linear_velocity.length() > ball_owner.linear_velocity.length()):
 	# 	scale_stat();
 	# 	return;
@@ -104,7 +104,7 @@ func on_ball_bounced_other_ball(id:int, other:int):
 func can_hit() -> bool:
 	return can_hit_cd_remaining <= 0.0;
 
-func on_weapon_hit_received(id:int, to:int, is_projectile:bool):
+func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	scale_stat();
 	pass;

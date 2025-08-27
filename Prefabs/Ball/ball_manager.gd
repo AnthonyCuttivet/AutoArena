@@ -52,7 +52,7 @@ func setup_pools():
 		add_child(sprite)
 		sprite_pool.append(sprite)
 
-	for i in range(fx_pool_size / 2):
+	for i in range(fx_pool_size / 2.0):
 		var particles = fx_0.instantiate();
 		if particles:
 			particles.finished.connect(return_fx_to_pool.bind(particles, 0));
@@ -61,7 +61,7 @@ func setup_pools():
 			particles.global_rotation_degrees = 90.0;
 			fx_pool_no.append(particles)
 
-	for i in range(fx_pool_size / 2):
+	for i in range(fx_pool_size / 2.0):
 		var particles = fx_1.instantiate();
 		if particles:
 			particles.finished.connect(return_fx_to_pool.bind(particles, 1));

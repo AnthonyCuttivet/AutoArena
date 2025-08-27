@@ -3,7 +3,6 @@ class_name Projectile extends Node2D
 @export var speed:float = 0.0;
 @export var pierce_count:int = 0;
 @export var bounce_count:int = 0;
-@export var p_scale:float = 1.0;
 @export var rotation_speed:float = 0.0;
 @export var absolute:bool = false;
 @export var hitbox:Area2D;
@@ -18,7 +17,7 @@ var weapon_owner:Weapon;
 var velocity: Vector2 = Vector2.ZERO;
 var self_destruct_remaining:float = 0.0;
 
-func init(owner:BattleBall, s:float, p:int = 0, b:int = 0):
+func init(owner:BattleBall, s:float, p:int = -1, b:int = -1):
 	ball_owner = owner;
 
 	if(s != -1.0):

@@ -29,11 +29,15 @@ func _process(delta: float) -> void:
 func _on_area_entered(other: Area2D) -> void:
 	if(other == null && other.ball_owner != self.ball_owner):
 		return;
-
-	if !unclashable && other is Hitbox && !other.unclashable && !is_clash_on_cd():
-		weapon.on_weapon_clash(other.ball_owner);
-		weapon_clash_cd_elapsed = -0.05;
-		return;
+	
+	if(other is Hitbox):
+		if(other.ball_owner == self.ball_owner):
+			return;
+			
+		if !unclashable && !other.unclashable && !is_clash_on_cd():
+			weapon.on_weapon_clash(other.ball_owner);
+			weapon_clash_cd_elapsed = -0.05;
+			return;
 
 	if other is Hurtbox && other.ball_owner != ball_owner && weapon.melee:
 		add_to_targets(other.ball_owner);

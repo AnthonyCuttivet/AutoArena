@@ -97,6 +97,7 @@ rotation = 2.35619
 script = ExtResource("3_n13mq")
 weapon = NodePath("../..")
 collider = NodePath("CollisionShape2D")
+unclashable = true
 metadata/owner = NodePath("../../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Opened/ScissorsOpenedHitbox"]

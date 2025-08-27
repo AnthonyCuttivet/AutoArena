@@ -29,7 +29,7 @@ func init(s:WeaponSettings, o:BattleBall):
 func _process(delta):
 	if(ball_owner.main != null && !level_name_init):
 		level_name_init = true;
-		ball_owner.main.set_weapon_ui_name(ball_owner.get_instance_id(), Color.WHITE, get_name_and_level_str());
+		ball_owner.update_ui_name(Color.WHITE, get_name_and_level_str());
 
 	if(dice_upgrade_effect_remaining > 0.0):
 		dice_upgrade_effect_remaining -= delta;
@@ -59,7 +59,7 @@ func scale_stat():
 	damage = r;
 	init_scaling_stat();
 
-func on_weapon_hit_received(id:int, to:int, is_projectile:bool):
+func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	AudioManager.play_sfx(sfx_hit, "SFX", 1.0 + (dice_index * sfxs_hit_pitch));
 	scale_stat();
@@ -78,9 +78,9 @@ func set_dice(i:int):
 func on_dice_upgrade():
 	dice_upgrade_effect_remaining += dice_upgrade_effect_duration;
 	AudioManager.play_sfx(sfx_upgrade, "SFX");
-	ball_owner.main.set_weapon_ui_sprite(ball_owner.get_instance_id());
+	ball_owner.update_ui_sprite();
 	fx_confettis.emit();
-	ball_owner.main.set_weapon_ui_name(ball_owner.get_instance_id(), Color.WHITE, get_name_and_level_str());
+	ball_owner.update_ui_name(Color.WHITE, get_name_and_level_str());
 
 func get_custom_stat_format() -> String:
 	var dmg:String = str(damage);

@@ -37,8 +37,8 @@ func _process(delta: float) -> void:
 
 		thunders.clear();
 
-func init(s:WeaponSettings, owner:BattleBall):
-	super.init(s, owner);
+func init(s:WeaponSettings, o:BattleBall):
+	super.init(s, o);
 	next_thunder_at_hp = ball_owner.health - spawn_thunder_each_hp_lost;
 	next_thunderstrike_at = thunders_needed;
 
@@ -56,14 +56,14 @@ func scale_stat():
 	damage += stat_scale_value;
 	init_scaling_stat();
 
-func on_listened_event_received(id:int, to:int, is_projectile:bool):
+func on_listened_event_received(id:int, _to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	if(scaled_at == next_thunderstrike_at): return;
 	scaled_at = next_thunderstrike_at;
 	scale_stat();
 	pass;
 
-func on_ball_damaged_received(id:int, amount:int, from:int):
+func on_ball_damaged_received(id:int, _amount:int, _from:int):
 	if(id != ball_owner.get_instance_id()): return;
 
 	if(ball_owner.health <= next_thunder_at_hp):

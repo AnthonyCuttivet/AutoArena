@@ -7,6 +7,7 @@ class_name WeaponDagger extends Weapon
 @onready var weapon_hitbox: Hitbox = $Sprite2D/WeaponHitbox
 
 var no_self_hitstop:bool = false;
+var ui_rot_speed:float = 0.0;
 
 func _init() -> void:
 	EventBus.ball_weapon_hit.connect(on_weapon_hit_received);
@@ -19,10 +20,11 @@ func init_scaling_stat():
 func scale_stat():
 	rotation_speed += stat_scale_value;
 	attack_speed += stat_scale_value;
+	ui_rot_speed += stat_scale_value * 10.0;
 
 	init_scaling_stat();
 
-func on_weapon_hit(other:BattleBall, hit_pos:Vector2, hitbox_id:int, projectile_hit:bool = false) -> void:
+func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:bool = false) -> void:
 	if(ball_owner.is_in_same_team(other)):
 		return;
 
@@ -54,13 +56,13 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, hitbox_id:int, projectile_
 	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit);
 	pass;
 
-func on_weapon_hit_received(id:int, to:int, is_projectile:bool):
+func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	scale_stat();
 	pass;
 
 func get_custom_stat_format() -> String:
-	return Utils.format_float(rotation_speed * 10.0, 1);
+	return Utils.format_float(settings.base_rotation_speed + ui_rot_speed * 10.0, 1);
 
 func set_charged_sprite_alpha():
 	sprite_charged.self_modulate.a = clamp(((rotation_speed - 3.0)), 0,1);

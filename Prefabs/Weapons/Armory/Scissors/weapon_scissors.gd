@@ -45,7 +45,7 @@ func scale_stat():
 	dash_damage += stat_scale_value;
 	init_scaling_stat();
 
-func on_weapon_hit(other:BattleBall, hit_pos:Vector2, hitbox_id:int, projectile_hit:bool = false) -> void:
+func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:bool = false) -> void:
 	if(ball_owner.is_in_same_team(other)):
 		return;
 
@@ -91,7 +91,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, hitbox_id:int, projectile_
 	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit);
 	pass;
 
-func on_listened_event_received(id:int, to:int, is_projectile:bool):
+func on_listened_event_received(id:int, _to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	pass;
 

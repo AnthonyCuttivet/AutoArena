@@ -13,6 +13,8 @@ class_name Main extends Node2D
 @export var time_attack_leaderboards:Dictionary[String, TimeAttackLeaderboard];
 @export var time_attack_endgame_delay:float = 2.0;
 @export var time_attack_ranking_duration:float = 15.0;
+@export var free_for_all:bool = false;
+@export var _2v2_colors:Array[Color];
 
 @export var forced_start_dir:Vector2 = Vector2.ZERO;
 @export var dead_ui_color:Color;
@@ -37,31 +39,55 @@ class_name Main extends Node2D
 @export var earclacks_mode:bool = false;
 @export var _1v1_hp:int = 50;
 @export var _1v2_hp:int = 75;
-@export var non_boss_scale:float = 0.11;
-@export var non_boss_weapon_scale:float = 18.0;
 @export var attraction_point:Node2D;
 
-@onready var name_boss_1: DynamicText = $UI/Top/Boss/WeaponLeft/Name
-@onready var sprite_boss_1: TextureRect = $UI/Top/Boss/WeaponLeft/Sprite
-@onready var boss_details_1: DynamicText = $UI/Top/Boss/BossDetails
-@onready var stat_left: DynamicText = $UI/Bottom/StatLeft
+# -------------- UI Single Team Player ----------------
 
-@onready var name_1: DynamicText = $UI/Top/WeaponRight/WeaponAlly/Name
-@onready var sprite_1: TextureRect = $UI/Top/WeaponRight/WeaponAlly/Sprite
-@onready var stat_ally_1: DynamicText = $UI/Bottom/StatAlly
-@onready var weapon_details_1: DynamicText = $UI/Top/WeaponRight/WeaponDetails
+@onready var name_left_1p: DynamicText = $UI/Top/CharacterLeft_1p/Character/Name
+@onready var sprite_left_1p: TextureRect = $UI/Top/CharacterLeft_1p/Character/Sprite
+@onready var details_left_1p: DynamicText = $UI/Top/CharacterLeft_1p/Details
+@onready var stat_left_1p: DynamicText = $UI/Bottom/StatLeft_1p
 
-@onready var name_2: DynamicText = $UI/Top/WeaponRight/WeaponAlly2/Name
-@onready var sprite_2: TextureRect = $UI/Top/WeaponRight/WeaponAlly2/Sprite
-@onready var stat_ally_2: DynamicText = $UI/Bottom/StatAlly2
-@onready var weapon_details_2: DynamicText = $UI/Top/WeaponRight/WeaponDetails2
+@onready var name_right_1p: DynamicText = $UI/Top/CharacterRight_1p/Character/Name
+@onready var sprite_right_1p: TextureRect = $UI/Top/CharacterRight_1p/Character/Sprite
+@onready var details_right_1p: DynamicText = $UI/Top/CharacterRight_1p/Details
+@onready var stat_right_1p: DynamicText = $UI/Bottom/StatRight_1p
 
-@onready var weapon_right: VBoxContainer = $UI/Top/WeaponRight
-@onready var boss_2: VBoxContainer = $UI/Top/Boss2
-@onready var sprite_boss_2: TextureRect = $UI/Top/Boss2/WeaponRight/Sprite
-@onready var name_boss_2: DynamicText = $UI/Top/Boss2/WeaponRight/Name
-@onready var boss_details_2: DynamicText = $UI/Top/Boss2/BossDetails
-@onready var stat_right: DynamicText = $UI/Bottom/StatRight
+# -------------- UI Team 2 Player ----------------
+
+@onready var name_left_1_2p: DynamicText = $UI/Top/CharactersLeft_2p/Character1/Name
+@onready var sprite_left_1_2p: TextureRect = $UI/Top/CharactersLeft_2p/Character1/Sprite
+@onready var details_left_1_2p: DynamicText = $UI/Top/CharactersLeft_2p/Details1
+@onready var stat_left_1_2p: DynamicText = $UI/Bottom/StatLeft1_2p
+
+@onready var name_left_2_2p: DynamicText = $UI/Top/CharactersLeft_2p/Character2/Name
+@onready var sprite_left_2_2p: TextureRect = $UI/Top/CharactersLeft_2p/Character2/Sprite
+@onready var details_left_2_2p: DynamicText = $UI/Top/CharactersLeft_2p/Details2
+@onready var stat_left_2_2p: DynamicText = $UI/Bottom/StatLeft2_2p
+
+# ------ #
+
+@onready var name_right_1_2p: DynamicText = $UI/Top/CharactersRight_2p/Character1/Name
+@onready var sprite_right_1_2p: TextureRect = $UI/Top/CharactersRight_2p/Character1/Sprite
+@onready var details_right_1_2p: DynamicText = $UI/Top/CharactersRight_2p/Details1
+@onready var stat_right_1_2p: DynamicText = $UI/Bottom/StatRight1_2p
+
+@onready var name_right_2_2p: DynamicText = $UI/Top/CharactersRight_2p/Character2/Name
+@onready var sprite_right_2_2p: TextureRect = $UI/Top/CharactersRight_2p/Character2/Sprite
+@onready var details_right_2_2p: DynamicText = $UI/Top/CharactersRight_2p/Details2
+@onready var stat_right_2_2p: DynamicText = $UI/Bottom/StatRight2_2p
+
+# -------------- Containers ----------------
+
+@onready var container_1v1_left: VBoxContainer = $UI/Top/CharacterLeft_1p
+@onready var container_1v1_right: VBoxContainer = $UI/Top/CharacterRight_1p
+@onready var container_2v2_left: VBoxContainer = $UI/Top/CharactersLeft_2p
+@onready var container_2v2_right: VBoxContainer = $UI/Top/CharactersRight_2p
+
+# ------ #
+
+@onready var vs: RichTextLabel = $UI/Top/VS
+@onready var winner_text: DynamicText = $UI/Winner
 
 @onready var obs: OBSWebsocket = $OBS
 @onready var camera: Camera = $Camera
@@ -100,12 +126,15 @@ class_name Main extends Node2D
 
 var balls_ids: Dictionary[int, int];
 var teams_alive_members: Dictionary[int, int];
+var balls_alive_count:int = 0;
 
 var current_patchnote_page:int = 0;
 var patchnote_timer:Timer = null;
 
 var _1v1_spots:Array[Vector2];
 var _1v2_spots:Array[Vector2];
+var _2v2_spots:Array[Vector2];
+var _4v_ffa_spots:Array[Vector2];
 
 var just_spawned_fxs:Array[GPUParticles2D];
 
@@ -140,15 +169,19 @@ func _ready() -> void:
 
 	obs.establish_connection();
 
-	if(time_attack_mode):
+	if(time_attack_mode || balls.size() == 4):
 		display_damage_dealt = true;
+
+	setup_fight();
 
 	init_ui();
 
 	teams_alive_members[0] = 0;
 	teams_alive_members[1] = 0;
 
-	setup_fight();
+	if(free_for_all):
+		teams_alive_members[2] = 0;
+		teams_alive_members[3] = 0;
 
 	for i in range(balls.size()):
 		balls_ids[balls[i].get_instance_id()] = i;
@@ -243,7 +276,7 @@ func stop_record():
 
 func start_game():
 	if(!no_announcer):
-		AudioManager.play_sfx(ve_announcer, "Master");
+		AudioManager.play_sfx(ve_announcer, "321GO");
 
 	var d:Vector2 = Vector2.ONE.rotated(deg_to_rad(randf_range(-50.0,-160.0)));
 
@@ -272,6 +305,8 @@ func end_game():
 		for confetti:MultiFX in confettis.get_children():
 			confetti.emit();
 
+	show_winner_text();
+
 	if(process_timer):
 		process_timer = false;
 		if(balls[0].health > 0): return;
@@ -288,66 +323,35 @@ func end_game():
 		var t_stop_record:SceneTreeTimer = get_tree().create_timer(time_to_stop);
 		t_stop_record.timeout.connect(stop_record);
 
-
 func init_ui():
+	winner_text.visible = false;
 	time_attack_leaderboard_ui.visible = false;
+	damage_dealt_text.original_text = generate_damage_dealt_string();
 
-	name_boss_1.format([balls[0].weapon_settings.name]);
-	name_boss_1.self_modulate = balls[0].color;
-	sprite_boss_1.texture = balls[0].weapon.sprite_2d.texture;
-	boss_details_1.format([balls[0].weapon_settings.details]);
-	boss_details_1.modulate = balls[0].color;
-	if(boss_details_1.text == ""):boss_details_1.text = " ";
+	fill_character_ui(balls[0], name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p);
 
-	balls[0].stat_text = stat_left;
-	balls[0].stat_text.self_modulate = balls[0].color;
-	balls[0].update_stat_text();
+	container_1v1_left.visible = balls.size() <= 3;
+	container_1v1_right.visible = balls.size() == 2;
+	container_2v2_left.visible = balls.size() == 4;
+	container_2v2_right.visible = balls.size() >= 3;
+
+	stat_left_1p.visible = container_1v1_left.visible;
+	stat_right_1p.visible = container_1v1_right.visible;
+	stat_left_1_2p.visible = container_2v2_left.visible;
+	stat_left_2_2p.visible = container_2v2_left.visible;
+	stat_right_1_2p.visible = container_2v2_right.visible;
+	stat_right_2_2p.visible = container_2v2_right.visible;
 
 	if(balls.size() == 2):
-		weapon_right.visible = false;
-		boss_2.visible = true;
-		stat_right.visible = true;
-		stat_ally_1.visible = false;
-		stat_ally_2.visible = false;
-
-		name_boss_2.format([balls[1].weapon_settings.name]);
-		name_boss_2.self_modulate = balls[1].color;
-		sprite_boss_2.texture = balls[1].weapon.sprite_2d.texture;
-		boss_details_2.format([balls[1].weapon_settings.details]);
-		boss_details_2.modulate = balls[1].color;
-		if(boss_details_2.text == ""):boss_details_2.text = " ";
-
-		balls[1].stat_text = stat_right;
-		balls[1].stat_text.self_modulate = balls[1].color;
-		balls[1].update_stat_text();
-
+		fill_character_ui(balls[1], name_right_1p, sprite_right_1p, details_right_1p, stat_right_1p);
 	elif(balls.size() == 3):
-		boss_2.visible = false;
-		stat_right.visible = false;
-
-		name_1.format([balls[1].weapon_settings.name]);
-		name_1.self_modulate = balls[1].color;
-		sprite_1.texture = balls[1].weapon.sprite_2d.texture;
-		weapon_details_1.text = balls[1].weapon_settings.details;
-		weapon_details_1.modulate = balls[1].color;
-		if(weapon_details_1.text == ""):weapon_details_1.text = " ";
-
-		name_2.format([balls[2].weapon_settings.name]);
-		name_2.self_modulate = balls[2].color;
-		sprite_2.texture = balls[2].weapon.sprite_2d.texture;
-		weapon_details_2.text = balls[2].weapon_settings.details;
-		weapon_details_2.modulate = balls[2].color;
-		if(weapon_details_2.text == ""):weapon_details_2.text = " ";
-
-
-		balls[1].stat_text = stat_ally_1;
-		balls[2].stat_text = stat_ally_2;
-
-		balls[1].stat_text.self_modulate = balls[1].color;
-		balls[2].stat_text.self_modulate = balls[2].color;
-
-		balls[1].update_stat_text();
-		balls[2].update_stat_text();
+		fill_character_ui(balls[1], name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p);
+		fill_character_ui(balls[2], name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p);
+	elif(balls.size() == 4):
+		fill_character_ui(balls[0], name_left_1_2p, sprite_left_1_2p, details_left_1_2p, stat_left_1_2p);
+		fill_character_ui(balls[1], name_left_2_2p, sprite_left_2_2p, details_left_2_2p, stat_left_2_2p);
+		fill_character_ui(balls[2], name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p);
+		fill_character_ui(balls[3], name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p);
 
 	time_attack_container.visible = time_attack_mode;
 	ta_record.visible = time_attack_mode;
@@ -355,90 +359,34 @@ func init_ui():
 	if(time_attack_mode):
 		ta_record.format([Utils.convert_time_to_string(time_attack_leaderboards[balls[0].weapon_settings.name.to_upper()].rankings[0].time)]);
 
-func set_weapon_ui_sprite(id:int, color:Color = Color.WHITE):
-	var ball:BattleBall = get_ball_by_id(id);
-	var local_id:int = balls_ids[id];
+func fill_character_ui(ball:BattleBall, name_text:DynamicText, sprite:TextureRect, details_text:DynamicText, stat_text:DynamicText):
+	name_text.format([ball.weapon_settings.name]);
+	name_text.self_modulate = ball.color;
+	sprite.texture = ball.weapon.sprite_2d.texture;
+	details_text.format([ball.weapon_settings.details]);
+	details_text.modulate = ball.color;
 
-	var tx:TextureRect = null;
+	if(details_text.text == ""):details_text.text = " ";
 
-	if(balls.size() == 1):
-		tx = sprite_boss_1;
-	if(balls.size() == 2):
-		tx = sprite_boss_1 if local_id == 0 else sprite_boss_2;
-	else:
-		if(local_id == 0):
-			tx = sprite_boss_1;
+	ball.name_text = name_text;
+	ball.ui_sprite = sprite;
+	ball.details_text = details_text;
+	ball.stat_text = stat_text;
+
+	ball.stat_text.self_modulate = ball.color;
+	ball.update_stat_text();
+
+func generate_damage_dealt_string() -> String:
+	if(balls.size() == 3):
+		return "[color=%s]%s[/color][color=white]※[color=%s]%s[/color]※[color=%s]%s[/color]";
+
+	if(balls.size() == 4):
+		if(free_for_all):
+			return "[color=%s]%s[/color][color=white]※[color=%s]%s[/color]※[color=%s]%s[/color]※[color=%s]%s[/color]";
 		else:
-			tx = sprite_1 if local_id == 1 else sprite_2;
+			return "[color=%s]%s[/color][color=white]•[color=%s]%s[/color] ※ [color=%s]%s[/color]•[color=%s]%s[/color]";
 
-	tx.texture = ball.weapon.sprite_2d.texture;
-	tx.self_modulate = color;
-
-func set_weapon_ui_name(id:int, color:Color, t:String = ""):
-	var ball:BattleBall = get_ball_by_id(id);
-	var local_id:int = balls_ids[id];
-
-	var text:DynamicText = null;
-
-	if(balls.size() == 1):
-		text = name_boss_1;
-	elif(balls.size() == 2):
-		text = name_boss_1 if local_id == 0 else name_boss_2;
-	else:
-		if(local_id == 0):
-			text = name_boss_1;
-		else:
-			text = name_1 if local_id == 1 else name_2;
-
-	if(t == ""):
-		text.format([ball.weapon_settings.name]);
-	else:
-		text.text = t;
-
-	text.self_modulate = color;
-
-func set_weapon_ui_stat(id:int, color:Color):
-	var ball:BattleBall = get_ball_by_id(id);
-	var local_id:int = balls_ids[id];
-
-	var text:DynamicText = null;
-
-	if(balls.size() == 1):
-		text = stat_left;
-	elif(balls.size() == 2):
-		text = stat_left if local_id == 0 else stat_right;
-	else:
-		if(local_id == 0):
-			text = stat_left;
-		else:
-			text = stat_ally_1 if local_id == 1 else stat_ally_2;
-
-	text.format([ball.weapon_settings.name]);
-
-	text.self_modulate = color;
-
-func set_weapon_ui_details(id:int, color:Color, raw:bool = false):
-	var ball:BattleBall = get_ball_by_id(id);
-	var local_id:int = balls_ids[id];
-
-	var text:DynamicText = null;
-
-	if(balls.size() == 1):
-		text = boss_details_1;
-	elif(balls.size() == 2):
-		text = boss_details_1 if local_id == 0 else boss_details_2;
-	else:
-		if(local_id == 0):
-			text = boss_details_1;
-		else:
-			text = weapon_details_1 if local_id == 1 else weapon_details_2;
-
-	if(!raw):
-		text.format([ball.weapon_settings.details]);
-	else:
-		text.text = ball.weapon_settings.details;
-
-	text.modulate = color;
+	return "";
 
 
 func on_ball_damaged(id: int, amount:int, from:int):
@@ -503,10 +451,26 @@ func on_ball_dead(id: int):
 		just_spawned_fxs.push_back(fx);
 
 	teams_alive_members[get_ball_by_id(id).team] -= 1;
+	balls_alive_count -= 1;
 
-	if(teams_alive_members[get_ball_by_id(id).team] <= 0):
+	if(free_for_all && balls_alive_count == 1):
 		end_game();
 		return;
+
+	if(!free_for_all && teams_alive_members[get_ball_by_id(id).team] <= 0):
+		end_game();
+		return;
+
+	if(balls_alive_count == 2 && !time_attack_mode):
+		for ball in balls:
+			if(!ball.dead):
+				# ball.root.scale = Vector2.ONE * ball.base_root_scale;
+				create_tween().tween_property(ball.root, "scale", Vector2.ONE * ball.base_root_scale, 2.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT);
+				ball.max_speed += ball.nerfed_speed;
+			pass
+
+		animate_label_font(author, 30, 2.4);
+
 
 func get_ball_by_id(id:int) -> BattleBall:
 	if(!balls_ids.has(id)):
@@ -532,16 +496,46 @@ func new_challenger_over(_n:StringName):
 
 
 func setup_fight():
-	_1v1_spots = [arena_center.global_position - Vector2.DOWN * (1080*0.25), arena_center.global_position - Vector2.UP * (1080*0.25)];
-	_1v2_spots = [arena_center.global_position + Vector2.LEFT * 250, arena_center.global_position + Vector2(250.0, -250.0), arena_center.global_position + Vector2(250.0, 250.0)];
 
-	var i:int = 0;
+	_1v1_spots = [
+		arena_center.global_position - Vector2.DOWN * (1080*0.25),
+		arena_center.global_position - Vector2.UP * (1080*0.25)
+	];
+
+	_1v2_spots = [
+		arena_center.global_position + Vector2.LEFT * 250,
+		arena_center.global_position + Vector2(250.0, -250.0),
+		arena_center.global_position + Vector2(250.0, 250.0)
+	];
+
+	_2v2_spots = [
+		arena_center.global_position + Vector2(250.0, -250.0),
+		arena_center.global_position + Vector2(-250.0, -250.0),
+		arena_center.global_position + Vector2(250.0, 250.0),
+		arena_center.global_position + Vector2(-250.0, 250.0),
+	];
+
+	_4v_ffa_spots = [
+		arena_center.global_position + Vector2(350.0, 0.0),
+		arena_center.global_position + Vector2(0.0, 350.0),
+		arena_center.global_position + Vector2(-350.0, 0.0),
+		arena_center.global_position + Vector2(0.0, -350.0)
+	];
+
+	balls_alive_count = balls.size();
+
+	if(balls.size() == 4 && !free_for_all):
+		balls[0].color = _2v2_colors[0];
+		balls[1].color = _2v2_colors[1];
+		balls[2].color = _2v2_colors[2];
+		balls[3].color = _2v2_colors[3];
+
 	for category in balls_container.get_children():
 		for ball:BattleBall in category.get_children():
+				ball.ready();
 				if(!balls.has(ball)):
 					ball.death();
 					ball.queue_free();
-					i += 1;
 
 	if(!new_challenger_mode):
 		place_fighting_balls();
@@ -573,15 +567,40 @@ func place_fighting_balls():
 		balls[1].team = 1;
 		balls[2].team = 1;
 
-		#Halve gravity against bosses
-		balls[1].gravity_strength *= 0.25;
-		balls[2].gravity_strength *= 0.25;
-
-		# balls[1].max_speed *= 0.75;
-		# balls[2].max_speed *= 0.75;
+		balls[1].max_speed *= 0.75;
+		balls[2].max_speed *= 0.75;
 
 		balls[1].root.scale *= 0.75;
 		balls[2].root.scale *= 0.75;
+
+	elif(balls.size() == 4):
+		balls[0].global_position = _2v2_spots[0] if !free_for_all else _4v_ffa_spots[0];
+		balls[1].global_position = _2v2_spots[1] if !free_for_all else _4v_ffa_spots[1];
+		balls[2].global_position = _2v2_spots[2] if !free_for_all else _4v_ffa_spots[2];
+		balls[3].global_position = _2v2_spots[3] if !free_for_all else _4v_ffa_spots[3];
+
+		balls[0].health = _1v1_hp;
+		balls[1].health = _1v1_hp;
+		balls[2].health = _1v1_hp;
+		balls[3].health = _1v1_hp;
+
+		balls[0].team = 0;
+		balls[1].team = 0 if !free_for_all else 1;
+		balls[2].team = 1 if !free_for_all else 2;
+		balls[3].team = 1 if !free_for_all else 3;
+
+		balls[0].nerf_max_speed(0.75);
+		balls[1].nerf_max_speed(0.75);
+		balls[2].nerf_max_speed(0.75);
+		balls[3].nerf_max_speed(0.75);
+
+		balls[0].root.scale *= 0.75;
+		balls[1].root.scale *= 0.75;
+		balls[2].root.scale *= 0.75;
+		balls[3].root.scale *= 0.75;
+
+		# Special trick for late game fake zoom
+		mult_author_font_size(0.75);
 
 	for ball in balls:
 		ball.dead = false;
@@ -601,13 +620,14 @@ func add_damage_dealt(id:int, amount:int):
 func update_damage_dealt_UI():
 	if(!display_damage_dealt):return;
 
-	damage_dealt_text.format(
-		[
-			balls[0].color.to_html(false), str(damage_dealt[balls[0].get_instance_id()]),
-			balls[1].color.to_html(false), str(damage_dealt[balls[1].get_instance_id()]),
-			balls[2].color.to_html(false), str(damage_dealt[balls[2].get_instance_id()]),
-		]
-	);
+	var args:Array[String];
+
+	for ball in balls:
+		args.push_back(ball.color.to_html(false));
+		args.push_back(str(damage_dealt[ball.get_instance_id()]));
+
+	damage_dealt_text.format(args);
+
 
 func add_time_attack_result():
 	var boss_name:String = balls[0].weapon_settings.name.to_upper();
@@ -651,3 +671,41 @@ func set_time_scale_smooth(v: float, d:float, burst:float):
 	tween.set_parallel(true);
 	tween.tween_property(Engine, "time_scale", v, burst);
 	tween.tween_property(Engine, "time_scale", 1.0, d-burst).set_delay(burst);
+
+func show_winner_text():
+	var winner_team:int = -1;
+	var winners:Array[BattleBall];
+
+	for key in teams_alive_members:
+		if(teams_alive_members[key] != 0):
+			winner_team = key;
+
+	for ball in balls:
+		if(ball.team == winner_team):
+			winners.push_back(ball);
+
+
+	if(winners.size() == 1):
+		winner_text.format(["[color=" + winners[0].color.to_html() + "]" + winners[0].weapon_settings.name + "[/color] wins!"]);
+
+	if(winners.size() == 2):
+		winner_text.format(
+			[
+				"[color=" + winners[0].color.to_html() + "]" + winners[0].weapon_settings.name + "[/color] & " + "[color=" + winners[1].color.to_html() + "]" + winners[1].weapon_settings.name + "[/color] win!"
+			]
+		);
+
+	winner_text.visible = true;
+
+func mult_author_font_size(v:float):
+	author.add_theme_font_size_override("normal_font_size", author.get_theme_font_size("normal_font_size") * v);
+
+func animate_label_font(label: RichTextLabel, to: int, duration: float = 0.6):
+	var tween = create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_method(
+		func(size):
+			label.add_theme_font_size_override("normal_font_size", size),
+		author.get_theme_font_size("normal_font_size"),
+		to,
+		duration
+	)

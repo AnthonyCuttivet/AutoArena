@@ -102,7 +102,7 @@ static func shoot_projectile(projectile_prefab:PackedScene, ball_owner:BattleBal
 	var p:Projectile = projectile_prefab.instantiate();
 	p.global_position = parent.global_position;
 	p.rotation = rotation;
-	p.scale = ball_owner.weapon_slot.scale * ball_owner.root.scale * p.p_scale;
+	p.scale = ball_owner.weapon_slot.scale * ball_owner.root.scale;
 	p.init(ball_owner, speed, pierce, bounces);
 	parent.get_tree().root.add_child(p);
 	return p;
@@ -111,7 +111,7 @@ static func spawn_projectile(projectile_prefab:PackedScene, ball_owner:BattleBal
 	var p:Projectile = projectile_prefab.instantiate();
 	p.global_position = position;
 	p.rotation = rotation;
-	p.scale = ball_owner.weapon_slot.scale * ball_owner.root.scale * p.p_scale;
+	p.scale = ball_owner.weapon_slot.scale * ball_owner.root.scale;
 	p.init(ball_owner, speed, pierce, bounces);
 	parent.get_tree().root.add_child(p);
 	return p;
@@ -202,3 +202,26 @@ static func format_float(value: float, decimals: int = 2) -> String:
 		s += "." + "0".repeat(decimals)
 
 	return s
+
+static func smooth_rotation(current: float, target: float, speed: float, delta: float) -> float:
+	return lerp_angle(current, target, speed * delta);
+
+static func sample_curve(curve:Curve, r:float) -> float:
+	return curve.sample(r);
+
+static func arrange_in_fan(nodes: Array, center: Vector2, base_angle_rad: float, spread_rad: float, radius: float) -> void:
+	# base_angle in radians, spread in radians
+	if nodes.size() == 0:
+		return
+
+	var step = 0.0
+	if nodes.size() > 1:
+		step = spread_rad / float(nodes.size() - 1)
+
+	var start_angle = base_angle_rad - spread_rad * 0.5
+
+	for i in range(nodes.size()):
+		var angle = start_angle + step * i
+		var pos = center + Vector2(cos(angle), sin(angle)) * radius
+		nodes[i].position = pos
+		nodes[i].rotation = angle

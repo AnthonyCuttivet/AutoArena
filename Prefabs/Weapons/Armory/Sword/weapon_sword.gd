@@ -11,7 +11,7 @@ func scale_stat():
 	damage += stat_scale_value;
 	init_scaling_stat();
 
-func on_weapon_hit_received(id:int, to:int, is_projectile:bool):
+func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	scale_stat();
 	pass;

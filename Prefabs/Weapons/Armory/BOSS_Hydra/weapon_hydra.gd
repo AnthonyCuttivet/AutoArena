@@ -21,8 +21,8 @@ func _init() -> void:
 	EventBus.ball_weapon_hit.connect(on_weapon_hit_received);
 	EventBus.ball_damaged.connect(on_ball_damaged_received);
 
-func init(s:WeaponSettings, owner:BattleBall):
-	super.init(s, owner);
+func init(s:WeaponSettings, o:BattleBall):
+	super.init(s, o);
 	add_head();
 	next_head_at_hp = ball_owner.health - spawn_head_each_hp_lost;
 
@@ -44,13 +44,13 @@ func shoot_projectile():
 func get_custom_damage_value() -> int:
 	return damage / heads.size();
 
-func on_weapon_hit_received(id:int, to:int, is_projectile:bool):
+func on_weapon_hit_received(id:int, _to:int, is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	if(is_projectile):
 		scale_stat();
 	pass;
 
-func on_ball_damaged_received(id:int, amount:int, from:int):
+func on_ball_damaged_received(id:int, _amount:int, _from:int):
 	if(id != ball_owner.get_instance_id()): return;
 
 	if(ball_owner.health <= next_head_at_hp):

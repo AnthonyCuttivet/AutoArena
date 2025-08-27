@@ -141,7 +141,7 @@ func inflict_damage(amount: int) -> bool:
 	EventBus.health_changed.emit(player_id, amount);
 	return true;
 
-func handle_other_ball_collision(other_ball: Ball):
+func handle_other_ball_collision(_other_ball: Ball):
 	if (get_other_ball().is_invincible): return ;
 
 	# EventBus.play_sound.emit("hit");

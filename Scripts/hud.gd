@@ -206,7 +206,7 @@ func countdown_feedback():
 
 	tween.play();
 
-func tween_countdown_number(tween: Tween, duration: float, delay_in: float, delay_out: float, sound: String):
+func tween_countdown_number(tween: Tween, duration: float, delay_in: float, delay_out: float, _sound: String):
 	# tween.parallel().tween_callback(game_manager.play_sound.bind(sound)).set_delay(delay_in + duration);
 	tween.parallel().tween_property(countdown_label, "self_modulate:a", 1.0, duration).set_delay(delay_in);
 	tween.parallel().tween_property(countdown_label, "position:x", countdown_label.position.x + countdown_move, duration).set_delay(delay_in);

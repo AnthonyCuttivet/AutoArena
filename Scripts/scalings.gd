@@ -50,7 +50,7 @@ static func fibonacci(current_index: int) -> int:
 		return next_val
 
 static func triangular(current_index: int) -> int:
-	return int(current_index * (current_index + 1) / 2);
+	return int(current_index * (current_index + 1) / 2.0);
 
 static func random(m:int) -> int:
 	return randi_range(1,m);
@@ -63,4 +63,3 @@ static func factorial(current_index: int) -> int:
 
 static func log_(current_index: int, base_value: float = 10.0) -> float:
 	return log(current_index + 1) / log(base_value)
-

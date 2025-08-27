@@ -1,0 +1,75 @@
+[gd_scene load_steps=14 format=3 uid="uid://d1n0femirmj41"]
+
+[ext_resource type="Script" uid="uid://cn1ju6qv8ks0y" path="res://Prefabs/Weapons/Armory/Plume/weapon_plume.gd" id="1_wumdj"]
+[ext_resource type="PackedScene" uid="uid://djpdsjqssagt3" path="res://Prefabs/Weapons/Armory/Plume/feather_sub_weapon.tscn" id="2_ys7b7"]
+[ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="3_6f0r4"]
+[ext_resource type="AudioStream" uid="uid://84o48igaut0l" path="res://Audio/SFX/BattleBalls/se_link_special_H06.wav" id="3_d6l5w"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="4_d6l5w"]
+[ext_resource type="AudioStream" uid="uid://m134k13svqt4" path="res://Audio/SFX/BattleBalls/se_master_special_H07_01.wav" id="5_d6l5w"]
+[ext_resource type="Texture2D" uid="uid://ceuj61nru1vt0" path="res://Graphics/_Addons/Icons/fc99999.png" id="6_2y4m1"]
+
+[sub_resource type="Gradient" id="Gradient_ys7b7"]
+colors = PackedColorArray(0.5874, 0.572, 0.88, 1, 0.709067, 0.552, 0.8, 1)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_2y4m1"]
+random_pitch = 1.25
+streams_count = 1
+stream_0/stream = ExtResource("3_d6l5w")
+
+[sub_resource type="Resource" id="Resource_nbqjd"]
+script = ExtResource("4_d6l5w")
+audio_stream = SubResource("AudioStreamRandomizer_2y4m1")
+volume = -35.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_nbqjd"]
+random_pitch = 1.15
+streams_count = 1
+stream_0/stream = ExtResource("5_d6l5w")
+
+[sub_resource type="Resource" id="Resource_gbnr4"]
+script = ExtResource("4_d6l5w")
+audio_stream = SubResource("AudioStreamRandomizer_nbqjd")
+volume = -27.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
+radius = 19.0
+height = 70.0
+
+[node name="WeaponPlume" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]
+script = ExtResource("1_wumdj")
+dmg_to_feather_conversion = 5
+feather_move_duration = 0.2
+recall_self_hitstop_t = 0.0
+feather_sub_weapon_prefab = ExtResource("2_ys7b7")
+feather_sub_weapon_spread = 90.0
+feathers_gradient = SubResource("Gradient_ys7b7")
+sfx_recall = SubResource("Resource_nbqjd")
+sfx_recall_hit = SubResource("Resource_gbnr4")
+sprite_2d = NodePath("Sprite2D")
+hitboxes = [NodePath("Sprite2D/WeaponHitbox")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(40, 0)
+rotation = 0.785398
+texture = ExtResource("6_2y4m1")
+
+[node name="WeaponHitbox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("weapon", "collider")]
+rotation = 0.785398
+script = ExtResource("3_6f0r4")
+weapon = NodePath("../..")
+collider = NodePath("CollisionShape2D")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
+position = Vector2(1, 0)
+shape = SubResource("CapsuleShape2D_1fhci")
+disabled = true
+
+[node name="Feathers" type="Node2D" parent="."]
+
+[connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_entered"]
+[connection signal="area_exited" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_exited"]

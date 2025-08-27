@@ -102,7 +102,7 @@ func reset_shoots():
 func add_remaining_shoot():
 	shoots_remaining += 1;
 
-func on_weapon_hit(other:BattleBall, hit_pos:Vector2, hitbox_id:int, projectile_hit:bool = false) -> void:
+func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:bool = false) -> void:
 	if(other.is_invincible()):
 		# print(other.name + " is INVINCIBLE");
 		return;
@@ -189,7 +189,7 @@ func shoot_projectile():
 	else:
 		get_tree().root.add_child(p);
 
-func on_listened_event_received(id:int, to:int, is_projectile:bool):
+func on_listened_event_received(_id:int, _to:int, _is_projectile:bool):
 	pass;
 
 func get_custom_damage_value() -> int:

@@ -28,9 +28,9 @@ func _init() -> void:
 	EventBus.ball_damaged.connect(on_damaged);
 	EventBus.ball_bounce_other_ball.connect(on_ball_bounced_other_ball);
 
-func init(s:WeaponSettings, owner:BattleBall) -> void:
-	super.init(s, owner);
-	base_max_speed = owner.max_speed;
+func init(s:WeaponSettings, o:BattleBall) -> void:
+	super.init(s, o);
+	base_max_speed = o.max_speed;
 	ball_owner.afterimage.active = true;
 	next_sandevistan_trigger = sandevistan_damage_threshold;
 
@@ -95,10 +95,10 @@ func sandevistan_mode(s:bool):
 
 	settings.name = "UNARMED?" if !s else sandevistan_name();
 	settings.details = sandevistan_details() if !s else cyberpsychosis_details();
-	ball_owner.main.set_weapon_ui_name(ball_owner.get_instance_id(), ball_owner.color if !s else sandevistan_name_color);
-	ball_owner.main.set_weapon_ui_details(ball_owner.get_instance_id(), ball_owner.color if !s else psychosis_details_color, true);
+	ball_owner.update_ui_name(ball_owner.color if !s else sandevistan_name_color);
+	ball_owner.update_ui_details(ball_owner.color if !s else psychosis_details_color, true);
 
-func on_weapon_hit(other:BattleBall, hit_pos:Vector2, hitbox_id:int, projectile_hit:bool = false) -> void:
+func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:bool = false) -> void:
 	# if(other.linear_velocity.length() > ball_owner.linear_velocity.length() && !sandevistan_active):
 	# 	scale_stat();
 	# 	return;
@@ -160,7 +160,7 @@ func on_ball_bounced_other_ball(id:int, other:int):
 func can_hit() -> bool:
 	return can_hit_cd_remaining <= 0.0;
 
-func on_weapon_hit_received(id:int, to:int, is_projectile:bool):
+func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	scale_stat();
 	pass;

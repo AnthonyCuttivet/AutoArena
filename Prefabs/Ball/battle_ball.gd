@@ -31,7 +31,7 @@ class_name BattleBall extends RigidBody2D
 @export var bounce_boost: float = 250.0;
 @export var relative_bounce_boost:float = 0.0;
 @export var acceleration:float = 1.0;
-@export var knockback_resistance:bool = false;
+@export var knockback_resistance:float = 1.0;
 @export var ghost:bool = false;
 @export var lock:bool = false;
 
@@ -66,7 +66,11 @@ var target:BattleBall = null;
 var hitstop_remaining:float = 0.0;
 var absolute_hitstop:bool = false;
 
+var name_text:DynamicText = null;
+var ui_sprite:TextureRect = null;
+var details_text:DynamicText = null;
 var stat_text:DynamicText = null;
+
 var vel_to_apply:Vector2 = Vector2.ZERO;
 var lose_hp_timer:Timer = null;
 
@@ -81,9 +85,12 @@ var block_weapon_rot:bool = false;
 var scaling_index:int = 0;
 var scaling_damage:int = 1;
 
+var base_root_scale:float = 0.0;
+var nerfed_speed:float = 0.0;
+
 # var aled:bool = false;
 
-func _ready() -> void:
+func ready() -> void:
 	spawn_weapon();
 	circle.self_modulate = color;
 
@@ -101,6 +108,7 @@ func _ready() -> void:
 	drift_dir = -1.0 if randf() < 0.5 else 1.0
 	base_drag_force = drag_force;
 	base_max_speed = max_speed;
+	base_root_scale = root.scale.x;
 
 	current_target_attraction = base_target_attraction;
 
@@ -246,7 +254,9 @@ func update_scaling_stat_text():
 	stat_text.bump(1.08, 0.08);
 
 func affect_health(v:int, from:BattleBall, silent:bool = false):
-	if(is_invincible()):return;
+	if(is_invincible()):
+		print(Utils.pf() + " Prevented " + str(v) + " thanks to INVINCIBILITY");
+		return;
 	health += v;
 	update_health_text();
 
@@ -307,8 +317,8 @@ func set_freeze(v: bool):
 		if(accumulated_forces == Vector2.ZERO || is_boss):
 			accumulated_forces = prev_linear_velocity;
 
-		if(knockback_resistance):
-			accumulated_forces = prev_linear_velocity.normalized() * base_max_speed;
+		if(knockback_resistance != 1.0):
+			accumulated_forces = prev_linear_velocity.normalized() * base_max_speed * knockback_resistance;
 		elif(accumulated_forces.length() < base_max_speed):
 			accumulated_forces = linear_velocity.normalized() * base_max_speed;
 
@@ -374,10 +384,10 @@ func death():
 		pass
 
 	if(main != null):
-		main.set_weapon_ui_name(get_instance_id(), main.dead_ui_color);
-		main.set_weapon_ui_details(get_instance_id(), main.dead_ui_color);
-		main.set_weapon_ui_sprite(get_instance_id(), main.dead_ui_color);
-		main.set_weapon_ui_stat(get_instance_id(), main.dead_ui_color);
+		update_ui_name(main.dead_ui_color);
+		update_ui_details(main.dead_ui_color);
+		update_ui_sprite(main.dead_ui_color);
+		update_ui_stat(main.dead_ui_color);
 
 func lose_hp_timeout():
 	if(self.health == 1): return;
@@ -453,3 +463,32 @@ func set_physics_time_scale(v: float, d:float):
 	get_tree().current_scene.add_child(t);
 
 	physics_time_scale = v;
+
+func update_ui_name(c:Color, t:String = ""):
+	if(t == ""):
+		name_text.format([weapon_settings.name]);
+	else:
+		name_text.text = t;
+
+	name_text.self_modulate = c;
+
+func update_ui_sprite(c:Color = Color.WHITE):
+	ui_sprite.texture = weapon.sprite_2d.texture;
+	ui_sprite.self_modulate = c;
+
+func update_ui_details(c:Color, raw:bool = false):
+	if(raw):
+		details_text.text = weapon_settings.details;
+	else:
+		details_text.format([weapon_settings.details]);
+
+	details_text.modulate = c;
+
+func update_ui_stat(c:Color):
+	if(!dead):
+		stat_text.format([weapon_settings.name]);
+	stat_text.self_modulate = c;
+
+func nerf_max_speed(v:float):
+	max_speed *= v;
+	nerfed_speed = abs(base_max_speed - max_speed);
