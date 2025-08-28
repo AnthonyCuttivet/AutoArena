@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="1_5nf2p"]
 [ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="3_g6hdt"]
-[ext_resource type="AudioStream" uid="uid://cowlk46iwqau7" path="res://Audio/SFX/se_jack_attackair_B01.wav" id="3_n4xfh"]
-[ext_resource type="AudioStream" uid="uid://dboluvfeqauop" path="res://Audio/SFX/se_jack_smash_H01_ft.wav" id="4_5nf2p"]
+[ext_resource type="AudioStream" uid="uid://cowlk46iwqau7" path="res://Audio/SFX/BattleBalls/se_jack_attackair_B01.wav" id="3_n4xfh"]
+[ext_resource type="AudioStream" uid="uid://dboluvfeqauop" path="res://Audio/SFX/BattleBalls/se_jack_smash_H01_ft.wav" id="4_5nf2p"]
 [ext_resource type="PackedScene" uid="uid://cdhj2fynyln0c" path="res://Prefabs/Weapons/Armory/Dagger/W_Dagger.tscn" id="5_5nf2p"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5f5ec"]

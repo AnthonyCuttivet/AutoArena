@@ -335,10 +335,11 @@ func _on_body_entered(other: Node) -> void:
 
 	EventBus.ball_bounce.emit(get_instance_id());
 
-	var dir = (global_position - other.global_position).normalized()
-	if(relative_bounce_boost > 0.0):
-		bounce_boost = max_speed * relative_bounce_boost;
-	linear_velocity += dir * bounce_boost;  # Knockback boost
+	if(!other.is_in_group("DRYWALL")):
+		var dir = (global_position - other.global_position).normalized();
+		if(relative_bounce_boost > 0.0):
+			bounce_boost = max_speed * relative_bounce_boost;
+		linear_velocity += dir * bounce_boost;  # Knockback boost
 
 	if(other.is_in_group("WALL")):
 		# linear_velocity += ((main.attraction_point.global_position - global_position).normalized() * linear_velocity.length() * center_pull_strength);

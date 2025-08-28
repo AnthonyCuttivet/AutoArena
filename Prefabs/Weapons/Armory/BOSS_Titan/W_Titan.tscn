@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://b7bpxvhxvxegx"]
+
+[ext_resource type="Script" uid="uid://bpdvcoq3rh1n2" path="res://Prefabs/Weapons/Armory/BOSS_Titan/weapon_titan.gd" id="1_dp5r4"]
+[ext_resource type="Texture2D" uid="uid://dudvo1eyrnkom" path="res://Graphics/_Addons/Icons/fc27.png" id="2_dp5r4"]
+[ext_resource type="PackedScene" uid="uid://dt64bufphwil1" path="res://Prefabs/Weapons/Armory/Projectiles/P_TitanRock.tscn" id="2_sid6n"]
+[ext_resource type="PackedScene" uid="uid://bykx0a8ie4kwf" path="res://Prefabs/Weapons/Armory/Projectiles/P_TitanShard.tscn" id="3_t2rg8"]
+
+[node name="WeaponTitan" type="Node2D" node_paths=PackedStringArray("sprite_2d")]
+script = ExtResource("1_dp5r4")
+bonus_rock_each_hp_lost = 50
+rock_prefab = ExtResource("2_sid6n")
+shard_projectile_prefab = ExtResource("3_t2rg8")
+sprite_2d = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+texture = ExtResource("2_dp5r4")

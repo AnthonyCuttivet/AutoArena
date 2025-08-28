@@ -4,6 +4,7 @@ class_name WeaponHydra extends Weapon
 @export var spawn_head_each_hp_lost:int;
 @export var heads:Array[WeaponHydraHead];
 @export var heads_projectiles:Array[PackedScene];
+@export var projectiles_scales:Array[float] = [0.8, 0.6, 1.0];
 @export var heads_shoot_delay:Array[float];
 @export var head_prefab:PackedScene;
 @export var heads_root:Node2D;
@@ -39,6 +40,7 @@ func shoot_projectile():
 		if(head.can_shoot((1.0 / shoot_speed))):
 			AudioManager.play_sfx(head.sfx_shoot, "SFX");
 			shooted_projectile = Utils.shoot_projectile(head.projectile, ball_owner, head.global_rotation, head.sprite_2d);
+			shooted_projectile.scale = head.p_scale * ball_owner.weapon_slot.scale * ball_owner.root.scale;;
 			shooted_projectile.weapon_owner = head;
 
 func get_custom_damage_value() -> int:
@@ -60,6 +62,7 @@ func on_ball_damaged_received(id:int, _amount:int, _from:int):
 func add_head():
 	var new_head:WeaponHydraHead = spawn_head();
 	new_head.init(settings, ball_owner);
+	new_head.p_scale = projectiles_scales[heads.size()] if heads.size() <= 2 else 0.0;
 	heads.append(new_head);
 
 	for i in heads.size():

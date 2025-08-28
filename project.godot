@@ -41,6 +41,7 @@ BALL=""
 RESET_ZONE=""
 WALL=""
 DEADZONE=""
+DRYWALL=""
 
 [physics]
 

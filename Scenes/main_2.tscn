@@ -1,4 +1,4 @@
-[gd_scene load_steps=103 format=4 uid="uid://cmsck3y43hvak"]
+[gd_scene load_steps=104 format=4 uid="uid://cmsck3y43hvak"]
 
 [ext_resource type="Script" uid="uid://llbx2bxdfjwy" path="res://Scenes/main.gd" id="1_nmkph"]
 [ext_resource type="Shader" uid="uid://m275kdb8v68b" path="res://Graphics/Shaders/balatro.gdshader" id="1_y2yxb"]
@@ -19,10 +19,10 @@
 [ext_resource type="Script" uid="uid://0fuba61sagm3" path="res://Scripts/camera.gd" id="11_87gun"]
 [ext_resource type="Resource" uid="uid://vf0ik06r5ypg" path="res://Resources/Weapons/W_BOW.tres" id="11_per8v"]
 [ext_resource type="Resource" uid="uid://dvig1hbsj8myn" path="res://Resources/Weapons/W_HYDRA.tres" id="11_uot50"]
+[ext_resource type="AudioStream" uid="uid://j1rkd76ve8f4" path="res://Audio/SFX/BattleBalls/Announcer/download1756376562618 (audio-extractor (mp3cut.net).mp3" id="12_gbt1t"]
 [ext_resource type="Texture2D" uid="uid://crarm12ndl2en" path="res://Graphics/_Addons/Icons/fc7.png" id="12_hvjex"]
 [ext_resource type="FontFile" uid="uid://bt2qq5v7nibma" path="res://Graphics/Fonts/PPFraktionMono-Bold.otf" id="12_p1oyv"]
 [ext_resource type="FontFile" uid="uid://bglbd1ylrt02k" path="res://Graphics/Fonts/big_noodle_titling.ttf" id="12_per8v"]
-[ext_resource type="AudioStream" uid="uid://c4y02nwoondlr" path="res://Audio/SFX/BattleBalls/Announcer/download1756232080400 (mp3cut.net).mp3" id="12_qtgyu"]
 [ext_resource type="Script" uid="uid://dtqgj8e3uki5c" path="res://Scenes/dynamic_text.gd" id="13_vvmd2"]
 [ext_resource type="Shader" uid="uid://dtyu4fqs87aw3" path="res://Graphics/Shaders/hitflash.gdshader" id="14_vvmd2"]
 [ext_resource type="FontFile" uid="uid://bttwarxfdsek6" path="res://Graphics/Fonts/PeaberryMono.ttf" id="19_rifaf"]
@@ -36,6 +36,7 @@
 [ext_resource type="Texture2D" uid="uid://coxlviwvbybmd" path="res://Graphics/_Addons/Icons/fc1960.png" id="23_o08cq"]
 [ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="24_3p5r5"]
 [ext_resource type="PackedScene" uid="uid://bn0dqaj5jmw3f" path="res://Prefabs/Weapons/Armory/_NONE/W_NONE.tscn" id="25_uhddi"]
+[ext_resource type="Resource" uid="uid://eb05goe3vru8" path="res://Resources/Weapons/W_TITAN.tres" id="26_gbt1t"]
 [ext_resource type="Texture2D" uid="uid://bfvdgok43dr2p" path="res://Graphics/Images/circle-svgrepo-com.svg" id="26_habdg"]
 [ext_resource type="Resource" uid="uid://byiqiqh47bey5" path="res://Resources/Weapons/W_Scissors.tres" id="27_djmp0"]
 [ext_resource type="Texture2D" uid="uid://kustmt8tcx7q" path="res://Graphics/_Addons/Icons/fc1492.png" id="27_qas6s"]
@@ -97,7 +98,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="Resource" id="Resource_p1oyv"]
 script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("12_qtgyu")
+audio_stream = ExtResource("12_gbt1t")
 volume = -20.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
@@ -667,17 +668,19 @@ shader_parameter/b_displacement = Vector2(0, 0)
 [node name="Main2" type="Node2D" node_paths=PackedStringArray("new_challenger_ball", "balls", "attraction_point")]
 rotation = 1.5708
 script = ExtResource("1_nmkph")
+record = true
 patchnote_s_per_page = 23.0
 new_challenger_ball = NodePath("Balls/Fighters/Reaper")
+time_attack_mode = true
+display_damage_dealt = true
 time_attack_leaderboards = Dictionary[String, ExtResource("2_poh84")]({
 "HYDRA": ExtResource("3_0qwvu"),
 "WARLOCK": ExtResource("4_g7d4c")
 })
 time_attack_ranking_duration = 10.0
-free_for_all = true
 _2v2_colors = Array[Color]([Color(0.5, 0.666667, 1, 1), Color(0.5, 0.583333, 1, 1), Color(1, 0.5, 0.5, 1), Color(1, 0.583333, 0.5, 1)])
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Fighters/Dagger"), NodePath("Balls/Fighters/Reaper"), NodePath("Balls/Fighters/Bow"), NodePath("Balls/Fighters/Katana")]
+balls = [NodePath("Balls/Bosses/HYDRA"), NodePath("Balls/Fighters/Plume"), NodePath("Balls/Fighters/Bow")]
 fx_hit_prefab = ExtResource("2_8wnqf")
 fx_death_prefab = ExtResource("3_uot50")
 fx_clash = ExtResource("4_0o7lx")
@@ -1100,7 +1103,7 @@ theme_override_constants/shadow_outline_size = 30
 theme_override_fonts/normal_font = ExtResource("12_per8v")
 theme_override_font_sizes/normal_font_size = 100
 bbcode_enabled = true
-text = "%s"
+text = "%s "
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
@@ -1131,7 +1134,7 @@ theme_override_constants/shadow_outline_size = 30
 theme_override_fonts/normal_font = ExtResource("12_per8v")
 theme_override_font_sizes/normal_font_size = 100
 bbcode_enabled = true
-text = "%s"
+text = "%s "
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
@@ -1213,7 +1216,7 @@ theme_override_constants/shadow_outline_size = 30
 theme_override_fonts/normal_font = ExtResource("12_per8v")
 theme_override_font_sizes/normal_font_size = 100
 bbcode_enabled = true
-text = "%s"
+text = "%s "
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
@@ -1244,7 +1247,7 @@ theme_override_constants/shadow_outline_size = 30
 theme_override_fonts/normal_font = ExtResource("12_per8v")
 theme_override_font_sizes/normal_font_size = 100
 bbcode_enabled = true
-text = "%s"
+text = "%s "
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
@@ -1625,10 +1628,12 @@ color = Color(0.917647, 0.384314, 0.384314, 1)
 team = 1
 stop = true
 is_boss = true
-max_speed = 1000.0
-min_horizontal = 50.0
+max_speed = 300.0
+min_horizontal = 0.0
 gravity_strength = 100.0
 drag_force = 0.2
+bounce_boost = 0.0
+relative_bounce_boost = 0.1
 
 [node name="Root" parent="Balls/Bosses/HYDRA" index="0"]
 scale = Vector2(0.21, 0.21)
@@ -1640,6 +1645,32 @@ scale = Vector2(10, 10)
 material = SubResource("ShaderMaterial_g7d4c")
 
 [node name="Trail" parent="Balls/Bosses/HYDRA/Root" index="5"]
+gradient = SubResource("Gradient_wkwug")
+
+[node name="TITAN" parent="Balls/Bosses" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2320.01, 1817.99)
+weapon_settings = ExtResource("26_gbt1t")
+start_dir = Vector2(0, -1)
+health = 150
+color = Color(0.662745, 0.517647, 0.403922, 1)
+team = 1
+stop = true
+is_boss = true
+max_speed = 300.0
+min_horizontal = 0.0
+gravity_strength = 1.0
+drag_force = 0.5
+
+[node name="Root" parent="Balls/Bosses/TITAN" index="0"]
+scale = Vector2(0.21, 0.21)
+
+[node name="WeaponSlot" parent="Balls/Bosses/TITAN/Root" index="0"]
+scale = Vector2(10, 10)
+
+[node name="Circle" parent="Balls/Bosses/TITAN/Root" index="2"]
+material = SubResource("ShaderMaterial_g7d4c")
+
+[node name="Trail" parent="Balls/Bosses/TITAN/Root" index="5"]
 gradient = SubResource("Gradient_wkwug")
 
 [node name="WARLOCK" parent="Balls/Bosses" groups=["BALL"] instance=ExtResource("4_ya2e4")]
@@ -2585,6 +2616,7 @@ offset_right = 1080.0
 offset_bottom = 1920.0
 
 [editable path="Balls/Bosses/HYDRA"]
+[editable path="Balls/Bosses/TITAN"]
 [editable path="Balls/Bosses/WARLOCK"]
 [editable path="Balls/Bosses/HYDRA_Void"]
 [editable path="Balls/Bosses/HYDRA_Acid"]

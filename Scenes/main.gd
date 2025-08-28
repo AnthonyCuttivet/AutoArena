@@ -567,11 +567,14 @@ func place_fighting_balls():
 		balls[1].team = 1;
 		balls[2].team = 1;
 
-		balls[1].max_speed *= 0.75;
-		balls[2].max_speed *= 0.75;
+		balls[1].max_speed *= 0.7;
+		balls[2].max_speed *= 0.7;
 
-		balls[1].root.scale *= 0.75;
-		balls[2].root.scale *= 0.75;
+		balls[1].gravity_strength *= 0.7;
+		balls[2].gravity_strength *= 0.7;
+
+		balls[1].root.scale *= 0.9;
+		balls[2].root.scale *= 0.9;
 
 	elif(balls.size() == 4):
 		balls[0].global_position = _2v2_spots[0] if !free_for_all else _4v_ffa_spots[0];

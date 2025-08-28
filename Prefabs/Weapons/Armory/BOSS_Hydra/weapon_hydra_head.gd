@@ -6,6 +6,7 @@ class_name WeaponHydraHead extends Weapon
 @export var sfx_hit:SFX;
 
 var shoot_delay_remaining:float;
+var p_scale:float;
 
 func _init() -> void:
 	EventBus.ball_weapon_hit.connect(on_weapon_hit_received);
