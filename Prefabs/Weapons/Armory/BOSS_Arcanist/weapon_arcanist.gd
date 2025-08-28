@@ -81,6 +81,7 @@ func add_thunder():
 	var p:Projectile = Utils.shoot_projectile(settings.projectile_prefab, ball_owner, ball_owner.weapon_slot.global_rotation, self);
 	p.set_speed(projectile_speed);
 	p.weapon_owner = self;
+	p.scale *= projectile_scale;
 	p.global_position = p_spawn.global_position;
 	p.global_rotation = p_spawn.global_rotation;
 	p.sprite_2d.modulate = Color.GRAY;

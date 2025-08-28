@@ -23,6 +23,7 @@ var projectile_scale:float = 0.75;
 var shoot_duration:float = 1.0;
 var hitstop:float = 0.0;
 var rot_speed_bounce_boost:bool = false;
+var projectile_self_hitstop:bool = false;
 
 var scaling_stat_value:float = 0.0;
 var stat_scale_value:float = 0.0;
@@ -68,6 +69,7 @@ func init(s:WeaponSettings, owner:BattleBall) -> void:
 	hitstop = settings.base_hitstop;
 	shoots_remaining = projectiles;
 	rot_speed_bounce_boost = settings.base_rot_speed_bounce_boost;
+	projectile_self_hitstop = settings.projectile_self_hitstop;
 
 	stat_scale_value = settings.stat_scale_value;
 
@@ -124,8 +126,13 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 
 	other.affect_health(-d, ball_owner);
 
+
 	if(!projectile_hit):
 		ball_owner.start_hitstop(0.01, hitstop);
+	else:
+		if(projectile_self_hitstop):
+			ball_owner.start_hitstop(0.0, hitstop);
+
 
 	other.start_hitstop(0.0, hitstop, kb);
 	other.hitflash(hitstop);
@@ -135,6 +142,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	pass;
 
 func on_weapon_clash(other:BattleBall, projectile_hit:bool = false):
+	if(other == null): return;
 	# if(ball_owner.is_in_same_team(other)):
 	# 	return;
 
@@ -147,10 +155,8 @@ func on_weapon_clash(other:BattleBall, projectile_hit:bool = false):
 		reverse_rotation();
 
 	ball_owner.start_hitstop(0.0, 0.15, kb);
-	# other.start_hitstop(0.0, 0.15, -kb);
 
 	EventBus.ball_weapon_clash.emit(ball_owner.get_instance_id());
-	# EventBus.ball_weapon_clash.emit(other.get_instance_id());
 	pass;
 
 func reverse_rotation():
@@ -173,6 +179,7 @@ func scale_stat():
 	pass;
 
 func shoot_projectile():
+	if(ball_owner.no_shoot): return;
 	if(settings.projectile_prefab == null):return;
 
 	AudioManager.play_sfx(settings.sfx_shoot, "SFX");

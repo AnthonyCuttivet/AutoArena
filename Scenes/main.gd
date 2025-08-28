@@ -186,8 +186,6 @@ func _ready() -> void:
 	for i in range(balls.size()):
 		balls_ids[balls[i].get_instance_id()] = i;
 		teams_alive_members[balls[i].team] += 1;
-		# balls[i].weapon_slot.global_rotation_degrees = randf_range(0.0,360.0);
-		balls[i].weapon_slot.global_rotation_degrees = 0.0;
 		if(i==0 && balls.size() > 1):
 			balls[0].target = balls[1];
 		else:

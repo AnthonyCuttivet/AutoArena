@@ -62,7 +62,7 @@ func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
 	pass;
 
 func get_custom_stat_format() -> String:
-	return Utils.format_float(settings.base_rotation_speed + ui_rot_speed * 10.0, 1);
+	return Utils.format_float(attack_speed * 3.0);
 
 func set_charged_sprite_alpha():
 	sprite_charged.self_modulate.a = clamp(((rotation_speed - 3.0)), 0,1);

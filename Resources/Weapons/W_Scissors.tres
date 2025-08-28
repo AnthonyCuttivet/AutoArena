@@ -61,6 +61,7 @@ base_projectile_speed = 150.0
 base_projectile_scale = 1.0
 base_shoot_duration = 0.25
 base_rot_speed_bounce_boost = false
+projectile_self_hitstop = false
 stat_scale_value = 2.0
 stat_scale_name = "Snip DMG"
 scaling_stat_float = false

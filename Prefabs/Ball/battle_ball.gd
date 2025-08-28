@@ -35,6 +35,12 @@ class_name BattleBall extends RigidBody2D
 @export var ghost:bool = false;
 @export var lock:bool = false;
 
+# --- Debug options ---
+@export var immobile:bool = false;
+@export var no_kb:bool = false;
+@export var no_shoot:bool = false;
+@export var no_rot:bool = false;
+
 # --- Push Duel ---
 @export var custom_ball_name:String = "";
 @export var scaling_type:Enums.SCALING;
@@ -128,6 +134,7 @@ func ready() -> void:
 
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	if(stop): return;
+	if(immobile): return;
 
 	var vel := linear_velocity
 
@@ -160,17 +167,18 @@ func _physics_process(delta: float) -> void:
 
 	if(hitstop_remaining <= 0.0 && freeze && time_scale >= 0.0 && accumulated_forces != Vector2.ZERO):
 		set_deferred("freeze", false);
-		apply_impulse(accumulated_forces);
+		impulse(accumulated_forces);
 		accumulated_forces = Vector2.ZERO;
 
 	if(invincible_for > 0.0):
 		invincible_for -= delta;
 
-	if(align_weapon_to_velocity):
-		# DebugDraw2D.arrow_vector(global_position, linear_velocity.normalized() * 50, Color.RED, 1.0, 1.0);
-		weapon_slot.rotation = linear_velocity.normalized().angle() - deg_to_rad(90.0);
-	elif(!block_weapon_rot):
-		weapon_slot.rotate(deg_to_rad(360.0 * weapon.rotation_speed * weapon.rotation_direction * time_scale) * delta);
+	if(!no_rot):
+		if(align_weapon_to_velocity):
+			# DebugDraw2D.arrow_vector(global_position, linear_velocity.normalized() * 50, Color.RED, 1.0, 1.0);
+			weapon_slot.rotation = linear_velocity.normalized().angle() - deg_to_rad(90.0);
+		elif(!block_weapon_rot):
+			weapon_slot.rotate(deg_to_rad(360.0 * weapon.rotation_speed * weapon.rotation_direction * time_scale) * delta);
 
 	# speed += delta;
 	# min_speed += delta;
@@ -193,9 +201,8 @@ func start(m:Main, dir:Vector2):
 	show_trail(false);
 	trail_2d.default_color = color;
 	trail_2d.default_color.a = 0.75;
-	# min_speed = min_speed + randf_range(min_speed * -0.2, min_speed * 0.2);
-	# max_speed = min_speed + randf_range(max_speed * -0.2, max_speed * 0.2);
-	apply_impulse(dir * max_speed);
+	if(!immobile):
+		impulse(dir * max_speed / 2.0);
 
 	if(lose_hp_per_s > 0):
 		set_hp_lost_per_s(lose_hp_per_s);
@@ -287,7 +294,6 @@ func start_hitstop(t:float, duration: float, knockback:Vector2 = Vector2.ZERO, o
 	accumulated_forces = knockback;
 
 	call_deferred("set_freeze", true);
-	# set_freeze(true);
 
 	hitstop_remaining = duration;
 	absolute_hitstop = absolute;
@@ -324,8 +330,7 @@ func set_freeze(v: bool):
 
 		# print(name + " Hitstop stop impulse " + str(accumulated_forces.length()));
 
-		apply_impulse(accumulated_forces);
-
+		impulse(accumulated_forces);
 		accumulated_forces = Vector2.ZERO;
 
 func _on_body_entered(other: Node) -> void:
@@ -342,15 +347,10 @@ func _on_body_entered(other: Node) -> void:
 		linear_velocity += dir * bounce_boost;  # Knockback boost
 
 	if(other.is_in_group("WALL")):
-		# linear_velocity += ((main.attraction_point.global_position - global_position).normalized() * linear_velocity.length() * center_pull_strength);
-		# apply_impulse(-linear_velocity.normalized() * max_speed * 0.15);
 		drift_dir *= -1;
 
 		if(weapon.rot_speed_bounce_boost):
 			weapon.rotation_speed += 0.01;
-
-	# var angle_tweak = deg_to_rad(randf_range(-3.0, 3.0));
-	# linear_velocity = linear_velocity.rotated(angle_tweak);
 
 	pass;
 
@@ -493,3 +493,7 @@ func update_ui_stat(c:Color):
 func nerf_max_speed(v:float):
 	max_speed *= v;
 	nerfed_speed = abs(base_max_speed - max_speed);
+
+func impulse(force:Vector2):
+	if(no_kb): return;
+	apply_impulse(force);

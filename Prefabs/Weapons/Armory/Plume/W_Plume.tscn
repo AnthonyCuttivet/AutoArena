@@ -6,7 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://84o48igaut0l" path="res://Audio/SFX/BattleBalls/se_link_special_H06.wav" id="3_d6l5w"]
 [ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="4_d6l5w"]
 [ext_resource type="AudioStream" uid="uid://m134k13svqt4" path="res://Audio/SFX/BattleBalls/se_master_special_H07_01.wav" id="5_d6l5w"]
-[ext_resource type="Texture2D" uid="uid://ceuj61nru1vt0" path="res://Graphics/_Addons/Icons/fc99999.png" id="6_2y4m1"]
+[ext_resource type="Texture2D" uid="uid://b0msgk3oeli16" path="res://Graphics/_Addons/Icons/fc987654.png" id="6_d6l5w"]
 
 [sub_resource type="Gradient" id="Gradient_ys7b7"]
 colors = PackedColorArray(0.5874, 0.572, 0.88, 1, 0.709067, 0.552, 0.8, 1)
@@ -41,6 +41,7 @@ height = 70.0
 script = ExtResource("1_wumdj")
 dmg_to_feather_conversion = 5
 feather_move_duration = 0.2
+recall_delay = 1.2
 recall_self_hitstop_t = 0.0
 feather_sub_weapon_prefab = ExtResource("2_ys7b7")
 feather_sub_weapon_spread = 90.0
@@ -54,8 +55,7 @@ hitboxes = [NodePath("Sprite2D/WeaponHitbox")]
 visible = false
 texture_filter = 1
 position = Vector2(40, 0)
-rotation = 0.785398
-texture = ExtResource("6_2y4m1")
+texture = ExtResource("6_d6l5w")
 
 [node name="WeaponHitbox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("weapon", "collider")]
 rotation = 0.785398

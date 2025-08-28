@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://dlt588ko3imtk" path="res://Graphics/_Addons/Icons/fc2154.png" id="2_dl2h1"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
-radius = 11.0
-height = 62.0
+radius = 6.0
+height = 80.0
 
 [node name="ProjectileArrow" type="Node2D" node_paths=PackedStringArray("hitbox")]
 script = ExtResource("1_tc23m")

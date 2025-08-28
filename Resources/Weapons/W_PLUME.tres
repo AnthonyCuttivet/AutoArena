@@ -61,6 +61,7 @@ base_projectile_speed = 2500.0
 base_projectile_scale = 0.8
 base_shoot_duration = 0.3
 base_rot_speed_bounce_boost = false
+projectile_self_hitstop = false
 stat_scale_value = 1.0
 stat_scale_name = "Recall DMG"
 scaling_stat_float = false

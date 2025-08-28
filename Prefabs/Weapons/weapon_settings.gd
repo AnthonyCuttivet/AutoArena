@@ -20,6 +20,7 @@ class_name WeaponSettings extends Resource
 @export var base_projectile_scale:float = 0.75;
 @export var base_shoot_duration:float = 0.35;
 @export var base_rot_speed_bounce_boost:bool = false;
+@export var projectile_self_hitstop:bool = false;
 
 @export var stat_scale_value:float = 1.0;
 @export var stat_scale_name:String = "NULL";
