@@ -15,6 +15,7 @@ class_name Main extends Node2D
 @export var time_attack_ranking_duration:float = 15.0;
 @export var free_for_all:bool = false;
 @export var _2v2_colors:Array[Color];
+@export var tournament_mode:bool = false;
 
 @export var forced_start_dir:Vector2 = Vector2.ZERO;
 @export var dead_ui_color:Color;

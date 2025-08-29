@@ -23,6 +23,11 @@ Components="*res://Scripts/components.gd"
 AudioManager="*res://Scripts/AudioManager/audio_manager.gd"
 DebugDraw2D="*res://addons/debugdraw2d/DebugDraw2D.gd"
 
+[debug]
+
+gdscript/warnings/unused_signal=0
+gdscript/warnings/integer_division=0
+
 [display]
 
 window/size/viewport_width=1920

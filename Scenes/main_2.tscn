@@ -1,4 +1,4 @@
-[gd_scene load_steps=104 format=4 uid="uid://cmsck3y43hvak"]
+[gd_scene load_steps=105 format=4 uid="uid://cmsck3y43hvak"]
 
 [ext_resource type="Script" uid="uid://llbx2bxdfjwy" path="res://Scenes/main.gd" id="1_nmkph"]
 [ext_resource type="Shader" uid="uid://m275kdb8v68b" path="res://Graphics/Shaders/balatro.gdshader" id="1_y2yxb"]
@@ -63,6 +63,7 @@
 [ext_resource type="Texture2D" uid="uid://diyiof7v8elk2" path="res://Graphics/_Addons/Icons/fc54.png" id="49_vp72v"]
 [ext_resource type="PackedScene" uid="uid://c3asfx7u2p3x8" path="res://Prefabs/FX/fx_confettis.tscn" id="57_70hv1"]
 [ext_resource type="Shader" uid="uid://byxemq4tgaq5f" path="res://Graphics/Shaders/chromatic_aberration.gdshader" id="59_hdidk"]
+[ext_resource type="Script" uid="uid://c51lyrulb6e1q" path="res://Scripts/Tournament/aled.gd" id="65_464qt"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_go1jf"]
 random_pitch = 1.1
@@ -694,6 +695,7 @@ sfx_bounce = SubResource("Resource_7mvmt")
 sfx_bounce_boss = SubResource("Resource_gaafq")
 sfx_death = SubResource("Resource_go1jf")
 ve_announcer = SubResource("Resource_p1oyv")
+no_announcer = true
 obs_delay = 4.0
 earclacks_mode = true
 _1v1_hp = 100
@@ -2621,6 +2623,45 @@ scale = Vector2(12, 12)
 material = SubResource("ShaderMaterial_pegen")
 offset_right = 1080.0
 offset_bottom = 1920.0
+
+[node name="Tournament" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1080.0
+offset_bottom = 1920.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG_Earclacks" type="ColorRect" parent="Tournament"]
+custom_minimum_size = Vector2(1280, 2120)
+layout_mode = 0
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 1180.0
+offset_bottom = 2020.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="BG" type="ColorRect" parent="Tournament/BG_Earclacks"]
+material = SubResource("ShaderMaterial_vijbk")
+custom_minimum_size = Vector2(1280, 2120)
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 2120.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(1, 1, 1, 0.0392157)
+
+[node name="Match" type="Node2D" parent="Tournament" node_paths=PackedStringArray("scene_root")]
+position = Vector2(482.003, 809.998)
+rotation = -1.5708
+script = ExtResource("65_464qt")
+scene_root = NodePath("../..")
+players = Array[String](["A", "B", "C", "D", "E", "F", "G", "H"])
+match_height = 100.0
 
 [editable path="Balls/Bosses/HYDRA"]
 [editable path="Balls/Bosses/TITAN"]

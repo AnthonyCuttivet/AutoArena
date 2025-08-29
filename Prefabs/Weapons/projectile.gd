@@ -17,8 +17,8 @@ var weapon_owner:Weapon;
 var velocity: Vector2 = Vector2.ZERO;
 var self_destruct_remaining:float = 0.0;
 
-func init(owner:BattleBall, s:float, p:int = -1, b:int = -1):
-	ball_owner = owner;
+func init(o:BattleBall, s:float, p:int = -1, b:int = -1):
+	ball_owner = o;
 
 	if(s != -1.0):
 		speed = s;

@@ -36,9 +36,9 @@ var shoots_remaining:int = 0;
 
 var no_shoot:bool = false;
 
-func init(s:WeaponSettings, owner:BattleBall) -> void:
+func init(s:WeaponSettings, o:BattleBall) -> void:
 
-	ball_owner = owner;
+	ball_owner = o;
 
 	if(s == null):
 		sprite_2d.texture = null;
