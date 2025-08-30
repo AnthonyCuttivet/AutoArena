@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="WeaponSettings" load_steps=10 format=3 uid="uid://dqi1plxun8om5"]
+[gd_resource type="Resource" script_class="WeaponSettings" load_steps=11 format=3 uid="uid://dqi1plxun8om5"]
 
 [ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="1_g1blm"]
 [ext_resource type="AudioStream" uid="uid://dehjmrc2hkyi8" path="res://Audio/SFX/BattleBalls/se_ike_appeal_stab.wav" id="2_gb2jc"]
 [ext_resource type="PackedScene" uid="uid://drdmmmqrtk30j" path="res://Prefabs/Weapons/Armory/Mace/W_Mace.tscn" id="2_h54af"]
 [ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="3_4eslf"]
 [ext_resource type="AudioStream" uid="uid://dew1b14mf6yam" path="res://Audio/SFX/BattleBalls/se_master_special_H07_kick_hit.wav" id="3_504au"]
+[ext_resource type="Texture2D" uid="uid://b6w1xcngywbfd" path="res://Graphics/_Addons/Icons/fc1506.png" id="5_4ivty"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4eslf"]
 random_pitch = 2.0
@@ -32,6 +33,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [resource]
 script = ExtResource("1_g1blm")
 name = "MACE"
+spr = ExtResource("5_4ivty")
 melee = true
 ranged = false
 flip = false

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="TimeAttackData" load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://Graphics/_Addons/Icons/fc176.png" id="1_arldv"]
+[ext_resource type="Texture2D" path="res://Graphics/_Addons/Icons/fc1789.png" id="2_0o3us"]
+[ext_resource type="Script" path="res://Scripts/time_attack_data.gd" id="3_rkg3q"]
+
+[resource]
+script = ExtResource("3_rkg3q")
+boss = "WARLOCK"
+time = 35.0151
+ball_1_name = "Gems"
+ball_1_color = Color(0.866667, 0.89375, 1, 1)
+ball_1_sprite = ExtResource("1_arldv")
+ball_1_flip_h = true
+ball_1_rot = 0.785398
+ball_1_offset = 56.0
+ball_1_damage = 162
+ball_2_name = "Bow"
+ball_2_color = Color(0.682353, 0.886275, 1, 1)
+ball_2_sprite = ExtResource("2_0o3us")
+ball_2_flip_h = false
+ball_2_rot = 0.785398
+ball_2_offset = 39.0
+ball_2_damage = 4

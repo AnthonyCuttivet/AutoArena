@@ -83,6 +83,7 @@ var lose_hp_timer:Timer = null;
 var drift_dir: float = 1.0 # left (-1) or right (+1)
 var base_drag_force:float = 0.0;
 var base_max_speed:float = 0.0;
+var base_health:int = 0;
 
 var lock_pos:bool = false;
 var locked_pos:Vector2;
@@ -115,6 +116,7 @@ func ready() -> void:
 	base_drag_force = drag_force;
 	base_max_speed = max_speed;
 	base_root_scale = root.scale.x;
+	base_health = health;
 
 	current_target_attraction = base_target_attraction;
 
@@ -180,12 +182,7 @@ func _physics_process(delta: float) -> void:
 		elif(!block_weapon_rot):
 			weapon_slot.rotate(deg_to_rad(360.0 * weapon.rotation_speed * weapon.rotation_direction * time_scale) * delta);
 
-	# speed += delta;
-	# min_speed += delta;
-	max_speed += 2 * delta;
-
-	# if(trail.visible && linear_velocity.length() <= max_speed):
-	# 	trail.visible = false;
+	# max_speed += 2 * delta;
 
 func _process(delta: float) -> void:
 	if(hitstop_remaining >= 0.0):
@@ -390,6 +387,30 @@ func death():
 		update_ui_sprite(main.dead_ui_color);
 		update_ui_stat(main.dead_ui_color);
 
+func respawn(pos:Vector2, h:int = -1):
+	global_position = pos;
+	dead = false;
+	visible = true;
+	set_process(true);
+	root.set_deferred("disabled", false);
+
+	reset_rigidbody();
+	weapon.init(weapon_settings, self);
+	health = base_health if h == -1 else h;
+	update_health_text();
+
+	for hitbox:Hitbox in weapon.hitboxes:
+		hitbox.set_deferred("monitorable", true);
+		hitbox.set_deferred("monitoring", true);
+		pass
+
+	if(main != null):
+		update_ui_name(color);
+		update_ui_details(color);
+		update_ui_sprite(Color.WHITE);
+		update_ui_stat(color);
+
+
 func lose_hp_timeout():
 	if(self.health == 1): return;
 	affect_health(-1,self, true);
@@ -497,3 +518,20 @@ func nerf_max_speed(v:float):
 func impulse(force:Vector2):
 	if(no_kb): return;
 	apply_impulse(force);
+
+func reset_rigidbody():
+	# Stop all movement
+	stop = true;
+	linear_velocity = Vector2.ZERO
+	prev_linear_velocity = Vector2.ZERO;
+	angular_velocity = 0.0
+	sleeping = true      # forces it to "pause" until the next physics tick
+	sleeping = false     # wakes it again so it can simulate normally
+	freeze = true;
+	accumulated_forces = Vector2.ZERO;
+	physics_time_scale = 1.0;
+	time_scale = 1.0;
+	max_speed = base_max_speed;
+	drag_force = base_drag_force;
+	current_target_attraction = base_target_attraction;
+	hitstop_remaining = 0.0;

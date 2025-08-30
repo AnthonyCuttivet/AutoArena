@@ -80,7 +80,7 @@ func init(s:WeaponSettings, o:BattleBall) -> void:
 
 	for hitbox in hitboxes:
 		if(hitbox != null):
-			hitbox.ball_owner = owner;
+			hitbox.ball_owner = o;
 			hitbox.init();
 
 func _physics_process(delta: float) -> void:

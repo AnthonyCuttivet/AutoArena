@@ -1,6 +1,7 @@
 class_name WeaponSettings extends Resource
 
 @export var name = "UNKNOWN";
+@export var spr:Texture;
 
 @export var melee:bool = true;
 @export var ranged:bool = false;

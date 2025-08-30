@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="WeaponSettings" load_steps=14 format=3 uid="uid://c5eexc502l0ip"]
+[gd_resource type="Resource" script_class="WeaponSettings" load_steps=15 format=3 uid="uid://c5eexc502l0ip"]
 
 [ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="1_08nkc"]
 [ext_resource type="PackedScene" uid="uid://b2nqrnreb6pns" path="res://Prefabs/Weapons/Armory/Projectiles/P_Thunder.tscn" id="1_ddo1p"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="3_tc42g"]
 [ext_resource type="AudioStream" uid="uid://do25o43fqbltx" path="res://Audio/SFX/BattleBalls/se_reflet_attackair_B02.wav" id="4_1wp16"]
 [ext_resource type="AudioStream" uid="uid://bb8deiq7i4eof" path="res://Audio/SFX/BattleBalls/se_reflet_finalhit_elec.wav" id="4_ahd6p"]
+[ext_resource type="Texture2D" uid="uid://bt3ogvpb85cbm" path="res://Graphics/_Addons/Icons/fc9999.png" id="7_dt5h3"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1wp16"]
 random_pitch = 1.05
@@ -44,6 +45,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [resource]
 script = ExtResource("1_08nkc")
 name = "THUNDER"
+spr = ExtResource("7_dt5h3")
 melee = false
 ranged = true
 flip = true

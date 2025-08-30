@@ -62,6 +62,7 @@ max_roll_color = Color(1, 0.87451, 0.67451, 1)
 roulette_colors = Array[Color]([Color(0.866667, 1, 0.996875, 1), Color(0.866667, 0.894118, 1, 1), Color(0.927083, 0.866667, 1, 1)])
 fx_confettis = NodePath("Sprite2D/FxConfettis")
 levels_colors = Array[Color]([Color(1, 0.802344, 0.730469, 1), Color(0.824219, 0.824219, 0.824219, 1), Color(1, 0.496094, 0.496094, 1), Color(0.6, 0.906667, 1, 1), Color(0.831238, 0.691406, 1, 1), Color(0.690643, 1, 0.636719, 1), Color(1, 0.906667, 0.6, 1), Color(1, 0.6, 0.6, 1)])
+cheat_first_hit = false
 sprite_2d = NodePath("Sprite2D")
 hitboxes = [NodePath("Sprite2D/WeaponHitbox")]
 custom_sfx = true

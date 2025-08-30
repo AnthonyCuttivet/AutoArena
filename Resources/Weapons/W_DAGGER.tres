@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="WeaponSettings" load_steps=10 format=3 uid="uid://dgbpfdn8qku06"]
+[gd_resource type="Resource" script_class="WeaponSettings" load_steps=11 format=3 uid="uid://dgbpfdn8qku06"]
 
 [ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="1_5nf2p"]
 [ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="3_g6hdt"]
 [ext_resource type="AudioStream" uid="uid://cowlk46iwqau7" path="res://Audio/SFX/BattleBalls/se_jack_attackair_B01.wav" id="3_n4xfh"]
 [ext_resource type="AudioStream" uid="uid://dboluvfeqauop" path="res://Audio/SFX/BattleBalls/se_jack_smash_H01_ft.wav" id="4_5nf2p"]
+[ext_resource type="Texture2D" uid="uid://2lhd2x1lrlww" path="res://Graphics/_Addons/Icons/fc1694.png" id="5_5f5ec"]
 [ext_resource type="PackedScene" uid="uid://cdhj2fynyln0c" path="res://Prefabs/Weapons/Armory/Dagger/W_Dagger.tscn" id="5_5nf2p"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5f5ec"]
@@ -31,6 +32,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [resource]
 script = ExtResource("1_5nf2p")
 name = "DAGGER"
+spr = ExtResource("5_5f5ec")
 melee = true
 ranged = false
 flip = true

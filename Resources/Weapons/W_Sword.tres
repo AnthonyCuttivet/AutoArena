@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="WeaponSettings" load_steps=10 format=3 uid="uid://b3s7seotwqvlb"]
+[gd_resource type="Resource" script_class="WeaponSettings" load_steps=11 format=3 uid="uid://b3s7seotwqvlb"]
 
 [ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="1_erj60"]
 [ext_resource type="AudioStream" uid="uid://wb7cigowqlsv" path="res://Audio/SFX/BattleBalls/WeaponClash.mp3" id="2_erj60"]
 [ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="3_vp7tv"]
 [ext_resource type="AudioStream" uid="uid://cny7ve6gtvqba" path="res://Audio/SFX/BattleBalls/se_master_final02_02.wav" id="4_erj60"]
 [ext_resource type="PackedScene" uid="uid://cncod01y4o2ml" path="res://Prefabs/Weapons/Armory/Sword/W_Sword.tscn" id="5_erj60"]
+[ext_resource type="Texture2D" uid="uid://cju35wtqmbnmq" path="res://Graphics/_Addons/Icons/fc1588.png" id="5_k00a4"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4eslf"]
 random_pitch = 2.0
@@ -32,6 +33,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [resource]
 script = ExtResource("1_erj60")
 name = "SWORD"
+spr = ExtResource("5_k00a4")
 melee = true
 ranged = false
 flip = false

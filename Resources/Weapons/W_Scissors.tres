@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="WeaponSettings" load_steps=14 format=3 uid="uid://byiqiqh47bey5"]
+[gd_resource type="Resource" script_class="WeaponSettings" load_steps=15 format=3 uid="uid://byiqiqh47bey5"]
 
 [ext_resource type="PackedScene" uid="uid://4q44tc8j4lwc" path="res://Prefabs/Weapons/Armory/Projectiles/P_Scissors.tscn" id="1_t4joa"]
 [ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="2_qhs80"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="4_onar2"]
 [ext_resource type="AudioStream" uid="uid://b24s7p40a8vl8" path="res://Audio/SFX/BattleBalls/se_edge_smash_L04.wav" id="5_t4joa"]
 [ext_resource type="AudioStream" uid="uid://dvjax4ihvanbi" path="res://Audio/SFX/BattleBalls/holy3.wav" id="6_t4joa"]
+[ext_resource type="Texture2D" uid="uid://su5ntojg64j2" path="res://Graphics/_Addons/Icons/fc953000.png" id="7_qhs80"]
 [ext_resource type="PackedScene" uid="uid://ccbg8hckn25qv" path="res://Prefabs/Weapons/Armory/Scissors/W_Scissors.tscn" id="7_t4joa"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_onar2"]
@@ -44,6 +45,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [resource]
 script = ExtResource("2_qhs80")
 name = "REAPER"
+spr = ExtResource("7_qhs80")
 melee = true
 ranged = true
 flip = false

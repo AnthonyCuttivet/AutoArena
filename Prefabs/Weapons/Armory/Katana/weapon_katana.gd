@@ -30,7 +30,7 @@ func scale_stat():
 
 func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
-	damage = max(1, damage-3);
+	damage = 1;
 	# tmp_damage = 0;
 	init_scaling_stat();
 	pass;

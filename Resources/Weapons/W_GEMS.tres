@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="WeaponSettings" load_steps=7 format=3 uid="uid://dckqlakpbmee2"]
+[gd_resource type="Resource" script_class="WeaponSettings" load_steps=8 format=3 uid="uid://dckqlakpbmee2"]
 
 [ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="1_cscb6"]
 [ext_resource type="AudioStream" uid="uid://dsobqkj25wqe7" path="res://Audio/SFX/BattleBalls/ding_coins.wav" id="2_gbm62"]
 [ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="3_yvfc0"]
+[ext_resource type="Texture2D" uid="uid://b6evq06wve5y3" path="res://Graphics/_Addons/Icons/fc169.png" id="4_t0wfu"]
 [ext_resource type="PackedScene" uid="uid://dcc18wxrtf4ne" path="res://Prefabs/Weapons/Armory/Gems/W_Gems.tscn" id="5_cscb6"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_t0wfu"]
@@ -20,6 +21,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [resource]
 script = ExtResource("1_cscb6")
 name = "GEMS"
+spr = ExtResource("4_t0wfu")
 melee = true
 ranged = false
 flip = false

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="WeaponSettings" load_steps=14 format=3 uid="uid://odj7lywcd7tq"]
+[gd_resource type="Resource" script_class="WeaponSettings" load_steps=15 format=3 uid="uid://odj7lywcd7tq"]
 
 [ext_resource type="PackedScene" uid="uid://dlaed02kcebe0" path="res://Prefabs/Weapons/Armory/Projectiles/P_Plume.tscn" id="1_reh5n"]
 [ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="2_lhs5o"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="4_lky4b"]
 [ext_resource type="AudioStream" uid="uid://yghn4n40ijsr" path="res://Audio/SFX/BattleBalls/se_sheik_jumpround.wav" id="6_lhs5o"]
 [ext_resource type="AudioStream" uid="uid://cm5v51r77gk3i" path="res://Audio/SFX/BattleBalls/se_edge_attackair_L04.wav" id="6_reh5n"]
+[ext_resource type="Texture2D" uid="uid://b0msgk3oeli16" path="res://Graphics/_Addons/Icons/fc987654.png" id="7_lhs5o"]
 [ext_resource type="PackedScene" uid="uid://d1n0femirmj41" path="res://Prefabs/Weapons/Armory/Plume/W_Plume.tscn" id="7_reh5n"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_q6ief"]
@@ -44,6 +45,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [resource]
 script = ExtResource("2_lhs5o")
 name = "PLUME"
+spr = ExtResource("7_lhs5o")
 melee = false
 ranged = true
 flip = false

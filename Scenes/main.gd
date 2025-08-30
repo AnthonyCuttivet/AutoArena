@@ -16,6 +16,7 @@ class_name Main extends Node2D
 @export var free_for_all:bool = false;
 @export var _2v2_colors:Array[Color];
 @export var tournament_mode:bool = false;
+@export var bo3_mode:bool = false;
 
 @export var forced_start_dir:Vector2 = Vector2.ZERO;
 @export var dead_ui_color:Color;
@@ -118,6 +119,7 @@ class_name Main extends Node2D
 @onready var damage_dealt_container: VBoxContainer = $UI/Bottom/DamageDoneContainer
 @onready var damage_dealt_text: DynamicText = $UI/Bottom/DamageDoneContainer/Damage_Done
 @onready var time_attack_leaderboard_ui: TimeAttackLeaderboardUI = $TimeAttackLeaderboard
+@onready var bo3_score_ui: DynamicText = $UI/Top/BO3Score
 
 @onready var special_effects_parent: Node2D = $SpecialEffectsParent
 @onready var projectiles_bg_parent: Node2D = $ProjectilesBGParent
@@ -145,6 +147,7 @@ var started:bool = false;
 var process_timer:bool = false;
 
 var damage_dealt:Dictionary[int,int];
+var bo3_score:Dictionary[int, int];
 
 func _ready() -> void:
 	if(devmode):
@@ -196,6 +199,9 @@ func _ready() -> void:
 
 	if(display_damage_dealt):
 		update_damage_dealt_UI();
+
+	if(bo3_mode):
+		init_bo3_score();
 
 	if(new_challenger_mode):
 		for ball in balls:
@@ -277,14 +283,7 @@ func start_game():
 	if(!no_announcer):
 		AudioManager.play_sfx(ve_announcer, "321GO");
 
-	var d:Vector2 = Vector2.ONE.rotated(deg_to_rad(randf_range(-50.0,-160.0)));
-
-	if(forced_start_dir != Vector2.ZERO):
-		d = forced_start_dir;
-
-	for ball in balls:
-		d = d.bounce(Vector2.UP);
-		ball.start(self, d);
+	start_balls();
 
 	if(new_challenger_mode):
 		balls[1].stop = true;
@@ -295,16 +294,46 @@ func start_game():
 	if(time_attack_mode):
 		process_timer = true;
 
-func end_game():
+func start_balls():
+	var d:Vector2 = Vector2.ONE.rotated(deg_to_rad(randf_range(-50.0,-160.0)));
 
+	if(forced_start_dir != Vector2.ZERO):
+		d = forced_start_dir;
+
+	for ball in balls:
+		d = d.bounce(Vector2.UP);
+		ball.start(self, d);
+
+func end_game():
 	var record_elapsed:float = (Time.get_ticks_msec() + (obs_delay * 1000.0)) / 1000.0;
 	var time_to_stop:float = max(obs_delay, 80.0 - record_elapsed);
+
+	var winner_team:int = -1;
+	var winners:Array[BattleBall];
+
+	for key in teams_alive_members:
+		if(teams_alive_members[key] != 0):
+			winner_team = key;
+
+		if(bo3_mode):
+			teams_alive_members[key] = 1;
+
+	for ball in balls:
+		if(ball.team == winner_team):
+			winners.push_back(ball);
+
+	if(bo3_mode):
+		update_bo3_score(winners[0].get_instance_id(), 1);
+
+		if(bo3_score[winners[0].get_instance_id()] < 2):
+			get_tree().create_timer(1).timeout.connect(reset_match);
+			return;
 
 	if(!balls[0].is_boss):
 		for confetti:MultiFX in confettis.get_children():
 			confetti.emit();
 
-	show_winner_text();
+	show_winner_text(winners);
 
 	if(process_timer):
 		process_timer = false;
@@ -322,9 +351,19 @@ func end_game():
 		var t_stop_record:SceneTreeTimer = get_tree().create_timer(time_to_stop);
 		t_stop_record.timeout.connect(stop_record);
 
+func reset_match():
+	balls[0].respawn(_1v1_spots[0], _1v1_hp);
+	balls[1].respawn(_1v1_spots[1], _1v1_hp);
+
+	fill_character_ui(balls[0], name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p);
+	fill_character_ui(balls[1], name_right_1p, sprite_right_1p, details_right_1p, stat_right_1p);
+
+	get_tree().create_timer(0.3).timeout.connect(start_balls);
+
 func init_ui():
 	winner_text.visible = false;
 	time_attack_leaderboard_ui.visible = false;
+	bo3_score_ui.visible = bo3_mode;
 	damage_dealt_text.original_text = generate_damage_dealt_string();
 
 	fill_character_ui(balls[0], name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p);
@@ -591,10 +630,10 @@ func place_fighting_balls():
 		balls[2].team = 1 if !free_for_all else 2;
 		balls[3].team = 1 if !free_for_all else 3;
 
-		balls[0].nerf_max_speed(0.75);
-		balls[1].nerf_max_speed(0.75);
-		balls[2].nerf_max_speed(0.75);
-		balls[3].nerf_max_speed(0.75);
+		balls[0].nerf_max_speed(0.65);
+		balls[1].nerf_max_speed(0.65);
+		balls[2].nerf_max_speed(0.65);
+		balls[3].nerf_max_speed(0.65);
 
 		balls[0].root.scale *= 0.75;
 		balls[1].root.scale *= 0.75;
@@ -674,19 +713,7 @@ func set_time_scale_smooth(v: float, d:float, burst:float):
 	tween.tween_property(Engine, "time_scale", v, burst);
 	tween.tween_property(Engine, "time_scale", 1.0, d-burst).set_delay(burst);
 
-func show_winner_text():
-	var winner_team:int = -1;
-	var winners:Array[BattleBall];
-
-	for key in teams_alive_members:
-		if(teams_alive_members[key] != 0):
-			winner_team = key;
-
-	for ball in balls:
-		if(ball.team == winner_team):
-			winners.push_back(ball);
-
-
+func show_winner_text(winners:Array[BattleBall]):
 	if(winners.size() == 1):
 		winner_text.format(["[color=" + winners[0].color.to_html() + "]" + winners[0].weapon_settings.name + "[/color] wins!"]);
 
@@ -711,3 +738,20 @@ func animate_label_font(label: RichTextLabel, to: int, duration: float = 0.6):
 		to,
 		duration
 	)
+
+func init_bo3_score():
+	for ball in balls:
+		bo3_score[ball.get_instance_id()] = 0;
+
+	update_bo3_score(balls[0].get_instance_id(), 0);
+
+func update_bo3_score(id:int, points:int):
+	bo3_score[id] += points;
+
+	var args:Array[String] = [];
+
+	for ball_id in bo3_score.keys():
+		args.push_back(get_ball_by_id(ball_id).color.to_html());
+		args.push_back(str(bo3_score[ball_id]));
+
+	bo3_score_ui.format(args);

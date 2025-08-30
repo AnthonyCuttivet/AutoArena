@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="WeaponSettings" load_steps=10 format=3 uid="uid://dngq5if36y8sd"]
+[gd_resource type="Resource" script_class="WeaponSettings" load_steps=11 format=3 uid="uid://dngq5if36y8sd"]
 
 [ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="1_v4bjt"]
 [ext_resource type="AudioStream" uid="uid://wb7cigowqlsv" path="res://Audio/SFX/BattleBalls/WeaponClash.mp3" id="2_dtbvl"]
 [ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="3_4jogt"]
 [ext_resource type="AudioStream" uid="uid://d1hfi6ib3w2xs" path="res://Audio/SFX/BattleBalls/se_marth_attackl_L01.wav" id="4_v4bjt"]
+[ext_resource type="Texture2D" uid="uid://y6121dnrlsoe" path="res://Graphics/_Addons/Icons/fc170401.png" id="5_dtbvl"]
 [ext_resource type="PackedScene" uid="uid://b2u3oyrvbqxxu" path="res://Prefabs/Weapons/Armory/Qiang/W_Qiang.tscn" id="5_v4bjt"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4eslf"]
@@ -32,6 +33,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [resource]
 script = ExtResource("1_v4bjt")
 name = "QIANG"
+spr = ExtResource("5_dtbvl")
 melee = true
 ranged = false
 flip = true

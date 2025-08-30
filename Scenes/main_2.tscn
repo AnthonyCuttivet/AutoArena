@@ -1,4 +1,4 @@
-[gd_scene load_steps=105 format=4 uid="uid://cmsck3y43hvak"]
+[gd_scene load_steps=108 format=4 uid="uid://cmsck3y43hvak"]
 
 [ext_resource type="Script" uid="uid://llbx2bxdfjwy" path="res://Scenes/main.gd" id="1_nmkph"]
 [ext_resource type="Shader" uid="uid://m275kdb8v68b" path="res://Graphics/Shaders/balatro.gdshader" id="1_y2yxb"]
@@ -19,8 +19,8 @@
 [ext_resource type="Script" uid="uid://0fuba61sagm3" path="res://Scripts/camera.gd" id="11_87gun"]
 [ext_resource type="Resource" uid="uid://vf0ik06r5ypg" path="res://Resources/Weapons/W_BOW.tres" id="11_per8v"]
 [ext_resource type="Resource" uid="uid://dvig1hbsj8myn" path="res://Resources/Weapons/W_HYDRA.tres" id="11_uot50"]
-[ext_resource type="AudioStream" uid="uid://cgrgxrv2qjraj" path="res://Audio/SFX/BattleBalls/Announcer/download1756402641404 (mp3cut.net).mp3" id="12_gbt1t"]
 [ext_resource type="Texture2D" uid="uid://crarm12ndl2en" path="res://Graphics/_Addons/Icons/fc7.png" id="12_hvjex"]
+[ext_resource type="AudioStream" uid="uid://baqoltgt1pvw1" path="res://Audio/SFX/BattleBalls/Announcer/download1756555813773 (mp3cut.net).mp3" id="12_mdjyl"]
 [ext_resource type="FontFile" uid="uid://bt2qq5v7nibma" path="res://Graphics/Fonts/PPFraktionMono-Bold.otf" id="12_p1oyv"]
 [ext_resource type="FontFile" uid="uid://bglbd1ylrt02k" path="res://Graphics/Fonts/big_noodle_titling.ttf" id="12_per8v"]
 [ext_resource type="Script" uid="uid://dtqgj8e3uki5c" path="res://Scenes/dynamic_text.gd" id="13_vvmd2"]
@@ -63,7 +63,9 @@
 [ext_resource type="Texture2D" uid="uid://diyiof7v8elk2" path="res://Graphics/_Addons/Icons/fc54.png" id="49_vp72v"]
 [ext_resource type="PackedScene" uid="uid://c3asfx7u2p3x8" path="res://Prefabs/FX/fx_confettis.tscn" id="57_70hv1"]
 [ext_resource type="Shader" uid="uid://byxemq4tgaq5f" path="res://Graphics/Shaders/chromatic_aberration.gdshader" id="59_hdidk"]
-[ext_resource type="Script" uid="uid://c51lyrulb6e1q" path="res://Scripts/Tournament/aled.gd" id="65_464qt"]
+[ext_resource type="Script" uid="uid://c51lyrulb6e1q" path="res://Scripts/Tournament/tournament_bracket.gd" id="64_cfp74"]
+[ext_resource type="Script" uid="uid://8u1113rg2qmn" path="res://Scripts/Tournament/tournament_match_data.gd" id="65_mdjyl"]
+[ext_resource type="Script" uid="uid://bu41ewmcjbxpu" path="res://Scripts/Tournament/tournament_data.gd" id="66_1jvtg"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_go1jf"]
 random_pitch = 1.1
@@ -99,7 +101,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="Resource" id="Resource_p1oyv"]
 script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("12_gbt1t")
+audio_stream = ExtResource("12_mdjyl")
 volume = -20.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
@@ -671,10 +673,17 @@ shader_parameter/r_displacement = Vector2(0, 0)
 shader_parameter/g_displacement = Vector2(0, 0)
 shader_parameter/b_displacement = Vector2(0, 0)
 
+[sub_resource type="Resource" id="Resource_5u0yo"]
+script = ExtResource("66_1jvtg")
+players = Array[String](["BOW", "SWORD", "KATANA", "REAPER"])
+matches = Array[ExtResource("65_mdjyl")]([])
+next_match = 0
+metadata/_custom_type_script = "uid://bu41ewmcjbxpu"
+
 [node name="Main2" type="Node2D" node_paths=PackedStringArray("new_challenger_ball", "balls", "attraction_point")]
 rotation = 1.5708
 script = ExtResource("1_nmkph")
-record = true
+devmode = true
 patchnote_s_per_page = 23.0
 new_challenger_ball = NodePath("Balls/Fighters/Reaper")
 time_attack_leaderboards = Dictionary[String, ExtResource("2_poh84")]({
@@ -683,8 +692,9 @@ time_attack_leaderboards = Dictionary[String, ExtResource("2_poh84")]({
 })
 time_attack_ranking_duration = 10.0
 _2v2_colors = Array[Color]([Color(0.5, 0.666667, 1, 1), Color(0.5, 0.583333, 1, 1), Color(1, 0.5, 0.5, 1), Color(1, 0.583333, 0.5, 1)])
+bo3_mode = true
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Fighters/Dagger"), NodePath("Balls/Fighters/Plume")]
+balls = [NodePath("Balls/Fighters/Katana"), NodePath("Balls/Fighters/Sword")]
 fx_hit_prefab = ExtResource("2_8wnqf")
 fx_death_prefab = ExtResource("3_uot50")
 fx_clash = ExtResource("4_0o7lx")
@@ -695,10 +705,9 @@ sfx_bounce = SubResource("Resource_7mvmt")
 sfx_bounce_boss = SubResource("Resource_gaafq")
 sfx_death = SubResource("Resource_go1jf")
 ve_announcer = SubResource("Resource_p1oyv")
-no_announcer = true
 obs_delay = 4.0
 earclacks_mode = true
-_1v1_hp = 100
+_1v1_hp = 1
 _1v2_hp = 50
 attraction_point = NodePath("AttractionPoint")
 
@@ -1355,6 +1364,38 @@ vertical_alignment = 1
 justification_flags = 0
 script = ExtResource("13_vvmd2")
 
+[node name="BO3Score" type="RichTextLabel" parent="UI/Top"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -164.999
+offset_top = 138.999
+offset_right = 165.001
+offset_bottom = 249.999
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 80
+bbcode_enabled = true
+text = "[color=%s]%s[/color] - [color=%s]%s[/color]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+vertical_alignment = 1
+justification_flags = 0
+script = ExtResource("13_vvmd2")
+
 [node name="Bottom" type="Control" parent="UI"]
 custom_minimum_size = Vector2(1000, 140)
 layout_mode = 1
@@ -1887,7 +1928,7 @@ base_weapon_rotation = 120.0
 color = Color(1, 0.843137, 0, 1)
 dead = true
 stop = true
-max_speed = 1800.0
+max_speed = 1200.0
 min_horizontal = 75.0
 drag_force = 0.025
 
@@ -2655,13 +2696,30 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 color = Color(1, 1, 1, 0.0392157)
 
-[node name="Match" type="Node2D" parent="Tournament" node_paths=PackedStringArray("scene_root")]
-position = Vector2(482.003, 809.998)
-rotation = -1.5708
-script = ExtResource("65_464qt")
+[node name="Match" type="Node2D" parent="Tournament" node_paths=PackedStringArray("scene_root", "balls")]
+script = ExtResource("64_cfp74")
 scene_root = NodePath("../..")
-players = Array[String](["A", "B", "C", "D", "E", "F", "G", "H"])
-match_height = 100.0
+tournament_data = SubResource("Resource_5u0yo")
+balls = {
+"BOW": NodePath("../../Balls/Fighters/Bow"),
+"DAGGER": NodePath("../../Balls/Fighters/Dagger"),
+"GEMS": NodePath("../../Balls/Fighters/Gems"),
+"KATANA": NodePath("../../Balls/Fighters/Katana"),
+"MACE": NodePath("../../Balls/Fighters/Mace"),
+"PLUME": NodePath("../../Balls/Fighters/Plume"),
+"QIANG": NodePath("../../Balls/Fighters/Qiang"),
+"REAPER": NodePath("../../Balls/Fighters/Reaper"),
+"SANDEVISTAN": NodePath("../../Balls/Fighters/Sandevistan"),
+"SWORD": NodePath("../../Balls/Fighters/Sword"),
+"THUNDER": NodePath("../../Balls/Fighters/Thunder"),
+"UNARMED": NodePath("../../Balls/Fighters/Unarmed")
+}
+line_width = 6
+match_length = 250.0
+match_height = 250.0
+trophy_sprite = ExtResource("47_7gphk")
+sprite_scale = 2.0
+tween_duration = 0.75
 
 [editable path="Balls/Bosses/HYDRA"]
 [editable path="Balls/Bosses/TITAN"]

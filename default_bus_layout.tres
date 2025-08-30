@@ -4,7 +4,7 @@
 resource_name = "EQ10"
 
 [resource]
-bus/0/volume_db = -29.2359
+bus/0/volume_db = -22.5766
 bus/0/effect/0/effect = SubResource("AudioEffectEQ10_g28q7")
 bus/0/effect/0/enabled = true
 bus/1/name = &"BGM"
@@ -23,7 +23,7 @@ bus/3/name = &"SFX"
 bus/3/solo = false
 bus/3/mute = false
 bus/3/bypass_fx = false
-bus/3/volume_db = -0.130497
+bus/3/volume_db = -2.51026
 bus/3/send = &"Master"
 bus/4/name = &"SFX_HIT"
 bus/4/solo = false

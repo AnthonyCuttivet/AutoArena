@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="WeaponSettings" load_steps=14 format=3 uid="uid://vf0ik06r5ypg"]
+[gd_resource type="Resource" script_class="WeaponSettings" load_steps=15 format=3 uid="uid://vf0ik06r5ypg"]
 
 [ext_resource type="PackedScene" uid="uid://d1v11yrn0my32" path="res://Prefabs/Weapons/Armory/Projectiles/P_Arrow.tscn" id="1_odt31"]
 [ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="2_1gh3n"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="4_dk7v7"]
 [ext_resource type="AudioStream" uid="uid://ct67ps4utyeo3" path="res://Audio/SFX/BattleBalls/se_edge_smash_L03.wav" id="5_8dpo0"]
 [ext_resource type="AudioStream" uid="uid://civ2fehii8id6" path="res://Audio/SFX/BattleBalls/BowShoot.mp3" id="6_dk7v7"]
+[ext_resource type="Texture2D" uid="uid://b6mqwj6vvm3q4" path="res://Graphics/_Addons/Icons/fc1789.png" id="7_1vor1"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6o23i"]
 random_pitch = 2.0
@@ -44,6 +45,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [resource]
 script = ExtResource("2_1gh3n")
 name = "BOW"
+spr = ExtResource("7_1vor1")
 melee = false
 ranged = true
 flip = false
