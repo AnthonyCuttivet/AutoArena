@@ -18,6 +18,7 @@ class_name BattleBall extends RigidBody2D
 @export var dead:bool = false;
 @export var stop:bool = false;
 @export var is_boss:bool = false;
+@export var knockback_immune:bool = false;
 
 @export var weapon:Weapon;
 @export var align_weapon_to_velocity:bool = false;
@@ -317,7 +318,7 @@ func set_freeze(v: bool):
 		if(debug_hitstop):
 			print(Utils.pf() + " Hitstop Stop (" + str(accumulated_forces)+")");
 
-		if(accumulated_forces == Vector2.ZERO || is_boss):
+		if(accumulated_forces == Vector2.ZERO || knockback_immune):
 			accumulated_forces = prev_linear_velocity;
 
 		if(knockback_resistance != 1.0):
@@ -362,6 +363,10 @@ func is_in_same_team(other: BattleBall) -> bool:
 
 func add_invincibility(v:float):
 	invincible_for += v;
+
+func set_or_ignore_invincibility(v:float):
+	if(invincible_for > v): return;
+	invincible_for = v;
 
 func is_invincible()->bool:
 	return invincible_for > 0.0;

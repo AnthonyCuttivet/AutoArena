@@ -8,6 +8,7 @@ class_name Projectile extends Node2D
 @export var hitbox:Area2D;
 @export var destroy_on_hit_delay:float = 0.0;
 @export var ball_owner:BattleBall;
+@export var debug_destroy:bool = false;
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var raycast: RayCast2D = $RayCast2D
@@ -38,7 +39,7 @@ func _physics_process(delta: float) -> void:
 	if(self_destruct_remaining > 0.0):
 		self_destruct_remaining = clamp(self_destruct_remaining - delta, 0.0, 100.0);
 		if(self_destruct_remaining == 0.0):
-			destroy();
+			destroy(0);
 
 func set_speed(s:float):
 	speed = s;
@@ -68,23 +69,30 @@ func _on_projectile_hitbox_body_entered(other: Node2D) -> void:
 			if(raycast.get_collision_normal() != Vector2.ZERO):
 				velocity = velocity.bounce(raycast.get_collision_normal());
 				if(velocity == Vector2.ZERO):
-					destroy();
+					destroy(1);
 				self.rotation = velocity.angle();
 
 	if(other.is_in_group("DEADZONE")):
-		destroy();
+		destroy(2);
 		return;
 
 func on_hurtbox_hit(other:BattleBall):
 	ball_owner.weapon.on_weapon_hit(other, self.global_position, hitbox.get_instance_id(), true);
 	pierce_count -= 1;
 	if(pierce_count < 0):
-		destroy();
+		destroy(3);
 
 	if(destroy_on_hit_delay > 0.0 && self_destruct_remaining == 0.0):
 		self_destruct_remaining = destroy_on_hit_delay;
 
-func destroy():
+func destroy(source:int = 0):
+	if(debug_destroy):
+		match source:
+			0 : print("[P DESTROYED] 0 : Self-Destruct");
+			1 : print("[P DESTROYED] 1 : Wall collision with no velocity");
+			#2 : print("[P DESTROYED] 2 : Deadzone");
+			3 : print("[P DESTROYED] 3 : Hit with no pierce remaining");
+
 	on_destroy_effect();
 	queue_free();
 

@@ -37,6 +37,7 @@ func add_thunder():
 	var p:Projectile = Utils.shoot_projectile(settings.projectile_prefab, ball_owner, ball_owner.weapon_slot.global_rotation, self);
 	p.set_speed(projectile_speed + scaling_stat_value * 50.0);
 	p.weapon_owner = self;
+	p.scale = ball_owner.weapon_slot.scale * ball_owner.root.scale * projectile_scale;
 	p.global_position = p_spawn.global_position;
 	p.global_rotation = p_spawn.global_rotation;
 	p.sprite_2d.modulate = Color.GRAY;
@@ -102,11 +103,11 @@ func clear_thunderstrike(t, s):
 
 	for i in t:
 		if(thunders[i] != null):
-			thunders[i].destroy();
+			thunders[i].destroy(0);
 		thunders.erase(i);
 		pass
 
 	for i in s:
 		if(thunderstrikes[i] != null):
-			thunderstrikes[i].destroy();
+			thunderstrikes[i].destroy(0);
 		thunderstrikes.erase(i);

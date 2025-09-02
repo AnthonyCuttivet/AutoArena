@@ -4,11 +4,15 @@ class_name TournamentBracket extends Node2D
 @export_tool_button("Generate") var gen = generate_bracket;
 @export_tool_button("NextMatch") var nextmatch = toggle_next_match;
 @export_tool_button("SetWinner") var setwinner = toggle_winner;
+@export_tool_button("Save") var save = save_tournament;
+@export_tool_button("Load") var load = load_tournament;
 @export_tool_button("Clear") var clear = clear_bracket;
 
 @export var scene_root:Node2D;
 @export var tournament_data:TournamentData;
-@export var balls:Dictionary[String, BattleBall];
+@export var balls:Dictionary[String, WeaponSettings];
+@export var setup_slide_sfx:SFX;
+@export var win_sfx:SFX;
 
 # --- Customization
 @export var line_width:int = 4;
@@ -24,15 +28,17 @@ var starting_positions:Array[Vector2];
 var next_match:int = 0;
 var matches:Array[TournamentBracketMatch] = [];
 var match_id:int = 0;
+var winner_next_match = 0;
+var next_match_players_set:int = 0;
+var trophy_sprite2D:Sprite2D = null;
 
 func generate_bracket():
 
 	var current_depth:int = 1;
 	max_depth = (tournament_data.players.size() / 2) - 1;
+	winner_next_match = tournament_data.players.size() / 2;
 
 	starting_positions = [];
-
-	print("-----");
 
 	if(max_depth == 1):
 		var step:int = current_depth * 2;
@@ -51,17 +57,16 @@ func generate_bracket():
 			current_depth += 1;
 
 	for i in tournament_data.players.size():
-		print(starting_positions[i]);
-		sprites.push_back(create_sprite(get_player(tournament_data.players[i]).weapon_settings.spr, starting_positions[i], "Player1"));
+		sprites.push_back(create_sprite(get_player(tournament_data.players[i]).spr, starting_positions[i], "Player1"));
 
 	var trophy_pos:Vector2 = Vector2.ZERO;
 
 	if(max_depth == 1):
-		trophy_pos = global_position + Vector2(match_length * (max_depth + 1), match_height / 2.0);
+		trophy_pos = Vector2(match_length * (max_depth + 1), match_height / 2.0);
 	else:
 		trophy_pos = global_position + Vector2(match_length, match_height / 2.0) * max_depth;
 
-	create_sprite(trophy_sprite, trophy_pos, "SpriteTrophy", true);
+	trophy_sprite2D = create_sprite(trophy_sprite, trophy_pos, "SpriteTrophy", true);
 
 func clear_bracket():
 	for child in self.get_children():
@@ -75,17 +80,15 @@ func clear_bracket():
 	match_id = 0;
 
 func toggle_next_match():
-	if(next_match == tournament_data.players.size() - 1):
-		print("No more matches");
-		return;
-
-	setup_match(matches[next_match]);
+	if(next_match == tournament_data.players.size() - 2):
+		setup_finals(matches[next_match]);
+	else:
+		setup_match(matches[next_match]);
 	pass;
 
 func toggle_winner():
 	var m:TournamentBracketMatch = matches[next_match];
-	set_match_winner(m, m.match_data.players[randi_range(0,1)]);
-	next_match += 1;
+	set_match_winner(m.match_data.players[randi_range(0,1)]);
 
 func generate_match(line:int, side:int, depth:int, p:Array[int]):
 	# print(str(line) + " // " + str(side) + " // " + str(depth));
@@ -101,7 +104,6 @@ func generate_match(line:int, side:int, depth:int, p:Array[int]):
 
 	if(depth == 1):
 		matches.back().match_data.set_players(p);
-		print(p);
 
 	matches.back().match_data.m_id = match_id;
 	match_id += 1;
@@ -115,8 +117,10 @@ func generate_finals(depth:int, f:bool = false):
 
 	var root:Node2D = create_container(Vector2(pos_x, pos_y), "Finals");
 	tbmatch.container = root;
-	tbmatch.p1_win_line = draw_sline(Vector2.ZERO, match_length, Vector2.RIGHT, root);
-	tbmatch.p2_win_line = draw_sline(Vector2(match_length*2, 0.0), match_length, Vector2.LEFT, root);
+	tbmatch.p1_match_line = draw_sline(Vector2.ZERO, match_length / 2.0, Vector2.RIGHT, root);
+	tbmatch.p2_match_line = draw_sline(Vector2(match_length*2, 0.0), match_length / 2.0, Vector2.LEFT, root);
+	tbmatch.p1_win_line = draw_sline(Vector2.RIGHT * (match_length / 2.0), match_length / 2.0, Vector2.RIGHT, root);
+	tbmatch.p2_win_line = draw_sline(Vector2((match_length / 2.0) * 3, 0.0), match_length / 2.0, Vector2.LEFT, root);
 	tbmatch.match_data.is_finals = true;
 	tbmatch.match_data.m_id = match_id;
 	matches.push_back(tbmatch);
@@ -161,6 +165,12 @@ func draw_match(length:float, height:float, side:int, root:Node2D, starting_pos:
 	tbmatch.p1_win_line = draw_sline(Vector2(length * side, 0.0), height / 2.0, Vector2.DOWN, root);
 	tbmatch.p2_win_line = draw_sline(Vector2(length * side, height), height / 2.0, Vector2.UP, root);
 
+	tbmatch.match_data.winner_next_match = winner_next_match;
+	next_match_players_set += 1;
+	if(next_match_players_set % 2 == 0):
+		winner_next_match += 1;
+		next_match_players_set = 0;
+
 	if(starting_pos):
 		starting_positions.push_back(tbmatch.p1_match_line.global_position);
 		starting_positions.push_back(tbmatch.p2_match_line.global_position);
@@ -191,11 +201,30 @@ func setup_match(m:TournamentBracketMatch):
 	t.tween_property(sprites[m.match_data.players[0]], "global_position", m.p1_match_line.to_global(m.p1_match_line.points[1]), tween_duration).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK);
 	t.tween_property(sprites[m.match_data.players[1]], "global_position", m.p2_match_line.to_global(m.p2_match_line.points[1]), tween_duration).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK);
 
+	AudioManager.play_sfx(setup_slide_sfx);
+	AudioManager.play_sfx(setup_slide_sfx);
 
 	pass;
 
-func set_match_winner(m:TournamentBracketMatch, w:int):
-	m.match_data.set_winner(w);
+func setup_finals(m:TournamentBracketMatch):
+	var t:Tween = create_tween();
+	t.set_parallel(true);
+	t.tween_property(sprites[m.match_data.players[0]], "global_position", m.p1_match_line.to_global(m.p1_match_line.points[1]), tween_duration).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK);
+	t.tween_property(sprites[m.match_data.players[1]], "global_position", m.p2_match_line.to_global(m.p2_match_line.points[1]), tween_duration).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK);
+	t.tween_property(trophy_sprite2D, "global_position", trophy_sprite2D.global_position + Vector2.RIGHT * 100.0, tween_duration).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK);
+
+	AudioManager.play_sfx(setup_slide_sfx);
+	AudioManager.play_sfx(setup_slide_sfx);
+
+	print("Finals players : " + str(m.match_data.players[0]) + " vs " + str(m.match_data.players[1]));
+
+	pass;
+
+func set_match_winner(w:int):
+	var m:TournamentBracketMatch = matches[next_match];
+	next_match += 1;
+	m.match_data.winner = w;
+	matches[m.match_data.winner_next_match].match_data.players.push_back(w);
 	print("// Match " + str(m.match_data.m_id) + " winner : " + str(w));
 
 	var p1_winner:bool = m.match_data.players[0] == w;
@@ -211,6 +240,53 @@ func set_match_winner(m:TournamentBracketMatch, w:int):
 	t.tween_property(l_match, "default_color", Color.GRAY, d).set_ease(Tween.EASE_OUT);
 	t.tween_property(l_win, "default_color", Color.GRAY, d).set_ease(Tween.EASE_OUT);
 
+	AudioManager.play_sfx(win_sfx);
 
-func get_player(s:String) -> BattleBall:
+
+func get_player(s:String) -> WeaponSettings:
 	return balls[s];
+
+func save_tournament():
+	save_res();
+
+func load_tournament():
+	clear_bracket();
+	generate_bracket();
+
+	for i in matches.size():
+		var m:TournamentBracketMatch = matches[i];
+		m.match_data = tournament_data.matches[i];
+		if(m.match_data.winner != -1):
+			set_match_winner(m.match_data.winner);
+		pass
+
+	print("After load next match " + str(next_match));
+
+func get_match_local_id(team:int) -> int:
+	return matches[next_match].match_data.players[team];
+
+func save_res():
+	# Make sure the directory exists
+	var dir_path = "res://Resources/Tournaments/"
+	if not DirAccess.dir_exists_absolute(dir_path):
+		DirAccess.make_dir_recursive_absolute(dir_path)
+
+	# Use safe filename (replace ':' to avoid Windows errors)
+	var timestamp = Time.get_time_string_from_system().replace(":", "-")
+	var save_path = dir_path + "/Tournament_" + tournament_data.tournament_name + "_" + timestamp + ".tres"
+
+	tournament_data.next_match = next_match;
+	var matches_data:Array[TournamentMatchData] = [];
+
+	for m in matches:
+		matches_data.push_back(m.match_data);
+		pass
+
+	tournament_data.matches = matches_data;
+
+	var error = ResourceSaver.save(tournament_data, save_path)
+
+	if error == OK:
+		print("Resource saved successfully at:", save_path)
+	else:
+		push_error("Failed to save resource: %s" % error)

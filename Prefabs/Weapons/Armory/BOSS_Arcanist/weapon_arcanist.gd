@@ -149,12 +149,12 @@ func register_thundertrike(p:Projectile):
 func clear_thunderstrike(t, s):
 
 	for i in t:
-		thunders[i].destroy();
+		thunders[i].destroy(0);
 		thunders.erase(i);
 		pass
 
 	for i in s:
-		thunderstrikes[i].destroy();
+		thunderstrikes[i].destroy(0);
 		thunderstrikes.erase(i);
 
 func increase_thunder_needed():

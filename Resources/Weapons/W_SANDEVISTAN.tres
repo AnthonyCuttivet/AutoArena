@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="WeaponSettings" load_steps=7 format=3 uid="uid://elqmbfmcai5r"]
+[gd_resource type="Resource" script_class="WeaponSettings" load_steps=8 format=3 uid="uid://elqmbfmcai5r"]
 
 [ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="1_p3qkb"]
 [ext_resource type="AudioStream" uid="uid://ddx8pstv0i4qf" path="res://Audio/SFX/BattleBalls/se_demon_hit_catchattack.wav" id="2_noibu"]
 [ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="3_xrixw"]
-[ext_resource type="PackedScene" uid="uid://ilblu4e5jv2u" path="res://Prefabs/Weapons/Armory/Unarmedd/W_Unarmed.tscn" id="4_p3qkb"]
+[ext_resource type="Texture2D" uid="uid://cfwyhor4kqo4c" path="res://Graphics/_Addons/Icons/fc888881.png" id="4_p3qkb"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lt4ae"]
 random_pitch = 1.25
@@ -16,9 +16,13 @@ audio_stream = SubResource("AudioStreamRandomizer_lt4ae")
 volume = -28.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
+[sub_resource type="Resource" id="Resource_0jyys"]
+metadata/__load_path__ = "res://Prefabs/Weapons/Armory/Unarmedd/W_Unarmed.tscn"
+
 [resource]
 script = ExtResource("1_p3qkb")
 name = "UNARMED?"
+spr = ExtResource("4_p3qkb")
 melee = true
 ranged = false
 flip = false
@@ -36,11 +40,12 @@ base_projectile_speed = 0.0
 base_projectile_scale = 0.0
 base_shoot_duration = 0.0
 base_rot_speed_bounce_boost = false
+projectile_self_hitstop = false
 stat_scale_value = 0.5
 stat_scale_name = "DMG / Max Speed"
 scaling_stat_float = false
 no_rotation_change = false
-weapon_prefab = ExtResource("4_p3qkb")
+weapon_prefab = SubResource("Resource_0jyys")
 bg_projectile = false
 details = "Triggers at 7/7 Speed"
 sfx_hit = SubResource("Resource_3duvo")

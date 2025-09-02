@@ -1,16 +1,18 @@
-[gd_scene load_steps=8 format=3 uid="uid://dt64bufphwil1"]
+[gd_scene load_steps=10 format=3 uid="uid://dt64bufphwil1"]
 
 [ext_resource type="Script" uid="uid://cknl03rfn4jmn" path="res://Prefabs/Weapons/Armory/BOSS_Titan/projectile_titan_rock.gd" id="1_vkdj5"]
 [ext_resource type="Shader" uid="uid://dewdqohxf515x" path="res://Graphics/Shaders/dissolve.gdshader" id="2_syxqy"]
-[ext_resource type="Texture2D" uid="uid://dudvo1eyrnkom" path="res://Graphics/_Addons/Icons/fc27.png" id="2_vkdj5"]
+[ext_resource type="Texture2D" uid="uid://bkh5n5q7bif6o" path="res://Graphics/_Addons/Icons/fc31.png" id="3_lgcis"]
+[ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="4_uquli"]
+[ext_resource type="Texture2D" uid="uid://bmre0584plxqj" path="res://Graphics/_Addons/Icons/fc198.png" id="5_4xeh4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uquli"]
 resource_local_to_scene = true
 shader = ExtResource("2_syxqy")
 shader_parameter/sensitivity = 0.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vkdj5"]
-size = Vector2(64, 64)
+[sub_resource type="CircleShape2D" id="CircleShape2D_lgcis"]
+radius = 28.0179
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vkdj5"]
 friction = 0.0
@@ -19,20 +21,23 @@ bounce = 1.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_syxqy"]
 size = Vector2(56, 56)
 
-[node name="ProjectileTitanRock" type="Node2D"]
+[node name="ProjectileTitanRock" type="Node2D" node_paths=PackedStringArray("wall", "hitbox")]
 script = ExtResource("1_vkdj5")
+wall = NodePath("Sprite2D/Wall")
+hitbox = NodePath("Sprite2D/WeaponHitbox")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 material = SubResource("ShaderMaterial_uquli")
-texture = ExtResource("2_vkdj5")
+texture = ExtResource("3_lgcis")
 
-[node name="ProjectileHitbox" type="Area2D" parent="Sprite2D" groups=["WALL"]]
+[node name="WeaponHitbox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("collider")]
+script = ExtResource("4_uquli")
+collider = NodePath("CollisionShape2D")
 metadata/owner = NodePath("../../..")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/ProjectileHitbox"]
-shape = SubResource("RectangleShape2D_vkdj5")
-debug_color = Color(0.678125, 0.7, 0, 0.42)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
+shape = SubResource("CircleShape2D_lgcis")
 
 [node name="Wall" type="StaticBody2D" parent="Sprite2D" groups=["DRYWALL"]]
 collision_mask = 2
@@ -41,11 +46,26 @@ physics_material_override = SubResource("PhysicsMaterial_vkdj5")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Wall"]
 shape = SubResource("RectangleShape2D_syxqy")
 
+[node name="Health" type="Node2D" parent="Sprite2D"]
+position = Vector2(0, 28)
+
+[node name="HP1" type="Sprite2D" parent="Sprite2D/Health"]
+position = Vector2(-7, 0)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("5_4xeh4")
+
+[node name="HP2" type="Sprite2D" parent="Sprite2D/Health"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("5_4xeh4")
+
+[node name="HP3" type="Sprite2D" parent="Sprite2D/Health"]
+position = Vector2(7, 0)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("5_4xeh4")
+
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2(33, 0)
 rotation = -1.5708
 hit_from_inside = true
 
-[connection signal="area_entered" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_area_entered"]
-[connection signal="area_exited" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_area_exited"]
-[connection signal="body_entered" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_body_entered"]
+[connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="." method="_on_weapon_hitbox_area_entered"]

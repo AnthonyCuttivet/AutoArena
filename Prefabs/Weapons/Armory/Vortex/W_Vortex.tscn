@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://ctdu8uiean2xw"]
+
+[ext_resource type="Script" uid="uid://dp284l0r3auhu" path="res://Prefabs/Weapons/Armory/Vortex/weapon_vortex.gd" id="1_uuugu"]
+[ext_resource type="Texture2D" uid="uid://cdwt4moo3pkn6" path="res://Graphics/_Addons/Icons/fc669.png" id="2_sk3dt"]
+[ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="3_thssb"]
+[ext_resource type="PackedScene" uid="uid://b67wuodnxbcdt" path="res://Prefabs/Weapons/Armory/Vortex/bubble.tscn" id="4_uuugu"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
+radius = 0.005
+height = 0.01
+
+[node name="WeaponVortex" type="Node2D" node_paths=PackedStringArray("rotating_bubbles", "sprite_2d", "hitboxes")]
+script = ExtResource("1_uuugu")
+wave_speed = 1.0
+rotating_bubbles = [NodePath("RotatingBubbles/Bubble"), NodePath("RotatingBubbles/Bubble2"), NodePath("RotatingBubbles/Bubble3")]
+sprite_2d = NodePath("Sprite2D")
+hitboxes = [NodePath("Sprite2D/WeaponHitbox")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+texture = ExtResource("2_sk3dt")
+
+[node name="WeaponHitbox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("weapon", "collider")]
+monitoring = false
+monitorable = false
+script = ExtResource("3_thssb")
+weapon = NodePath("../..")
+collider = NodePath("CollisionShape2D")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_1fhci")
+disabled = true
+
+[node name="RotatingBubbles" type="Node2D" parent="."]
+
+[node name="Bubble" parent="RotatingBubbles" instance=ExtResource("4_uuugu")]
+rot_speed = 50.0
+
+[node name="Bubble2" parent="RotatingBubbles" instance=ExtResource("4_uuugu")]
+rot_speed = 40.0
+
+[node name="Bubble3" parent="RotatingBubbles" instance=ExtResource("4_uuugu")]
+rot_speed = 60.0
+
+[connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_entered"]
+[connection signal="area_exited" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_exited"]

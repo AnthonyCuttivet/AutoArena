@@ -117,7 +117,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 
 	var d:int = get_custom_damage_value() if custom_damage else damage;
 
-	var kb_dist:float = knockback + other.linear_velocity.length() if !other.is_boss else 0.0;
+	var kb_dist:float = knockback + other.linear_velocity.length() if !other.knockback_immune else 0.0;
 
 	var kb:Vector2 = (other.global_position - ball_owner.global_position).normalized() * kb_dist;
 
@@ -125,7 +125,6 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 		kb = (hit_pos - ball_owner.global_position).normalized() * kb_dist;
 
 	other.affect_health(-d, ball_owner);
-
 
 	if(!projectile_hit):
 		ball_owner.start_hitstop(0.01, hitstop);
@@ -141,7 +140,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit);
 	pass;
 
-func on_weapon_clash(other:BattleBall, projectile_hit:bool = false):
+func on_weapon_clash(other:Node2D, projectile_hit:bool = false):
 	if(other == null): return;
 	# if(ball_owner.is_in_same_team(other)):
 	# 	return;

@@ -3,6 +3,7 @@ class_name WeaponTitan extends Weapon
 @export var bonus_rock_each_hp_lost:int;
 @export var max_rocks:int = 3;
 @export var shards_per_rock:int = 8;
+@export var rock_inactive_for:float = 1.0;
 @export var rock_prefab:PackedScene;
 @export var shard_projectile_prefab:PackedScene;
 
@@ -23,16 +24,18 @@ func init_scaling_stat():
 	ball_owner.update_stat_text();
 
 func scale_stat():
-	damage += stat_scale_value;
+	# damage += stat_scale_value;
 	init_scaling_stat();
 
 func shoot_projectile():
 	if(active_rocks.size() >= max_rocks): return;
 
 	# AudioManager.play_sfx(head.sfx_shoot, "SFX");
-	var rock:ProjectileTitanRock = Utils.spawn_projectile(rock_prefab, ball_owner, global_position - ball_owner.linear_velocity.normalized() * 75.0, ball_owner.global_rotation, self);
+	var rock:ProjectileTitanRock = Utils.spawn_projectile(rock_prefab, ball_owner, global_position, ball_owner.global_rotation, self);
 	rock.weapon_owner = self;
-	rock.scale *= projectile_scale;
+	rock.hitbox.weapon = self;
+	rock.inactive_for = rock_inactive_for;
+	rock.scale = ball_owner.weapon_slot.scale * ball_owner.root.scale * projectile_scale;
 	active_rocks.push_back(rock);
 
 func on_weapon_hit_received(id:int, _to:int, is_projectile:bool):
@@ -50,11 +53,12 @@ func on_ball_damaged_received(id:int, _amount:int, _from:int):
 
 func on_rock_destroyed(rock:ProjectileTitanRock):
 	active_rocks.erase(rock);
-	# get_tree().create_timer(0.1).timeout.connect(rock.destroy);
+	get_tree().create_timer(0.1).timeout.connect(rock.destroy);
 
 	for i in shards_per_rock:
 		var s:Projectile = Utils.shoot_projectile(shard_projectile_prefab, ball_owner, i * deg_to_rad(360.0 / shards_per_rock), rock, projectile_speed, 999);
-		s.scale *= projectile_scale;
+		s.set_deferred("scale", s.scale * projectile_scale);
+		s.weapon_owner = self;
 		pass
 
 	pass;

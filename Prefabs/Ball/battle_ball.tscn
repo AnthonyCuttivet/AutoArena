@@ -45,12 +45,11 @@ contact_monitor = true
 max_contacts_reported = 50
 linear_damp_mode = 1
 script = ExtResource("1_0l4tw")
-start_dir = Vector2(-0.5, 0)
 clash_invincibility = 0.15
 max_speed = 2300.0
 
 [node name="Root" type="CollisionShape2D" parent="."]
-scale = Vector2(0.16, 0.16)
+scale = Vector2(0.17, 0.17)
 shape = SubResource("CircleShape2D_j21cw")
 debug_color = Color(0.7, 0, 0, 0)
 

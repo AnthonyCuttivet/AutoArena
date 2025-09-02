@@ -17,6 +17,7 @@ class_name Main extends Node2D
 @export var _2v2_colors:Array[Color];
 @export var tournament_mode:bool = false;
 @export var bo3_mode:bool = false;
+@export var preset_score:Vector2i;
 
 @export var forced_start_dir:Vector2 = Vector2.ZERO;
 @export var dead_ui_color:Color;
@@ -127,6 +128,9 @@ class_name Main extends Node2D
 @onready var confettis: Node2D = $Confettis
 @onready var chromatic_aberration: ColorRect = $ChromaticAberration
 
+@onready var tournament_container: Control = $Tournament
+@onready var bracket: TournamentBracket = $Tournament/Bracket
+
 var balls_ids: Dictionary[int, int];
 var teams_alive_members: Dictionary[int, int];
 var balls_alive_count:int = 0;
@@ -203,6 +207,11 @@ func _ready() -> void:
 	if(bo3_mode):
 		init_bo3_score();
 
+	if(tournament_mode):
+		no_announcer = true;
+		for ball in balls:
+			ball.stop = true;
+
 	if(new_challenger_mode):
 		for ball in balls:
 			ball.stop = true;
@@ -225,7 +234,11 @@ func _ready() -> void:
 		var t_new_challenger:SceneTreeTimer = get_tree().create_timer(obs_delay + 1.0);
 		t_new_challenger.timeout.connect(start_new_challenger);
 
-	if(!patchnote_mode && !new_challenger_mode):
+	if(tournament_mode):
+		var t_tournament:SceneTreeTimer = get_tree().create_timer(obs_delay + 0.3);
+		t_tournament.timeout.connect(start_tournament_game);
+
+	if(!patchnote_mode && !new_challenger_mode && !tournament_mode):
 		t_start_game.timeout.connect(start_game);
 
 func _physics_process(_delta: float) -> void:
@@ -347,6 +360,9 @@ func end_game():
 
 		var t_show_rankings:SceneTreeTimer = get_tree().create_timer(time_attack_endgame_delay);
 		t_show_rankings.timeout.connect(show_time_attack_rankings);
+	elif(tournament_mode):
+		var t_show_tournament_result:SceneTreeTimer = get_tree().create_timer(2.0);
+		t_show_tournament_result.timeout.connect(show_tournament_match_result.bind(winner_team));
 	else:
 		var t_stop_record:SceneTreeTimer = get_tree().create_timer(time_to_stop);
 		t_stop_record.timeout.connect(stop_record);
@@ -456,7 +472,7 @@ func on_ball_clash(id:int):
 	if(!balls_ids.has(id)):
 		return;
 
-	get_ball_by_id(id).add_invincibility(balls[0].clash_invincibility);
+	get_ball_by_id(id).set_or_ignore_invincibility(balls[0].clash_invincibility);
 
 	for i in range(5):
 		var fx: GPUParticles2D = fx_clash.instantiate();
@@ -743,6 +759,10 @@ func init_bo3_score():
 	for ball in balls:
 		bo3_score[ball.get_instance_id()] = 0;
 
+	if(preset_score != Vector2i.ZERO):
+		bo3_score[bo3_score.keys()[0]] = preset_score.x;
+		bo3_score[bo3_score.keys()[1]] = preset_score.y;
+
 	update_bo3_score(balls[0].get_instance_id(), 0);
 
 func update_bo3_score(id:int, points:int):
@@ -755,3 +775,26 @@ func update_bo3_score(id:int, points:int):
 		args.push_back(str(bo3_score[ball_id]));
 
 	bo3_score_ui.format(args);
+
+func start_tournament_game():
+	AudioManager.play_sfx(ve_announcer, "321GO");
+
+	var t_tournament:SceneTreeTimer = get_tree().create_timer(4.0);
+	t_tournament.timeout.connect(start_game);
+
+	bracket.load_tournament();
+	get_tree().create_timer(0.3).timeout.connect(func():bracket.toggle_next_match());
+
+	var tween:Tween = create_tween();
+	tween.tween_property(tournament_container, "global_position", Vector2.RIGHT * 2000.0, 1.0).set_delay(1.5).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK);
+	tween.tween_property(tournament_container, "visible", false, 0.0);
+
+func show_tournament_match_result(w:int):
+	var tween:Tween = create_tween();
+	tween.tween_property(tournament_container, "visible", true, 0.0);
+	tween.tween_property(tournament_container, "global_position", Vector2.ZERO, 2.0).set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_BACK);
+	tween.tween_callback(bracket.set_match_winner.bind(bracket.get_match_local_id(w))).set_delay(1.0);
+	tween.tween_callback(bracket.save_tournament);
+
+	var t_stop_record:SceneTreeTimer = get_tree().create_timer(8.0);
+	t_stop_record.timeout.connect(stop_record);

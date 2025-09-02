@@ -25,7 +25,7 @@ func scale_stat():
 	# 	base_damage += 1;
 
 	# tmp_damage += stat_scale_value;
-	damage += 2;
+	damage += 3;
 	init_scaling_stat();
 
 func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
@@ -35,7 +35,7 @@ func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
 	init_scaling_stat();
 	pass;
 
-func on_weapon_clash(other:BattleBall, projectile_hit:bool = false):
+func on_weapon_clash(other:Node2D, projectile_hit:bool = false):
 	AudioManager.play_sfx(settings.sfx_clash, "SFX");
 
 	var kb:Vector2 = Vector2.ZERO;
