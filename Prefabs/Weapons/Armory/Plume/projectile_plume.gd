@@ -4,8 +4,8 @@ class_name ProjectilePlume extends Projectile
 @export var rot_lerp_speed:float = 5.0;
 @export var collision_shape_recall: CollisionShape2D
 @export var collision_shape_shoot: CollisionShape2D
-
-@onready var trail: Trail2D = $Trail
+@export var plume_sprite_2D:Sprite2D;
+@export var trail: Trail2D;
 
 var move_duration:float = 0.0;
 var recall_duration:float = 0.0;

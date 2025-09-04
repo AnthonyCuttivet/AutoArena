@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="TournamentData" load_steps=6 format=3 uid="uid://dj0s7fcdk0sqn"]
+
+[ext_resource type="Script" uid="uid://8u1113rg2qmn" path="res://Scripts/Tournament/tournament_match_data.gd" id="1_f1rl8"]
+[ext_resource type="Script" uid="uid://bu41ewmcjbxpu" path="res://Scripts/Tournament/tournament_data.gd" id="2_dd5lu"]
+
+[sub_resource type="Resource" id="Resource_4ys8s"]
+script = ExtResource("1_f1rl8")
+m_id = 0
+is_finals = false
+players = Array[int]([0, 1])
+winner = 0
+winner_next_match = -1
+
+[sub_resource type="Resource" id="Resource_ncfmk"]
+script = ExtResource("1_f1rl8")
+m_id = 1
+is_finals = false
+players = Array[int]([2, 3])
+winner = -1
+winner_next_match = -1
+
+[sub_resource type="Resource" id="Resource_750k5"]
+script = ExtResource("1_f1rl8")
+m_id = 2
+is_finals = true
+players = Array[int]([0])
+winner = -1
+winner_next_match = -1
+
+[resource]
+script = ExtResource("2_dd5lu")
+tournament_name = "C"
+players = Array[String](["UNARMED", "PLUME", "KATANA", "DAGGER"])
+matches = Array[ExtResource("1_f1rl8")]([SubResource("Resource_4ys8s"), SubResource("Resource_ncfmk"), SubResource("Resource_750k5")])
+next_match = 1
+metadata/_custom_type_script = "uid://bu41ewmcjbxpu"

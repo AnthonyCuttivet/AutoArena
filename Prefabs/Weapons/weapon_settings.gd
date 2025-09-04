@@ -33,6 +33,7 @@ class_name WeaponSettings extends Resource
 @export var projectile_prefab:PackedScene;
 @export var bg_projectile:bool = false;
 @export var details:String;
+@export var white_details:bool = false;
 
 @export var sfx_clash:SFX;
 @export var sfx_hit:SFX;

@@ -1,9 +1,35 @@
-[gd_scene load_steps=6 format=3 uid="uid://ctdu8uiean2xw"]
+[gd_scene load_steps=14 format=3 uid="uid://ctdu8uiean2xw"]
 
 [ext_resource type="Script" uid="uid://dp284l0r3auhu" path="res://Prefabs/Weapons/Armory/Vortex/weapon_vortex.gd" id="1_uuugu"]
-[ext_resource type="Texture2D" uid="uid://cdwt4moo3pkn6" path="res://Graphics/_Addons/Icons/fc669.png" id="2_sk3dt"]
+[ext_resource type="Texture2D" uid="uid://gcqyj4ao8awl" path="res://Graphics/_Addons/Icons/fc66901.png" id="2_3hkdk"]
+[ext_resource type="AudioStream" uid="uid://rtph3t8exdk2" path="res://Audio/SFX/BattleBalls/se_gekkouga_attackhard_H02.wav" id="3_1woxq"]
+[ext_resource type="Texture2D" uid="uid://bk12tufmto7bj" path="res://Graphics/_Addons/Icons/fc66900.png" id="3_sk3dt"]
 [ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="3_thssb"]
-[ext_resource type="PackedScene" uid="uid://b67wuodnxbcdt" path="res://Prefabs/Weapons/Armory/Vortex/bubble.tscn" id="4_uuugu"]
+[ext_resource type="AudioStream" uid="uid://dkgftuus0385g" path="res://Audio/SFX/BattleBalls/se_gekkouga_appeal_S01 (mp3cut.net).wav" id="3_vphb1"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="4_1woxq"]
+[ext_resource type="PackedScene" uid="uid://b67wuodnxbcdt" path="res://Prefabs/Weapons/Armory/Vortex/W_Vortex_Bubble.tscn" id="4_uuugu"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_le0pt"]
+random_pitch = 1.15
+streams_count = 1
+stream_0/stream = ExtResource("3_1woxq")
+
+[sub_resource type="Resource" id="Resource_ik16q"]
+script = ExtResource("4_1woxq")
+audio_stream = SubResource("AudioStreamRandomizer_le0pt")
+volume = -20.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ik16q"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("3_vphb1")
+
+[sub_resource type="Resource" id="Resource_1v5rm"]
+script = ExtResource("4_1woxq")
+audio_stream = SubResource("AudioStreamRandomizer_ik16q")
+volume = -30.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
 radius = 0.005
@@ -11,15 +37,23 @@ height = 0.01
 
 [node name="WeaponVortex" type="Node2D" node_paths=PackedStringArray("rotating_bubbles", "sprite_2d", "hitboxes")]
 script = ExtResource("1_uuugu")
-wave_speed = 1.0
+wave_speed = 0.35
+hits_dmg_boost = 1
 rotating_bubbles = [NodePath("RotatingBubbles/Bubble"), NodePath("RotatingBubbles/Bubble2"), NodePath("RotatingBubbles/Bubble3")]
+pop_delay = 0.2
+repop_delay = 1.0
+seq_repop_interval = 0.2
+hit_bubble_sprite = ExtResource("2_3hkdk")
+hit_bubble_color = Color(1, 0.807047, 0.47451, 1)
+sfx_popped_bubble = SubResource("Resource_ik16q")
+sfx_repop_bubble = SubResource("Resource_1v5rm")
 sprite_2d = NodePath("Sprite2D")
 hitboxes = [NodePath("Sprite2D/WeaponHitbox")]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false
 texture_filter = 1
-texture = ExtResource("2_sk3dt")
+texture = ExtResource("3_sk3dt")
 
 [node name="WeaponHitbox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("weapon", "collider")]
 monitoring = false

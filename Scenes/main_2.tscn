@@ -19,8 +19,8 @@
 [ext_resource type="Script" uid="uid://0fuba61sagm3" path="res://Scripts/camera.gd" id="11_87gun"]
 [ext_resource type="Resource" uid="uid://vf0ik06r5ypg" path="res://Resources/Weapons/W_BOW.tres" id="11_per8v"]
 [ext_resource type="Resource" uid="uid://dvig1hbsj8myn" path="res://Resources/Weapons/W_HYDRA.tres" id="11_uot50"]
-[ext_resource type="AudioStream" uid="uid://bplsrqjkrabrw" path="res://Audio/SFX/BattleBalls/Announcer/download1756795006741 (mp3cut.net).mp3" id="12_08cjx"]
 [ext_resource type="Texture2D" uid="uid://crarm12ndl2en" path="res://Graphics/_Addons/Icons/fc7.png" id="12_hvjex"]
+[ext_resource type="AudioStream" uid="uid://164yteec81xe" path="res://Audio/SFX/BattleBalls/Announcer/download1756932282243 (audio-extractor (mp3cut.net).mp3" id="12_k7ahf"]
 [ext_resource type="FontFile" uid="uid://bt2qq5v7nibma" path="res://Graphics/Fonts/PPFraktionMono-Bold.otf" id="12_p1oyv"]
 [ext_resource type="FontFile" uid="uid://bglbd1ylrt02k" path="res://Graphics/Fonts/big_noodle_titling.ttf" id="12_per8v"]
 [ext_resource type="Script" uid="uid://dtqgj8e3uki5c" path="res://Scenes/dynamic_text.gd" id="13_vvmd2"]
@@ -69,13 +69,13 @@
 [ext_resource type="Script" uid="uid://c51lyrulb6e1q" path="res://Scripts/Tournament/tournament_bracket.gd" id="64_cfp74"]
 [ext_resource type="Resource" uid="uid://b6swqgojaf77u" path="res://Resources/Weapons/W_UNARMED.tres" id="67_5aelx"]
 [ext_resource type="Texture2D" uid="uid://bqfuvul6ukarn" path="res://Graphics/_Addons/Icons/fc649.png" id="68_5aelx"]
-[ext_resource type="Resource" uid="uid://dprcikx16y1q4" path="res://Resources/Tournaments/Tournament_B_21-55-55.tres" id="68_k7ahf"]
+[ext_resource type="Resource" uid="uid://dj0s7fcdk0sqn" path="res://Resources/Tournaments/Tournament_C_23-25-31.tres" id="68_k7ahf"]
 [ext_resource type="Resource" uid="uid://elqmbfmcai5r" path="res://Resources/Weapons/W_SANDEVISTAN.tres" id="68_t5fc8"]
 [ext_resource type="AudioStream" uid="uid://bq5jij2vxeg7v" path="res://Audio/SFX/BattleBalls/woosh.wav" id="69_a0vpb"]
 [ext_resource type="AudioStream" uid="uid://mhwjhrlnb5ve" path="res://Audio/SFX/BattleBalls/Duel_Win.wav" id="70_08cjx"]
-[ext_resource type="Texture2D" uid="uid://b6mqwj6vvm3q4" path="res://Graphics/_Addons/Icons/fc1789.png" id="73_k7ahf"]
-[ext_resource type="Texture2D" uid="uid://b6evq06wve5y3" path="res://Graphics/_Addons/Icons/fc169.png" id="74_sy8k4"]
-[ext_resource type="Texture2D" uid="uid://cju35wtqmbnmq" path="res://Graphics/_Addons/Icons/fc1588.png" id="75_p38as"]
+[ext_resource type="Texture2D" uid="uid://b0msgk3oeli16" path="res://Graphics/_Addons/Icons/fc987654.png" id="74_sy8k4"]
+[ext_resource type="Texture2D" uid="uid://cwf4at5rm7o78" path="res://Graphics/_Addons/Icons/fc1453.png" id="75_p38as"]
+[ext_resource type="Texture2D" uid="uid://2lhd2x1lrlww" path="res://Graphics/_Addons/Icons/fc1694.png" id="76_q4ffq"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_go1jf"]
 random_pitch = 1.1
@@ -111,7 +111,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="Resource" id="Resource_p1oyv"]
 script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("12_08cjx")
+audio_stream = ExtResource("12_k7ahf")
 volume = -20.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
@@ -225,6 +225,7 @@ no_rotation_change = true
 weapon_prefab = ExtResource("25_uhddi")
 bg_projectile = false
 details = ""
+white_details = false
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 
 [sub_resource type="Resource" id="Resource_ee1k8"]
@@ -255,6 +256,7 @@ no_rotation_change = true
 weapon_prefab = ExtResource("25_uhddi")
 bg_projectile = false
 details = ""
+white_details = false
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 
 [sub_resource type="Resource" id="Resource_76u2v"]
@@ -285,6 +287,7 @@ no_rotation_change = true
 weapon_prefab = ExtResource("25_uhddi")
 bg_projectile = false
 details = ""
+white_details = false
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 
 [sub_resource type="AudioStreamWAV" id="AudioStreamWAV_pegen"]
@@ -326,12 +329,13 @@ base_shoot_duration = 0.0
 base_rot_speed_bounce_boost = false
 projectile_self_hitstop = false
 stat_scale_value = 1.0
-stat_scale_name = "DMG / Max Speed"
+stat_scale_name = "DMG / Speed"
 scaling_stat_float = false
 no_rotation_change = false
 weapon_prefab = ExtResource("34_pegen")
 bg_projectile = false
 details = ""
+white_details = false
 sfx_hit = SubResource("Resource_qtgyu")
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 
@@ -375,6 +379,7 @@ no_rotation_change = false
 weapon_prefab = ExtResource("36_d4oku")
 bg_projectile = false
 details = "Triggers at 7 / 7 Speed"
+white_details = false
 sfx_hit = SubResource("Resource_3duvo")
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 
@@ -710,6 +715,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [node name="Main2" type="Node2D" node_paths=PackedStringArray("new_challenger_ball", "balls", "attraction_point")]
 rotation = 1.5708
 script = ExtResource("1_nmkph")
+devmode = true
 patchnote_s_per_page = 23.0
 new_challenger_ball = NodePath("Balls/Fighters/Reaper")
 time_attack_leaderboards = Dictionary[String, ExtResource("2_poh84")]({
@@ -718,11 +724,8 @@ time_attack_leaderboards = Dictionary[String, ExtResource("2_poh84")]({
 })
 time_attack_ranking_duration = 10.0
 _2v2_colors = Array[Color]([Color(0.5, 0.666667, 1, 1), Color(0.5, 0.583333, 1, 1), Color(1, 0.5, 0.5, 1), Color(1, 0.583333, 0.5, 1)])
-tournament_mode = true
-bo3_mode = true
-preset_score = Vector2i(1, 0)
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Fighters/Bow"), NodePath("Balls/Fighters/Gems")]
+balls = [NodePath("Balls/Fighters/Vortex"), NodePath("Balls/Fighters/Sword")]
 fx_hit_prefab = ExtResource("2_8wnqf")
 fx_death_prefab = ExtResource("3_uot50")
 fx_clash = ExtResource("4_0o7lx")
@@ -1908,12 +1911,13 @@ base_weapon_rotation = 120.0
 color = Color(0.77, 0.77, 0.77, 1)
 dead = true
 stop = true
-max_speed = 800.0
+max_speed = 600.0
 min_horizontal = 0.0
-gravity_strength = 800.0
+gravity_strength = 600.0
 drag_force = 0.05
 bounce_boost = 0.0
-relative_bounce_boost = 0.15
+relative_bounce_boost = 0.1
+acceleration = 0.75
 
 [node name="Sandevistan" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2246, 1022.99)
@@ -2002,9 +2006,10 @@ color = Color(0.583012, 0.706805, 1, 1)
 team = 1
 dead = true
 stop = true
-max_speed = 800.0
-min_horizontal = 0.0
-gravity_strength = 500.0
+max_speed = 1500.0
+min_horizontal = 150.0
+gravity_strength = 1500.0
+drag_force = 0.05
 
 [node name="Thunder" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2953, 826.989)
@@ -2697,6 +2702,7 @@ offset_right = 1080.0
 offset_bottom = 1920.0
 
 [node name="Tournament" type="Control" parent="."]
+visible = false
 z_index = 1
 layout_mode = 3
 anchors_preset = 15
@@ -2798,7 +2804,7 @@ theme_override_constants/shadow_outline_size = 30
 theme_override_fonts/normal_font = ExtResource("12_per8v")
 theme_override_font_sizes/normal_font_size = 60
 bbcode_enabled = true
-text = "BRACKET B"
+text = "BRACKET C"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
@@ -2824,7 +2830,8 @@ theme_override_constants/shadow_outline_size = 30
 theme_override_fonts/normal_font = ExtResource("12_per8v")
 theme_override_font_sizes/normal_font_size = 80
 bbcode_enabled = true
-text = "QUALIFIERS FINALS"
+text = "QUALIFIERS SEMIFINALS
+MATCH 1"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
@@ -2861,50 +2868,50 @@ trophy_sprite = ExtResource("68_5aelx")
 sprite_scale = 2.0
 tween_duration = 0.75
 
-[node name="Match1" type="Node2D" parent="Tournament/Bracket"]
+[node name="Match3" type="Node2D" parent="Tournament/Bracket"]
 
-[node name="Line" type="Line2D" parent="Tournament/Bracket/Match1"]
-points = PackedVector2Array(0, 0, 200, 0)
-width = 6.0
-default_color = Color(0.745098, 0.745098, 0.745098, 1)
-begin_cap_mode = 1
-end_cap_mode = 1
-
-[node name="Line2" type="Line2D" parent="Tournament/Bracket/Match1"]
-position = Vector2(0, 350)
+[node name="Line" type="Line2D" parent="Tournament/Bracket/Match3"]
 points = PackedVector2Array(0, 0, 200, 0)
 width = 6.0
 default_color = Color(0, 0, 0, 1)
 begin_cap_mode = 1
 end_cap_mode = 1
 
-[node name="Line3" type="Line2D" parent="Tournament/Bracket/Match1"]
+[node name="Line2" type="Line2D" parent="Tournament/Bracket/Match3"]
+position = Vector2(0, 350)
+points = PackedVector2Array(0, 0, 200, 0)
+width = 6.0
+default_color = Color(0.745098, 0.745098, 0.745098, 1)
+begin_cap_mode = 1
+end_cap_mode = 1
+
+[node name="Line3" type="Line2D" parent="Tournament/Bracket/Match3"]
 position = Vector2(200, 0)
 points = PackedVector2Array(0, 0, 0, 175)
 width = 6.0
-default_color = Color(0.745098, 0.745098, 0.745098, 1)
-begin_cap_mode = 1
-end_cap_mode = 1
-
-[node name="Line4" type="Line2D" parent="Tournament/Bracket/Match1"]
-position = Vector2(200, 350)
-points = PackedVector2Array(0, 0, 0, -175)
-width = 6.0
 default_color = Color(0, 0, 0, 1)
 begin_cap_mode = 1
 end_cap_mode = 1
 
-[node name="Match2" type="Node2D" parent="Tournament/Bracket"]
+[node name="Line4" type="Line2D" parent="Tournament/Bracket/Match3"]
+position = Vector2(200, 350)
+points = PackedVector2Array(0, 0, 0, -175)
+width = 6.0
+default_color = Color(0.745098, 0.745098, 0.745098, 1)
+begin_cap_mode = 1
+end_cap_mode = 1
+
+[node name="Match4" type="Node2D" parent="Tournament/Bracket"]
 position = Vector2(800, 0)
 
-[node name="Line" type="Line2D" parent="Tournament/Bracket/Match2"]
+[node name="Line" type="Line2D" parent="Tournament/Bracket/Match4"]
 points = PackedVector2Array(0, 0, -200, 0)
 width = 6.0
 default_color = Color(0, 0, 0, 1)
 begin_cap_mode = 1
 end_cap_mode = 1
 
-[node name="Line2" type="Line2D" parent="Tournament/Bracket/Match2"]
+[node name="Line2" type="Line2D" parent="Tournament/Bracket/Match4"]
 position = Vector2(0, 350)
 points = PackedVector2Array(0, 0, -200, 0)
 width = 6.0
@@ -2912,7 +2919,7 @@ default_color = Color(0, 0, 0, 1)
 begin_cap_mode = 1
 end_cap_mode = 1
 
-[node name="Line3" type="Line2D" parent="Tournament/Bracket/Match2"]
+[node name="Line3" type="Line2D" parent="Tournament/Bracket/Match4"]
 position = Vector2(-200, 0)
 points = PackedVector2Array(0, 0, 0, 175)
 width = 6.0
@@ -2920,7 +2927,7 @@ default_color = Color(0, 0, 0, 1)
 begin_cap_mode = 1
 end_cap_mode = 1
 
-[node name="Line4" type="Line2D" parent="Tournament/Bracket/Match2"]
+[node name="Line4" type="Line2D" parent="Tournament/Bracket/Match4"]
 position = Vector2(-200, 350)
 points = PackedVector2Array(0, 0, 0, -175)
 width = 6.0
@@ -2928,17 +2935,17 @@ default_color = Color(0, 0, 0, 1)
 begin_cap_mode = 1
 end_cap_mode = 1
 
-[node name="Finals" type="Node2D" parent="Tournament/Bracket"]
+[node name="Finals2" type="Node2D" parent="Tournament/Bracket"]
 position = Vector2(200, 175)
 
-[node name="Line" type="Line2D" parent="Tournament/Bracket/Finals"]
+[node name="Line" type="Line2D" parent="Tournament/Bracket/Finals2"]
 points = PackedVector2Array(0, 0, 100, 0)
 width = 6.0
 default_color = Color(0, 0, 0, 1)
 begin_cap_mode = 1
 end_cap_mode = 1
 
-[node name="Line2" type="Line2D" parent="Tournament/Bracket/Finals"]
+[node name="Line2" type="Line2D" parent="Tournament/Bracket/Finals2"]
 position = Vector2(400, 0)
 points = PackedVector2Array(0, 0, -100, 0)
 width = 6.0
@@ -2946,7 +2953,7 @@ default_color = Color(0, 0, 0, 1)
 begin_cap_mode = 1
 end_cap_mode = 1
 
-[node name="Line3" type="Line2D" parent="Tournament/Bracket/Finals"]
+[node name="Line3" type="Line2D" parent="Tournament/Bracket/Finals2"]
 position = Vector2(100, 0)
 points = PackedVector2Array(0, 0, 100, 0)
 width = 6.0
@@ -2954,7 +2961,7 @@ default_color = Color(0, 0, 0, 1)
 begin_cap_mode = 1
 end_cap_mode = 1
 
-[node name="Line4" type="Line2D" parent="Tournament/Bracket/Finals"]
+[node name="Line4" type="Line2D" parent="Tournament/Bracket/Finals2"]
 position = Vector2(300, 0)
 points = PackedVector2Array(0, 0, -100, 0)
 width = 6.0
@@ -2962,29 +2969,30 @@ default_color = Color(0, 0, 0, 1)
 begin_cap_mode = 1
 end_cap_mode = 1
 
-[node name="Player1" type="Sprite2D" parent="Tournament/Bracket"]
-texture_filter = 1
-texture = ExtResource("38_sy8k4")
-
-[node name="Player2" type="Sprite2D" parent="Tournament/Bracket"]
+[node name="Player5" type="Sprite2D" parent="Tournament/Bracket"]
 texture_filter = 1
 position = Vector2(200, 175)
 scale = Vector2(2, 2)
-texture = ExtResource("75_p38as")
+texture = ExtResource("35_k7ahf")
 
-[node name="Player3" type="Sprite2D" parent="Tournament/Bracket"]
+[node name="Player6" type="Sprite2D" parent="Tournament/Bracket"]
 texture_filter = 1
-position = Vector2(600, -6.10352e-05)
-scale = Vector2(2, 2)
-texture = ExtResource("73_k7ahf")
-
-[node name="Player4" type="Sprite2D" parent="Tournament/Bracket"]
-texture_filter = 1
-position = Vector2(600, 350)
-scale = Vector2(2, 2)
+position = Vector2(0, 350)
 texture = ExtResource("74_sy8k4")
 
-[node name="SpriteTrophy" type="Sprite2D" parent="Tournament/Bracket"]
+[node name="Player7" type="Sprite2D" parent="Tournament/Bracket"]
+texture_filter = 1
+position = Vector2(800, -6.10352e-05)
+scale = Vector2(2, 2)
+texture = ExtResource("75_p38as")
+
+[node name="Player8" type="Sprite2D" parent="Tournament/Bracket"]
+texture_filter = 1
+position = Vector2(800, 350)
+scale = Vector2(2, 2)
+texture = ExtResource("76_q4ffq")
+
+[node name="SpriteTrophy2" type="Sprite2D" parent="Tournament/Bracket"]
 texture_filter = 1
 position = Vector2(400, 175)
 scale = Vector2(2, 2)

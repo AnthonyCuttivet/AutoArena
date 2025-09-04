@@ -43,6 +43,19 @@ func _process(delta):
 			init_scaling_stat();
 	pass
 
+func reset():
+	dice_index = 0;
+	dice_upgrade_effect_remaining = 0.0;
+	dice_roll_remaining = 0.0;
+	level_name_init = false;
+	set_dice(0);
+	damage = 1;
+
+	ball_owner.update_ui_sprite();
+	ball_owner.update_ui_name(Color.WHITE, get_name_and_level_str());
+
+	init_scaling_stat();
+
 func init_scaling_stat():
 	scaling_stat_value = damage;
 	ball_owner.update_stat_text();

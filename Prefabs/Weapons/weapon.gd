@@ -140,7 +140,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit);
 	pass;
 
-func on_weapon_clash(other:Node2D, projectile_hit:bool = false):
+func on_weapon_clash(other:Node2D, clash_pos:Vector2, projectile_hit:bool = false):
 	if(other == null): return;
 	# if(ball_owner.is_in_same_team(other)):
 	# 	return;
@@ -155,7 +155,7 @@ func on_weapon_clash(other:Node2D, projectile_hit:bool = false):
 
 	ball_owner.start_hitstop(0.0, 0.15, kb);
 
-	EventBus.ball_weapon_clash.emit(ball_owner.get_instance_id());
+	EventBus.ball_weapon_clash.emit(ball_owner.get_instance_id(), clash_pos);
 	pass;
 
 func reverse_rotation():
@@ -203,3 +203,6 @@ func get_custom_damage_value() -> int:
 
 func get_custom_stat_format() -> String:
 	return "";
+
+func reset():
+	pass;

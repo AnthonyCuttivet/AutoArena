@@ -291,6 +291,9 @@ func start_hitstop(t:float, duration: float, knockback:Vector2 = Vector2.ZERO, o
 	prev_linear_velocity = linear_velocity;
 	accumulated_forces = knockback;
 
+	if(knockback_resistance != 1.0):
+		accumulated_forces = knockback * knockback_resistance;
+
 	call_deferred("set_freeze", true);
 
 	hitstop_remaining = duration;
@@ -321,14 +324,12 @@ func set_freeze(v: bool):
 		if(accumulated_forces == Vector2.ZERO || knockback_immune):
 			accumulated_forces = prev_linear_velocity;
 
-		if(knockback_resistance != 1.0):
-			accumulated_forces = prev_linear_velocity.normalized() * base_max_speed * knockback_resistance;
-		elif(accumulated_forces.length() < base_max_speed):
+		if(accumulated_forces.length() < base_max_speed):
 			accumulated_forces = linear_velocity.normalized() * base_max_speed;
 
 		# print(name + " Hitstop stop impulse " + str(accumulated_forces.length()));
 
-		impulse(accumulated_forces);
+		impulse(accumulated_forces * acceleration);
 		accumulated_forces = Vector2.ZERO;
 
 func _on_body_entered(other: Node) -> void:
@@ -341,8 +342,8 @@ func _on_body_entered(other: Node) -> void:
 	if(!other.is_in_group("DRYWALL")):
 		var dir = (global_position - other.global_position).normalized();
 		if(relative_bounce_boost > 0.0):
-			bounce_boost = max_speed * relative_bounce_boost;
-		linear_velocity += dir * bounce_boost;  # Knockback boost
+			bounce_boost = max_speed * relative_bounce_boost * acceleration;
+		linear_velocity += dir * bounce_boost * acceleration;  # Knockback boost
 
 	if(other.is_in_group("WALL")):
 		drift_dir *= -1;

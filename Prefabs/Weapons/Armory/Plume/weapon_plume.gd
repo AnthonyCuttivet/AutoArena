@@ -140,8 +140,8 @@ func spawn_feather():
 	p.weapon_owner = self;
 	p.move_duration = feather_move_duration;
 	p.recall_duration = feather_recall_duration;
-	p.sprite_2d.self_modulate = sub_weapons[feathers.size()].sprite_2d.self_modulate;
-	p.trail.set_color(p.sprite_2d.self_modulate);
+	p.plume_sprite_2D.self_modulate = sub_weapons[feathers.size()].sprite_2d.self_modulate;
+	p.trail.set_color(p.plume_sprite_2D.self_modulate);
 	p.trail.set_active(false);
 	feathers.push_back(p);
 

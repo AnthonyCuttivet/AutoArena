@@ -3,7 +3,9 @@ class_name Hitbox extends Area2D
 @export var weapon:Weapon;
 @export var collider:CollisionShape2D;
 @export var unclashable:bool = false;
+@export var debug:bool = false;
 
+var active:bool = true;
 var ball_owner:BattleBall;
 var target_cd:Dictionary[BattleBall, float];
 var weapon_clash_cd:float = 0.2;
@@ -27,6 +29,9 @@ func _process(delta: float) -> void:
 		weapon_clash_cd_elapsed += delta;
 
 func _on_area_entered(other: Area2D) -> void:
+	if(debug):
+		print("Entered " + other.name);
+
 	if(other == null && other.ball_owner != self.ball_owner):
 		return;
 
@@ -35,7 +40,7 @@ func _on_area_entered(other: Area2D) -> void:
 			return;
 
 		if !unclashable && !other.unclashable && !is_clash_on_cd():
-			weapon.on_weapon_clash(other.ball_owner);
+			weapon.on_weapon_clash(other.ball_owner, self.global_position);
 			weapon_clash_cd_elapsed = -0.05;
 			return;
 

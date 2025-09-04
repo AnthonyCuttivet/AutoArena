@@ -374,6 +374,9 @@ func reset_match():
 	fill_character_ui(balls[0], name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p);
 	fill_character_ui(balls[1], name_right_1p, sprite_right_1p, details_right_1p, stat_right_1p);
 
+	balls[0].weapon.reset();
+	balls[1].weapon.reset();
+
 	get_tree().create_timer(0.3).timeout.connect(start_balls);
 
 func init_ui():
@@ -418,7 +421,11 @@ func fill_character_ui(ball:BattleBall, name_text:DynamicText, sprite:TextureRec
 	name_text.self_modulate = ball.color;
 	sprite.texture = ball.weapon.sprite_2d.texture;
 	details_text.format([ball.weapon_settings.details]);
-	details_text.modulate = ball.color;
+	if(ball.weapon_settings.white_details):
+		details_text.text = "[color=" + ball.color.to_html() + "]" + details_text.text + "[/color]";
+		details_text.modulate = Color.WHITE;
+	else:
+		details_text.modulate = ball.color;
 
 	if(details_text.text == ""):details_text.text = " ";
 
@@ -468,7 +475,7 @@ func on_ball_damaged(id: int, amount:int, from:int):
 
 	pass ;
 
-func on_ball_clash(id:int):
+func on_ball_clash(id:int, clash_pos:Vector2):
 	if(!balls_ids.has(id)):
 		return;
 
@@ -478,7 +485,7 @@ func on_ball_clash(id:int):
 		var fx: GPUParticles2D = fx_clash.instantiate();
 		var ball:BattleBall = get_ball_by_id(id);
 		add_child(fx);
-		fx.global_position = ball.weapon.sprite_2d.global_position + Vector2.ONE * randf_range(-15.0, 15.0);
+		fx.global_position = clash_pos + Vector2.ONE * randf_range(-15.0, 15.0);
 		fx.modulate = ball.color;
 		fx.rotation = ball.weapon_slot.global_rotation;
 		fx.finished.connect(fx.queue_free);

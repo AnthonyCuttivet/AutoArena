@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://b67wuodnxbcdt"]
+
+[ext_resource type="Script" uid="uid://cxqldk12nb56i" path="res://Prefabs/Weapons/Armory/Vortex/weapon_vortex_bubble.gd" id="1_xhq6l"]
+[ext_resource type="PackedScene" uid="uid://bsrl84y6xy8qx" path="res://Prefabs/FX/fx_bubbles.tscn" id="2_18w51"]
+[ext_resource type="Texture2D" uid="uid://bk12tufmto7bj" path="res://Graphics/_Addons/Icons/fc66900.png" id="3_qs2vi"]
+[ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="4_lrlu5"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l3rsa"]
+radius = 30.0
+height = 60.0
+
+[node name="WeaponVortexBubble" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]
+scale = Vector2(0.3, 0.3)
+script = ExtResource("1_xhq6l")
+rot_speed = 0.0
+sprite_2d = NodePath("Root/Sprite2D")
+hitboxes = [NodePath("Root/Sprite2D/WeaponHitbox")]
+
+[node name="Root" type="Node2D" parent="."]
+
+[node name="FXBubbles" parent="Root" instance=ExtResource("2_18w51")]
+scale = Vector2(0.18, 0.18)
+
+[node name="Sprite2D" type="Sprite2D" parent="Root"]
+texture_filter = 1
+texture = ExtResource("3_qs2vi")
+
+[node name="WeaponHitbox" type="Area2D" parent="Root/Sprite2D" node_paths=PackedStringArray("collider")]
+visible = false
+script = ExtResource("4_lrlu5")
+collider = NodePath("CollisionShape2D")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Root/Sprite2D/WeaponHitbox"]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_l3rsa")
+
+[connection signal="area_entered" from="Root/Sprite2D/WeaponHitbox" to="Root/Sprite2D/WeaponHitbox" method="_on_area_entered"]
+[connection signal="area_exited" from="Root/Sprite2D/WeaponHitbox" to="Root/Sprite2D/WeaponHitbox" method="_on_area_exited"]

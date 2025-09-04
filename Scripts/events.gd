@@ -22,7 +22,7 @@ signal stop_record();
 
 signal ball_damaged(id:int, amount:int, from:int);
 signal ball_weapon_hit(id:int, to:int, is_projectile:bool);
-signal ball_weapon_clash(id:int);
+signal ball_weapon_clash(id:int, clash_pos:Vector2);
 signal ball_update_stat(id:int);
 signal ball_bounce(id:int);
 signal ball_bounce_other_ball(id:int, other:int);
