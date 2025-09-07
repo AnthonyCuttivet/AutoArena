@@ -72,6 +72,7 @@ weapon_prefab = ExtResource("7_reh5n")
 projectile_prefab = ExtResource("1_reh5n")
 bg_projectile = false
 details = "5 DMG ⬗ +1 Feather"
+white_details = false
 sfx_clash = SubResource("Resource_fjw7t")
 sfx_hit = SubResource("Resource_qkwvv")
 sfx_shoot = SubResource("Resource_nb3kj")

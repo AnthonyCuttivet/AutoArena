@@ -15,7 +15,7 @@ stream_0/stream = ExtResource("2_ocopu")
 [sub_resource type="Resource" id="Resource_gj2xt"]
 script = ExtResource("2_iw8on")
 audio_stream = SubResource("AudioStreamRandomizer_iw8on")
-volume = -27.0
+volume = -31.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_d0qbl"]
@@ -26,7 +26,7 @@ stream_0/stream = ExtResource("4_iw8on")
 [sub_resource type="Resource" id="Resource_ocopu"]
 script = ExtResource("2_iw8on")
 audio_stream = SubResource("AudioStreamRandomizer_d0qbl")
-volume = -25.0
+volume = -29.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [resource]

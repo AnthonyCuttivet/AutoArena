@@ -28,6 +28,7 @@ func init(s:WeaponSettings, o:BattleBall):
 	setup_bubbles();
 
 func _process(delta: float) -> void:
+	if(ball_owner.stop): return;
 	t += delta * wave_speed;
 	current_rot_dist = lerp(min_rotating_dist, max_rotating_dist, pingpong(t, 1.0));
 	for i in rotating_bubbles.size():
@@ -86,3 +87,8 @@ func restore_bubble(i:int):
 	rotating_bubbles[i].damage = damage;
 	rotating_bubbles[i].set_bubble_state(true, false);
 	AudioManager.play_sfx(sfx_repop_bubble, "SFX");
+
+func reset():
+	restore_bubbles();
+	damage = 1;
+	super.reset();

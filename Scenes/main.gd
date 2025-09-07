@@ -18,6 +18,7 @@ class_name Main extends Node2D
 @export var tournament_mode:bool = false;
 @export var bo3_mode:bool = false;
 @export var preset_score:Vector2i;
+@export var battleblock_mode:bool = false;
 
 @export var forced_start_dir:Vector2 = Vector2.ZERO;
 @export var dead_ui_color:Color;
@@ -130,6 +131,8 @@ class_name Main extends Node2D
 
 @onready var tournament_container: Control = $Tournament
 @onready var bracket: TournamentBracket = $Tournament/Bracket
+
+@onready var block_breaker: Control = $BlockBreaker
 
 var balls_ids: Dictionary[int, int];
 var teams_alive_members: Dictionary[int, int];
@@ -497,8 +500,7 @@ func on_ball_dead(id: int):
 	if(!balls_ids.has(id)):
 		return;
 
-	for ball in balls:
-		ball.start_hitstop(0.01,0.6);
+	global_hitstop(0.01,0.6);
 
 	AudioManager.play_sfx(sfx_death, "SFX", 1.0, 0.0, 0.0, true);
 	EventBus.camera_trigger_shake.emit(death_shake);
@@ -531,6 +533,10 @@ func on_ball_dead(id: int):
 			pass
 
 		animate_label_font(author, 30, 2.4);
+
+func global_hitstop(t:float, v:float):
+	for ball in balls:
+		ball.start_hitstop(t,v);
 
 
 func get_ball_by_id(id:int) -> BattleBall:
@@ -584,6 +590,13 @@ func setup_fight():
 	];
 
 	balls_alive_count = balls.size();
+
+	if(!battleblock_mode):
+		block_breaker.queue_free();
+	else:
+		block_breaker.visible = true;
+		for block in block_breaker.get_child(0).get_children():
+			block.main = self;
 
 	if(balls.size() == 4 && !free_for_all):
 		balls[0].color = _2v2_colors[0];
@@ -670,6 +683,12 @@ func place_fighting_balls():
 		ball.dead = false;
 		ball.visible = true;
 		ball.update_health_text();
+		if(battleblock_mode):
+			ball.global_position = _4v_ffa_spots[0];
+			ball.root.scale *= 0.7;
+			ball.nerf_max_speed(0.60);
+			ball.weapon.hitstop *= 0.1;
+			# ball.gravity_strength = 0;
 
 func update_time_attack_timer():
 	ta_timer.text = " " + Utils.convert_time_to_string(time_attack_elapsed) + " ";

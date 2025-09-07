@@ -193,3 +193,17 @@ func get_custom_stat_format() -> String:
 
 func plume_details() -> String:
 	return str(dmg_to_feather_conversion + recall_dmg_bonus) + " DMG ⬗ +1 Feather";
+
+func reset():
+	max_feathers = base_feathers;
+	sub_weapons.clear();
+	feathers.clear();
+	recall_dmg = 1;
+	recall_dmg_bonus = 0;
+
+	for w in feathers_parent.get_children():
+		w.queue_free();
+
+	for i in range(max_feathers):
+		add_sub_weapon(i, i == max_feathers -1);
+	super.reset();

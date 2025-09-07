@@ -49,7 +49,7 @@ func on_weapon_clash(other:Node2D, clash_pos:Vector2, projectile_hit:bool = fals
 	scale_stat();
 	pass;
 
-func on_weapon_clash_received(id:int):
+func on_weapon_clash_received(id:int, _clash_pos:Vector2):
 	if(id != ball_owner.get_instance_id()): return;
 	# scale_stat();
 	pass;

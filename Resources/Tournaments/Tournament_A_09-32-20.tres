@@ -1,7 +1,7 @@
-[gd_resource type="Resource" script_class="TournamentData" load_steps=6 format=3]
+[gd_resource type="Resource" script_class="TournamentData" load_steps=6 format=3 uid="uid://3li1byid0riq"]
 
-[ext_resource type="Script" path="res://Scripts/Tournament/tournament_match_data.gd" id="1_7sfmp"]
-[ext_resource type="Script" path="res://Scripts/Tournament/tournament_data.gd" id="2_7f8h1"]
+[ext_resource type="Script" uid="uid://8u1113rg2qmn" path="res://Scripts/Tournament/tournament_match_data.gd" id="1_7sfmp"]
+[ext_resource type="Script" uid="uid://bu41ewmcjbxpu" path="res://Scripts/Tournament/tournament_data.gd" id="2_7f8h1"]
 
 [sub_resource type="Resource" id="Resource_4vhug"]
 script = ExtResource("1_7sfmp")
@@ -23,7 +23,7 @@ winner_next_match = 2
 script = ExtResource("1_7sfmp")
 m_id = 2
 is_finals = true
-players = Array[int]([1, 3, 1])
+players = Array[int]([1, 3, 1, 1])
 winner = 1
 winner_next_match = -1
 

@@ -72,6 +72,7 @@ weapon_prefab = ExtResource("7_t4joa")
 projectile_prefab = ExtResource("1_t4joa")
 bg_projectile = true
 details = "+2 Snip DMG on Snip"
+white_details = false
 sfx_clash = SubResource("Resource_40vsq")
 sfx_hit = SubResource("Resource_onar2")
 sfx_shoot = SubResource("Resource_ypqnk")

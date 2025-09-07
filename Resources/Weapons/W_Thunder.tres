@@ -72,6 +72,7 @@ weapon_prefab = ExtResource("2_0t81g")
 projectile_prefab = ExtResource("1_ddo1p")
 bg_projectile = false
 details = "Lightning strike every 2 casts"
+white_details = false
 sfx_clash = SubResource("Resource_ahd6p")
 sfx_hit = SubResource("Resource_dt5h3")
 sfx_shoot = SubResource("Resource_o05x3")

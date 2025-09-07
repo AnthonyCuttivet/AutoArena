@@ -27,6 +27,7 @@ func _init() -> void:
 	EventBus.ball_weapon_hit.connect(on_weapon_hit_received);
 	EventBus.ball_damaged.connect(on_damaged);
 	EventBus.ball_bounce_other_ball.connect(on_ball_bounced_other_ball);
+	EventBus.ball_bounce_battleblock.connect(on_ball_bounced_battleblock);
 
 func init(s:WeaponSettings, o:BattleBall) -> void:
 	super.init(s, o);
@@ -154,6 +155,14 @@ func on_ball_bounced_other_ball(id:int, other:int):
 	if(other_ball.team == ball_owner.team): return;
 
 	on_weapon_hit(other_ball, other_ball.global_position, hitboxes[0].get_instance_id());
+
+	pass;
+
+func on_ball_bounced_battleblock(id:int, block:BattleBlock):
+	if(!can_hit): return;
+	if(id != ball_owner.get_instance_id()): return;
+
+	on_weapon_hit(block.hurtbox.ball_owner, block.global_position, hitboxes[0].get_instance_id());
 
 	pass;
 

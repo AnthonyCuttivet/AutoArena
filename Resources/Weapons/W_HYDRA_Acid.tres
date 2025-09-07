@@ -39,5 +39,6 @@ no_rotation_change = true
 weapon_prefab = ExtResource("4_nxts7")
 bg_projectile = false
 details = "New Head / 25HP lost"
+white_details = false
 sfx_clash = SubResource("Resource_o3hyd")
 metadata/_custom_type_script = "uid://c1biydo2yju8x"

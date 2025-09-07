@@ -35,6 +35,7 @@ var shoot_speed_elapsed:float = 0.0;
 var shoots_remaining:int = 0;
 
 var no_shoot:bool = false;
+var owned_projectiles:Array[Projectile] = [];
 
 func init(s:WeaponSettings, o:BattleBall) -> void:
 
@@ -195,6 +196,8 @@ func shoot_projectile():
 	else:
 		get_tree().root.add_child(p);
 
+	owned_projectiles.push_back(p);
+
 func on_listened_event_received(_id:int, _to:int, _is_projectile:bool):
 	pass;
 
@@ -205,4 +208,10 @@ func get_custom_stat_format() -> String:
 	return "";
 
 func reset():
+	for p in owned_projectiles:
+		if(p != null):
+			p.queue_free();
+
+	owned_projectiles.clear();
+	init_scaling_stat();
 	pass;

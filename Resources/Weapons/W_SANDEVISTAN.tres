@@ -48,5 +48,6 @@ no_rotation_change = false
 weapon_prefab = SubResource("Resource_0jyys")
 bg_projectile = false
 details = "Triggers at 7/7 Speed"
+white_details = false
 sfx_hit = SubResource("Resource_3duvo")
 metadata/_custom_type_script = "uid://c1biydo2yju8x"

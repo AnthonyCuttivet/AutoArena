@@ -225,3 +225,15 @@ static func arrange_in_fan(nodes: Array, center: Vector2, base_angle_rad: float,
 		var pos = center + Vector2(cos(angle), sin(angle)) * radius
 		nodes[i].position = pos
 		nodes[i].rotation = angle
+
+static func weighted_pick(distribution: Array[MCBlockSettings]) -> MCBlockSettings:
+	var total_weight := 0
+	for d in distribution:
+		total_weight += d.weight;
+
+	var r := randi_range(0, total_weight - 1)
+	for d in distribution:
+		r -= d.weight;
+		if r < 0:
+			return d
+	return distribution.back() # fallback

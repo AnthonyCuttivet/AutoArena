@@ -20,7 +20,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cm4p0"]
 size = Vector2(20, 21.6)
 
-[node name="1" type="RigidBody2D"]
+[node name="1" type="RigidBody2D" node_paths=PackedStringArray("value")]
 collision_mask = 2
 mass = 1e+08
 gravity_scale = 0.0
@@ -31,6 +31,7 @@ max_contacts_reported = 32
 script = ExtResource("1_l6kev")
 block_death_shake = 0.3
 sfx_break = SubResource("Resource_o1451")
+value = NodePath("Value")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(31, 3)

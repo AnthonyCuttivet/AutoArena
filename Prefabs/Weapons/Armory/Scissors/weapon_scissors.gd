@@ -18,6 +18,7 @@ class_name WeaponScissors extends Weapon
 @onready var closed_hitbox: Hitbox = $Closed/ClosedHitbox
 @onready var scissors_opened_hitbox: Hitbox = $Opened/ScissorsOpenedHitbox
 
+var base_dash_damage:int = 0;
 var dashing:bool = false;
 var weapon_opened:bool = false;
 var dash_hit_registered:bool = false;
@@ -32,6 +33,7 @@ var block_closing:bool = false;
 
 func _init() -> void:
 	EventBus.ball_weapon_hit.connect(on_listened_event_received);
+	base_dash_damage = dash_damage;
 
 # func _process(delta: float) -> void:
 # 	if(dashing):
@@ -225,3 +227,7 @@ func clear_opened():
 	opened.texture = hit_attack_base_texture;
 	block_closing = false;
 	toggle_opened(false);
+
+func reset():
+	dash_damage = base_dash_damage;
+	super.reset();

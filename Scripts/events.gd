@@ -26,6 +26,7 @@ signal ball_weapon_clash(id:int, clash_pos:Vector2);
 signal ball_update_stat(id:int);
 signal ball_bounce(id:int);
 signal ball_bounce_other_ball(id:int, other:int);
+signal ball_bounce_battleblock(id:int, block:BattleBlock);
 signal ball_shoot(id:int, projectile: Projectile);
 
 signal block_destroyed(id:int, block_index:int);

@@ -70,6 +70,7 @@ weapon_prefab = ExtResource("3_nhhwy")
 projectile_prefab = ExtResource("1_n4iih")
 bg_projectile = false
 details = "+1 Lightning / 50hp lost"
+white_details = false
 sfx_clash = SubResource("Resource_3iwyu")
 sfx_hit = SubResource("Resource_0xmuw")
 sfx_shoot = SubResource("Resource_1crlb")

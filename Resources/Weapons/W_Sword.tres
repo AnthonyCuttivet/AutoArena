@@ -59,6 +59,7 @@ no_rotation_change = false
 weapon_prefab = ExtResource("5_erj60")
 bg_projectile = false
 details = ""
+white_details = false
 sfx_clash = SubResource("Resource_4ivty")
 sfx_hit = SubResource("Resource_wbgv2")
 metadata/_custom_type_script = "uid://c1biydo2yju8x"

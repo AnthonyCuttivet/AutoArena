@@ -63,6 +63,7 @@ var time_scale:float = 1.0;
 var physics_time_scale:float = 1.0;
 var accumulated_forces:Vector2 = Vector2.ZERO;
 var invincible_for:float = false;
+var unkillable:bool = false;
 var hit_pos:Vector2 = Vector2.ZERO;
 var current_target_attraction:float = 0.0;
 var end_game:bool = false;
@@ -268,7 +269,7 @@ func affect_health(v:int, from:BattleBall, silent:bool = false):
 	if(v < 0 && !silent):
 		EventBus.ball_damaged.emit(get_instance_id(), abs(v), from.get_instance_id());
 
-	if(health <= 0 && !dead):
+	if(health <= 0 && !dead && !unkillable):
 		main.set_time_scale(0.1, 0.5);
 		death();
 
@@ -282,6 +283,7 @@ func start_hitstop(t:float, duration: float, knockback:Vector2 = Vector2.ZERO, o
 
 	if(debug_hitstop):
 		print(Utils.pf() + " Hitstop Start for " + str(duration) + "s");
+		print(Utils.pf() + " Linear Velocity : " + str(linear_velocity));
 
 	if(weapon.rot_speed_bounce_boost):
 		weapon.rotation_speed = weapon_settings.base_rotation_speed;
@@ -325,9 +327,10 @@ func set_freeze(v: bool):
 			accumulated_forces = prev_linear_velocity;
 
 		if(accumulated_forces.length() < base_max_speed):
-			accumulated_forces = linear_velocity.normalized() * base_max_speed;
+			accumulated_forces = prev_linear_velocity.normalized() * base_max_speed;
 
-		# print(name + " Hitstop stop impulse " + str(accumulated_forces.length()));
+		if(debug_hitstop):
+			print(Utils.pf() + " " + name + " Hitstop stop impulse " + str(accumulated_forces.length()));
 
 		impulse(accumulated_forces * acceleration);
 		accumulated_forces = Vector2.ZERO;
@@ -336,6 +339,9 @@ func _on_body_entered(other: Node) -> void:
 	if(other.is_in_group("BALL")):
 		if(ghost): return;
 		EventBus.ball_bounce_other_ball.emit(get_instance_id(), other.get_instance_id());
+
+	if(other.is_in_group("BLOCK")):
+		EventBus.ball_bounce_battleblock.emit(get_instance_id(), other);
 
 	EventBus.ball_bounce.emit(get_instance_id());
 
@@ -354,6 +360,7 @@ func _on_body_entered(other: Node) -> void:
 	pass;
 
 func hitflash(d:float):
+	if(circle == null): return;
 	var tween = create_tween().set_parallel(true);
 	tween.tween_property(circle, "material:shader_parameter/flash_intensity", 1, 0);
 	tween.chain().tween_property(circle, "material:shader_parameter/flash_intensity", 0, 0).set_delay(d);
