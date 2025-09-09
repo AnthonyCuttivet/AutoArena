@@ -39,7 +39,8 @@ func init_scaling_stat():
 	scaling_stat_value = fdamage;
 	ball_owner.update_stat_text(true);
 
-func scale_stat():
+func scale_stat(force:bool = false):
+	if(no_stat_scale && !force): return;
 	fdamage += stat_scale_value;
 	ball_owner.max_speed += (speed_scale * stat_scale_value);
 	init_scaling_stat();

@@ -25,7 +25,7 @@ func _on_weapon_hitbox_area_entered(other: Area2D) -> void:
 	if(!other is Hurtbox && !other is Hitbox): return;
 
 	if(other is Hitbox):
-		other.weapon.on_weapon_clash(self, false);
+		other.weapon.on_weapon_clash(self, self.global_position, false);
 
 	on_rock_hit();
 

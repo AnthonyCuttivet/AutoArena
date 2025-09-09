@@ -17,7 +17,8 @@ func init_scaling_stat():
 	ball_owner.update_stat_text();
 	set_charged_sprite_alpha();
 
-func scale_stat():
+func scale_stat(force:bool = false):
+	if(no_stat_scale && !force): return;
 	rotation_speed += stat_scale_value;
 	attack_speed += stat_scale_value;
 	ui_rot_speed += stat_scale_value * 10.0;

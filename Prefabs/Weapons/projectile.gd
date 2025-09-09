@@ -56,7 +56,7 @@ func _on_projectile_hitbox_area_entered(other: Area2D) -> void:
 
 	elif(other is Hitbox && other.ball_owner != null && other.ball_owner != ball_owner && other.ball_owner.team != ball_owner.team):
 		if(absolute) : return;
-		other.ball_owner.weapon.on_weapon_clash(other.ball_owner, true);
+		other.ball_owner.weapon.on_weapon_clash(other.ball_owner, other.global_position, true);
 		velocity = velocity.rotated(deg_to_rad(randf_range(90,270)));
 		self.rotation = velocity.angle();
 

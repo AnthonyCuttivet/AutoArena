@@ -21,7 +21,8 @@ func init_scaling_stat():
 	scaling_stat_value = thunderstrike_duration;
 	ball_owner.update_stat_text();
 
-func scale_stat():
+func scale_stat(force:bool = false):
+	if(no_stat_scale && !force): return;
 	thunderstrike_duration += stat_scale_value;
 	init_scaling_stat();
 

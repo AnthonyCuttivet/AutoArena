@@ -27,6 +27,7 @@ class_name Main extends Node2D
 @export var fx_hit_prefab: PackedScene;
 @export var fx_death_prefab: PackedScene;
 @export var fx_clash:PackedScene;
+@export var fx_block_destroyed:PackedScene;
 
 @export var hit_shake:float = 0.1;
 @export var hit_max_shake:float = 0.3;
@@ -145,6 +146,7 @@ var _1v1_spots:Array[Vector2];
 var _1v2_spots:Array[Vector2];
 var _2v2_spots:Array[Vector2];
 var _4v_ffa_spots:Array[Vector2];
+var _2v_minecraft_spots:Array[Vector2];
 
 var just_spawned_fxs:Array[GPUParticles2D];
 
@@ -159,7 +161,7 @@ var bo3_score:Dictionary[int, int];
 func _ready() -> void:
 	if(devmode):
 		obs_delay = 0.0;
-		camera.zoom = Vector2(.5,.5);
+		camera.set_camera_zoom(Vector2(.5,.5));
 
 	if(patchnote_mode):
 		patch_note.visible = true;
@@ -174,6 +176,7 @@ func _ready() -> void:
 	EventBus.ball_bounce.connect(sfx_play_bounce);
 	EventBus.ball_weapon_clash.connect(on_ball_clash);
 	EventBus.set_chromatic_aberration.connect(set_chromatic_aberration);
+	EventBus.block_destroyed.connect(on_block_destroyed);
 
 	if(earclacks_mode):
 		set_earclacks_mode();
@@ -472,6 +475,8 @@ func on_ball_damaged(id: int, amount:int, from:int):
 	fx.rotation = (ball.global_position - ball.hit_pos).normalized().angle();
 	fx.finished.connect(fx.queue_free);
 	fx.visible = true;
+	if(battleblock_mode):
+		fx.scale = Vector2.ONE * 0.5;
 	just_spawned_fxs.push_back(fx);
 
 	EventBus.camera_trigger_shake.emit( max(hit_shake + amount, 0, hit_max_shake));
@@ -492,6 +497,8 @@ func on_ball_clash(id:int, clash_pos:Vector2):
 		fx.modulate = ball.color;
 		fx.rotation = ball.weapon_slot.global_rotation;
 		fx.finished.connect(fx.queue_free);
+		if(battleblock_mode):
+			fx.scale = Vector2.ONE * 0.5;
 		just_spawned_fxs.push_back(fx);
 		pass ;
 
@@ -537,7 +544,6 @@ func on_ball_dead(id: int):
 func global_hitstop(t:float, v:float):
 	for ball in balls:
 		ball.start_hitstop(t,v);
-
 
 func get_ball_by_id(id:int) -> BattleBall:
 	if(!balls_ids.has(id)):
@@ -587,6 +593,11 @@ func setup_fight():
 		arena_center.global_position + Vector2(0.0, 350.0),
 		arena_center.global_position + Vector2(-350.0, 0.0),
 		arena_center.global_position + Vector2(0.0, -350.0)
+	];
+
+	_2v_minecraft_spots = [
+		arena_center.global_position + Vector2(405.0, -150),
+		arena_center.global_position + Vector2(405.0, 100),
 	];
 
 	balls_alive_count = balls.size();
@@ -679,16 +690,30 @@ func place_fighting_balls():
 		# Special trick for late game fake zoom
 		mult_author_font_size(0.75);
 
+	if(battleblock_mode):
+		for i in balls.size():
+			balls[i].global_position = _2v_minecraft_spots[i];
+			balls[i].root.scale *= 0.25;
+			balls[i].nerf_max_speed(0.25);
+			balls[i].weapon.hitstop *= 0.1;
+			balls[i].weapon.no_stat_scale = true;
+			balls[i].hp_immunity = true;
+			balls[i].weapon.damage = 1;
+			balls[i].min_horizontal = 0;
+			# camera.phantom_camera_2d.append_follow_targets(balls[i]);
+
+		# camera.phantom_camera_2d.follow_mode = PhantomCamera2D.FollowMode.GROUP;
+		# camera.phantom_camera_2d.set_auto_zoom(true);
+		# camera.phantom_camera_2d.set_auto_zoom_min(1.5);
+		# camera.phantom_camera_2d.set_auto_zoom_max(100.0);
+		# camera.phantom_camera_2d.set_auto_zoom_margin(Vector4(50,50,50,50));
+		# camera.phantom_camera_2d.set_follow_damping(true);
+		# camera.phantom_camera_2d.set_follow_damping_value(Vector2(0.1,0.1));
+
 	for ball in balls:
 		ball.dead = false;
 		ball.visible = true;
 		ball.update_health_text();
-		if(battleblock_mode):
-			ball.global_position = _4v_ffa_spots[0];
-			ball.root.scale *= 0.7;
-			ball.nerf_max_speed(0.60);
-			ball.weapon.hitstop *= 0.1;
-			# ball.gravity_strength = 0;
 
 func update_time_attack_timer():
 	ta_timer.text = " " + Utils.convert_time_to_string(time_attack_elapsed) + " ";
@@ -824,3 +849,22 @@ func show_tournament_match_result(w:int):
 
 	var t_stop_record:SceneTreeTimer = get_tree().create_timer(8.0);
 	t_stop_record.timeout.connect(stop_record);
+
+func on_block_destroyed(_id:int, block:MCBattleBlock):
+	var fx: GPUParticles2D = fx_block_destroyed.instantiate();
+	add_child(fx);
+	fx.global_position = block.global_position;
+	fx.texture = block.stx;
+	fx.scale = Vector2.ONE * (1.0 if !battleblock_mode else 0.3);
+	fx.finished.connect(fx.queue_free);
+	just_spawned_fxs.push_back(fx);
+
+func get_opponent(id:int) -> BattleBall:
+	if(balls.size() != 2):
+		return null;
+
+	for b in balls:
+		if(b.get_instance_id() != id):
+			return b;
+
+	return null;

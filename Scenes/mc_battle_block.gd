@@ -12,6 +12,7 @@ class_name MCBattleBlock extends RigidBody2D
 @export var parent:BlockModeMCDig = null;
 
 @onready var hurtbox: BattleBlockHurtbox = $Hurtbox
+@onready var value_ui: DynamicText = $Value
 
 var current_value:int = 0;
 var block_index:int = 0;
@@ -34,7 +35,6 @@ func _ready() -> void:
 	sprite.texture = stx;
 
 func on_impact(ball:BattleBall, amount:int):
-	if(ball.team != team): return;
 
 	current_value -= amount;
 	EventBus.ball_duel_scale.emit(ball.get_instance_id());
@@ -45,20 +45,22 @@ func on_impact(ball:BattleBall, amount:int):
 		block_death(ball);
 		return;
 
-
 	update_value_text();
 	# update_block_color(ball);
 
 func block_death(ball:BattleBall):
-	parent.on_block_destroyed(self);
-	get_tree().get_current_scene().global_hitstop(0.01, 0.1);
+	if(parent != null):
+		parent.on_block_destroyed(ball, self);
+
+	# get_tree().get_current_scene().global_hitstop(0.01, 0.1);
 	EventBus.camera_trigger_shake.emit(block_death_shake * block_index);
 	AudioManager.play_sfx(sfx_break, "SFX");
+	EventBus.block_destroyed.emit(ball.get_instance_id(), self);
 	queue_free();
-	EventBus.block_destroyed.emit(ball.get_instance_id(), block_index);
 
 func update_value_text():
 	value.format([Utils.format_number_with_dots(current_value)]);
+	sprite.self_modulate.a = (current_value / float(block_value));
 
 # func update_block_color(ball:BattleBall):
 # 	polygon_color.color = ball.color;

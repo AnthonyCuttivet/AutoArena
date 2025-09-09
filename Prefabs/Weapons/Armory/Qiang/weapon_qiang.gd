@@ -15,7 +15,8 @@ func init_scaling_stat():
 	scaling_stat_value = tipper_damage;
 	ball_owner.update_stat_text();
 
-func scale_stat():
+func scale_stat(force:bool = false):
+	if(no_stat_scale && !force): return;
 	tipper_damage += stat_scale_value;
 	init_scaling_stat();
 

@@ -37,6 +37,8 @@ var shoots_remaining:int = 0;
 var no_shoot:bool = false;
 var owned_projectiles:Array[Projectile] = [];
 
+var no_stat_scale:bool = false;
+
 func init(s:WeaponSettings, o:BattleBall) -> void:
 
 	ball_owner = o;
@@ -175,7 +177,8 @@ func flip_sprite():
 func init_scaling_stat():
 	pass;
 
-func scale_stat():
+func scale_stat(force:bool = false):
+	if(no_stat_scale && !force): return;
 	pass;
 
 func shoot_projectile():

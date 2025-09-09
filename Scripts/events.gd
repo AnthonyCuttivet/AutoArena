@@ -29,6 +29,6 @@ signal ball_bounce_other_ball(id:int, other:int);
 signal ball_bounce_battleblock(id:int, block:BattleBlock);
 signal ball_shoot(id:int, projectile: Projectile);
 
-signal block_destroyed(id:int, block_index:int);
+signal block_destroyed(id:int, block:BattleBlock);
 signal ball_duel_scale(id:int);
 signal ball_duel_winner(id:int);

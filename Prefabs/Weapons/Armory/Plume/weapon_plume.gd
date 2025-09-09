@@ -52,7 +52,8 @@ func init_scaling_stat():
 func shoot_projectile():
 	spawn_feather();
 
-func scale_stat():
+func scale_stat(force:bool = false):
+	if(no_stat_scale && !force): return;
 	recall_dmg += int(stat_scale_value);
 
 	if(recall_dmg == dmg_to_feather_conversion + recall_dmg_bonus):

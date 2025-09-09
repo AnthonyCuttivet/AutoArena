@@ -19,6 +19,7 @@ class_name BattleBall extends RigidBody2D
 @export var stop:bool = false;
 @export var is_boss:bool = false;
 @export var knockback_immune:bool = false;
+@export var hp_immunity:bool = false;
 
 @export var weapon:Weapon;
 @export var align_weapon_to_velocity:bool = false;
@@ -96,6 +97,8 @@ var scaling_damage:int = 1;
 
 var base_root_scale:float = 0.0;
 var nerfed_speed:float = 0.0;
+
+var claimed_blocks:Dictionary[Texture, bool] = {};
 
 # var aled:bool = false;
 
@@ -229,6 +232,7 @@ func spawn_weapon() -> Weapon:
 	return w;
 
 func update_health_text():
+	if(hp_text == null): return;
 	hp_text.text = str(health);
 
 func update_stat_text(no_bump:bool = false):
@@ -263,8 +267,10 @@ func affect_health(v:int, from:BattleBall, silent:bool = false):
 	if(is_invincible()):
 		print(Utils.pf() + " Prevented " + str(v) + " thanks to INVINCIBILITY");
 		return;
-	health += v;
-	update_health_text();
+
+	if(!hp_immunity):
+		health += v;
+		update_health_text();
 
 	if(v < 0 && !silent):
 		EventBus.ball_damaged.emit(get_instance_id(), abs(v), from.get_instance_id());

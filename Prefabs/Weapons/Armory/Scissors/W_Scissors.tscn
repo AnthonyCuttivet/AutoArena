@@ -44,8 +44,8 @@ volume = -25.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
-radius = 7.99998
-height = 32.0
+radius = 6.0
+height = 28.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q615r"]
 radius = 11.4286
@@ -80,7 +80,7 @@ collider = NodePath("CollisionShape2D")
 metadata/owner = NodePath("../../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Closed/ClosedHitbox"]
-position = Vector2(-24, -0.00011158)
+position = Vector2(-28, -0.000130177)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_1fhci")
 

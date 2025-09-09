@@ -22,6 +22,7 @@ EventBus="*res://Scripts/events.gd"
 Components="*res://Scripts/components.gd"
 AudioManager="*res://Scripts/AudioManager/audio_manager.gd"
 DebugDraw2D="*res://addons/debugdraw2d/DebugDraw2D.gd"
+PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 
 [debug]
 
@@ -34,13 +35,12 @@ gdscript/warnings/narrowing_conversion=0
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/size/resizable=false
-window/size/window_width_override=960
-window/size/window_height_override=540
+window/size/borderless=true
 window/vsync/vsync_mode=2
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/debugdraw2d/plugin.cfg", "res://addons/midi/plugin.cfg")
+enabled=PackedStringArray("res://addons/debugdraw2d/plugin.cfg", "res://addons/midi/plugin.cfg", "res://addons/phantom_camera/plugin.cfg")
 
 [global_group]
 
