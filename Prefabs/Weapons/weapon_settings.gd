@@ -38,3 +38,5 @@ class_name WeaponSettings extends Resource
 @export var sfx_clash:SFX;
 @export var sfx_hit:SFX;
 @export var sfx_shoot:SFX;
+
+@export var scale_stat_multiplier:int = 1;

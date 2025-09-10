@@ -83,7 +83,8 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	if(ball_owner.is_in_same_team(other)):
 		return;
 
-	AudioManager.play_sfx(settings.sfx_hit if !recalling else sfx_recall_hit, "SFX");
+	if(!other.silent_on_hit):
+		AudioManager.play_sfx(settings.sfx_hit if !recalling else sfx_recall_hit, "SFX");
 
 	var d:int = recall_dmg if recalling else damage;
 	var kb_dist:float = knockback + other.linear_velocity.length() if !other.knockback_immune else 0.0;

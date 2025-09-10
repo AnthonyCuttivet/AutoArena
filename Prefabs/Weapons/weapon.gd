@@ -38,6 +38,7 @@ var no_shoot:bool = false;
 var owned_projectiles:Array[Projectile] = [];
 
 var no_stat_scale:bool = false;
+var scale_stat_multiplier:int = 1;
 
 func init(s:WeaponSettings, o:BattleBall) -> void:
 
@@ -75,6 +76,7 @@ func init(s:WeaponSettings, o:BattleBall) -> void:
 	projectile_self_hitstop = settings.projectile_self_hitstop;
 
 	stat_scale_value = settings.stat_scale_value;
+	scale_stat_multiplier = settings.scale_stat_multiplier;
 
 	if(rotation_direction == -1 && settings.flip):
 		flip_sprite();
@@ -109,13 +111,13 @@ func add_remaining_shoot():
 
 func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:bool = false) -> void:
 	if(other.is_invincible()):
-		# print(other.name + " is INVINCIBLE");
+		print(other.name + " is INVINCIBLE");
 		return;
 
 	if(ball_owner.is_in_same_team(other)):
 		return;
 
-	if(!custom_sfx):
+	if(!custom_sfx && !other.silent_on_hit):
 		AudioManager.play_sfx(settings.sfx_hit, "SFX");
 
 	var d:int = get_custom_damage_value() if custom_damage else damage;
@@ -143,12 +145,13 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit);
 	pass;
 
-func on_weapon_clash(other:Node2D, clash_pos:Vector2, projectile_hit:bool = false):
+func on_weapon_clash(other:Node2D, clash_pos:Vector2, projectile_hit:bool = false, silent:bool = false):
 	if(other == null): return;
 	# if(ball_owner.is_in_same_team(other)):
 	# 	return;
 
-	AudioManager.play_sfx(settings.sfx_clash, "SFX");
+	if(!silent):
+		AudioManager.play_sfx(settings.sfx_clash, "SFX");
 
 	var kb:Vector2 = Vector2.ZERO;
 
@@ -158,7 +161,7 @@ func on_weapon_clash(other:Node2D, clash_pos:Vector2, projectile_hit:bool = fals
 
 	ball_owner.start_hitstop(0.0, 0.15, kb);
 
-	EventBus.ball_weapon_clash.emit(ball_owner.get_instance_id(), clash_pos);
+	EventBus.ball_weapon_clash.emit(ball_owner.get_instance_id(), clash_pos, silent);
 	pass;
 
 func reverse_rotation():

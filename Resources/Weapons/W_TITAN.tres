@@ -67,4 +67,5 @@ details = "+1 max rock / 50hp lost"
 white_details = false
 sfx_clash = SubResource("Resource_sn41l")
 sfx_hit = SubResource("Resource_56wvi")
+scale_stat_multiplier = 1
 metadata/_custom_type_script = "uid://c1biydo2yju8x"

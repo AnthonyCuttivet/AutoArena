@@ -20,7 +20,7 @@ func scale_stat(force:bool = false):
 	tipper_damage += stat_scale_value;
 	init_scaling_stat();
 
-func on_weapon_hit(other:BattleBall, hit_pos:Vector2, hitbox_id:int, projectile_hit:bool = false) -> void:
+func on_weapon_hit(other:BattleBall, hit_pos:Vector2, hitbox_id:int, projectile_hit:bool = false, silent:bool = false) -> void:
 	if(ball_owner.is_in_same_team(other)):
 		return;
 
@@ -42,11 +42,13 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, hitbox_id:int, projectile_
 	if(tipper):
 		d = int(scaling_stat_value);
 		h *= tipper_hitstop_multiplier;
-		AudioManager.play_sfx(tipper_sfx, "SFX");
+		if(!other.silent_on_hit):
+			AudioManager.play_sfx(tipper_sfx, "SFX");
 		scale_stat();
 	else:
 		d = max(1.0, floor(scaling_stat_value * non_tipper_dmg));
-		AudioManager.play_sfx(settings.sfx_hit, "SFX");
+		if(!other.silent_on_hit):
+			AudioManager.play_sfx(settings.sfx_hit, "SFX");
 
 	var kb:Vector2 = (other.global_position - ball_owner.global_position).normalized() * other.max_speed;
 

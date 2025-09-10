@@ -59,4 +59,5 @@ details = "+1 head every 50hp lost"
 white_details = false
 sfx_clash = SubResource("Resource_o3hyd")
 sfx_hit = SubResource("Resource_8f1rw")
+scale_stat_multiplier = 1
 metadata/_custom_type_script = "uid://c1biydo2yju8x"

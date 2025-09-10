@@ -61,4 +61,5 @@ details = "+3 DMG next hit per parry"
 white_details = false
 sfx_clash = SubResource("Resource_jakn7")
 sfx_hit = SubResource("Resource_ronry")
+scale_stat_multiplier = 1
 metadata/_custom_type_script = "uid://c1biydo2yju8x"

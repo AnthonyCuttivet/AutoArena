@@ -65,4 +65,3 @@ common/enable_object_picking=false
 [rendering]
 
 viewport/hdr_2d=true
-anti_aliasing/quality/screen_space_aa=1

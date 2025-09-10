@@ -116,7 +116,8 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	if(sandevistan_active):
 		ball_owner.drag_force = ball_owner.base_drag_force;
 
-	AudioManager.play_sfx(settings.sfx_hit if !sandevistan_active else sfx_sandevistan_hit, "SFX");
+	if(!other.silent_on_hit):
+		AudioManager.play_sfx(settings.sfx_hit if !sandevistan_active else sfx_sandevistan_hit, "SFX");
 
 	var kb_dist:float = (knockback * (1.0 + (current_damage / 15.0))) + other.linear_velocity.length() if !other.is_boss else 0.0;
 	var kb:Vector2 = (other.global_position - ball_owner.global_position).normalized() * kb_dist;

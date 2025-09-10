@@ -10,6 +10,7 @@ class_name BlockModeMCDig extends Node2D
 @export var ground_depth:int = 0;
 @export var clusters: Array[MCClusterSettings];
 @export var block_value_registry:Dictionary[Texture, int];
+@export var block_sfx:Dictionary[Texture, AudioStream];
 @export var distribution:Array[MCLayerSettings];
 
 var p_cache:Vector2;
@@ -26,8 +27,6 @@ func compute_cumulative_layers():
 	for d in distribution:
 		sum = sum + d.size;
 		cumulative_layers.push_back(sum);
-
-	print(cumulative_layers);
 
 func generate():
 	current_depth = 0;
@@ -85,7 +84,7 @@ func add_cluster(c:MCClusterSettings) -> void:
 	var origin: Vector2i = Vector2i(randi_range(0, dimensions.x - 1), c.depth + ground_depth)
 
 	# Random cluster size
-	var size_x: int = randi_range(0, c.size.x)
+	var size_x: int = randi_range(3, c.size.x + 3)
 	var size_y: int = randi_range(0, c.size.y)
 
 	for dx in range(-size_x, size_x + 1):
@@ -106,9 +105,9 @@ func add_cluster(c:MCClusterSettings) -> void:
 			set_block_values(blocks[pos], c.tx);
 
 func build_house():
-	var planks:Texture = block_value_registry.keys()[8];
-	var wood:Texture = block_value_registry.keys()[9];
-	var leaves:Texture = block_value_registry.keys()[10];
+	var planks:Texture = block_value_registry.keys()[2];
+	var wood:Texture = block_value_registry.keys()[1];
+	var leaves:Texture = block_value_registry.keys()[0];
 
 	spawn_block(Vector2(4,1), leaves);
 	spawn_block(Vector2(4,2), leaves);
@@ -137,7 +136,6 @@ func build_house():
 	spawn_block(Vector2(28,4), wood);
 	spawn_block(Vector2(28,5), wood);
 
-	spawn_block(Vector2(21,1), wood);
 	spawn_block(Vector2(22,1), wood);
 	spawn_block(Vector2(23,1), wood);
 	spawn_block(Vector2(24,1), wood);
@@ -145,7 +143,6 @@ func build_house():
 	spawn_block(Vector2(26,1), wood);
 	spawn_block(Vector2(27,1), wood);
 	spawn_block(Vector2(28,1), wood);
-	spawn_block(Vector2(29,1), wood);
 
 	spawn_block(Vector2(23,2), planks);
 	spawn_block(Vector2(23,3), planks);
@@ -171,27 +168,35 @@ func set_block_values(b:MCBattleBlock, tx:Texture):
 	b.sprite.texture = tx;
 	b.block_value = block_value_registry[tx];
 	b.stx = b.sprite.texture;
-
+	b.sfx_hit.audio_stream.remove_stream(0);
+	b.sfx_hit.audio_stream.add_stream(0, block_sfx[tx]);
 
 func on_block_destroyed(by:BattleBall, block:MCBattleBlock):
-	if(!by.claimed_blocks.has(block.sprite.texture)):
+	if(block.depth == dimensions.y - 1):
+		var opponent:BattleBall = scene_root.get_opponent(by.get_instance_id());
+		opponent.can_respawn = false;
+		opponent.death();
+		scene_root.end_game();
+		return;
+
+	if(by.claimed_blocks[block.sprite.texture] == false):
 		by.claimed_blocks[block.sprite.texture] = true;
-		by.weapon.scale_stat(true);
+		update_bb_blocks_ui(by);
+
+		for i in by.weapon.scale_stat_multiplier:
+			by.weapon.scale_stat(true);
+
 		# print(Utils.pf() + " " + by.weapon_settings.name + " Claimed block " + block.sprite.texture.resource_path);
 
 	if(block.depth > current_depth):
-		# scene_root.global_hitstop(0, 0.4);
 		current_depth = block.depth;
-		# go_deeper();
 
-	if(block.depth == dimensions.y - 1):
-		scene_root.get_opponent(by.get_instance_id()).death();
-		scene_root.end_game();
+func init_bb_blocks_ui(ball:BattleBall):
+	for i in ball.bb_blocks_ui.get_child_count():
+		ball.bb_blocks_ui.get_child(i).texture = block_value_registry.keys()[i];
+		ball.bb_blocks_ui.get_child(i).self_modulate.a = 0.3;
+		ball.claimed_blocks[block_value_registry.keys()[i]] = false;
 
-func go_deeper() -> void:
-	# kill any old tween
-	# if(active_tween != null && active_tween.is_running()):
-	# 	active_tween.kill();
-
-	active_tween = create_tween()
-	active_tween.tween_property(self, "position:y", position.y - block_height, 0.2).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+func update_bb_blocks_ui(ball:BattleBall):
+	for i in ball.claimed_blocks.keys().size():
+		ball.bb_blocks_ui.get_child(i).self_modulate.a = 1.0 if ball.claimed_blocks.values()[i] else 0.3;

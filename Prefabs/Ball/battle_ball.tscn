@@ -57,11 +57,13 @@ debug_color = Color(0.7, 0, 0, 0)
 scale = Vector2(22, 22)
 
 [node name="CircleBG" type="Sprite2D" parent="Root"]
-modulate = Color(0, 0, 0, 1)
-scale = Vector2(1.1, 1.1)
+self_modulate = Color(0, 0, 0, 1)
+texture_filter = 4
+scale = Vector2(1.12, 1.12)
 texture = ExtResource("1_lj2f6")
 
 [node name="Circle" type="Sprite2D" parent="Root"]
+texture_filter = 4
 material = SubResource("ShaderMaterial_yvhfn")
 texture = ExtResource("1_lj2f6")
 

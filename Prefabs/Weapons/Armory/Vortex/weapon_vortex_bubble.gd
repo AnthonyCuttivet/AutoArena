@@ -30,7 +30,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	if(ball_owner.is_in_same_team(other)):
 		return;
 
-	if(!custom_sfx):
+	if(!custom_sfx && !other.silent_on_hit):
 		AudioManager.play_sfx(settings.sfx_hit, "SFX");
 
 	pop_bubble(true);
@@ -59,10 +59,11 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit);
 	pass;
 
-func on_weapon_clash(other:Node2D, clash_pos:Vector2, projectile_hit:bool = false):
+func on_weapon_clash(other:Node2D, clash_pos:Vector2, projectile_hit:bool = false, silent:bool = false):
 	if(other == null): return;
 
-	AudioManager.play_sfx(settings.sfx_clash, "SFX");
+	if(!silent):
+		AudioManager.play_sfx(settings.sfx_clash, "SFX");
 
 	pop_bubble(false);
 
@@ -74,7 +75,7 @@ func on_weapon_clash(other:Node2D, clash_pos:Vector2, projectile_hit:bool = fals
 
 	ball_owner.start_hitstop(0.0, 0.15, kb);
 
-	EventBus.ball_weapon_clash.emit(ball_owner.get_instance_id(), clash_pos);
+	EventBus.ball_weapon_clash.emit(ball_owner.get_instance_id(), clash_pos, silent);
 	pass;
 
 func pop_bubble(is_hit:bool):

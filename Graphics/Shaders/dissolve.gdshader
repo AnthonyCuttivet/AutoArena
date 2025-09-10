@@ -10,7 +10,7 @@ void fragment() {
 	// Get size of texture in pixels
 	float size_x = float(textureSize(TEXTURE, 0).x);
 	float size_y = float(textureSize(TEXTURE, 0).y);
-	// 
+	//
 	vec4 pixelColor = texture(TEXTURE, UV);
 	// Create a new "UV" which remaps every UV value to a snapped pixel value
 	vec2 UVr = vec2(floor(UV.x*size_x)/size_x, floor(UV.y*size_y)/size_y);

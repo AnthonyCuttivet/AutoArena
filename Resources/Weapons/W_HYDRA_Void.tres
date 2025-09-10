@@ -41,4 +41,5 @@ bg_projectile = false
 details = "New Head / 25HP lost"
 white_details = false
 sfx_clash = SubResource("Resource_o3hyd")
+scale_stat_multiplier = 1
 metadata/_custom_type_script = "uid://c1biydo2yju8x"

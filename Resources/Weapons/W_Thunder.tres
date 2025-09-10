@@ -76,4 +76,5 @@ white_details = false
 sfx_clash = SubResource("Resource_ahd6p")
 sfx_hit = SubResource("Resource_dt5h3")
 sfx_shoot = SubResource("Resource_o05x3")
+scale_stat_multiplier = 1
 metadata/_custom_type_script = "uid://c1biydo2yju8x"

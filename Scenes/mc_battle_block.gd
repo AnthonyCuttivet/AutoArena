@@ -3,6 +3,7 @@ class_name MCBattleBlock extends RigidBody2D
 @export var main:Main;
 @export var block_value:int = 1;
 @export var block_death_shake:float = 1.0;
+@export var sfx_hit:SFX;
 @export var sfx_break:SFX;
 @export var value:DynamicText;
 @export var collider:CollisionShape2D;
@@ -25,6 +26,7 @@ func _ready() -> void:
 	hurtbox.ball_owner.team = -99;
 	hurtbox.ball_owner.hp_text = value;
 	hurtbox.ball_owner.unkillable = true;
+	hurtbox.ball_owner.silent_on_hit = true;
 	hurtbox.ball_owner.weapon = Weapon.new();
 
 	current_value = block_value;
@@ -39,14 +41,15 @@ func on_impact(ball:BattleBall, amount:int):
 	current_value -= amount;
 	EventBus.ball_duel_scale.emit(ball.get_instance_id());
 
-	ball.weapon.on_weapon_clash(self, self.global_position);
+	ball.weapon.on_weapon_clash(self, self.global_position, false, true);
 
 	if(current_value <= 0):
 		block_death(ball);
 		return;
 
 	update_value_text();
-	# update_block_color(ball);
+	AudioManager.play_sfx(sfx_hit, "SFX");
+	EventBus.block_hit.emit(ball.get_instance_id(), self);
 
 func block_death(ball:BattleBall):
 	if(parent != null):
@@ -60,7 +63,7 @@ func block_death(ball:BattleBall):
 
 func update_value_text():
 	value.format([Utils.format_number_with_dots(current_value)]);
-	sprite.self_modulate.a = (current_value / float(block_value));
+	sprite.self_modulate.a = lerp(0.5, 1.0, clamp(current_value / float(block_value), 0.0, 1.0));
 
 # func update_block_color(ball:BattleBall):
 # 	polygon_color.color = ball.color;

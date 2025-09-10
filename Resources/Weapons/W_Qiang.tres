@@ -62,4 +62,5 @@ details = "Tip +5 dmg else 10% dmg"
 white_details = false
 sfx_clash = SubResource("Resource_4ivty")
 sfx_hit = SubResource("Resource_dtbvl")
+scale_stat_multiplier = 1
 metadata/_custom_type_script = "uid://c1biydo2yju8x"

@@ -32,7 +32,8 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	hitboxes[0].weapon_clash_cd_elapsed = hitboxes[0].weapon_clash_cd * 2.0;
 	hitboxes[0].target_cd[other] = hitstop / (0.8 + (rotation_speed / scale_divider));
 
-	AudioManager.play_sfx(settings.sfx_hit, "SFX");
+	if(!other.silent_on_hit):
+		AudioManager.play_sfx(settings.sfx_hit, "SFX");
 
 	var d:int = get_custom_damage_value() if custom_damage else damage;
 

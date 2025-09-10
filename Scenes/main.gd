@@ -19,6 +19,8 @@ class_name Main extends Node2D
 @export var bo3_mode:bool = false;
 @export var preset_score:Vector2i;
 @export var battleblock_mode:bool = false;
+@export var battleblock_controller:BlockModeMCDig;
+@export var battleblock_start_delay:float = 0.5;
 
 @export var forced_start_dir:Vector2 = Vector2.ZERO;
 @export var dead_ui_color:Color;
@@ -88,6 +90,14 @@ class_name Main extends Node2D
 @onready var container_1v1_right: VBoxContainer = $UI/Top/CharacterRight_1p
 @onready var container_2v2_left: VBoxContainer = $UI/Top/CharactersLeft_2p
 @onready var container_2v2_right: VBoxContainer = $UI/Top/CharactersRight_2p
+@onready var container_battlelock: Control = $UI/Bottom/BlockBreaker
+
+# -------------- BattleBlock ----------------
+@onready var bb_left: DynamicText = $UI/Bottom/BlockBreaker/BB_Left
+@onready var bb_blocks_left: GridContainer = $UI/Bottom/BlockBreaker/BB_Blocks_Left
+@onready var bb_right: DynamicText = $UI/Bottom/BlockBreaker/BB_Right
+@onready var bb_blocks_right: GridContainer = $UI/Bottom/BlockBreaker/BB_Blocks_Right
+@onready var hook: RichTextLabel = $Hook
 
 # ------ #
 
@@ -177,6 +187,7 @@ func _ready() -> void:
 	EventBus.ball_weapon_clash.connect(on_ball_clash);
 	EventBus.set_chromatic_aberration.connect(set_chromatic_aberration);
 	EventBus.block_destroyed.connect(on_block_destroyed);
+	EventBus.block_hit.connect(on_block_destroyed);
 
 	if(earclacks_mode):
 		set_earclacks_mode();
@@ -302,7 +313,10 @@ func start_game():
 	if(!no_announcer):
 		AudioManager.play_sfx(ve_announcer, "321GO");
 
-	start_balls();
+	if(battleblock_mode):
+		get_tree().create_timer(battleblock_start_delay).timeout.connect(start_balls);
+	else:
+		start_balls();
 
 	if(new_challenger_mode):
 		balls[1].stop = true;
@@ -323,6 +337,11 @@ func start_balls():
 		d = d.bounce(Vector2.UP);
 		ball.start(self, d);
 
+	if(battleblock_mode):
+		var t:Tween = create_tween();
+		t.tween_property(hook, "self_modulate:a", 0.0, battleblock_start_delay * 4.0);
+		t.finished.connect(func(): hook.visible = false);
+
 func end_game():
 	var record_elapsed:float = (Time.get_ticks_msec() + (obs_delay * 1000.0)) / 1000.0;
 	var time_to_stop:float = max(obs_delay, 80.0 - record_elapsed);
@@ -331,7 +350,7 @@ func end_game():
 	var winners:Array[BattleBall];
 
 	for key in teams_alive_members:
-		if(teams_alive_members[key] != 0):
+		if(teams_alive_members[key] > 0):
 			winner_team = key;
 
 		if(bo3_mode):
@@ -390,6 +409,8 @@ func init_ui():
 	time_attack_leaderboard_ui.visible = false;
 	bo3_score_ui.visible = bo3_mode;
 	damage_dealt_text.original_text = generate_damage_dealt_string();
+	container_battlelock.visible = battleblock_mode;
+	hook.visible = battleblock_mode;
 
 	fill_character_ui(balls[0], name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p);
 
@@ -415,6 +436,12 @@ func init_ui():
 		fill_character_ui(balls[1], name_left_2_2p, sprite_left_2_2p, details_left_2_2p, stat_left_2_2p);
 		fill_character_ui(balls[2], name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p);
 		fill_character_ui(balls[3], name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p);
+
+	if(battleblock_mode):
+		fill_battleblock_ui(balls[0], bb_left, bb_blocks_left);
+		fill_battleblock_ui(balls[1], bb_right, bb_blocks_right);
+		battleblock_controller.init_bb_blocks_ui(balls[0]);
+		battleblock_controller.init_bb_blocks_ui(balls[1]);
 
 	time_attack_container.visible = time_attack_mode;
 	ta_record.visible = time_attack_mode;
@@ -443,11 +470,19 @@ func fill_character_ui(ball:BattleBall, name_text:DynamicText, sprite:TextureRec
 	ball.stat_text.self_modulate = ball.color;
 	ball.update_stat_text();
 
-func generate_damage_dealt_string() -> String:
-	if(balls.size() == 3):
-		return "[color=%s]%s[/color][color=white]※[color=%s]%s[/color]※[color=%s]%s[/color]";
+func fill_battleblock_ui(ball:BattleBall, mult_text:DynamicText, bb_blocks:GridContainer):
+	ball.bb_mult_text = mult_text;
+	ball.bb_mult_text.self_modulate = ball.color;
+	ball.update_bb_mult_text();
 
-	if(balls.size() == 4):
+	ball.bb_blocks_ui = bb_blocks;
+
+func generate_damage_dealt_string() -> String:
+	if(balls.size() == 2):
+		return "[color=%s]%s[/color][color=white]※[color=%s]%s[/color]";
+	elif(balls.size() == 3):
+		return "[color=%s]%s[/color][color=white]※[color=%s]%s[/color]※[color=%s]%s[/color]";
+	elif(balls.size() == 4):
 		if(free_for_all):
 			return "[color=%s]%s[/color][color=white]※[color=%s]%s[/color]※[color=%s]%s[/color]※[color=%s]%s[/color]";
 		else:
@@ -483,24 +518,26 @@ func on_ball_damaged(id: int, amount:int, from:int):
 
 	pass ;
 
-func on_ball_clash(id:int, clash_pos:Vector2):
+func on_ball_clash(id:int, clash_pos:Vector2, silent:bool):
 	if(!balls_ids.has(id)):
 		return;
 
 	get_ball_by_id(id).set_or_ignore_invincibility(balls[0].clash_invincibility);
 
-	for i in range(5):
-		var fx: GPUParticles2D = fx_clash.instantiate();
+	if(!silent):
 		var ball:BattleBall = get_ball_by_id(id);
-		add_child(fx);
-		fx.global_position = clash_pos + Vector2.ONE * randf_range(-15.0, 15.0);
-		fx.modulate = ball.color;
-		fx.rotation = ball.weapon_slot.global_rotation;
-		fx.finished.connect(fx.queue_free);
-		if(battleblock_mode):
-			fx.scale = Vector2.ONE * 0.5;
-		just_spawned_fxs.push_back(fx);
-		pass ;
+
+		for i in range(5):
+			var fx: GPUParticles2D = fx_clash.instantiate();
+			add_child(fx);
+			fx.global_position = clash_pos + Vector2.ONE * randf_range(-15.0, 15.0);
+			fx.modulate = ball.color;
+			fx.rotation = ball.weapon_slot.global_rotation;
+			fx.finished.connect(fx.queue_free);
+			if(battleblock_mode):
+				fx.scale = Vector2.ONE * 0.5;
+			just_spawned_fxs.push_back(fx);
+			pass ;
 
 func on_ball_dead(id: int):
 
@@ -512,13 +549,18 @@ func on_ball_dead(id: int):
 	AudioManager.play_sfx(sfx_death, "SFX", 1.0, 0.0, 0.0, true);
 	EventBus.camera_trigger_shake.emit(death_shake);
 
+	var ball:BattleBall = get_ball_by_id(id);
+
 	for i in range(6):
 		var fx: GPUParticles2D = fx_death_prefab.instantiate();
-		var ball:BattleBall = get_ball_by_id(id);
 		add_child(fx);
 		fx.global_position = ball.global_position + Vector2.ONE * randf_range(-50.0, 50.0);
 		fx.modulate = ball.color;
 		just_spawned_fxs.push_back(fx);
+
+
+	if(ball.can_respawn):
+		return;
 
 	teams_alive_members[get_ball_by_id(id).team] -= 1;
 	balls_alive_count -= 1;
@@ -532,11 +574,11 @@ func on_ball_dead(id: int):
 		return;
 
 	if(balls_alive_count == 2 && !time_attack_mode):
-		for ball in balls:
-			if(!ball.dead):
-				# ball.root.scale = Vector2.ONE * ball.base_root_scale;
-				create_tween().tween_property(ball.root, "scale", Vector2.ONE * ball.base_root_scale, 2.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT);
-				ball.max_speed += ball.nerfed_speed;
+		for b in balls:
+			if(!b.dead):
+				# b.root.scale = Vector2.ONE * b.base_root_scale;
+				create_tween().tween_property(b.root, "scale", Vector2.ONE * b.base_root_scale, 2.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT);
+				b.max_speed += b.nerfed_speed;
 			pass
 
 		animate_label_font(author, 30, 2.4);
@@ -596,8 +638,8 @@ func setup_fight():
 	];
 
 	_2v_minecraft_spots = [
-		arena_center.global_position + Vector2(405.0, -150),
-		arena_center.global_position + Vector2(405.0, 100),
+		arena_center.global_position + Vector2(400.0, -150),
+		arena_center.global_position + Vector2(400.0, 100),
 	];
 
 	balls_alive_count = balls.size();
@@ -693,22 +735,23 @@ func place_fighting_balls():
 	if(battleblock_mode):
 		for i in balls.size():
 			balls[i].global_position = _2v_minecraft_spots[i];
-			balls[i].root.scale *= 0.25;
-			balls[i].nerf_max_speed(0.25);
-			balls[i].weapon.hitstop *= 0.1;
+			balls[i].respawn_pos = _2v_minecraft_spots[i];
+			balls[i].can_respawn = true;
+			balls[i].root.scale *= 0.45;
+			balls[i].nerf_max_speed(0.6);
+			balls[i].gravity_strength *= 3.5;
+			balls[i].weapon.hitstop *= 0.2;
+			balls[i].drag_force *= 2.0;
 			balls[i].weapon.no_stat_scale = true;
-			balls[i].hp_immunity = true;
+			balls[i].health = 1;
 			balls[i].weapon.damage = 1;
 			balls[i].min_horizontal = 0;
-			# camera.phantom_camera_2d.append_follow_targets(balls[i]);
+			balls[i].clash_invincibility *= 0.1;
+			balls[i].bounce_boost = 0.0;
+			balls[i].relative_bounce_boost = 0.0;
 
-		# camera.phantom_camera_2d.follow_mode = PhantomCamera2D.FollowMode.GROUP;
-		# camera.phantom_camera_2d.set_auto_zoom(true);
-		# camera.phantom_camera_2d.set_auto_zoom_min(1.5);
-		# camera.phantom_camera_2d.set_auto_zoom_max(100.0);
-		# camera.phantom_camera_2d.set_auto_zoom_margin(Vector4(50,50,50,50));
-		# camera.phantom_camera_2d.set_follow_damping(true);
-		# camera.phantom_camera_2d.set_follow_damping_value(Vector2(0.1,0.1));
+			for h in balls[i].weapon.hitboxes:
+				h.weapon_clash_cd = 0.0;
 
 	for ball in balls:
 		ball.dead = false;
@@ -851,11 +894,17 @@ func show_tournament_match_result(w:int):
 	t_stop_record.timeout.connect(stop_record);
 
 func on_block_destroyed(_id:int, block:MCBattleBlock):
+	# if(block.current_value <= 0):
+	# 	print();
+	# else:
+	# 	print();
+
+	var bb_scale:float = 0.3 if block.current_value <= 0 else 0.15;
 	var fx: GPUParticles2D = fx_block_destroyed.instantiate();
 	add_child(fx);
 	fx.global_position = block.global_position;
 	fx.texture = block.stx;
-	fx.scale = Vector2.ONE * (1.0 if !battleblock_mode else 0.3);
+	fx.scale = Vector2.ONE * (1.0 if !battleblock_mode else bb_scale);
 	fx.finished.connect(fx.queue_free);
 	just_spawned_fxs.push_back(fx);
 

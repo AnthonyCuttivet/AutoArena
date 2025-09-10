@@ -36,8 +36,9 @@ func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
 	init_scaling_stat();
 	pass;
 
-func on_weapon_clash(other:Node2D, clash_pos:Vector2, projectile_hit:bool = false):
-	AudioManager.play_sfx(settings.sfx_clash, "SFX");
+func on_weapon_clash(other:Node2D, clash_pos:Vector2, projectile_hit:bool = false, silent:bool = false):
+	if(!silent):
+		AudioManager.play_sfx(settings.sfx_clash, "SFX");
 
 	var kb:Vector2 = Vector2.ZERO;
 
@@ -46,7 +47,7 @@ func on_weapon_clash(other:Node2D, clash_pos:Vector2, projectile_hit:bool = fals
 		reverse_rotation();
 
 	ball_owner.start_hitstop(0.0, 0.15, kb);
-	EventBus.ball_weapon_clash.emit(ball_owner.get_instance_id(), clash_pos);
+	EventBus.ball_weapon_clash.emit(ball_owner.get_instance_id(), clash_pos, silent);
 	scale_stat();
 	pass;
 

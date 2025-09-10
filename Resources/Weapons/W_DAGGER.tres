@@ -61,4 +61,5 @@ details = ""
 white_details = false
 sfx_clash = SubResource("Resource_g6hdt")
 sfx_hit = SubResource("Resource_tmfjn")
+scale_stat_multiplier = 1
 metadata/_custom_type_script = "uid://c1biydo2yju8x"

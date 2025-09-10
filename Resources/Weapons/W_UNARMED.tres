@@ -54,4 +54,5 @@ bg_projectile = false
 details = ""
 white_details = false
 sfx_hit = SubResource("Resource_lt4ae")
+scale_stat_multiplier = 1
 metadata/_custom_type_script = "uid://c1biydo2yju8x"

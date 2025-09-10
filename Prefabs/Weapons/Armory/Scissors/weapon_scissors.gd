@@ -74,7 +74,8 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 		get_tree().create_timer(dash_hit_hitstop * 0.6).timeout.connect(dash_hit_snip_2.bind(other, kb));
 		get_tree().create_timer(dash_hit_hitstop * 0.9).timeout.connect(dash_hit_stop);
 
-	AudioManager.play_sfx(settings.sfx_hit if !weapon_opened else sfx_dash_hit, "SFX");
+	if(!other.silent_on_hit):
+		AudioManager.play_sfx(settings.sfx_hit if !weapon_opened else sfx_dash_hit, "SFX");
 
 	other.affect_health(-d, ball_owner);
 

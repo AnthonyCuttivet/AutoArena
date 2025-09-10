@@ -53,6 +53,7 @@ class_name BattleBall extends RigidBody2D
 
 @onready var hp_text: RichTextLabel = $Root/HP_Text;
 @onready var circle: Sprite2D = $Root/Circle
+@onready var circle_bg: Sprite2D = $Root/CircleBG
 @onready var weapon_slot: Node2D = $Root/WeaponSlot
 @onready var root: CollisionShape2D = $Root
 @onready var trail_2d: Trail2D = $Root/Trail
@@ -79,6 +80,7 @@ var name_text:DynamicText = null;
 var ui_sprite:TextureRect = null;
 var details_text:DynamicText = null;
 var stat_text:DynamicText = null;
+var bb_mult_text:DynamicText = null;
 
 var vel_to_apply:Vector2 = Vector2.ZERO;
 var lose_hp_timer:Timer = null;
@@ -99,6 +101,12 @@ var base_root_scale:float = 0.0;
 var nerfed_speed:float = 0.0;
 
 var claimed_blocks:Dictionary[Texture, bool] = {};
+var bb_blocks_ui:GridContainer = null;
+var can_respawn:bool = true;
+var respawn_pos:Vector2 = Vector2.ZERO;
+var respawn_count:int = 0;
+var respawn_cd:float = 0.0;
+var silent_on_hit:bool = false;
 
 # var aled:bool = false;
 
@@ -190,7 +198,7 @@ func _physics_process(delta: float) -> void:
 	# max_speed += 2 * delta;
 
 func _process(delta: float) -> void:
-	if(hitstop_remaining >= 0.0):
+	if(hitstop_remaining > 0.0):
 		hitstop_remaining -= delta;
 		if(hitstop_remaining <= 0.0):
 			stop_hitstop();
@@ -262,6 +270,12 @@ func update_scaling_stat_text():
 
 	stat_text.format([weapon_settings.stat_scale_name, Utils.format_number_with_dots(scaling_damage)]);
 	stat_text.bump(1.08, 0.08);
+
+func update_bb_mult_text():
+	if(bb_mult_text == null): return;
+
+	bb_mult_text.format(["Multiplier", "x " + str(weapon.scale_stat_multiplier)]);
+	bb_mult_text.bump(1.08, 0.08);
 
 func affect_health(v:int, from:BattleBall, silent:bool = false):
 	if(is_invincible()):
@@ -375,9 +389,6 @@ func is_in_same_team(other: BattleBall) -> bool:
 	if(other == null): return false;
 	return team == other.team;
 
-func add_invincibility(v:float):
-	invincible_for += v;
-
 func set_or_ignore_invincibility(v:float):
 	if(invincible_for > v): return;
 	invincible_for = v;
@@ -390,8 +401,9 @@ func death():
 	lock_pos = false;
 	dead = true;
 	visible = false;
+	invincible_for = 99;
 	set_process(false);
-	set_deferred("global_position", Vector2.ONE * 9999);
+	set_deferred("global_position", Vector2.ONE * 9999 if !can_respawn else respawn_pos);
 	set_deferred("freeze", true);
 	sleeping = true;
 	root.set_deferred("disabled", true);
@@ -405,6 +417,47 @@ func death():
 		update_ui_details(main.dead_ui_color);
 		update_ui_sprite(main.dead_ui_color);
 		update_ui_stat(main.dead_ui_color);
+
+		if(can_respawn):
+			set_color_overlay(main.dead_ui_color, Color.WHITE);
+			bb_blocks_ui.modulate = main.dead_ui_color;
+			bb_mult_text.modulate = main.dead_ui_color;
+
+	if(can_respawn):
+		var t:int = 1 + respawn_count;
+		respawn_cd = t;
+		hp_text.text = str(t);
+		get_tree().create_timer(0.5).timeout.connect(func():visible = true);
+		get_tree().create_timer(1.0).timeout.connect(update_respawn_cd);
+
+
+func raw_respawn():
+	respawn_count += 1;
+	invincible_for = 0;
+	dead = false;
+	visible = true;
+	set_process(true);
+	root.set_deferred("disabled", false);
+	set_color_overlay(Color.WHITE, Color.BLACK);
+	bb_blocks_ui.modulate = Color.WHITE;
+	bb_mult_text.modulate = Color.WHITE;
+
+	# reset_rigidbody();
+	health = respawn_count * 5;
+	update_health_text();
+
+	for hitbox:Hitbox in weapon.hitboxes:
+		hitbox.set_deferred("monitorable", true);
+		hitbox.set_deferred("monitoring", true);
+		pass
+
+	if(main != null):
+		update_ui_name(color);
+		update_ui_details(color);
+		update_ui_sprite(Color.WHITE);
+		update_ui_stat(color);
+
+	weapon.init_scaling_stat();
 
 func respawn(pos:Vector2, h:int = -1):
 	global_position = pos;
@@ -554,3 +607,20 @@ func reset_rigidbody():
 	drag_force = base_drag_force;
 	current_target_attraction = base_target_attraction;
 	hitstop_remaining = 0.0;
+
+func set_color_overlay(c:Color, text_color:Color):
+	weapon_slot.modulate = c;
+	circle.modulate = c;
+	circle_bg.modulate = c;
+	hp_text.set("theme_override_colors/default_color", text_color);
+
+func update_respawn_cd():
+	respawn_cd -= 1.0;
+
+	hp_text.text = str(int(respawn_cd));
+
+	if(respawn_cd <= 0.0):
+		get_tree().create_timer(0.2).timeout.connect(raw_respawn);
+		return;
+
+	get_tree().create_timer(1.0).timeout.connect(update_respawn_cd);
