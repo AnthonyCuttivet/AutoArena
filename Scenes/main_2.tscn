@@ -1,4 +1,4 @@
-[gd_scene load_steps=172 format=4 uid="uid://cmsck3y43hvak"]
+[gd_scene load_steps=173 format=4 uid="uid://cmsck3y43hvak"]
 
 [ext_resource type="Script" uid="uid://llbx2bxdfjwy" path="res://Scenes/main.gd" id="1_nmkph"]
 [ext_resource type="Shader" uid="uid://m275kdb8v68b" path="res://Graphics/Shaders/balatro.gdshader" id="1_y2yxb"]
@@ -23,7 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://crarm12ndl2en" path="res://Graphics/_Addons/Icons/fc7.png" id="12_hvjex"]
 [ext_resource type="FontFile" uid="uid://bt2qq5v7nibma" path="res://Graphics/Fonts/PPFraktionMono-Bold.otf" id="12_p1oyv"]
 [ext_resource type="FontFile" uid="uid://bglbd1ylrt02k" path="res://Graphics/Fonts/big_noodle_titling.ttf" id="12_per8v"]
-[ext_resource type="AudioStream" uid="uid://s6lkmqtuktyv" path="res://Audio/SFX/BattleBalls/Announcer/download1757604294948 (mp3cut.net).mp3" id="13_1t3vj"]
+[ext_resource type="AudioStream" uid="uid://d4mtlmuyqmi08" path="res://Audio/SFX/BattleBalls/Announcer/download1757616279024 (mp3cut.net).mp3" id="13_pl8or"]
 [ext_resource type="Script" uid="uid://dtqgj8e3uki5c" path="res://Scenes/dynamic_text.gd" id="13_vvmd2"]
 [ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="14_0krxf"]
 [ext_resource type="AudioStream" uid="uid://c1v5jlj0arj35" path="res://Audio/BGM/flying-finish.mp3" id="14_1t3vj"]
@@ -69,6 +69,7 @@
 [ext_resource type="PackedScene" uid="uid://bxajeluf8set7" path="res://Prefabs/HUD/ranking_line.tscn" id="47_d4iat"]
 [ext_resource type="Texture2D" uid="uid://b1ru8jv7lpu68" path="res://Graphics/_Addons/Icons/fc52.png" id="48_poh84"]
 [ext_resource type="Script" uid="uid://bcqswpyfo4fff" path="res://Scripts/time_attack_leaderboard_ui.gd" id="49_0qwvu"]
+[ext_resource type="Resource" uid="uid://cb5viiys6pnd4" path="res://Resources/Weapons/W_Perfect.tres" id="49_1t3vj"]
 [ext_resource type="Script" uid="uid://cfse0m61mp3dr" path="res://Scenes/mode_block_mc_dig.gd" id="49_k7ahf"]
 [ext_resource type="Texture2D" uid="uid://diyiof7v8elk2" path="res://Graphics/_Addons/Icons/fc54.png" id="49_vp72v"]
 [ext_resource type="Resource" uid="uid://chbo481r6wayq" path="res://Resources/Weapons/W_BloodSword.tres" id="50_1t3vj"]
@@ -144,7 +145,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="Resource" id="Resource_p1oyv"]
 script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("13_1t3vj")
+audio_stream = ExtResource("13_pl8or")
 volume = -20.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
@@ -899,7 +900,7 @@ time_attack_ranking_duration = 10.0
 _2v2_colors = Array[Color]([Color(0.5, 0.666667, 1, 1), Color(0.5, 0.583333, 1, 1), Color(1, 0.5, 0.5, 1), Color(1, 0.583333, 0.5, 1)])
 battleblock_controller = NodePath("BlockBreaker/MinecraftDig")
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Fighters/BloodSword"), NodePath("Balls/Fighters/Sword")]
+balls = [NodePath("Balls/Fighters/Perfect"), NodePath("Balls/Fighters/Plume")]
 fx_hit_prefab = ExtResource("2_8wnqf")
 fx_death_prefab = ExtResource("3_uot50")
 fx_clash = ExtResource("4_0o7lx")
@@ -913,7 +914,7 @@ sfx_death = SubResource("Resource_go1jf")
 ve_announcer = SubResource("Resource_p1oyv")
 announcer_delay = 2.0
 bgm = ExtResource("14_1t3vj")
-bgm_volume = -20.0
+bgm_volume = -22.0
 obs_delay = 4.0
 earclacks_mode = true
 _1v1_hp = 100
@@ -953,7 +954,6 @@ offset_right = 1376.0
 offset_bottom = 2418.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
-color = Color(0.976563, 0.976563, 0.976563, 1)
 
 [node name="BG" type="ColorRect" parent="BG_Earclacks"]
 material = SubResource("ShaderMaterial_vijbk")
@@ -966,7 +966,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-color = Color(1, 1, 1, 0.0784314)
+color = Color(1, 1, 1, 0.0392157)
 
 [node name="BG" type="ColorRect" parent="."]
 visible = false
@@ -1051,7 +1051,7 @@ offset_left = -490.0
 offset_top = -490.0
 offset_right = 490.0
 offset_bottom = 490.0
-color = Color(0, 0, 0, 0.196078)
+color = Color(0, 0, 0, 0.0392157)
 
 [node name="DeadZone" type="Node2D" parent="."]
 position = Vector2(540, 1082)
@@ -2465,7 +2465,7 @@ color = Color(1, 0.843137, 0, 1)
 dead = true
 stop = true
 max_speed = 1700.0
-gravity_strength = 1000.0
+gravity_strength = 1800.0
 drag_force = 0.025
 bounce_boost = 0.0
 relative_bounce_boost = 0.2
@@ -2483,6 +2483,20 @@ gravity_strength = 2600.0
 drag_force = 0.025
 bounce_boost = 0.0
 relative_bounce_boost = 0.2
+
+[node name="Perfect" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2370.47, 297.991)
+weapon_settings = ExtResource("49_1t3vj")
+health = 50
+base_weapon_rotation = 120.0
+color = Color(1, 0.835327, 0.703125, 1)
+dead = true
+stop = true
+max_speed = 1700.0
+min_horizontal = 100.0
+gravity_strength = 1850.0
+drag_force = 0.05
+bounce_boost = 350.0
 
 [node name="Qiang" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2669, 374.99)
@@ -3425,7 +3439,7 @@ balls = Dictionary[String, ExtResource("24_3p5r5")]({
 "QIANG": ExtResource("22_ee1k8"),
 "REAPER": ExtResource("27_djmp0"),
 "SANDEVISTAN": ExtResource("68_t5fc8"),
-"SWORD": ExtResource("23_76u2v"),
+"SWORD": ExtResource("49_1t3vj"),
 "THUNDER": ExtResource("23_n5n48"),
 "UNARMED": ExtResource("67_5aelx"),
 "VORTEX": ExtResource("45_k7ahf")

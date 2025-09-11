@@ -1,0 +1,61 @@
+[gd_scene load_steps=12 format=3 uid="uid://cqyq1522n3u7w"]
+
+[ext_resource type="Script" uid="uid://tanmfq2v6nl1" path="res://Prefabs/Weapons/Armory/Perfect/weapon_perfect.gd" id="1_6rfvm"]
+[ext_resource type="Texture2D" uid="uid://dk67ayj7q31q1" path="res://Graphics/_Addons/Icons/fc1726.png" id="2_6rfvm"]
+[ext_resource type="AudioStream" uid="uid://bjn84j8amyasl" path="res://Audio/SFX/BattleBalls/finger_snap.mp3" id="2_ujkhu"]
+[ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="3_hay6q"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="3_qx20b"]
+[ext_resource type="AudioStream" uid="uid://cv6f6a3bk5pi2" path="res://Audio/SFX/BattleBalls/tsk.mp3" id="4_8dm6b"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_s8sk0"]
+random_pitch = 1.05
+streams_count = 1
+stream_0/stream = ExtResource("2_ujkhu")
+
+[sub_resource type="Resource" id="Resource_4mdah"]
+script = ExtResource("3_qx20b")
+audio_stream = SubResource("AudioStreamRandomizer_s8sk0")
+volume = -18.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_piohh"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("4_8dm6b")
+
+[sub_resource type="Resource" id="Resource_1rqyb"]
+script = ExtResource("3_qx20b")
+audio_stream = SubResource("AudioStreamRandomizer_piohh")
+volume = -20.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
+radius = 7.0
+height = 56.0
+
+[node name="WeaponPerfect" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]
+script = ExtResource("1_6rfvm")
+sfx_fingersnap = SubResource("Resource_4mdah")
+sfx_tsk = SubResource("Resource_1rqyb")
+sprite_2d = NodePath("Sprite2D")
+hitboxes = [NodePath("Sprite2D/WeaponHitbox")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(40, 0)
+rotation = 0.785398
+texture = ExtResource("2_6rfvm")
+
+[node name="WeaponHitbox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("weapon", "collider")]
+rotation = 0.785398
+script = ExtResource("3_hay6q")
+weapon = NodePath("../..")
+collider = NodePath("CollisionShape2D")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
+position = Vector2(2.25276e-06, -17)
+shape = SubResource("CapsuleShape2D_1fhci")
+
+[connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_entered"]
+[connection signal="area_exited" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_exited"]

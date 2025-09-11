@@ -345,7 +345,7 @@ func start_game():
 func play_announcer():
 	AudioManager.play_sfx(ve_announcer, "321GO");
 	if(!no_bgm):
-		AudioManager.tween_volume(bgm_player, -40.0, 1.0);
+		AudioManager.tween_volume(bgm_player, -46.0, 1.0);
 
 func start_balls():
 	var d:Vector2 = Vector2.ONE.rotated(deg_to_rad(randf_range(-50.0,-160.0)));

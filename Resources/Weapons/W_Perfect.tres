@@ -1,0 +1,69 @@
+[gd_resource type="Resource" script_class="WeaponSettings" load_steps=11 format=3 uid="uid://cb5viiys6pnd4"]
+
+[ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="1_rb5cq"]
+[ext_resource type="AudioStream" uid="uid://b0pjwiq5vtg3q" path="res://Audio/SFX/BattleBalls/se_eflame_smash_S01_SWISH.wav" id="2_rb5cq"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="3_8nmta"]
+[ext_resource type="AudioStream" uid="uid://bw6lmdpktwcpj" path="res://Audio/SFX/BattleBalls/se_elight_special_H02_01.wav" id="4_b8573"]
+[ext_resource type="Texture2D" uid="uid://dk67ayj7q31q1" path="res://Graphics/_Addons/Icons/fc1726.png" id="5_rb5cq"]
+[ext_resource type="PackedScene" uid="uid://cqyq1522n3u7w" path="res://Prefabs/Weapons/Armory/Perfect/W_Perfect.tscn" id="6_rb5cq"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4eslf"]
+random_pitch = 2.0
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("2_rb5cq")
+
+[sub_resource type="Resource" id="Resource_4ivty"]
+script = ExtResource("3_8nmta")
+audio_stream = SubResource("AudioStreamRandomizer_4eslf")
+volume = -33.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4ivty"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("4_b8573")
+
+[sub_resource type="Resource" id="Resource_wbgv2"]
+script = ExtResource("3_8nmta")
+audio_stream = SubResource("AudioStreamRandomizer_4ivty")
+volume = -28.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[resource]
+script = ExtResource("1_rb5cq")
+name = "☆PERFECT"
+spr = ExtResource("5_rb5cq")
+melee = true
+ranged = false
+flip = false
+offset = 8.0
+base_rotation_direction = -1
+base_rotation_speed = 0.5
+base_damage = 1
+base_knockback = 4000.0
+base_attack_speed = 30.0
+base_shoot_speed = 1.0
+base_size = 16.0
+base_hitstop = 0.25
+base_projectiles = 0
+base_projectile_speed = 1000.0
+base_projectile_scale = 0.75
+base_shoot_duration = 0.35
+base_rot_speed_bounce_boost = false
+projectile_self_hitstop = false
+lifesteal = false
+lifesteal_tick = 1
+stat_scale_value = 4.0
+stat_scale_name = "☆ Damage"
+scaling_stat_float = false
+no_rotation_change = false
+weapon_prefab = ExtResource("6_rb5cq")
+bg_projectile = false
+details = "DMG Reset when hit ☆"
+white_details = false
+sfx_clash = SubResource("Resource_4ivty")
+sfx_hit = SubResource("Resource_wbgv2")
+scale_stat_multiplier = 1
+base_damage_multiplier = 1
+metadata/_custom_type_script = "uid://c1biydo2yju8x"
