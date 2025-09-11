@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bsv6mil7dxm3k"
+path="res://.godot/imported/flying-finish-345863 (mp3cut.net).mp3-8f2f6a7ee8459347fbbb6a6617ed44c9.mp3str"
+
+[deps]
+
+source_file="res://Audio/BGM/flying-finish-345863 (mp3cut.net).mp3"
+dest_files=["res://.godot/imported/flying-finish-345863 (mp3cut.net).mp3-8f2f6a7ee8459347fbbb6a6617ed44c9.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

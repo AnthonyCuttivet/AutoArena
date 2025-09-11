@@ -7,9 +7,6 @@ class_name WeaponBloodSword extends WeaponSword
 func _init() -> void:
 	EventBus.ball_weapon_hit.connect(on_weapon_hit_received);
 
-func init(s:WeaponSettings, o:BattleBall) -> void:
-	super.init(s,o);
-
 func init_scaling_stat():
 	scaling_stat_value = damage;
 	ball_owner.update_stat_text();
@@ -23,20 +20,23 @@ func scale_stat(force:bool = false):
 func on_weapon_hit_received(id:int, to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 
-	update_lifesteal(damage, to);
+	if(lifesteal_active):
+		apply_lifesteal(damage, to);
+
+	update_lifesteal_status();
 	update_details();
 
 	if(lifesteal_active):
 		AudioManager.play_sfx(sfx_lifesteal_state);
+		scale_stat();
 
 	if(lifesteal_ticked == lifesteal_tick):
 		AudioManager.play_sfx(sfx_lifesteal_hit);
 		get_tree().create_timer(0.3).timeout.connect(func(): AudioManager.play_sfx(sfx_lifesteal_heal));
 
-	scale_stat();
 
 
 func update_details():
-	var s:String = "Heal + Scale in "+ str(lifesteal_ticked + 1) +" hits" if lifesteal_ticked > 0 else "Heal + Scale next hit";
+	var s:String = "Heal + Scale in "+ str(lifesteal_ticked + 1) +" hits" if lifesteal_ticked > 0 else "[wave amp=25.0 freq=4 connected=1]Heal + Scale next hit[/wave]";
 	settings.details = s;
 	ball_owner.update_ui_details(ball_owner.color if lifesteal_ticked > 0 else Color.DARK_RED, true);

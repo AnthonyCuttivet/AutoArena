@@ -44,3 +44,9 @@ func kill_audio_player(path: NodePath):
 	if player:
 		player.stop();
 		player.queue_free();
+
+func tween_volume(path: NodePath, v:float, d:float):
+	var player:AudioStreamPlayer = get_node_or_null(path);
+	if player:
+		var t:Tween = create_tween();
+		t.tween_property(player, "volume_db", v, d);

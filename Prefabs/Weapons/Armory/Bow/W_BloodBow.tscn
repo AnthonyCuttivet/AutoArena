@@ -1,0 +1,72 @@
+[gd_scene load_steps=15 format=3 uid="uid://b8tw84rkc2w5c"]
+
+[ext_resource type="Script" uid="uid://3qhfvy3owk8d" path="res://Prefabs/Weapons/Armory/Bow/weapon_bloodBow.gd" id="1_umh7g"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="2_lsc2q"]
+[ext_resource type="AudioStream" uid="uid://bxyc71klmdsw0" path="res://Audio/SFX/BattleBalls/se_demon_ragedrive.wav" id="2_urbpa"]
+[ext_resource type="Texture2D" uid="uid://cwjj40qq4q74h" path="res://Graphics/_Addons/Icons/fc1705.png" id="2_xfgmd"]
+[ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="3_lsc2q"]
+[ext_resource type="AudioStream" uid="uid://gn1e3psaloj" path="res://Audio/SFX/BattleBalls/se_brave_special_L09.wav" id="4_bd762"]
+[ext_resource type="AudioStream" uid="uid://dra8epsyfpc5a" path="res://Audio/SFX/BattleBalls/se_brave_special_L12.wav" id="5_4cts6"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_rf0d3"]
+random_pitch = 1.05
+streams_count = 1
+stream_0/stream = ExtResource("2_urbpa")
+
+[sub_resource type="Resource" id="Resource_elpvq"]
+script = ExtResource("2_lsc2q")
+audio_stream = SubResource("AudioStreamRandomizer_rf0d3")
+volume = -26.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_q46uq"]
+random_pitch = 1.05
+streams_count = 1
+stream_0/stream = ExtResource("4_bd762")
+
+[sub_resource type="Resource" id="Resource_prtya"]
+script = ExtResource("2_lsc2q")
+audio_stream = SubResource("AudioStreamRandomizer_q46uq")
+volume = -25.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_x00a6"]
+random_pitch = 1.25
+streams_count = 1
+stream_0/stream = ExtResource("5_4cts6")
+
+[sub_resource type="Resource" id="Resource_rf0d3"]
+script = ExtResource("2_lsc2q")
+audio_stream = SubResource("AudioStreamRandomizer_x00a6")
+volume = -29.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3w0lg"]
+height = 48.9839
+
+[node name="BloodBow" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]
+script = ExtResource("1_umh7g")
+sfx_lifesteal_state = SubResource("Resource_elpvq")
+sfx_lifesteal_hit = SubResource("Resource_prtya")
+sfx_lifesteal_heal = SubResource("Resource_rf0d3")
+sprite_2d = NodePath("Sprite2D")
+hitboxes = [NodePath("Sprite2D/WeaponHitbox")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+rotation = 0.785398
+texture = ExtResource("2_xfgmd")
+
+[node name="WeaponHitbox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("weapon", "collider")]
+rotation = 2.35619
+script = ExtResource("3_lsc2q")
+weapon = NodePath("../..")
+collider = NodePath("CollisionShape2D")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
+position = Vector2(-8, -3.71933e-05)
+shape = SubResource("CapsuleShape2D_3w0lg")
+
+[connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_entered"]
+[connection signal="area_exited" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_exited"]

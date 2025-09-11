@@ -39,7 +39,11 @@ class_name Main extends Node2D
 @export var sfx_bounce_boss:SFX;
 @export var sfx_death:SFX;
 @export var ve_announcer:SFX;
+@export var announcer_delay:float = 0.0;
 @export var no_announcer:bool = false;
+@export var bgm:AudioStream;
+@export var bgm_volume:float = -40.0;
+@export var no_bgm:bool = false;
 
 @export var obs_delay: float = 1.5;
 
@@ -167,6 +171,8 @@ var process_timer:bool = false;
 
 var damage_dealt:Dictionary[int,int];
 var bo3_score:Dictionary[int, int];
+
+var bgm_player:NodePath;
 
 func _ready() -> void:
 	if(devmode):
@@ -314,7 +320,13 @@ func stop_record():
 
 func start_game():
 	if(!no_announcer):
-		AudioManager.play_sfx(ve_announcer, "321GO");
+		if(announcer_delay > 0.0):
+			get_tree().create_timer(announcer_delay).timeout.connect(play_announcer);
+		else:
+			play_announcer();
+
+	if(!no_bgm):
+		bgm_player = AudioManager.play_sound(bgm, bgm_volume, "BGM");
 
 	if(battleblock_mode):
 		get_tree().create_timer(battleblock_start_delay).timeout.connect(start_balls);
@@ -329,6 +341,11 @@ func start_game():
 
 	if(time_attack_mode):
 		process_timer = true;
+
+func play_announcer():
+	AudioManager.play_sfx(ve_announcer, "321GO");
+	if(!no_bgm):
+		AudioManager.tween_volume(bgm_player, -40.0, 1.0);
 
 func start_balls():
 	var d:Vector2 = Vector2.ONE.rotated(deg_to_rad(randf_range(-50.0,-160.0)));

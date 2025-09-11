@@ -216,6 +216,9 @@ func shoot_projectile():
 
 	owned_projectiles.push_back(p);
 
+	if(lifesteal_active):
+		p.sprite_2d.self_modulate = Color.DARK_RED;
+
 func on_listened_event_received(_id:int, _to:int, _is_projectile:bool):
 	pass;
 
@@ -234,12 +237,14 @@ func reset():
 	init_scaling_stat();
 	pass;
 
-func update_lifesteal(d:int, target:int):
+func apply_lifesteal(v:int, target:int):
+	ball_owner.affect_health(v, ball_owner);
+	EventBus.ball_lifesteal.emit(target, ball_owner.get_instance_id());
+
+func update_lifesteal_status():
 	if(lifesteal_active):
-		ball_owner.affect_health(d, ball_owner);
-		EventBus.ball_lifesteal.emit(target, ball_owner.get_instance_id());
-		toggle_lifesteal_state(false);
 		lifesteal_ticked = lifesteal_tick;
+		toggle_lifesteal_state(false);
 	else:
 		lifesteal_ticked -= 1;
 		if(lifesteal_ticked == 0):
