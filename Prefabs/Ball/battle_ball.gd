@@ -102,7 +102,7 @@ var nerfed_speed:float = 0.0;
 
 var claimed_blocks:Dictionary[Texture, bool] = {};
 var bb_blocks_ui:GridContainer = null;
-var can_respawn:bool = true;
+var can_respawn:bool = false;
 var respawn_pos:Vector2 = Vector2.ZERO;
 var respawn_count:int = 0;
 var respawn_cd:float = 0.0;
@@ -279,7 +279,7 @@ func update_bb_mult_text():
 
 func affect_health(v:int, from:BattleBall, silent:bool = false):
 	if(is_invincible()):
-		print(Utils.pf() + " Prevented " + str(v) + " thanks to INVINCIBILITY");
+		# print(Utils.pf() + " Prevented " + str(v) + " thanks to INVINCIBILITY");
 		return;
 
 	if(!hp_immunity):

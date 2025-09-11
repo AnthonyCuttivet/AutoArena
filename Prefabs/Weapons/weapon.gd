@@ -24,6 +24,10 @@ var shoot_duration:float = 1.0;
 var hitstop:float = 0.0;
 var rot_speed_bounce_boost:bool = false;
 var projectile_self_hitstop:bool = false;
+var lifesteal:bool = false;
+var lifesteal_tick:int = 0;
+var lifesteal_ticked:int = 0;
+var lifesteal_active:bool = false;
 
 var scaling_stat_value:float = 0.0;
 var stat_scale_value:float = 0.0;
@@ -75,6 +79,10 @@ func init(s:WeaponSettings, o:BattleBall) -> void:
 	rot_speed_bounce_boost = settings.base_rot_speed_bounce_boost;
 	projectile_self_hitstop = settings.projectile_self_hitstop;
 
+	lifesteal = settings.lifesteal;
+	lifesteal_tick = settings.lifesteal_tick;
+	lifesteal_ticked = lifesteal_tick;
+
 	stat_scale_value = settings.stat_scale_value;
 	scale_stat_multiplier = settings.scale_stat_multiplier;
 
@@ -123,8 +131,11 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	var d:int = get_custom_damage_value() if custom_damage else damage;
 
 	var kb_dist:float = knockback + other.linear_velocity.length() if !other.knockback_immune else 0.0;
-
 	var kb:Vector2 = (other.global_position - ball_owner.global_position).normalized() * kb_dist;
+	var h:float = hitstop;
+
+	if(lifesteal && lifesteal_active):
+		h *= 1.25;
 
 	if(projectile_hit):
 		kb = (hit_pos - ball_owner.global_position).normalized() * kb_dist;
@@ -132,14 +143,14 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	other.affect_health(-d, ball_owner);
 
 	if(!projectile_hit):
-		ball_owner.start_hitstop(0.01, hitstop);
+		ball_owner.start_hitstop(0.01, h);
 	else:
 		if(projectile_self_hitstop):
-			ball_owner.start_hitstop(0.0, hitstop);
+			ball_owner.start_hitstop(0.0, h);
 
 
-	other.start_hitstop(0.0, hitstop, kb);
-	other.hitflash(hitstop);
+	other.start_hitstop(0.0, h, kb);
+	other.hitflash(h);
 	other.hit_pos = hit_pos;
 
 	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit);
@@ -182,6 +193,7 @@ func init_scaling_stat():
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
+	if(lifesteal && !lifesteal_active): return;
 	pass;
 
 func shoot_projectile():
@@ -221,3 +233,20 @@ func reset():
 	owned_projectiles.clear();
 	init_scaling_stat();
 	pass;
+
+func update_lifesteal(d:int, target:int):
+	if(lifesteal_active):
+		ball_owner.affect_health(d, ball_owner);
+		EventBus.ball_lifesteal.emit(target, ball_owner.get_instance_id());
+		toggle_lifesteal_state(false);
+		lifesteal_ticked = lifesteal_tick;
+	else:
+		lifesteal_ticked -= 1;
+		if(lifesteal_ticked == 0):
+			toggle_lifesteal_state(true);
+
+func toggle_lifesteal_state(s:bool):
+	lifesteal_active = s;
+	sprite_2d.self_modulate = Color.WHITE if !s else Color.DARK_RED;
+	ball_owner.update_ui_stat(ball_owner.color if !s else Color.DARK_RED);
+	ball_owner.update_stat_text();

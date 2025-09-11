@@ -22,6 +22,8 @@ class_name WeaponSettings extends Resource
 @export var base_shoot_duration:float = 0.35;
 @export var base_rot_speed_bounce_boost:bool = false;
 @export var projectile_self_hitstop:bool = false;
+@export var lifesteal:bool = false;
+@export var lifesteal_tick:int = 1;
 
 @export var stat_scale_value:float = 1.0;
 @export var stat_scale_name:String = "NULL";
@@ -40,3 +42,4 @@ class_name WeaponSettings extends Resource
 @export var sfx_shoot:SFX;
 
 @export var scale_stat_multiplier:int = 1;
+@export var base_damage_multiplier:int = 1;

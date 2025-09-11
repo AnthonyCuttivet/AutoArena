@@ -237,3 +237,20 @@ static func weighted_pick(distribution: Array[MCBlockSettings]) -> MCBlockSettin
 		if r < 0:
 			return d
 	return distribution.back() # fallback
+
+static func set_particles_attractor_2d(particles: GPUParticles2D, target: Vector2, strength: float = 300.0, tangential: float = 100.0) -> void:
+	# Ensure the material is a ParticleProcessMaterial
+	var mat: ParticleProcessMaterial = particles.process_material
+	if mat == null or not (mat is ParticleProcessMaterial):
+		push_warning("Particles process_material is not a ParticleProcessMaterial.")
+		return
+
+	# Compute vector from particles to target (local space)
+	var to_target: Vector2 = target - particles.global_position
+	to_target = to_target.normalized()
+
+	# Apply radial acceleration toward target
+	mat.radial_accel_min = -strength  # Negative pulls inward
+	mat.radial_accel_max = -strength  # Negative pulls inward
+	mat.tangential_accel_min = tangential
+	mat.tangential_accel_max = tangential

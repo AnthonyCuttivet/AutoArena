@@ -182,6 +182,7 @@ func _ready() -> void:
 		patchnote_timer.autostart = true;
 
 	EventBus.ball_damaged.connect(on_ball_damaged);
+	EventBus.ball_lifesteal.connect(on_ball_lifesteal);
 	EventBus.ball_dead.connect(on_ball_dead);
 	EventBus.ball_bounce.connect(sfx_play_bounce);
 	EventBus.ball_weapon_clash.connect(on_ball_clash);
@@ -260,7 +261,9 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	for fx in just_spawned_fxs:
+		await get_tree().process_frame
 		fx.emitting = true;
+		fx.restart();
 		pass
 
 	just_spawned_fxs.clear();
@@ -507,14 +510,36 @@ func on_ball_damaged(id: int, amount:int, from:int):
 	fx.position = Vector2.ZERO;
 	fx.global_position = ball.global_position;
 	fx.modulate = ball.color;
-	fx.rotation = (ball.global_position - ball.hit_pos).normalized().angle();
+	fx.global_rotation = (ball.global_position - ball.hit_pos).normalized().angle();
 	fx.finished.connect(fx.queue_free);
 	fx.visible = true;
+	fx.emitting = false;
 	if(battleblock_mode):
 		fx.scale = Vector2.ONE * 0.5;
 	just_spawned_fxs.push_back(fx);
 
 	EventBus.camera_trigger_shake.emit( max(hit_shake + amount, 0, hit_max_shake));
+
+	pass ;
+
+func on_ball_lifesteal(target:int, origin:int):
+	if(!balls_ids.has(target) || !balls_ids.has(origin)):
+		return;
+
+	var fx: GPUParticles2D = fx_hit_prefab.instantiate();
+	var ball:BattleBall = get_ball_by_id(target);
+
+	get_tree().current_scene.add_child(fx);
+	fx.position = Vector2.ZERO;
+	fx.global_position = ball.global_position;
+	fx.modulate = Color.DARK_RED;
+	fx.global_rotation = (get_ball_by_id(origin).global_position - ball.global_position).normalized().angle();
+	fx.finished.connect(fx.queue_free);
+	fx.visible = true;
+	fx.emitting = false;
+	if(battleblock_mode):
+		fx.scale = Vector2.ONE * 0.5;
+	just_spawned_fxs.push_back(fx);
 
 	pass ;
 
@@ -527,12 +552,13 @@ func on_ball_clash(id:int, clash_pos:Vector2, silent:bool):
 	if(!silent):
 		var ball:BattleBall = get_ball_by_id(id);
 
-		for i in range(5):
+		for i in range(2):
 			var fx: GPUParticles2D = fx_clash.instantiate();
 			add_child(fx);
 			fx.global_position = clash_pos + Vector2.ONE * randf_range(-15.0, 15.0);
 			fx.modulate = ball.color;
 			fx.rotation = ball.weapon_slot.global_rotation;
+			fx.emitting = false;
 			fx.finished.connect(fx.queue_free);
 			if(battleblock_mode):
 				fx.scale = Vector2.ONE * 0.5;
@@ -554,6 +580,7 @@ func on_ball_dead(id: int):
 	for i in range(6):
 		var fx: GPUParticles2D = fx_death_prefab.instantiate();
 		add_child(fx);
+		fx.emitting = false;
 		fx.global_position = ball.global_position + Vector2.ONE * randf_range(-50.0, 50.0);
 		fx.modulate = ball.color;
 		just_spawned_fxs.push_back(fx);
@@ -738,13 +765,13 @@ func place_fighting_balls():
 			balls[i].respawn_pos = _2v_minecraft_spots[i];
 			balls[i].can_respawn = true;
 			balls[i].root.scale *= 0.45;
-			balls[i].nerf_max_speed(0.6);
+			balls[i].nerf_max_speed(0.3);
 			balls[i].gravity_strength *= 3.5;
 			balls[i].weapon.hitstop *= 0.2;
 			balls[i].drag_force *= 2.0;
 			balls[i].weapon.no_stat_scale = true;
 			balls[i].health = 1;
-			balls[i].weapon.damage = 1;
+			balls[i].weapon.damage = 1 * balls[i].weapon_settings.base_damage_multiplier;
 			balls[i].min_horizontal = 0;
 			balls[i].clash_invincibility *= 0.1;
 			balls[i].bounce_boost = 0.0;
@@ -904,6 +931,7 @@ func on_block_destroyed(_id:int, block:MCBattleBlock):
 	add_child(fx);
 	fx.global_position = block.global_position;
 	fx.texture = block.stx;
+	fx.emitting = false;
 	fx.scale = Vector2.ONE * (1.0 if !battleblock_mode else bb_scale);
 	fx.finished.connect(fx.queue_free);
 	just_spawned_fxs.push_back(fx);
