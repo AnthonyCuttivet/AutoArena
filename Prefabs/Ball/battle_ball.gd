@@ -108,6 +108,13 @@ var respawn_count:int = 0;
 var respawn_cd:float = 0.0;
 var silent_on_hit:bool = false;
 
+
+var use_cheat_weapon_rotation:bool = false;
+var cheat_weapon_rotation_angle: float = 20.0;
+
+var use_cheat_underdog_clash:bool = false;
+var cheat_underdog_clash_mult: float = 0.2;
+
 # var aled:bool = false;
 
 func ready() -> void:
@@ -195,6 +202,9 @@ func _physics_process(delta: float) -> void:
 		elif(!block_weapon_rot):
 			weapon_slot.rotate(deg_to_rad(360.0 * weapon.rotation_speed * weapon.rotation_direction * time_scale) * delta);
 
+		if(use_cheat_weapon_rotation && !align_weapon_to_velocity):
+			adjust_weapon_rotation(delta);
+
 	# max_speed += 2 * delta;
 
 func _process(delta: float) -> void:
@@ -238,6 +248,10 @@ func spawn_weapon() -> Weapon:
 	weapon_slot.rotation = deg_to_rad(base_weapon_rotation);
 	if(debug_mode): weapon_slot.global_rotation_degrees = 0.0;
 	return w;
+
+func init_health(v:float):
+	health = v;
+	base_health = v;
 
 func update_health_text():
 	if(hp_text == null): return;
@@ -292,6 +306,13 @@ func affect_health(v:int, from:BattleBall, silent:bool = false):
 	if(health <= 0 && !dead && !unkillable):
 		main.set_time_scale(0.1, 0.5);
 		death();
+
+func start_hitstop_clash(t:float, duration: float, knockback:Vector2, other:Node2D):
+	if(other is not BattleBall): return;
+	if(use_cheat_underdog_clash && is_underdog(other as BattleBall)):
+		knockback *= cheat_underdog_clash_mult;
+
+	start_hitstop(t,duration,knockback);
 
 func start_hitstop(t:float, duration: float, knockback:Vector2 = Vector2.ZERO, override:bool = true, absolute:bool = false):
 	#Add override bool
@@ -422,10 +443,12 @@ func death():
 			set_color_overlay(main.dead_ui_color, Color.WHITE);
 			bb_blocks_ui.modulate = main.dead_ui_color;
 			bb_mult_text.modulate = main.dead_ui_color;
+			if(weapon.battleblock_mode):
+				weapon.on_bb_death();
 
 	if(can_respawn):
 		var t:int = 1 + respawn_count;
-		respawn_cd = t;
+		respawn_cd = t / 2.0;
 		hp_text.text = str(t);
 		get_tree().create_timer(0.5).timeout.connect(func():visible = true);
 		get_tree().create_timer(1.0).timeout.connect(update_respawn_cd);
@@ -624,3 +647,37 @@ func update_respawn_cd():
 		return;
 
 	get_tree().create_timer(1.0).timeout.connect(update_respawn_cd);
+
+func is_underdog(other:BattleBall) -> bool:
+	return other.health > health;
+
+# ------- Cheats ---------
+
+func update_cheat_hitbox_size(damaged_by:BattleBall, max_bonus:float):
+	var w:float = 0.0;
+
+	if(is_underdog(damaged_by)):
+		w = 1.0 - (float(health) / float(base_health));
+
+	var b:float = lerp(1.0, 1.0 + max_bonus, w);
+
+	for h in weapon.hitboxes:
+		h.collider.scale = Vector2.ONE * b;
+
+	weapon.cheat_hitbox_scale_bonus = b;
+
+func adjust_weapon_rotation(delta: float) -> void:
+	if(weapon.hitboxes[0].collider.global_position.distance_to(target.global_position) > 200.0): return;
+	var dir: Vector2 = (target.global_position - global_position).normalized()
+	var weapon_dir: Vector2 = Vector2.RIGHT.rotated(weapon_slot.rotation)
+
+	# Angle difference in radians
+	var angle_diff: float = dir.angle_to(weapon_dir)
+
+	if(sign(angle_diff) != sign(weapon.rotation_direction)): return;
+
+	# Only bias if close to target
+	if abs(angle_diff) < deg_to_rad(cheat_weapon_rotation_angle):
+		# Small bias rotation, scaled by delta
+		var bias_speed: float = 5.0  # radians per second
+		weapon_slot.rotation += sign(angle_diff) * bias_speed * delta

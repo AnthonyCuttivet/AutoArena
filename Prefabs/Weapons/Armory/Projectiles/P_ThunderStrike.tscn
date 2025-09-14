@@ -38,12 +38,15 @@ shader_parameter/number_lightning = 1
 shader_parameter/speed = 0.076
 shader_parameter/position = 0.5
 
-[node name="ProjectileThunderStrike" type="Node2D" node_paths=PackedStringArray("hitbox")]
+[node name="ProjectileThunderStrike" type="Node2D" node_paths=PackedStringArray("thunderstrike_hitbox", "thunderstrike_line", "hitbox", "sprite_2d")]
 script = ExtResource("1_imm4n")
+thunderstrike_hitbox = NodePath("Sprite2D/ProjectileHitbox/CollisionShape2D")
+thunderstrike_line = NodePath("ThunderStrikeLine")
 pierce_count = 999
 absolute = true
 hitbox = NodePath("Sprite2D/ProjectileHitbox")
 destroy_on_hit_delay = 0.25
+sprite_2d = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.95)

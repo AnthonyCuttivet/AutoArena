@@ -18,7 +18,7 @@ class_name MCBattleBlock extends RigidBody2D
 var current_value:int = 0;
 var block_index:int = 0;
 var team:int = 0;
-
+var dead:bool = false;
 
 func _ready() -> void:
 	hurtbox.ball_owner = BattleBall.new();
@@ -37,9 +37,8 @@ func _ready() -> void:
 	sprite.texture = stx;
 
 func on_impact(ball:BattleBall, amount:int):
-
+	if(dead): return;
 	current_value -= amount;
-	EventBus.ball_duel_scale.emit(ball.get_instance_id());
 
 	ball.weapon.on_weapon_clash(self, self.global_position, false, true);
 
@@ -55,7 +54,8 @@ func block_death(ball:BattleBall):
 	if(parent != null):
 		parent.on_block_destroyed(ball, self);
 
-	# get_tree().get_current_scene().global_hitstop(0.01, 0.1);
+	dead = true;
+
 	EventBus.camera_trigger_shake.emit(block_death_shake * block_index);
 	AudioManager.play_sfx(sfx_break, "SFX");
 	EventBus.block_destroyed.emit(ball.get_instance_id(), self);
@@ -64,13 +64,6 @@ func block_death(ball:BattleBall):
 func update_value_text():
 	value.format([Utils.format_number_with_dots(current_value)]);
 	sprite.self_modulate.a = lerp(0.5, 1.0, clamp(current_value / float(block_value), 0.0, 1.0));
-
-# func update_block_color(ball:BattleBall):
-# 	polygon_color.color = ball.color;
-# 	if(current_value < ball.scaling_damage):
-# 		polygon_color.color.a = 0.9;
-# 	else:
-# 		polygon_color.color.a = 1.0 - (current_value/float(block_value));
 
 func on_damaged_received(id:int, _amount:int, _from:int):
 	if(id != hurtbox.ball_owner.get_instance_id()): return;

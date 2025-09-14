@@ -7,9 +7,10 @@
 radius = 6.0
 height = 80.0
 
-[node name="ProjectileArrow" type="Node2D" node_paths=PackedStringArray("hitbox")]
+[node name="ProjectileArrow" type="Node2D" node_paths=PackedStringArray("hitbox", "sprite_2d")]
 script = ExtResource("1_tc23m")
 hitbox = NodePath("Sprite2D/ProjectileHitbox")
+sprite_2d = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

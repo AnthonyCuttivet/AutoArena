@@ -912,10 +912,11 @@ time_attack_leaderboards = Dictionary[String, ExtResource("2_poh84")]({
 })
 time_attack_ranking_duration = 10.0
 _2v2_colors = Array[Color]([Color(0.5, 0.666667, 1, 1), Color(0.5, 0.583333, 1, 1), Color(1, 0.5, 0.5, 1), Color(1, 0.583333, 0.5, 1)])
+battleblock_mode = true
 battleblock_controller = NodePath("BlockBreaker/MinecraftDig")
 forced_start_dir = Vector2(0, -1)
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Fighters/Gems"), NodePath("Balls/Fighters/Perfect"), NodePath("Balls/Fighters/Unarmed"), NodePath("Balls/Fighters/Sandevistan")]
+balls = [NodePath("Balls/Fighters/Katana"), NodePath("Balls/Fighters/Bow")]
 fx_hit_prefab = ExtResource("2_8wnqf")
 fx_death_prefab = ExtResource("3_uot50")
 fx_clash = ExtResource("4_0o7lx")
@@ -2452,7 +2453,6 @@ gravity_strength = 2000.0
 drag_force = 0.05
 bounce_boost = 0.0
 relative_bounce_boost = 0.4
-acceleration = 0.5
 
 [node name="Sandevistan" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2246, 1022.99)

@@ -21,6 +21,9 @@ var cumulative_layers:Array[int] = [];
 var blocks:Dictionary[Vector2i, MCBattleBlock] = {};
 var active_tween:Tween = null;
 
+func _ready() -> void:
+	EventBus.update_bb_blocks_ui.connect(update_bb_blocks_ui);
+
 func compute_cumulative_layers():
 	cumulative_layers.clear();
 	var sum:int = ground_depth;

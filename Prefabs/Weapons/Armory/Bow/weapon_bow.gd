@@ -10,6 +10,7 @@ func init_scaling_stat():
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
 	projectiles += stat_scale_value;
+	shoot_duration += 0.002;
 	init_scaling_stat();
 	add_remaining_shoot();
 

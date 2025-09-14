@@ -19,7 +19,7 @@ height = 96.0
 [sub_resource type="Gradient" id="Gradient_t3p6s"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
-[node name="ProjectilePlume" type="Node2D" node_paths=PackedStringArray("collision_shape_recall", "collision_shape_shoot", "plume_sprite_2D", "trail", "hitbox")]
+[node name="ProjectilePlume" type="Node2D" node_paths=PackedStringArray("collision_shape_recall", "collision_shape_shoot", "plume_sprite_2D", "trail", "hitbox", "sprite_2d")]
 script = ExtResource("1_o1vwt")
 acceleration_curve = SubResource("Curve_o1vwt")
 rot_lerp_speed = 10.0
@@ -29,6 +29,7 @@ plume_sprite_2D = NodePath("Sprite2D")
 trail = NodePath("Trail")
 pierce_count = 999
 hitbox = NodePath("Sprite2D/ProjectileHitbox")
+sprite_2d = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

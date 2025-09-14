@@ -20,23 +20,29 @@ func scale_stat(force:bool = false):
 func on_weapon_hit_received(id:int, to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 
+	if(battleblock_mode && ball_owner.main.get_ball_by_id(to) == null):
+		return;
+
 	if(lifesteal_active):
 		apply_lifesteal(damage, to);
+		scale_stat();
 
 	update_lifesteal_status();
 	update_details();
 
 	if(lifesteal_active):
 		AudioManager.play_sfx(sfx_lifesteal_state);
-		scale_stat();
 
 	if(lifesteal_ticked == lifesteal_tick):
 		AudioManager.play_sfx(sfx_lifesteal_hit);
 		get_tree().create_timer(0.3).timeout.connect(func(): AudioManager.play_sfx(sfx_lifesteal_heal));
 
-
-
 func update_details():
 	var s:String = "Heal + Scale in "+ str(lifesteal_ticked + 1) +" hits" if lifesteal_ticked > 0 else "[wave amp=25.0 freq=4 connected=1]Heal + Scale next hit[/wave]";
 	settings.details = s;
 	ball_owner.update_ui_details(ball_owner.color if lifesteal_ticked > 0 else Color.DARK_RED, true);
+
+func set_battleblock_modifiers():
+	super.set_battleblock_modifiers();
+
+	lifesteal = false;

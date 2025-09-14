@@ -40,7 +40,9 @@ func init_scaling_stat():
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
-	# rotation_speed += stat_scale_value;
+	if(battleblock_mode):
+		damage = 1 + Utils.get_claimed_blocks_amount(ball_owner);
+
 	init_scaling_stat();
 
 # func get_custom_stat_format() -> String:
@@ -73,7 +75,7 @@ func on_bubble_popped(is_hit:bool):
 
 	if(popped_bubbles_count == 3):
 		# print("Popped Hits : " + str(popped_bubbles_states[1]) + " // Clashes : " + str(popped_bubbles_states[0]));
-		if(popped_bubbles_states[1] >= 2):
+		if(popped_bubbles_states[1] >= 2 && !battleblock_mode):
 			damage += hits_dmg_boost;
 
 		scale_stat();
@@ -93,3 +95,11 @@ func reset():
 	restore_bubbles();
 	damage = 1;
 	super.reset();
+
+func set_battleblock_modifiers():
+	super.set_battleblock_modifiers();
+	ball_owner.gravity_strength /= 3.5;
+	ball_owner.relative_bounce_boost = 0.3;
+	max_rotating_dist *= 2;
+
+	settings.details = "";

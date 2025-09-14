@@ -111,3 +111,10 @@ func get_name_and_level_str() -> String:
 	var amp:float = dice_index * 10.0;
 	var c:String = levels_colors[dice_index].to_html();
 	return " [color=" + ball_owner.color.to_html() + "]" + ball_owner.weapon_settings.name + "[/color] [wave amp=" + str(amp) + " freq=" + str(amp / 2.0) + "][color=" + c + "]LV." + str(dice_index) + "[/color][/wave] ";
+
+func set_battleblock_modifiers():
+	super.set_battleblock_modifiers();
+
+	ball_owner.gravity_strength /= 3.5;
+	ball_owner.relative_bounce_boost = 0.3;
+	attack_speed /= 10.0;

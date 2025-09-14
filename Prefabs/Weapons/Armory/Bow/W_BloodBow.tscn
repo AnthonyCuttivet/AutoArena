@@ -16,7 +16,7 @@ stream_0/stream = ExtResource("2_urbpa")
 [sub_resource type="Resource" id="Resource_elpvq"]
 script = ExtResource("2_lsc2q")
 audio_stream = SubResource("AudioStreamRandomizer_rf0d3")
-volume = -26.0
+volume = -28.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_q46uq"]
@@ -27,7 +27,7 @@ stream_0/stream = ExtResource("4_bd762")
 [sub_resource type="Resource" id="Resource_prtya"]
 script = ExtResource("2_lsc2q")
 audio_stream = SubResource("AudioStreamRandomizer_q46uq")
-volume = -25.0
+volume = -27.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_x00a6"]
@@ -38,7 +38,7 @@ stream_0/stream = ExtResource("5_4cts6")
 [sub_resource type="Resource" id="Resource_rf0d3"]
 script = ExtResource("2_lsc2q")
 audio_stream = SubResource("AudioStreamRandomizer_x00a6")
-volume = -29.0
+volume = -31.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3w0lg"]

@@ -44,13 +44,24 @@ class_name Main extends Node2D
 @export var bgm:AudioStream;
 @export var bgm_volume:float = -40.0;
 @export var no_bgm:bool = false;
+@export var startup_sfx:AudioStream;
+@export var startup_sfx_volume:float = -40.0;
+@export var no_startup_sfx:bool = false;
 
 @export var obs_delay: float = 1.5;
 
 @export var earclacks_mode:bool = false;
+@export var rainbow_borders:bool = false;
 @export var _1v1_hp:int = 50;
 @export var _1v2_hp:int = 75;
 @export var attraction_point:Node2D;
+
+@export var use_cheat_hitbox:bool = false;
+@export var cheat_hitbox_max_hitbox_bonus: float = 0.2;
+@export var use_cheat_weapon_rotation:bool = false;
+@export var cheat_weapon_rotation_angle: float = 20.0;
+@export var use_cheat_underdog_clash:bool = false;
+@export var cheat_underdog_clash_mult: float = 0.2;
 
 # -------------- UI Single Team Player ----------------
 
@@ -158,11 +169,13 @@ var patchnote_timer:Timer = null;
 
 var _1v1_spots:Array[Vector2];
 var _1v2_spots:Array[Vector2];
+var _3v_ffa_spots:Array[Vector2];
 var _2v2_spots:Array[Vector2];
 var _4v_ffa_spots:Array[Vector2];
 var _2v_minecraft_spots:Array[Vector2];
 
-var just_spawned_fxs:Array[GPUParticles2D];
+var just_spawned_fxs:Dictionary[GPUParticles2D, int];
+var fxs_to_remove:Array[GPUParticles2D];
 
 var time_attack_elapsed:float = 0.0;
 
@@ -173,6 +186,7 @@ var damage_dealt:Dictionary[int,int];
 var bo3_score:Dictionary[int, int];
 
 var bgm_player:NodePath;
+var startup_player:NodePath;
 
 func _ready() -> void:
 	if(devmode):
@@ -218,10 +232,10 @@ func _ready() -> void:
 	for i in range(balls.size()):
 		balls_ids[balls[i].get_instance_id()] = i;
 		teams_alive_members[balls[i].team] += 1;
-		if(i==0 && balls.size() > 1):
-			balls[0].target = balls[1];
-		else:
-			balls[i].target = balls[0];
+		# if(i==0 && balls.size() > 1):
+		# 	balls[0].target = balls[1];
+		# else:
+		# 	balls[i].target = balls[0];
 
 		init_damage_dealt(balls[i].get_instance_id());
 
@@ -265,19 +279,22 @@ func _ready() -> void:
 	if(!patchnote_mode && !new_challenger_mode && !tournament_mode):
 		t_start_game.timeout.connect(start_game);
 
-func _physics_process(_delta: float) -> void:
-	for fx in just_spawned_fxs:
-		await get_tree().process_frame
-		fx.emitting = true;
-		fx.restart();
-		pass
-
-	just_spawned_fxs.clear();
-
 func _process(delta: float) -> void:
 	if(process_timer && time_attack_mode):
 		time_attack_elapsed += delta;
 		update_time_attack_timer();
+
+	for fx in just_spawned_fxs.keys():
+		if just_spawned_fxs[fx] >= 1:
+			fx.emitting = true
+			fx.restart()
+			fxs_to_remove.append(fx)
+		else:
+			just_spawned_fxs[fx] += 1
+
+	for fx in fxs_to_remove:
+		just_spawned_fxs.erase(fx)
+		fxs_to_remove.erase(fx);
 
 func set_earclacks_mode():
 	bg.visible = false;
@@ -286,17 +303,23 @@ func set_earclacks_mode():
 	version.self_modulate = Color.WEB_GRAY;
 	# arena_bg.color = Color.GHOST_WHITE;
 
-	walltop.material = null;
-	walltop.color = Color.BLACK;
+	if(!rainbow_borders):
+		walltop.material = null;
+		walltop.color = Color.BLACK;
 
-	wallbot.material = null;
-	wallbot.color = Color.BLACK;
+		wallbot.material = null;
+		wallbot.color = Color.BLACK;
 
-	wallleft.material = null;
-	wallleft.color = Color.BLACK;
+		wallleft.material = null;
+		wallleft.color = Color.BLACK;
 
-	wallright.material = null;
-	wallright.color = Color.BLACK;
+		wallright.material = null;
+		wallright.color = Color.BLACK;
+
+func set_balatro_mode():
+	bg.visible = true;
+	author.self_modulate = Color.GHOST_WHITE;
+	version.self_modulate = Color.GHOST_WHITE;
 
 func show_next_patchnote_page():
 
@@ -325,8 +348,8 @@ func start_game():
 		else:
 			play_announcer();
 
-	if(!no_bgm):
-		bgm_player = AudioManager.play_sound(bgm, bgm_volume, "BGM");
+	if(!no_startup_sfx):
+		startup_player = AudioManager.play_sound(startup_sfx, startup_sfx_volume, "BGM");
 
 	if(battleblock_mode):
 		get_tree().create_timer(battleblock_start_delay).timeout.connect(start_balls);
@@ -344,8 +367,12 @@ func start_game():
 
 func play_announcer():
 	AudioManager.play_sfx(ve_announcer, "321GO");
+
 	if(!no_bgm):
-		AudioManager.tween_volume(bgm_player, -46.0, 1.0);
+		get_tree().create_timer(ve_announcer.audio_stream.get_length()).timeout.connect(
+			func():
+				bgm_player = AudioManager.play_sound(bgm, bgm_volume, "BGM");
+		);
 
 func start_balls():
 	var d:Vector2 = Vector2.ONE.rotated(deg_to_rad(randf_range(-50.0,-160.0)));
@@ -533,9 +560,12 @@ func on_ball_damaged(id: int, amount:int, from:int):
 	fx.emitting = false;
 	if(battleblock_mode):
 		fx.scale = Vector2.ONE * 0.5;
-	just_spawned_fxs.push_back(fx);
+	just_spawned_fxs[fx] = 0;
 
 	EventBus.camera_trigger_shake.emit( max(hit_shake + amount, 0, hit_max_shake));
+
+	if(use_cheat_hitbox):
+		ball.update_cheat_hitbox_size(get_ball_by_id(from), cheat_hitbox_max_hitbox_bonus);
 
 	pass ;
 
@@ -556,7 +586,7 @@ func on_ball_lifesteal(target:int, origin:int):
 	fx.emitting = false;
 	if(battleblock_mode):
 		fx.scale = Vector2.ONE * 0.5;
-	just_spawned_fxs.push_back(fx);
+	just_spawned_fxs[fx] = 0;
 
 	pass ;
 
@@ -579,7 +609,7 @@ func on_ball_clash(id:int, clash_pos:Vector2, silent:bool):
 			fx.finished.connect(fx.queue_free);
 			if(battleblock_mode):
 				fx.scale = Vector2.ONE * 0.5;
-			just_spawned_fxs.push_back(fx);
+			just_spawned_fxs[fx] = 0;
 			pass ;
 
 func on_ball_dead(id: int):
@@ -590,7 +620,7 @@ func on_ball_dead(id: int):
 	global_hitstop(0.01,0.6);
 
 	AudioManager.play_sfx(sfx_death, "SFX", 1.0, 0.0, 0.0, true);
-	EventBus.camera_trigger_shake.emit(death_shake);
+	EventBus.camera_trigger_shake.emit(death_shake if !battleblock_mode else death_shake / 2.0);
 
 	var ball:BattleBall = get_ball_by_id(id);
 
@@ -600,7 +630,7 @@ func on_ball_dead(id: int):
 		fx.emitting = false;
 		fx.global_position = ball.global_position + Vector2.ONE * randf_range(-50.0, 50.0);
 		fx.modulate = ball.color;
-		just_spawned_fxs.push_back(fx);
+		just_spawned_fxs[fx] = 0;
 
 
 	if(ball.can_respawn):
@@ -667,6 +697,12 @@ func setup_fight():
 		arena_center.global_position + Vector2(250.0, 250.0)
 	];
 
+	_3v_ffa_spots = [
+		arena_center.global_position + Vector2(250.0, 0.0),
+		arena_center.global_position + Vector2(-250, 350.0),
+		arena_center.global_position + Vector2(-250, -350.0)
+	];
+
 	_2v2_spots = [
 		arena_center.global_position + Vector2(250.0, -250.0),
 		arena_center.global_position + Vector2(-250.0, -250.0),
@@ -720,32 +756,52 @@ func place_fighting_balls():
 		balls[0].global_position = _1v1_spots[0];
 		balls[1].global_position = _1v1_spots[1];
 
-		balls[0].health = _1v1_hp;
-		balls[1].health = _1v1_hp;
+		balls[0].init_health(_1v1_hp);
+		balls[1].init_health(_1v1_hp);
 
 		balls[0].team = 0
 		balls[1].team = 1;
+
+		balls[0].target = balls[1];
+		balls[1].target = balls[0];
+
+		apply_cheats(balls[0]);
+		apply_cheats(balls[1]);
 
 	elif(balls.size() == 3):
-		balls[0].global_position = _1v2_spots[0];
-		balls[1].global_position = _1v2_spots[1];
-		balls[2].global_position = _1v2_spots[2];
+		if(free_for_all):
+			balls[0].global_position = _1v2_spots[0];
+			balls[1].global_position = _1v2_spots[1];
+			balls[2].global_position = _1v2_spots[2];
 
-		balls[1].health = _1v2_hp;
-		balls[2].health = _1v2_hp;
+			balls[0].init_health(_1v1_hp);
+			balls[1].init_health(_1v1_hp);
+			balls[2].init_health(_1v1_hp);
 
-		balls[0].team = 0
-		balls[1].team = 1;
-		balls[2].team = 1;
+			balls[0].team = 0
+			balls[1].team = 1;
+			balls[2].team = 2;
 
-		balls[1].max_speed *= 0.7;
-		balls[2].max_speed *= 0.7;
+		else:
+			balls[0].global_position = _1v2_spots[0];
+			balls[1].global_position = _1v2_spots[1];
+			balls[2].global_position = _1v2_spots[2];
 
-		balls[1].gravity_strength *= 0.7;
-		balls[2].gravity_strength *= 0.7;
+			balls[1].init_health(_1v2_hp);
+			balls[2].init_health(_1v2_hp);
 
-		balls[1].root.scale *= 0.9;
-		balls[2].root.scale *= 0.9;
+			balls[0].team = 0
+			balls[1].team = 1;
+			balls[2].team = 1;
+
+			balls[1].max_speed *= 0.7;
+			balls[2].max_speed *= 0.7;
+
+			balls[1].gravity_strength *= 0.7;
+			balls[2].gravity_strength *= 0.7;
+
+			balls[1].root.scale *= 0.9;
+			balls[2].root.scale *= 0.9;
 
 	elif(balls.size() == 4):
 		balls[0].global_position = _2v2_spots[0] if !free_for_all else _4v_ffa_spots[0];
@@ -753,20 +809,20 @@ func place_fighting_balls():
 		balls[2].global_position = _2v2_spots[2] if !free_for_all else _4v_ffa_spots[2];
 		balls[3].global_position = _2v2_spots[3] if !free_for_all else _4v_ffa_spots[3];
 
-		balls[0].health = _1v1_hp;
-		balls[1].health = _1v1_hp;
-		balls[2].health = _1v1_hp;
-		balls[3].health = _1v1_hp;
+		balls[0].init_health(_1v1_hp);
+		balls[1].init_health(_1v1_hp);
+		balls[2].init_health(_1v1_hp);
+		balls[3].init_health(_1v1_hp);
 
 		balls[0].team = 0;
 		balls[1].team = 0 if !free_for_all else 1;
 		balls[2].team = 1 if !free_for_all else 2;
 		balls[3].team = 1 if !free_for_all else 3;
 
-		balls[0].nerf_max_speed(0.65);
-		balls[1].nerf_max_speed(0.65);
-		balls[2].nerf_max_speed(0.65);
-		balls[3].nerf_max_speed(0.65);
+		balls[0].nerf_max_speed(0.75);
+		balls[1].nerf_max_speed(0.75);
+		balls[2].nerf_max_speed(0.75);
+		balls[3].nerf_max_speed(0.75);
 
 		balls[0].root.scale *= 0.75;
 		balls[1].root.scale *= 0.75;
@@ -780,22 +836,7 @@ func place_fighting_balls():
 		for i in balls.size():
 			balls[i].global_position = _2v_minecraft_spots[i];
 			balls[i].respawn_pos = _2v_minecraft_spots[i];
-			balls[i].can_respawn = true;
-			balls[i].root.scale *= 0.45;
-			balls[i].nerf_max_speed(0.3);
-			balls[i].gravity_strength *= 3.5;
-			balls[i].weapon.hitstop *= 0.2;
-			balls[i].drag_force *= 2.0;
-			balls[i].weapon.no_stat_scale = true;
-			balls[i].health = 1;
-			balls[i].weapon.damage = 1 * balls[i].weapon_settings.base_damage_multiplier;
-			balls[i].min_horizontal = 0;
-			balls[i].clash_invincibility *= 0.1;
-			balls[i].bounce_boost = 0.0;
-			balls[i].relative_bounce_boost = 0.0;
-
-			for h in balls[i].weapon.hitboxes:
-				h.weapon_clash_cd = 0.0;
+			balls[i].weapon.set_battleblock_modifiers();
 
 	for ball in balls:
 		ball.dead = false;
@@ -938,11 +979,6 @@ func show_tournament_match_result(w:int):
 	t_stop_record.timeout.connect(stop_record);
 
 func on_block_destroyed(_id:int, block:MCBattleBlock):
-	# if(block.current_value <= 0):
-	# 	print();
-	# else:
-	# 	print();
-
 	var bb_scale:float = 0.3 if block.current_value <= 0 else 0.15;
 	var fx: GPUParticles2D = fx_block_destroyed.instantiate();
 	add_child(fx);
@@ -951,7 +987,7 @@ func on_block_destroyed(_id:int, block:MCBattleBlock):
 	fx.emitting = false;
 	fx.scale = Vector2.ONE * (1.0 if !battleblock_mode else bb_scale);
 	fx.finished.connect(fx.queue_free);
-	just_spawned_fxs.push_back(fx);
+	just_spawned_fxs[fx] = 0;
 
 func get_opponent(id:int) -> BattleBall:
 	if(balls.size() != 2):
@@ -962,3 +998,12 @@ func get_opponent(id:int) -> BattleBall:
 			return b;
 
 	return null;
+
+func apply_cheats(ball:BattleBall):
+	if(use_cheat_weapon_rotation):
+		ball.use_cheat_weapon_rotation = true;
+		ball.cheat_weapon_rotation_angle = cheat_weapon_rotation_angle;
+
+	if(use_cheat_underdog_clash):
+		ball.use_cheat_underdog_clash = true;
+		ball.cheat_underdog_clash_mult = cheat_underdog_clash_mult;

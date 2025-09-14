@@ -73,7 +73,10 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 
 	other.affect_health(-current_damage, ball_owner);
 
-	ball_owner.start_hitstop(0.01, h, (ball_owner.global_position - other.global_position).normalized() * 800.0);
+	if(battleblock_mode):
+		ball_owner.start_hitstop(0.01, h);
+	else:
+		ball_owner.start_hitstop(0.01, h, (ball_owner.global_position - other.global_position).normalized() * 800.0);
 
 	other.start_hitstop(0.0, h, kb);
 	other.hitflash(hitstop);
@@ -104,7 +107,7 @@ func on_ball_bounced_other_ball(id:int, other:int):
 
 	pass;
 
-func on_ball_bounced_battleblock(id:int, block:BattleBlock):
+func on_ball_bounced_battleblock(id:int, block:MCBattleBlock):
 	if(!can_hit): return;
 	if(id != ball_owner.get_instance_id()): return;
 
@@ -122,3 +125,9 @@ func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
 
 func get_custom_stat_format() -> String:
 	return str(current_damage) + " / " + Utils.format_float(fdamage,1);
+
+func set_battleblock_modifiers():
+	super.set_battleblock_modifiers();
+
+	ball_owner.gravity_strength /= 3.5;
+	ball_owner.relative_bounce_boost = 0.3;

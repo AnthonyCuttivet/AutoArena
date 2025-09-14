@@ -254,3 +254,10 @@ static func set_particles_attractor_2d(particles: GPUParticles2D, target: Vector
 	mat.radial_accel_max = -strength  # Negative pulls inward
 	mat.tangential_accel_min = tangential
 	mat.tangential_accel_max = tangential
+
+static func get_claimed_blocks_amount(ball:BattleBall) -> int:
+	var r:int = 0;
+	for key in ball.claimed_blocks:
+		if(ball.claimed_blocks[key]): r += 1;
+
+	return r;

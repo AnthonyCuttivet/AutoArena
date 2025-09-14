@@ -13,11 +13,12 @@ shader_parameter/sensitivity = 0.0
 radius = 18.0
 height = 66.0
 
-[node name="ProjectileTitanShard" type="Node2D" node_paths=PackedStringArray("hitbox")]
+[node name="ProjectileTitanShard" type="Node2D" node_paths=PackedStringArray("hitbox", "sprite_2d")]
 script = ExtResource("1_nfxy2")
 pierce_count = 999
 absolute = true
 hitbox = NodePath("Sprite2D/ProjectileHitbox")
+sprite_2d = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

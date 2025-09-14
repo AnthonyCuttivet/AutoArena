@@ -44,6 +44,10 @@ var owned_projectiles:Array[Projectile] = [];
 var no_stat_scale:bool = false;
 var scale_stat_multiplier:int = 1;
 
+var battleblock_mode:bool = false;
+
+var cheat_hitbox_scale_bonus:float = 0.0;
+
 func init(s:WeaponSettings, o:BattleBall) -> void:
 
 	ball_owner = o;
@@ -143,7 +147,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	other.affect_health(-d, ball_owner);
 
 	if(!projectile_hit):
-		ball_owner.start_hitstop(0.01, h);
+		ball_owner.start_hitstop(0.0, h);
 	else:
 		if(projectile_self_hitstop):
 			ball_owner.start_hitstop(0.0, h);
@@ -170,7 +174,7 @@ func on_weapon_clash(other:Node2D, clash_pos:Vector2, projectile_hit:bool = fals
 		kb = (ball_owner.global_position - other.global_position).normalized() * ball_owner.linear_velocity.length() * 1.5;
 		reverse_rotation();
 
-	ball_owner.start_hitstop(0.0, 0.15, kb);
+	ball_owner.start_hitstop_clash(0.0, 0.15, kb, other);
 
 	EventBus.ball_weapon_clash.emit(ball_owner.get_instance_id(), clash_pos, silent);
 	pass;
@@ -206,6 +210,7 @@ func shoot_projectile():
 	p.global_position = sprite_2d.global_position;
 	p.rotation = ball_owner.weapon_slot.global_rotation;
 	p.scale = ball_owner.weapon_slot.scale * ball_owner.root.scale * projectile_scale;
+	p.hitbox.scale *= 1.0 + cheat_hitbox_scale_bonus;
 	p.init(ball_owner, projectile_speed, 0, 0);
 	p.weapon_owner = self;
 
@@ -255,3 +260,25 @@ func toggle_lifesteal_state(s:bool):
 	sprite_2d.self_modulate = Color.WHITE if !s else Color.DARK_RED;
 	ball_owner.update_ui_stat(ball_owner.color if !s else Color.DARK_RED);
 	ball_owner.update_stat_text();
+
+func set_battleblock_modifiers():
+	ball_owner.can_respawn = true;
+	ball_owner.root.scale *= 0.45;
+	ball_owner.nerf_max_speed(0.3);
+	ball_owner.gravity_strength *= 3.5;
+	ball_owner.weapon.hitstop *= 0.2;
+	ball_owner.drag_force *= 2.0;
+	ball_owner.weapon.no_stat_scale = true;
+	ball_owner.health = 1;
+	ball_owner.weapon.damage = 1 * ball_owner.weapon_settings.base_damage_multiplier;
+	ball_owner.min_horizontal = 0;
+	ball_owner.clash_invincibility *= 0.1;
+	ball_owner.bounce_boost = 0.0;
+	ball_owner.relative_bounce_boost = 0.0;
+	ball_owner.weapon.battleblock_mode = true;
+
+	for h in ball_owner.weapon.hitboxes:
+		h.weapon_clash_cd = 0.0;
+
+func on_bb_death():
+	pass;

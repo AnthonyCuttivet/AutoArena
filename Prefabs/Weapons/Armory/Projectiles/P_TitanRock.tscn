@@ -21,10 +21,11 @@ bounce = 1.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_syxqy"]
 size = Vector2(56, 56)
 
-[node name="ProjectileTitanRock" type="Node2D" node_paths=PackedStringArray("wall", "hitbox")]
+[node name="ProjectileTitanRock" type="Node2D" node_paths=PackedStringArray("wall", "hitbox", "sprite_2d")]
 script = ExtResource("1_vkdj5")
 wall = NodePath("Sprite2D/Wall")
 hitbox = NodePath("Sprite2D/WeaponHitbox")
+sprite_2d = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

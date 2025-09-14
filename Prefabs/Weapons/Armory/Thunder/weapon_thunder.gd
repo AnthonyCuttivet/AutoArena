@@ -81,7 +81,7 @@ func add_thunderstrike(i0:int, i1:int):
 	var strike:ProjectileThunderStrike = Utils.spawn_projectile(thunderstrike_prefab, ball_owner, pos, rot, self);
 	strike.weapon_owner = self;
 
-	strike.thunderstrike_hitbox.shape.height = p0.distance_to(p1) / 2.0;
+	strike.thunderstrike_hitbox.shape.height = p0.distance_to(p1);
 	strike.thunderstrike_hitbox.shape.radius = 2.5;
 
 	strike.thunderstrike_line.set_point_position(0, strike.thunderstrike_line.to_local(p0));
@@ -112,3 +112,12 @@ func clear_thunderstrike(t, s):
 		if(thunderstrikes[i] != null):
 			thunderstrikes[i].destroy(0);
 		thunderstrikes.erase(i);
+
+func set_battleblock_modifiers():
+	super.set_battleblock_modifiers();
+
+	projectile_speed = 300.0;
+	damage = 7;
+	rotation_speed *= 1.5;
+	ball_owner.gravity_strength /= 3.5;
+	ball_owner.relative_bounce_boost = 0.3;

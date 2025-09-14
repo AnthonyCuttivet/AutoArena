@@ -15,15 +15,27 @@ func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
 	if(lifesteal && !lifesteal_active): return;
 	damage += stat_scale_value;
+	AudioManager.play_sfx(sfx_fingersnap);
 	init_scaling_stat();
 
 func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	scale_stat();
-	AudioManager.play_sfx(sfx_fingersnap);
 
 func on_ball_damaged_received(id:int, _amount:int, _from:int):
 	if(id != ball_owner.get_instance_id()): return;
 	damage = 1;
 	init_scaling_stat();
 	AudioManager.play_sfx(sfx_tsk);
+
+	if(battleblock_mode):
+		for key in ball_owner.claimed_blocks.keys():
+			ball_owner.claimed_blocks[key] = false;
+
+		EventBus.update_bb_blocks_ui.emit(ball_owner);
+
+func set_battleblock_modifiers():
+	super.set_battleblock_modifiers();
+	scaling_stat_value = 2.0;
+	ball_owner.gravity_strength /= 3.5;
+	ball_owner.relative_bounce_boost = 0.3;

@@ -73,7 +73,7 @@ func on_weapon_clash(other:Node2D, clash_pos:Vector2, projectile_hit:bool = fals
 	# 	kb = (ball_owner.global_position - other.global_position).normalized() * ball_owner.linear_velocity.length() * 1.5;
 	# 	reverse_rotation();
 
-	ball_owner.start_hitstop(0.0, 0.15, kb);
+	ball_owner.start_hitstop_clash(0.0, 0.15, kb, other);
 
 	EventBus.ball_weapon_clash.emit(ball_owner.get_instance_id(), clash_pos, silent);
 	pass;

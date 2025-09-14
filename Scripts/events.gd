@@ -27,10 +27,12 @@ signal ball_weapon_clash(id:int, clash_pos:Vector2, silent:bool);
 signal ball_update_stat(id:int);
 signal ball_bounce(id:int);
 signal ball_bounce_other_ball(id:int, other:int);
-signal ball_bounce_battleblock(id:int, block:BattleBlock);
+signal ball_bounce_battleblock(id:int, block:MCBattleBlock);
 signal ball_shoot(id:int, projectile: Projectile);
 
 signal block_hit(id:int, block:BattleBlock);
 signal block_destroyed(id:int, block:BattleBlock);
 signal ball_duel_scale(id:int);
 signal ball_duel_winner(id:int);
+
+signal update_bb_blocks_ui(ball:BattleBall);

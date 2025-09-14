@@ -7,11 +7,12 @@
 radius = 12.0
 height = 49.14
 
-[node name="ProjectilePoison" type="Node2D" node_paths=PackedStringArray("hitbox")]
+[node name="ProjectilePoison" type="Node2D" node_paths=PackedStringArray("hitbox", "sprite_2d")]
 script = ExtResource("1_x438k")
 speed = 750.0
 bounce_count = 1
 hitbox = NodePath("Sprite2D/ProjectileHitbox")
+sprite_2d = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

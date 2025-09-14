@@ -7,10 +7,11 @@
 radius = 12.0
 height = 49.14
 
-[node name="ProjectileFireball" type="Node2D" node_paths=PackedStringArray("hitbox")]
+[node name="ProjectileFireball" type="Node2D" node_paths=PackedStringArray("hitbox", "sprite_2d")]
 script = ExtResource("1_ypc2i")
 speed = 600.0
 hitbox = NodePath("Sprite2D/ProjectileHitbox")
+sprite_2d = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

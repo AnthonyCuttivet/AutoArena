@@ -15,6 +15,8 @@ var recall_elapsed:float = 0.0;
 var fixed_dir:Vector2 = Vector2.ZERO;
 var position_fixed:bool = false;
 var recalling:bool = false;
+var stop_delay:float = 0.0;
+var stop_delay_elapsed:float = 0.0;
 
 func init(o:BattleBall, s:float, _p:int = 0, _b:int = 0):
 	super.init(o, s);
@@ -25,13 +27,18 @@ func init(o:BattleBall, s:float, _p:int = 0, _b:int = 0):
 func _physics_process(delta: float) -> void:
 	move_elapsed += delta;
 
+	if(stop_delay > 0.0):
+		stop_delay_elapsed += delta;
+		if(stop_delay_elapsed >= stop_delay):
+			fix_position();
+			stop_delay = 0.0;
+
 	#var r:float = move_elapsed / move_duration;
 
 	damaging = !position_fixed;
 
 	if(!position_fixed && !recalling && raycast.is_colliding() && raycast.get_collider().is_in_group("WALL")):
-		position_fixed = true;
-		trail.set_active(true);
+		fix_position();
 
 	if(position_fixed || recalling):
 		var rot_to_owner:Vector2 = (ball_owner.global_position - global_position).normalized();
@@ -82,3 +89,7 @@ func recall():
 
 	# DebugDraw2D.arrow_vector(global_position, fixed_dir * global_position.distance_to(ball_owner.global_position), Color.PURPLE, 2.0, recall_duration);
 	pass;
+
+func fix_position():
+	position_fixed = true;
+	trail.set_active(true);

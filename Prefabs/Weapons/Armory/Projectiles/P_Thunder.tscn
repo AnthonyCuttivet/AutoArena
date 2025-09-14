@@ -7,13 +7,13 @@
 radius = 0.005
 height = 0.01
 
-[node name="ProjectileThunder" type="Node2D" node_paths=PackedStringArray("hitbox")]
+[node name="ProjectileThunder" type="Node2D" node_paths=PackedStringArray("hitbox", "sprite_2d")]
 script = ExtResource("1_evsry")
 pierce_count = 999
-p_scale = 0.5
 rotation_speed = 0.1
 absolute = true
 hitbox = NodePath("Sprite2D/ProjectileHitbox")
+sprite_2d = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

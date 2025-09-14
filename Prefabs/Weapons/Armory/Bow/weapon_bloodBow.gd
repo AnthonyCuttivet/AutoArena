@@ -32,6 +32,9 @@ func scale_stat(force:bool = false):
 func on_weapon_hit_received(id:int, to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 
+	if(battleblock_mode && ball_owner.main.get_ball_by_id(to) == null):
+		return;
+
 	if(lifesteal_active):
 		if(!stop_lifesteal_after_salvo):
 			stop_lifesteal_after_salvo = true;
@@ -51,8 +54,12 @@ func update_lifesteal():
 	if(lifesteal_active):
 		AudioManager.play_sfx(sfx_lifesteal_state);
 
-
 func update_details():
 	var s:String = "Heal + Scale in "+ str(lifesteal_ticked + 1) +" hits" if lifesteal_ticked > 0 else "[wave amp=25.0 freq=4 connected=1]Heal + Scale next hit[/wave]";
 	settings.details = s;
 	ball_owner.update_ui_details(ball_owner.color if lifesteal_ticked > 0 else Color.DARK_RED, true);
+
+func set_battleblock_modifiers():
+	super.set_battleblock_modifiers();
+
+	lifesteal = false;

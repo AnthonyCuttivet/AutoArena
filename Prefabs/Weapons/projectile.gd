@@ -9,8 +9,8 @@ class_name Projectile extends Node2D
 @export var destroy_on_hit_delay:float = 0.0;
 @export var ball_owner:BattleBall;
 @export var debug_destroy:bool = false;
+@export var sprite_2d: Sprite2D;
 
-@onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var raycast: RayCast2D = $RayCast2D
 
 var custom_damage:int = -1;

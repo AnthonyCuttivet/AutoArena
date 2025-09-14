@@ -69,6 +69,9 @@ func _process(delta: float) -> void:
 	if(current_damage == floor(fdamage) && limiter_remaining > 0.0):
 		current_damage -= 1;
 
+	if(battleblock_mode):
+		current_damage += settings.base_damage_multiplier;
+
 	ball_owner.update_stat_text();
 
 	# print("Limiter : " + str(limiter_remaining));
@@ -160,7 +163,7 @@ func on_ball_bounced_other_ball(id:int, other:int):
 
 	pass;
 
-func on_ball_bounced_battleblock(id:int, block:BattleBlock):
+func on_ball_bounced_battleblock(id:int, block:MCBattleBlock):
 	if(!can_hit): return;
 	if(id != ball_owner.get_instance_id()): return;
 
@@ -187,3 +190,9 @@ func sandevistan_details() -> String:
 
 func cyberpsychosis_details() -> String:
 	return "CYBERPSYCHOSIS: -" + str(sandevistan_hp_lost_per_s) + "hp/s";
+
+func set_battleblock_modifiers():
+	super.set_battleblock_modifiers();
+
+	ball_owner.gravity_strength /= 3.5;
+	ball_owner.relative_bounce_boost = 0.3;
