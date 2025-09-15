@@ -22,7 +22,8 @@ var blocks:Dictionary[Vector2i, MCBattleBlock] = {};
 var active_tween:Tween = null;
 
 func _ready() -> void:
-	EventBus.update_bb_blocks_ui.connect(update_bb_blocks_ui);
+	if(!Engine.is_editor_hint()):
+		EventBus.update_bb_blocks_ui.connect(update_bb_blocks_ui);
 
 func compute_cumulative_layers():
 	cumulative_layers.clear();
