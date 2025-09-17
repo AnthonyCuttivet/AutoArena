@@ -15,7 +15,7 @@ var position_fixed:bool = false;
 var arrow_rot_speed:float = 0.0;
 var weapon_traps:WeaponTraps = null;
 var timeout:bool = false;
-var disabled:bool = false;
+var disabled:bool = true;
 var triggered:bool = false;
 
 func init(o:BattleBall, s:float, _p:int = 0, _b:int = 0):
@@ -52,6 +52,7 @@ func _physics_process(delta: float) -> void:
 		position_fixed = true;
 
 		if(fixed_lifetime_elapsed == 0.0):
+			disabled = false;
 			open_trap();
 
 		fixed_lifetime_elapsed += delta;
@@ -60,12 +61,18 @@ func _physics_process(delta: float) -> void:
 			close_trap();
 
 func _on_projectile_hitbox_area_entered(other: Area2D) -> void:
-	if(disabled): return;
-	if(other is not Hurtbox): return;
-	if(other.ball_owner == ball_owner): return;
-	if(move_elapsed < move_duration): return;
-	triggered = true;
-	trigger_trap(other.ball_owner);
+	if(disabled || triggered): return;
+
+	if(other is Hurtbox && other.ball_owner.team != ball_owner.team):
+		triggered = true;
+		trigger_trap(other.ball_owner);
+		return;
+
+	if(other is Hitbox && other.ball_owner.team != ball_owner.team):
+		other.ball_owner.weapon.on_weapon_clash(self, global_position);
+		disabled = true;
+		close_trap();
+		return;
 
 func _on_projectile_hitbox_body_entered(other: Node2D) -> void:
 	if(absolute) : return;
@@ -100,6 +107,7 @@ func open_trap():
 
 
 func trigger_trap(ball:BattleBall):
+	if(disabled): return;
 	var grow_size:Vector2 = Vector2.ONE * 3.0;
 	var grow_duration:float = weapon_traps.trap_hit_total_duration * 0.25;
 	var armed_delay:float = weapon_traps.trap_hit_total_duration * 0.05;
@@ -130,8 +138,8 @@ func trap_hit(ball:BattleBall):
 	weapon_traps.on_trap_hit(ball, self.global_position, knockback, 0.25);
 
 func close_trap():
-	var close_delay:float = 0.1;
-	var shrink_duration:float = 1.0;
+	var close_delay:float = 0.05;
+	var shrink_duration:float = 0.5;
 
 	get_tree().create_timer(shrink_duration / 2.0).timeout.connect(func(): disabled = true);
 	var t:Tween = create_tween();

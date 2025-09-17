@@ -235,11 +235,7 @@ func _ready() -> void:
 		teams_alive_members[3] = 0;
 
 	if(hypermatch_mode):
-		for i in balls.size():
-			balls[i].init_health(hypermatch_hp);
-			balls[i].update_health_text();
-			for j in hypermatch_scales[i]:
-				balls[i].weapon.scale_stat();
+		init_hypermatch();
 
 	for i in range(balls.size()):
 		balls_ids[balls[i].get_instance_id()] = i;
@@ -465,6 +461,9 @@ func reset_match():
 
 	balls[0].weapon.reset();
 	balls[1].weapon.reset();
+
+	if(hypermatch_mode):
+		init_hypermatch();
 
 	get_tree().create_timer(0.3).timeout.connect(start_balls);
 
@@ -1023,3 +1022,24 @@ func apply_cheats(ball:BattleBall):
 	if(use_cheat_underdog_clash):
 		ball.use_cheat_underdog_clash = true;
 		ball.cheat_underdog_clash_mult = cheat_underdog_clash_mult;
+
+func init_hypermatch():
+	for i in balls.size():
+		balls[i].init_health(hypermatch_hp);
+		balls[i].update_health_text();
+		for j in hypermatch_scales[i]:
+			balls[i].weapon.scale_stat();
+
+func spawn_fx(fx_prefab:PackedScene, pos:Vector2, rot:float):
+	var fx: GPUParticles2D = fx_prefab.instantiate();
+
+	get_tree().current_scene.add_child(fx);
+	fx.position = Vector2.ZERO;
+	fx.global_position = pos;
+	fx.global_rotation = rot;
+	fx.finished.connect(fx.queue_free);
+	fx.visible = true;
+	fx.emitting = false;
+	if(battleblock_mode):
+		fx.scale = Vector2.ONE * 0.5;
+	just_spawned_fxs[fx] = 0;

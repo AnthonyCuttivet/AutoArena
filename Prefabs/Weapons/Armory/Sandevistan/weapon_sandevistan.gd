@@ -152,7 +152,7 @@ func on_damaged(id:int, _amount:int, _from:int):
 	ball_owner.linear_velocity = ball_owner.linear_velocity.normalized() * base_max_speed;
 
 func on_ball_bounced_other_ball(id:int, other:int):
-	if(!can_hit): return;
+	if(!can_hit()): return;
 	if(id != ball_owner.get_instance_id()): return;
 
 	var other_ball:BattleBall = ball_owner.main.get_ball_by_id(other);
@@ -164,7 +164,7 @@ func on_ball_bounced_other_ball(id:int, other:int):
 	pass;
 
 func on_ball_bounced_battleblock(id:int, block:MCBattleBlock):
-	if(!can_hit): return;
+	if(!can_hit()): return;
 	if(id != ball_owner.get_instance_id()): return;
 
 	on_weapon_hit(block.hurtbox.ball_owner, block.global_position, hitboxes[0].get_instance_id());

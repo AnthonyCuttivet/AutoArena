@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ly6ibbb25gbf"
+path="res://.godot/imported/download1758133310188 (mp3cut.net) (1).mp3-7c7de4d0dc49c0c39a1d54d8c9264905.mp3str"
+
+[deps]
+
+source_file="res://Audio/SFX/BattleBalls/Announcer/download1758133310188 (mp3cut.net) (1).mp3"
+dest_files=["res://.godot/imported/download1758133310188 (mp3cut.net) (1).mp3-7c7de4d0dc49c0c39a1d54d8c9264905.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

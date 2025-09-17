@@ -486,6 +486,7 @@ func respawn(pos:Vector2, h:int = -1):
 	global_position = pos;
 	dead = false;
 	visible = true;
+	invincible_for = 0.0;
 	set_process(true);
 	root.set_deferred("disabled", false);
 

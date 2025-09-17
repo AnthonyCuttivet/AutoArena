@@ -10,6 +10,9 @@ class_name WeaponTraps extends Weapon
 @export var fx_trap_hit:PackedScene;
 @export var fx_confettis: MultiFX;
 
+@export var combo_color:Color;
+
+@export var sfx_best_combo:SFX;
 @export var sfx_trap_trigger:SFX;
 @export var sfx_trap_closed:SFX;
 
@@ -47,7 +50,7 @@ func on_trap_hit(other:BattleBall, hit_pos:Vector2, kb_dir:Vector2, hitstop:floa
 	other.hit_pos = hit_pos;
 
 	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), false);
-	add_combo(other.get_instance_id());
+	add_combo(other.get_instance_id(), hit_pos);
 
 	other.trail_2d.set_color(ball_owner.color);
 	other.show_trail_for(combo_duration);
@@ -89,15 +92,11 @@ func on_listened_event_received(id:int, _to:int, _is_projectile:bool):
 	pass;
 
 func trap_hit_fxs(pos:Vector2):
-	var fx: GPUParticles2D = fx_trap_hit.instantiate();
-	ball_owner.main.add_child(fx);
-	fx.position = Vector2.ZERO;
-	fx.global_position = pos
-	fx.scale *= 1.5;
-	fx.finished.connect(fx.queue_free);
-	fx.emitting = true;
+	ball_owner.main.spawn_fx(fx_trap_hit, pos, 0.0);
+	ball_owner.main.spawn_fx(fx_trap_hit, pos, 0.0);
+	ball_owner.main.spawn_fx(fx_trap_hit, pos, 0.0);
 
-func add_combo(ball_id:int) -> int:
+func add_combo(ball_id:int, hit_pos:Vector2) -> int:
 	if(!combo_values.has(ball_id)):
 		combo_values[ball_id] = 0;
 		combo_remainings[ball_id] = 0.0;
@@ -107,20 +106,35 @@ func add_combo(ball_id:int) -> int:
 
 	# print(Utils.pf() + " Combo on " + str(ball_id) +  " : " + str(combo_values[ball_id]));
 
+	update_details_combo(combo_values[ball_id]);
+
 	if(combo_values[ball_id] > best_combo):
-		on_best_combo(combo_values[ball_id]);
+		on_best_combo(combo_values[ball_id], hit_pos);
 
 	return combo_values[ball_id];
 
 func clear_combo(ball_id:int):
 	combo_values[ball_id] = 0;
 	combo_remainings[ball_id] = 0.0;
+	update_details_combo(0);
 	# print(Utils.pf() + " Combo RESET");
 
-func on_best_combo(v:int):
+func on_best_combo(v:int, hit_pos):
 	best_combo = v;
 	scale_stat();
+	fx_confettis.global_position = hit_pos;
 	fx_confettis.emit();
+	AudioManager.play_sfx(sfx_best_combo);
+
+func update_details_combo(combo:int):
+	if(combo == 0):
+		settings.details = "";
+	else:
+		var h:String = "hit" if combo == 1 else "hits";
+		var w:String = "[wave amp=" + str(combo * 10.0) + "freq=" + str(combo * 5.0) + "]";
+		settings.details = w + "[color=" + combo_color.to_html() + "]" + str(combo) + " " + h + " [/color][color=" + ball_owner.color.to_html() + "] Combo!!![/color][/wave]";
+
+	ball_owner.update_ui_details(Color.WHITE, true);
 
 func reset():
 	super.reset();

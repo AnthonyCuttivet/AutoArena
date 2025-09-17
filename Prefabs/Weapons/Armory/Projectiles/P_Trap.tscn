@@ -15,7 +15,7 @@ height = 68.0
 [node name="ProjectileTrap" type="Node2D" node_paths=PackedStringArray("arrow", "small_arrow_sprite", "hitbox", "sprite_2d")]
 script = ExtResource("1_8wdkt")
 move_duration = 0.25
-fixed_lifetime = 6.0
+fixed_lifetime = 5.0
 arrow_rot_speed_range = Vector2(180, 540)
 acceleration_curve = SubResource("Curve_7185q")
 arrow = NodePath("Sprite2D/SpriteRoot")
