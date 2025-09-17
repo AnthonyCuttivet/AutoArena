@@ -211,8 +211,8 @@ func shoot_projectile():
 	p.rotation = ball_owner.weapon_slot.global_rotation;
 	p.scale = ball_owner.weapon_slot.scale * ball_owner.root.scale * projectile_scale;
 	p.hitbox.scale *= 1.0 + cheat_hitbox_scale_bonus;
-	p.init(ball_owner, projectile_speed, 0, 0);
 	p.weapon_owner = self;
+	p.init(ball_owner, projectile_speed, 0, 0);
 
 	if(settings.bg_projectile):
 		ball_owner.main.projectiles_bg_parent.add_child(p);

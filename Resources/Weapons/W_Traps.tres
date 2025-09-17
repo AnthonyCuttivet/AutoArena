@@ -1,0 +1,84 @@
+[gd_resource type="Resource" script_class="WeaponSettings" load_steps=15 format=3 uid="uid://do40m4wrgehk5"]
+
+[ext_resource type="PackedScene" uid="uid://bmitwu886ksc8" path="res://Prefabs/Weapons/Armory/Projectiles/P_Trap.tscn" id="1_yc7w1"]
+[ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="2_5bohr"]
+[ext_resource type="AudioStream" uid="uid://dph6nnbsp0454" path="res://Audio/SFX/BattleBalls/se_marth_appeal_H01.wav" id="3_0hht0"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="4_ievk0"]
+[ext_resource type="AudioStream" uid="uid://b24s7p40a8vl8" path="res://Audio/SFX/BattleBalls/se_edge_smash_L04.wav" id="5_mw0rc"]
+[ext_resource type="AudioStream" uid="uid://dvjax4ihvanbi" path="res://Audio/SFX/BattleBalls/holy3.wav" id="6_mq8tv"]
+[ext_resource type="Texture2D" uid="uid://cglwc37jcx1vg" path="res://Graphics/_Addons/Icons/fc127.png" id="7_yc7w1"]
+[ext_resource type="PackedScene" uid="uid://crt45cgtoigfm" path="res://Prefabs/Weapons/Armory/Traps/W_Traps.tscn" id="8_yc7w1"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_onar2"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("3_0hht0")
+
+[sub_resource type="Resource" id="Resource_40vsq"]
+script = ExtResource("4_ievk0")
+audio_stream = SubResource("AudioStreamRandomizer_onar2")
+volume = -45.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ypqnk"]
+random_pitch = 1.02
+streams_count = 1
+stream_0/stream = ExtResource("5_mw0rc")
+
+[sub_resource type="Resource" id="Resource_onar2"]
+script = ExtResource("4_ievk0")
+audio_stream = SubResource("AudioStreamRandomizer_ypqnk")
+volume = -28.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qhs80"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("6_mq8tv")
+
+[sub_resource type="Resource" id="Resource_ypqnk"]
+script = ExtResource("4_ievk0")
+audio_stream = SubResource("AudioStreamRandomizer_qhs80")
+volume = -45.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[resource]
+script = ExtResource("2_5bohr")
+name = "TRAPS"
+spr = ExtResource("7_yc7w1")
+melee = false
+ranged = true
+flip = false
+offset = 50.0
+base_rotation_direction = -1
+base_rotation_speed = 0.5
+base_damage = 0
+base_knockback = 10000.0
+base_attack_speed = 30.0
+base_shoot_speed = 1.0
+base_size = 8.0
+base_hitstop = 0.5
+base_projectiles = 1
+base_projectile_speed = 1500.0
+base_projectile_scale = 0.85
+base_shoot_duration = 0.35
+base_rot_speed_bounce_boost = false
+projectile_self_hitstop = false
+lifesteal = false
+lifesteal_tick = 1
+stat_scale_value = 1.0
+stat_scale_name = "Base DMG"
+scaling_stat_float = false
+no_rotation_change = false
+weapon_prefab = ExtResource("8_yc7w1")
+projectile_prefab = ExtResource("1_yc7w1")
+bg_projectile = false
+details = "DMG = BEST COMBO"
+white_details = false
+sfx_clash = SubResource("Resource_40vsq")
+sfx_hit = SubResource("Resource_onar2")
+sfx_shoot = SubResource("Resource_ypqnk")
+scale_stat_multiplier = 1
+base_damage_multiplier = 1
+no_clash_on_block = false
+metadata/_custom_type_script = "uid://c1biydo2yju8x"

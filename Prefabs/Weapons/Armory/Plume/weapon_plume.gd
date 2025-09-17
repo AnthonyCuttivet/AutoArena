@@ -152,7 +152,7 @@ func spawn_feather():
 	p.plume_sprite_2D.self_modulate = sub_weapons[feathers.size()].sprite_2d.self_modulate;
 	p.trail.set_color(p.plume_sprite_2D.self_modulate);
 	p.trail.set_active(false);
-	p.stop_delay = 0.0 if !battleblock_mode else 0.05;
+	p.stop_delay = 0.0 if !battleblock_mode else 0.1;
 
 	feathers.push_back(p);
 
@@ -225,6 +225,9 @@ func on_bb_death():
 
 	for w in feathers_parent.get_children():
 		w.queue_free();
+
+	shoot_speed_elapsed = 0.0;
+	shoot_speed = current_shoot_speed;
 
 	sub_weapons.clear();
 	feathers.clear();

@@ -40,7 +40,8 @@ func on_impact(ball:BattleBall, amount:int):
 	if(dead): return;
 	current_value -= amount;
 
-	ball.weapon.on_weapon_clash(self, self.global_position, false, true);
+	if(!ball.weapon_settings.no_clash_on_block):
+		ball.weapon.on_weapon_clash(self, self.global_position, false, true);
 
 	if(current_value <= 0):
 		block_death(ball);

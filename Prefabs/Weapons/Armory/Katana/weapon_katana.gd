@@ -1,6 +1,7 @@
 class_name WeaponKatana extends Weapon
 
 @export var parries_needed:int = 4;
+@export var hitstop_multiplier:float = 0.4;
 
 @onready var sprite_charged: Sprite2D = $Sprite2D/SpriteCharged
 

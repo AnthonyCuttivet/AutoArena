@@ -1,4 +1,4 @@
-[gd_scene load_steps=177 format=4 uid="uid://cmsck3y43hvak"]
+[gd_scene load_steps=180 format=4 uid="uid://cmsck3y43hvak"]
 
 [ext_resource type="Script" uid="uid://llbx2bxdfjwy" path="res://Scenes/main.gd" id="1_nmkph"]
 [ext_resource type="Shader" uid="uid://m275kdb8v68b" path="res://Graphics/Shaders/balatro.gdshader" id="1_y2yxb"]
@@ -23,7 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://crarm12ndl2en" path="res://Graphics/_Addons/Icons/fc7.png" id="12_hvjex"]
 [ext_resource type="FontFile" uid="uid://bt2qq5v7nibma" path="res://Graphics/Fonts/PPFraktionMono-Bold.otf" id="12_p1oyv"]
 [ext_resource type="FontFile" uid="uid://bglbd1ylrt02k" path="res://Graphics/Fonts/big_noodle_titling.ttf" id="12_per8v"]
-[ext_resource type="AudioStream" uid="uid://c0r22hncbcysj" path="res://Audio/SFX/BattleBalls/Announcer/download1757855431847 (mp3cut.net).mp3" id="13_gcqa4"]
+[ext_resource type="AudioStream" uid="uid://c3r7cibvspvqm" path="res://Audio/SFX/BattleBalls/Announcer/download1758100962193 (mp3cut.net).mp3" id="13_nfmlc"]
 [ext_resource type="Script" uid="uid://dtqgj8e3uki5c" path="res://Scenes/dynamic_text.gd" id="13_vvmd2"]
 [ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="14_0krxf"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="14_cticm"]
@@ -51,6 +51,7 @@
 [ext_resource type="Texture2D" uid="uid://dogoa4t2bqlss" path="res://Graphics/_Addons/Icons/fc1598.png" id="29_0o7lx"]
 [ext_resource type="Texture2D" uid="uid://q13wr5xbdeg0" path="res://Graphics/_Addons/Icons/fc1704.png" id="30_6y6hv"]
 [ext_resource type="Script" uid="uid://ckxf1aiw26v1v" path="res://Scenes/cameo.gd" id="31_qas6s"]
+[ext_resource type="Texture2D" uid="uid://d0w63aumid11l" path="res://Graphics/Comment.png" id="32_dpnnm"]
 [ext_resource type="Texture2D" uid="uid://2ki0ut25fcs4" path="res://Graphics/_Addons/Icons/fc1590.png" id="33_0o7lx"]
 [ext_resource type="Script" uid="uid://c50pcpoy1hh6r" path="res://Scenes/animfuncs.gd" id="34_ee1k8"]
 [ext_resource type="Resource" uid="uid://dckqlakpbmee2" path="res://Resources/Weapons/W_GEMS.tres" id="34_g7d4c"]
@@ -87,6 +88,7 @@
 [ext_resource type="Texture2D" uid="uid://udle51b6b48y" path="res://Graphics/_Addons/Icons/fcb_7.png" id="56_3gj21"]
 [ext_resource type="PackedScene" uid="uid://c3asfx7u2p3x8" path="res://Prefabs/FX/fx_confettis.tscn" id="57_70hv1"]
 [ext_resource type="Shader" uid="uid://byxemq4tgaq5f" path="res://Graphics/Shaders/chromatic_aberration.gdshader" id="59_hdidk"]
+[ext_resource type="Resource" uid="uid://do40m4wrgehk5" path="res://Resources/Weapons/W_Traps.tres" id="60_ux8nf"]
 [ext_resource type="Script" uid="uid://bc4psjkpwis32" path="res://Scenes/mc_layer_settings.gd" id="62_3gj21"]
 [ext_resource type="Script" uid="uid://bxdnuwaammth0" path="res://Scenes/mc_block_settings.gd" id="63_2p8oi"]
 [ext_resource type="Script" uid="uid://c51lyrulb6e1q" path="res://Scripts/Tournament/tournament_bracket.gd" id="64_cfp74"]
@@ -147,7 +149,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="Resource" id="Resource_p1oyv"]
 script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("13_gcqa4")
+audio_stream = ExtResource("13_nfmlc")
 volume = -20.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
@@ -273,6 +275,7 @@ details = ""
 white_details = false
 scale_stat_multiplier = 1
 base_damage_multiplier = 1
+no_clash_on_block = false
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 
 [sub_resource type="Resource" id="Resource_ee1k8"]
@@ -308,6 +311,7 @@ details = ""
 white_details = false
 scale_stat_multiplier = 1
 base_damage_multiplier = 1
+no_clash_on_block = false
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 
 [sub_resource type="Resource" id="Resource_76u2v"]
@@ -343,6 +347,7 @@ details = ""
 white_details = false
 scale_stat_multiplier = 1
 base_damage_multiplier = 1
+no_clash_on_block = false
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 
 [sub_resource type="AudioStreamWAV" id="AudioStreamWAV_pegen"]
@@ -396,6 +401,7 @@ white_details = false
 sfx_hit = SubResource("Resource_qtgyu")
 scale_stat_multiplier = 3
 base_damage_multiplier = 5
+no_clash_on_block = false
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lt4ae"]
@@ -444,6 +450,7 @@ white_details = false
 sfx_hit = SubResource("Resource_3duvo")
 scale_stat_multiplier = 3
 base_damage_multiplier = 5
+no_clash_on_block = false
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 
 [sub_resource type="Resource" id="Resource_ucewg"]
@@ -858,6 +865,12 @@ _data = {
 &"new_challenger": SubResource("Animation_0o7lx")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nfmlc"]
+shader = ExtResource("6_uot50")
+shader_parameter/strength = 0.5
+shader_parameter/speed = 0.1
+shader_parameter/angle = 0.0
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_poh84"]
 resource_local_to_scene = true
 shader = ExtResource("1_y2yxb")
@@ -904,7 +917,6 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [node name="Main2" type="Node2D" node_paths=PackedStringArray("new_challenger_ball", "battleblock_controller", "balls", "attraction_point")]
 rotation = 1.5708
 script = ExtResource("1_nmkph")
-record = true
 patchnote_s_per_page = 23.0
 new_challenger_ball = NodePath("Balls/Fighters/Reaper")
 time_attack_leaderboards = Dictionary[String, ExtResource("2_poh84")]({
@@ -914,9 +926,11 @@ time_attack_leaderboards = Dictionary[String, ExtResource("2_poh84")]({
 time_attack_ranking_duration = 10.0
 _2v2_colors = Array[Color]([Color(0.5, 0.666667, 1, 1), Color(0.5, 0.583333, 1, 1), Color(1, 0.5, 0.5, 1), Color(1, 0.583333, 0.5, 1)])
 battleblock_controller = NodePath("BlockBreaker/MinecraftDig")
+hypermatch_mode = true
+hypermatch_scales = Array[int]([50, 25])
 forced_start_dir = Vector2(0, -1)
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Fighters/Pipe"), NodePath("Balls/Fighters/Katana")]
+balls = [NodePath("Balls/Fighters/Reaper"), NodePath("Balls/Fighters/Sandevistan")]
 fx_hit_prefab = ExtResource("2_8wnqf")
 fx_death_prefab = ExtResource("3_uot50")
 fx_clash = ExtResource("4_0o7lx")
@@ -928,14 +942,13 @@ sfx_bounce = SubResource("Resource_7mvmt")
 sfx_bounce_boss = SubResource("Resource_gaafq")
 sfx_death = SubResource("Resource_go1jf")
 ve_announcer = SubResource("Resource_p1oyv")
-announcer_delay = 2.0
+announcer_delay = 1.5
 bgm = ExtResource("14_gcqa4")
 bgm_volume = -20.0
 startup_sfx = ExtResource("15_gcqa4")
 startup_sfx_volume = -22.0
 obs_delay = 4.0
 earclacks_mode = true
-rainbow_borders = true
 _1v1_hp = 100
 _1v2_hp = 50
 attraction_point = NodePath("AttractionPoint")
@@ -2447,8 +2460,7 @@ color = Color(0.607269, 0.701772, 0.785156, 1)
 dead = true
 stop = true
 max_speed = 1500.0
-min_horizontal = 250.0
-gravity_strength = 2000.0
+gravity_strength = 2200.0
 drag_force = 0.03
 bounce_boost = 0.0
 relative_bounce_boost = 0.1
@@ -2612,6 +2624,18 @@ stop = true
 max_speed = 1600.0
 min_horizontal = 50.0
 drag_force = 0.05
+
+[node name="Traps" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(1991, 1197.99)
+weapon_settings = ExtResource("60_ux8nf")
+base_weapon_rotation = 135.0
+color = Color(0.418945, 0.6875, 0.530143, 1)
+stop = true
+max_speed = 1400.0
+min_horizontal = 150.0
+gravity_strength = 1200.0
+drag_force = 0.05
+bounce_boost = 150.0
 
 [node name="Reaper" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(1991, 1197.99)
@@ -3169,8 +3193,39 @@ horizontal_alignment = 1
 vertical_alignment = 1
 justification_flags = 0
 
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 739.0
+offset_right = 40.0
+offset_bottom = 779.0
+
+[node name="Request" type="TextureRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_nfmlc")
+offset_left = 153.002
+offset_top = 701.814
+offset_right = 1703.0
+offset_bottom = 1721.81
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("32_dpnnm")
+
+[node name="RealRequest" type="TextureRect" parent="Request"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.99909
+offset_top = 11.998
+offset_right = 8.0011
+offset_bottom = 12.002
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.99, 0.99)
+texture = ExtResource("32_dpnnm")
+
 [node name="Center" type="Node2D" parent="."]
-position = Vector2(540, 978)
+position = Vector2(540, 977)
 
 [node name="AttractionPoint" type="Node2D" parent="."]
 position = Vector2(539.004, 984.998)
@@ -3477,7 +3532,7 @@ balls = Dictionary[String, ExtResource("24_3p5r5")]({
 "MACE": ExtResource("44_vebv7"),
 "PLUME": ExtResource("43_qtgyu"),
 "QIANG": ExtResource("22_ee1k8"),
-"REAPER": ExtResource("27_djmp0"),
+"REAPER": ExtResource("60_ux8nf"),
 "SANDEVISTAN": ExtResource("68_t5fc8"),
 "SWORD": ExtResource("49_1t3vj"),
 "THUNDER": ExtResource("23_n5n48"),

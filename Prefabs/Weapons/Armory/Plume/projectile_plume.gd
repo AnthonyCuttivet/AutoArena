@@ -37,7 +37,7 @@ func _physics_process(delta: float) -> void:
 
 	damaging = !position_fixed;
 
-	if(!position_fixed && !recalling && raycast.is_colliding() && raycast.get_collider().is_in_group("WALL")):
+	if(!position_fixed && !recalling && raycast.is_colliding() && raycast.get_collider() != null && raycast.get_collider().is_in_group("WALL")):
 		fix_position();
 
 	if(position_fixed || recalling):

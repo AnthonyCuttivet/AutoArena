@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://dlt588ko3imtk" path="res://Graphics/_Addons/Icons/fc2154.png" id="2_dl2h1"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
-radius = 6.0
-height = 80.0
+radius = 9.0
+height = 58.0
 
 [node name="ProjectileArrow" type="Node2D" node_paths=PackedStringArray("hitbox", "sprite_2d")]
 script = ExtResource("1_tc23m")
@@ -22,7 +22,7 @@ rotation = 0.785398
 metadata/owner = NodePath("../../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/ProjectileHitbox"]
-position = Vector2(9.53674e-07, -3)
+position = Vector2(3.8147e-06, -11)
 shape = SubResource("CapsuleShape2D_1fhci")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]

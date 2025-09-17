@@ -80,4 +80,5 @@ sfx_hit = SubResource("Resource_dt5h3")
 sfx_shoot = SubResource("Resource_o05x3")
 scale_stat_multiplier = 1
 base_damage_multiplier = 1
+no_clash_on_block = false
 metadata/_custom_type_script = "uid://c1biydo2yju8x"

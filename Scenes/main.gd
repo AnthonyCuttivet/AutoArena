@@ -21,6 +21,9 @@ class_name Main extends Node2D
 @export var battleblock_mode:bool = false;
 @export var battleblock_controller:BlockModeMCDig;
 @export var battleblock_start_delay:float = 0.5;
+@export var hypermatch_mode:bool = false;
+@export var hypermatch_hp:int = 250;
+@export var hypermatch_scales:Array[int];
 
 @export var forced_start_dir:Vector2 = Vector2.ZERO;
 @export var dead_ui_color:Color;
@@ -115,6 +118,8 @@ class_name Main extends Node2D
 @onready var hook: RichTextLabel = $Hook
 
 # ------ #
+
+@onready var request: TextureRect = $Request
 
 @onready var vs: RichTextLabel = $UI/Top/VS
 @onready var winner_text: DynamicText = $UI/Winner
@@ -228,6 +233,13 @@ func _ready() -> void:
 	if(free_for_all):
 		teams_alive_members[2] = 0;
 		teams_alive_members[3] = 0;
+
+	if(hypermatch_mode):
+		for i in balls.size():
+			balls[i].init_health(hypermatch_hp);
+			balls[i].update_health_text();
+			for j in hypermatch_scales[i]:
+				balls[i].weapon.scale_stat();
 
 	for i in range(balls.size()):
 		balls_ids[balls[i].get_instance_id()] = i;
@@ -355,6 +367,11 @@ func start_game():
 		get_tree().create_timer(battleblock_start_delay).timeout.connect(start_balls);
 	else:
 		start_balls();
+
+	if(request.visible):
+		var t:Tween = create_tween();
+		t.tween_property(request, "position:y", 120.0, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK);
+		t.tween_property(request, "modulate:a", 0.0, 1.0).set_delay(4.0);
 
 	if(new_challenger_mode):
 		balls[1].stop = true;
@@ -650,7 +667,6 @@ func on_ball_dead(id: int):
 	if(balls_alive_count == 2 && !time_attack_mode):
 		for b in balls:
 			if(!b.dead):
-				# b.root.scale = Vector2.ONE * b.base_root_scale;
 				create_tween().tween_property(b.root, "scale", Vector2.ONE * b.base_root_scale, 2.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT);
 				b.max_speed += b.nerfed_speed;
 			pass

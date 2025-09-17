@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=3 uid="uid://bmitwu886ksc8"]
+
+[ext_resource type="Script" uid="uid://dqqelypky0css" path="res://Prefabs/Weapons/Armory/Traps/projectile_trap.gd" id="1_8wdkt"]
+[ext_resource type="Texture2D" uid="uid://b2rvoq6gy0vek" path="res://Graphics/_Addons/Icons/fc12700.png" id="2_7185q"]
+[ext_resource type="Texture2D" uid="uid://ds0ps3xd8bwxy" path="res://Graphics/_Addons/Icons/fc1741.png" id="4_7185q"]
+
+[sub_resource type="Curve" id="Curve_7185q"]
+_data = [Vector2(0, 0), 0.0, 1.4, 0, 0, Vector2(0.488673, 0.86423), 0.573576, 0.573576, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
+radius = 24.0
+height = 68.0
+
+[node name="ProjectileTrap" type="Node2D" node_paths=PackedStringArray("arrow", "small_arrow_sprite", "hitbox", "sprite_2d")]
+script = ExtResource("1_8wdkt")
+move_duration = 0.25
+fixed_lifetime = 6.0
+arrow_rot_speed_range = Vector2(180, 540)
+acceleration_curve = SubResource("Curve_7185q")
+arrow = NodePath("Sprite2D/SpriteRoot")
+small_arrow_sprite = NodePath("Sprite2D/SpriteRoot/SpriteArrow")
+hitbox = NodePath("Sprite2D/ProjectileHitbox")
+sprite_2d = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+rotation = 1.5708
+texture = ExtResource("2_7185q")
+
+[node name="ProjectileHitbox" type="Area2D" parent="Sprite2D"]
+rotation = 0.785398
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/ProjectileHitbox"]
+position = Vector2(-2, -7.15256e-07)
+shape = SubResource("CapsuleShape2D_1fhci")
+
+[node name="SpriteRoot" type="Node2D" parent="Sprite2D"]
+visible = false
+modulate = Color(1, 1, 1, 0)
+rotation = -0.785398
+scale = Vector2(0.7, 0.7)
+
+[node name="SpriteArrow" type="Sprite2D" parent="Sprite2D/SpriteRoot"]
+texture_filter = 1
+position = Vector2(29.2944, -29.2944)
+texture = ExtResource("4_7185q")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(-6, 0)
+rotation = -1.5708
+hit_from_inside = true
+
+[connection signal="area_entered" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_area_entered"]
+[connection signal="area_exited" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_area_exited"]
+[connection signal="body_entered" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_body_entered"]

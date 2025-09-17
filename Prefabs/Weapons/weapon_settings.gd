@@ -43,3 +43,4 @@ class_name WeaponSettings extends Resource
 
 @export var scale_stat_multiplier:int = 1;
 @export var base_damage_multiplier:int = 1;
+@export var no_clash_on_block:bool = false;

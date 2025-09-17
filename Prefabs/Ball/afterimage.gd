@@ -8,6 +8,8 @@ class_name Afterimage extends Node2D
 @export var use_gradient:bool = false;
 @export var gradient: Gradient;
 @export var continuous:bool = true;
+@export var use_custom_color:bool;
+@export var custom_color:Color;
 
 @onready var root: CollisionShape2D = $".."
 @onready var ball_owner: BattleBall = $"../.."
@@ -32,14 +34,16 @@ func spawn_afterimage():
 	var img = Sprite2D.new()
 	img.texture = source_sprite.texture
 	img.global_position = source_sprite.global_position
-	#img.global_rotation = source_sprite.global_rotation
 	img.scale = root.scale;
 
 	if(use_gradient && gradient != null):
 		img.modulate = gradient.sample(fmod(spawn_interval_total * 21.9,1.0));
 		img.modulate.a = opacity;
 	else:
-		img.modulate = Color(source_sprite.self_modulate.r, source_sprite.self_modulate.g, source_sprite.self_modulate.b, opacity)
+		if(use_custom_color):
+			img.modulate = custom_color;
+		else:
+			img.modulate = Color(source_sprite.self_modulate.r, source_sprite.self_modulate.g, source_sprite.self_modulate.b, opacity)
 
 	get_tree().current_scene.special_effects_parent.add_child(img);
 
@@ -47,3 +51,11 @@ func spawn_afterimage():
 	img.create_tween().tween_property(img, "self_modulate:a", 0.0, afterimage_lifetime).finished.connect(func(): img.queue_free())
 
 	spawn_interval_total += spawn_interval;
+
+func set_custom_color(c:Color):
+	use_custom_color = true;
+	custom_color = c;
+
+func draw_afterimages_for(d:float):
+	active = true;
+	get_tree().create_timer(d).timeout.connect(func(): active = false);
