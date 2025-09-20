@@ -25,6 +25,8 @@ class_name BattleBall extends RigidBody2D
 @export var align_weapon_to_velocity:bool = false;
 @export var lose_hp_per_s:int = 0;
 
+@export var max_combo_duration:float = 1.0;
+
 # --- Tweakable settings ---
 @export var max_speed: float = 2200.0
 @export var min_horizontal: float = 200.0
@@ -108,6 +110,8 @@ var respawn_count:int = 0;
 var respawn_cd:float = 0.0;
 var silent_on_hit:bool = false;
 
+var current_combo:int = 0;
+var combo_remaining:float = 0.0;
 
 var use_cheat_weapon_rotation:bool = false;
 var cheat_weapon_rotation_angle: float = 20.0;
@@ -213,6 +217,8 @@ func _process(delta: float) -> void:
 		if(hitstop_remaining <= 0.0):
 			stop_hitstop();
 
+	update_combo_remaining(delta);
+
 func start(m:Main, dir:Vector2):
 	main = m;
 	if(debug_mode):return;
@@ -244,6 +250,11 @@ func spawn_weapon() -> Weapon:
 	weapon_slot.add_child(w);
 	weapon = w;
 	w.position.x += weapon_settings.offset;
+
+	if(weapon_settings.y_offset):
+		w.position.x = 0.0;
+		w.position.y = weapon_settings.offset;
+
 	w.init(weapon_settings, self);
 	weapon_slot.rotation = deg_to_rad(base_weapon_rotation);
 	if(debug_mode): weapon_slot.global_rotation_degrees = 0.0;
@@ -449,7 +460,7 @@ func death():
 	if(can_respawn):
 		var t:int = 1 + respawn_count;
 		respawn_cd = t / 2.0;
-		hp_text.text = str(t);
+		hp_text.text = str(int(respawn_cd));
 		get_tree().create_timer(0.5).timeout.connect(func():visible = true);
 		get_tree().create_timer(1.0).timeout.connect(update_respawn_cd);
 
@@ -464,6 +475,10 @@ func raw_respawn():
 	set_color_overlay(Color.WHITE, Color.BLACK);
 	bb_blocks_ui.modulate = Color.WHITE;
 	bb_mult_text.modulate = Color.WHITE;
+
+	linear_velocity = Vector2.ZERO
+	prev_linear_velocity = Vector2.ZERO;
+	accumulated_forces = Vector2.ZERO;
 
 	# reset_rigidbody();
 	health = respawn_count * 5;
@@ -651,6 +666,27 @@ func update_respawn_cd():
 
 func is_underdog(other:BattleBall) -> bool:
 	return other.health > health;
+
+func update_combo_remaining(dt:float):
+	if(combo_remaining <= 0.0): return;
+
+	combo_remaining -= dt;
+
+	if(combo_remaining <= 0.0):
+		stop_combo();
+
+func add_combo(t:BattleBall):
+	current_combo += 1;
+	combo_remaining = max_combo_duration;
+	print(current_combo);
+
+	EventBus.ball_combo_up.emit(get_instance_id(), t);
+
+func stop_combo():
+	current_combo = 0;
+	combo_remaining = 0.0;
+
+	EventBus.ball_combo_reset.emit(get_instance_id());
 
 # ------- Cheats ---------
 

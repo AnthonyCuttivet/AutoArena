@@ -18,6 +18,7 @@ melee = false
 ranged = true
 flip = false
 offset = 0.0
+y_offset = false
 base_rotation_direction = -1
 base_rotation_speed = 0.5
 base_damage = 1

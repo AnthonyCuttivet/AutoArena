@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bykx0a8ie4kwf"]
+[gd_scene load_steps=7 format=3 uid="uid://bykx0a8ie4kwf"]
 
 [ext_resource type="Script" uid="uid://ta5lif15v75h" path="res://Prefabs/Weapons/projectile.gd" id="1_nfxy2"]
 [ext_resource type="Shader" uid="uid://dewdqohxf515x" path="res://Graphics/Shaders/dissolve.gdshader" id="2_kjv6a"]
 [ext_resource type="Texture2D" uid="uid://dkh7m88q53xra" path="res://Graphics/_Addons/Icons/fc197.png" id="3_nfxy2"]
+[ext_resource type="Script" uid="uid://d27ne0poeo6c7" path="res://Prefabs/Ball/projectile_hitbox.gd" id="4_kjv6a"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uquli"]
 resource_local_to_scene = true
@@ -28,6 +29,7 @@ rotation = -1.5708
 texture = ExtResource("3_nfxy2")
 
 [node name="ProjectileHitbox" type="Area2D" parent="Sprite2D" groups=["WALL"]]
+script = ExtResource("4_kjv6a")
 metadata/owner = NodePath("../../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/ProjectileHitbox"]

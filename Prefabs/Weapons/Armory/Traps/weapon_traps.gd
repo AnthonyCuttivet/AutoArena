@@ -13,8 +13,12 @@ class_name WeaponTraps extends Weapon
 @export var combo_color:Color;
 
 @export var sfx_best_combo:SFX;
-@export var sfx_trap_trigger:SFX;
+@export var sfx_trap_open:SFX;
+@export var sfx_trap_armed:SFX;
+@export var sfx_trap_crunch:SFX;
 @export var sfx_trap_closed:SFX;
+@export var sfx_trap_broken:SFX;
+@export var sfx_trap_trigger:SFX;
 
 var combo_values:Dictionary[int,int];
 var combo_remainings:Dictionary[int,float];
@@ -95,6 +99,8 @@ func trap_hit_fxs(pos:Vector2):
 	ball_owner.main.spawn_fx(fx_trap_hit, pos, 0.0);
 	ball_owner.main.spawn_fx(fx_trap_hit, pos, 0.0);
 	ball_owner.main.spawn_fx(fx_trap_hit, pos, 0.0);
+	ball_owner.main.spawn_fx(fx_trap_hit, pos, 0.0);
+	ball_owner.main.spawn_fx(fx_trap_hit, pos, 0.0);
 
 func add_combo(ball_id:int, hit_pos:Vector2) -> int:
 	if(!combo_values.has(ball_id)):
@@ -119,6 +125,12 @@ func clear_combo(ball_id:int):
 	update_details_combo(0);
 	# print(Utils.pf() + " Combo RESET");
 
+func is_in_combo(ball_id) -> bool:
+	return combo_remainings.has(ball_id) && combo_remainings[ball_id] > 0.0;
+
+func get_combo_value(ball_id) -> int:
+	return combo_values[ball_id] if combo_values.has(ball_id) else 0;
+
 func on_best_combo(v:int, hit_pos):
 	best_combo = v;
 	scale_stat();
@@ -130,11 +142,14 @@ func update_details_combo(combo:int):
 	if(combo == 0):
 		settings.details = "";
 	else:
-		var h:String = "hit" if combo == 1 else "hits";
-		var w:String = "[wave amp=" + str(combo * 10.0) + "freq=" + str(combo * 5.0) + "]";
-		settings.details = w + "[color=" + combo_color.to_html() + "]" + str(combo) + " " + h + " [/color][color=" + ball_owner.color.to_html() + "] Combo!!![/color][/wave]";
+		var h:String = get_combo_text(combo);
+		var w:String = "[wave amp=" + str(combo * 25.0) + "freq=" + str(combo * 15.0) + "]";
+		settings.details = w + "[color=" + combo_color.to_html() + "][b][i]" + str(combo) + " [/i][/b][/color]" + h + "[/wave]";
 
 	ball_owner.update_ui_details(Color.WHITE, true);
+
+func get_combo_text(combo:int) -> String:
+	return "[color=#95DE03]h[/color][color=#85DB19]i[/color][color=#76D82F]t[/color]" + ("[color=#67D545]S[/color]" if combo > 1 else "") + " [color=#48CF72]c[/color][color=#39CC88]o[/color][color=#29C99E]m[/color][color=#26C1A0]b[/color][color=#23B9A2]o[/color] [color=#1CAAA6]![/color][color=#19A2A8]![/color][color=#169AAA]![/color]"
 
 func reset():
 	super.reset();

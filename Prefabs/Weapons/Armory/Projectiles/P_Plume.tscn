@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dlaed02kcebe0"]
+[gd_scene load_steps=9 format=3 uid="uid://dlaed02kcebe0"]
 
 [ext_resource type="Script" uid="uid://b5g3fif13o3q3" path="res://Prefabs/Weapons/Armory/Plume/projectile_plume.gd" id="1_o1vwt"]
 [ext_resource type="Texture2D" uid="uid://cb2hhyg4cgdwm" path="res://Graphics/_Addons/Icons/fc25900.png" id="2_o1vwt"]
+[ext_resource type="Script" uid="uid://d27ne0poeo6c7" path="res://Prefabs/Ball/projectile_hitbox.gd" id="3_6yb1m"]
 [ext_resource type="Script" uid="uid://c0yo17knk84wp" path="res://Prefabs/Ball/trail.gd" id="3_t3p6s"]
 
 [sub_resource type="Curve" id="Curve_o1vwt"]
@@ -39,6 +40,7 @@ texture = ExtResource("2_o1vwt")
 
 [node name="ProjectileHitbox" type="Area2D" parent="Sprite2D"]
 rotation = 0.785398
+script = ExtResource("3_6yb1m")
 metadata/owner = NodePath("../../..")
 
 [node name="CollisionShapeRecall" type="CollisionShape2D" parent="Sprite2D/ProjectileHitbox"]

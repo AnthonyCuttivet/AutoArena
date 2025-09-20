@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://b2nqrnreb6pns"]
+[gd_scene load_steps=5 format=3 uid="uid://b2nqrnreb6pns"]
 
 [ext_resource type="Script" uid="uid://ta5lif15v75h" path="res://Prefabs/Weapons/projectile.gd" id="1_evsry"]
 [ext_resource type="Texture2D" uid="uid://70ydhkwcxs8f" path="res://Graphics/_Addons/Icons/fc740.png" id="2_evsry"]
+[ext_resource type="Script" uid="uid://d27ne0poeo6c7" path="res://Prefabs/Ball/projectile_hitbox.gd" id="3_ixidx"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
 radius = 0.005
@@ -22,6 +23,7 @@ texture = ExtResource("2_evsry")
 
 [node name="ProjectileHitbox" type="Area2D" parent="Sprite2D"]
 position = Vector2(-8.74228e-07, 20)
+script = ExtResource("3_ixidx")
 metadata/owner = NodePath("../../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/ProjectileHitbox"]

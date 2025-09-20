@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://bypmtjpsrnsm8"]
+[gd_scene load_steps=12 format=3 uid="uid://bypmtjpsrnsm8"]
 
 [ext_resource type="Script" uid="uid://ntl4dqbkvp60" path="res://Prefabs/Weapons/Armory/Thunder/projectile_thunderstrike.gd" id="1_imm4n"]
 [ext_resource type="Shader" uid="uid://bqw8t1j4f7yi7" path="res://Graphics/Shaders/lightning.gdshader" id="2_imm4n"]
+[ext_resource type="Script" uid="uid://d27ne0poeo6c7" path="res://Prefabs/Ball/projectile_hitbox.gd" id="2_m1x6r"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_umtk3"]
 radius = 4.0
@@ -54,6 +55,7 @@ texture_filter = 1
 
 [node name="ProjectileHitbox" type="Area2D" parent="Sprite2D"]
 rotation = 1.5708
+script = ExtResource("2_m1x6r")
 metadata/owner = NodePath("../../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/ProjectileHitbox"]

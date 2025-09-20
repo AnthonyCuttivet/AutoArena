@@ -32,8 +32,9 @@ func init(o:BattleBall, s:float, _p:int = 0, _b:int = 0):
 
 	rotation_speed = randf_range(arrow_rot_speed_range.x, arrow_rot_speed_range.y);
 	var angle_to_center:float = rad_to_deg(fixed_dir.angle_to_point(ball_owner.main.arena_center.global_position));
-	angle_to_center += rotation_speed;
 	rotation_speed = angle_to_center / move_duration;
+
+	set_state(false);
 
 
 func _physics_process(delta: float) -> void:
@@ -52,7 +53,6 @@ func _physics_process(delta: float) -> void:
 		position_fixed = true;
 
 		if(fixed_lifetime_elapsed == 0.0):
-			disabled = false;
 			open_trap();
 
 		fixed_lifetime_elapsed += delta;
@@ -68,9 +68,13 @@ func _on_projectile_hitbox_area_entered(other: Area2D) -> void:
 		trigger_trap(other.ball_owner);
 		return;
 
-	if(other is Hitbox && other.ball_owner.team != ball_owner.team):
-		other.ball_owner.weapon.on_weapon_clash(self, global_position);
-		disabled = true;
+	if(other is Hitbox || other is ProjectileHitbox):
+		if(other.ball_owner.team == ball_owner.team): return;
+		if(weapon_traps.is_in_combo(other.ball_owner.get_instance_id())): return;
+		if(other is Hitbox):
+			other.ball_owner.weapon.on_weapon_clash(weapon_traps.ball_owner, global_position);
+		AudioManager.play_sfx(weapon_traps.sfx_trap_broken)
+		set_state(false);
 		close_trap();
 		return;
 
@@ -95,7 +99,7 @@ func open_trap():
 
 	var t:Tween = create_tween();
 
-	get_tree().create_timer(open_delay).timeout.connect(func():AudioManager.play_sfx(weapon_traps.sfx_trap_trigger));
+	get_tree().create_timer(open_delay).timeout.connect(func():AudioManager.play_sfx(weapon_traps.sfx_trap_open));
 
 	t.tween_property(sprite_2d, "scale", grow_size, grow_duration).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT);
 	t.parallel().tween_property(arrow, "modulate:a", 1.0, open_delay);
@@ -104,7 +108,7 @@ func open_trap():
 	t.parallel().tween_property(sprite_2d, "texture", weapon_traps.tx_neutral_trap, 0.0).set_delay(open_delay);
 	t.parallel().tween_property(self, "global_position:x", global_position.x + displacement, shrink_duration * 0.7).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT);
 	t.tween_property(sprite_2d, "scale", Vector2.ONE, shrink_duration).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT);
-
+	t.finished.connect(set_state.bind(true));
 
 func trigger_trap(ball:BattleBall):
 	if(disabled): return;
@@ -120,8 +124,12 @@ func trigger_trap(ball:BattleBall):
 	if(ball != null):
 		ball.start_hitstop(0.0, weapon_traps.trap_hit_total_duration);
 
-	get_tree().create_timer(armed_delay).timeout.connect(func():AudioManager.play_sfx(weapon_traps.sfx_trap_trigger));
-	get_tree().create_timer(closed_delay).timeout.connect(func():AudioManager.play_sfx(weapon_traps.sfx_trap_closed));
+	get_tree().create_timer(armed_delay).timeout.connect(func():AudioManager.play_sfx(weapon_traps.sfx_trap_armed));
+	get_tree().create_timer(closed_delay).timeout.connect(
+		func():
+			AudioManager.play_sfx(weapon_traps.sfx_trap_trigger, "SFX", 1.0 + (0.15 * weapon_traps.get_combo_value(ball.get_instance_id())));
+			AudioManager.play_sfx(weapon_traps.sfx_trap_crunch);
+	);
 
 	t.tween_property(sprite_2d, "scale", grow_size, grow_duration).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT);
 	t.parallel().tween_property(self, "global_position", ball.global_position, 0.0).set_delay(armed_delay).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT);
@@ -141,7 +149,7 @@ func close_trap():
 	var close_delay:float = 0.05;
 	var shrink_duration:float = 0.5;
 
-	get_tree().create_timer(shrink_duration / 2.0).timeout.connect(func(): disabled = true);
+	get_tree().create_timer(shrink_duration / 2.0).timeout.connect(set_state.bind(false));
 	var t:Tween = create_tween();
 
 	get_tree().create_timer(close_delay).timeout.connect(func():AudioManager.play_sfx(weapon_traps.sfx_trap_closed));
@@ -150,3 +158,7 @@ func close_trap():
 	t.tween_property(sprite_2d, "scale", Vector2.ONE * 0.5, shrink_duration).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT).set_delay(close_delay);
 	t.parallel().tween_property(sprite_2d, "self_modulate:a", 0.0, shrink_duration);
 	t.finished.connect(destroy);
+
+func set_state(s:bool):
+	disabled = !s;
+	modulate.a = 1.0 if s else 0.5;

@@ -10,8 +10,8 @@ height = 40.0
 [node name="WeaponUnarmed" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]
 script = ExtResource("1_0geoh")
 just_hurt_hit_cd = 0.0
-multi_hit_cd = 0.0
-speed_scale = 180.0
+multi_hit_cd = 0.15
+speed_scale = 205.0
 afterimages_interval = 0.01
 sprite_2d = NodePath("Sprite2D")
 hitboxes = [NodePath("Sprite2D/WeaponHitbox")]

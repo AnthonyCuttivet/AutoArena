@@ -1,16 +1,22 @@
-[gd_resource type="Resource" script_class="WeaponSettings" load_steps=10 format=3 uid="uid://uipnvvfsno8"]
+[gd_resource type="Resource" script_class="WeaponSettings" load_steps=11 format=3 uid="uid://uipnvvfsno8"]
 
 [ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="1_l50tq"]
-[ext_resource type="AudioStream" uid="uid://p3rv46pxc0ri" path="res://Audio/SFX/BattleBalls/metal_pipe_clash.mp3" id="2_l50tq"]
+[ext_resource type="AudioStream" uid="uid://wb7cigowqlsv" path="res://Audio/SFX/BattleBalls/WeaponClash.mp3" id="2_l50tq"]
 [ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="3_17258"]
 [ext_resource type="AudioStream" uid="uid://b4h2m4rdoaglc" path="res://Audio/SFX/BattleBalls/metal_pipe.mp3" id="4_l50tq"]
 [ext_resource type="Texture2D" uid="uid://d1hxmwy404ahx" path="res://Graphics/_Addons/Icons/fc14900.png" id="5_l50tq"]
 [ext_resource type="PackedScene" uid="uid://bdx3t7ec7ymkw" path="res://Prefabs/Weapons/Armory/Pipe/W_Pipe.tscn" id="6_l50tq"]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4eslf"]
+random_pitch = 2.0
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("2_l50tq")
+
 [sub_resource type="Resource" id="Resource_4ivty"]
 script = ExtResource("3_17258")
-audio_stream = ExtResource("2_l50tq")
-volume = -25.0
+audio_stream = SubResource("AudioStreamRandomizer_4eslf")
+volume = -33.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_l50tq"]
@@ -32,7 +38,8 @@ melee = true
 ranged = false
 flip = false
 offset = 20.0
-base_rotation_direction = 1
+y_offset = false
+base_rotation_direction = -1
 base_rotation_speed = 0.45
 base_damage = 1
 base_knockback = 1000.0
@@ -58,7 +65,7 @@ details = "DMG = Knockback"
 white_details = false
 sfx_clash = SubResource("Resource_4ivty")
 sfx_hit = SubResource("Resource_wbgv2")
-scale_stat_multiplier = 1
-base_damage_multiplier = 3
+scale_stat_multiplier = 2
+base_damage_multiplier = 1
 no_clash_on_block = false
 metadata/_custom_type_script = "uid://c1biydo2yju8x"

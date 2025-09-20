@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bmitwu886ksc8"]
+[gd_scene load_steps=7 format=3 uid="uid://bmitwu886ksc8"]
 
 [ext_resource type="Script" uid="uid://dqqelypky0css" path="res://Prefabs/Weapons/Armory/Traps/projectile_trap.gd" id="1_8wdkt"]
 [ext_resource type="Texture2D" uid="uid://b2rvoq6gy0vek" path="res://Graphics/_Addons/Icons/fc12700.png" id="2_7185q"]
+[ext_resource type="Script" uid="uid://d27ne0poeo6c7" path="res://Prefabs/Ball/projectile_hitbox.gd" id="3_7185q"]
 [ext_resource type="Texture2D" uid="uid://ds0ps3xd8bwxy" path="res://Graphics/_Addons/Icons/fc1741.png" id="4_7185q"]
 
 [sub_resource type="Curve" id="Curve_7185q"]
@@ -14,8 +15,8 @@ height = 68.0
 
 [node name="ProjectileTrap" type="Node2D" node_paths=PackedStringArray("arrow", "small_arrow_sprite", "hitbox", "sprite_2d")]
 script = ExtResource("1_8wdkt")
-move_duration = 0.25
-fixed_lifetime = 5.0
+move_duration = 0.2
+fixed_lifetime = 7.5
 arrow_rot_speed_range = Vector2(180, 540)
 acceleration_curve = SubResource("Curve_7185q")
 arrow = NodePath("Sprite2D/SpriteRoot")
@@ -30,6 +31,7 @@ texture = ExtResource("2_7185q")
 
 [node name="ProjectileHitbox" type="Area2D" parent="Sprite2D"]
 rotation = 0.785398
+script = ExtResource("3_7185q")
 metadata/owner = NodePath("../../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/ProjectileHitbox"]

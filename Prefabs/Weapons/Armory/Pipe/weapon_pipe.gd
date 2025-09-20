@@ -14,7 +14,8 @@ func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
 	knockback += stat_scale_value;
 	damage = knockback * kb_dmg_ratio;
-	hitstop += hitstop_scale;
+	if(!battleblock_mode):
+		hitstop += hitstop_scale;
 	init_scaling_stat();
 
 func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
@@ -24,3 +25,9 @@ func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
 
 func get_custom_stat_format() -> String:
 	return str(damage) + " / " + str(knockback *kb_dmg_ratio) + " x";
+
+func set_battleblock_modifiers():
+	super.set_battleblock_modifiers();
+
+	ball_owner.gravity_strength /= 3.5;
+	ball_owner.relative_bounce_boost = 0.3;

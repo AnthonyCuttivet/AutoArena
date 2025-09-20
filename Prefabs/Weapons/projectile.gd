@@ -5,7 +5,7 @@ class_name Projectile extends Node2D
 @export var bounce_count:int = 0;
 @export var rotation_speed:float = 0.0;
 @export var absolute:bool = false;
-@export var hitbox:Area2D;
+@export var hitbox:ProjectileHitbox;
 @export var destroy_on_hit_delay:float = 0.0;
 @export var ball_owner:BattleBall;
 @export var debug_destroy:bool = false;
@@ -31,6 +31,7 @@ func init(o:BattleBall, s:float, p:int = -1, b:int = -1):
 		bounce_count = b;
 
 	velocity = transform.x * speed;
+	hitbox.ball_owner = o;
 
 func _physics_process(delta: float) -> void:
 	global_position += velocity * delta;

@@ -30,6 +30,9 @@ signal ball_bounce_other_ball(id:int, other:int);
 signal ball_bounce_battleblock(id:int, block:MCBattleBlock);
 signal ball_shoot(id:int, projectile: Projectile);
 
+signal ball_combo_up(id:int, target:BattleBall);
+signal ball_combo_reset(id:int);
+
 signal block_hit(id:int, block:BattleBlock);
 signal block_destroyed(id:int, block:BattleBlock);
 signal ball_duel_scale(id:int);

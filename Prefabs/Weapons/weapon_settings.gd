@@ -7,6 +7,7 @@ class_name WeaponSettings extends Resource
 @export var ranged:bool = false;
 @export var flip:bool = false;
 @export var offset:float = 0.0;
+@export var y_offset:bool = false;
 
 @export var base_rotation_direction:int = 1;
 @export var base_rotation_speed:float = 1.0;

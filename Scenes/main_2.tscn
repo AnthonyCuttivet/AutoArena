@@ -1,4 +1,4 @@
-[gd_scene load_steps=180 format=4 uid="uid://cmsck3y43hvak"]
+[gd_scene load_steps=182 format=4 uid="uid://cmsck3y43hvak"]
 
 [ext_resource type="Script" uid="uid://llbx2bxdfjwy" path="res://Scenes/main.gd" id="1_nmkph"]
 [ext_resource type="Shader" uid="uid://m275kdb8v68b" path="res://Graphics/Shaders/balatro.gdshader" id="1_y2yxb"]
@@ -23,7 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://crarm12ndl2en" path="res://Graphics/_Addons/Icons/fc7.png" id="12_hvjex"]
 [ext_resource type="FontFile" uid="uid://bt2qq5v7nibma" path="res://Graphics/Fonts/PPFraktionMono-Bold.otf" id="12_p1oyv"]
 [ext_resource type="FontFile" uid="uid://bglbd1ylrt02k" path="res://Graphics/Fonts/big_noodle_titling.ttf" id="12_per8v"]
-[ext_resource type="AudioStream" uid="uid://ly6ibbb25gbf" path="res://Audio/SFX/BattleBalls/Announcer/download1758133310188 (mp3cut.net) (1).mp3" id="13_nfmlc"]
+[ext_resource type="AudioStream" uid="uid://btyho3x14diiy" path="res://Audio/SFX/BattleBalls/Announcer/download1758362702808 (mp3cut.net) (1).mp3" id="13_nfmlc"]
 [ext_resource type="Script" uid="uid://dtqgj8e3uki5c" path="res://Scenes/dynamic_text.gd" id="13_vvmd2"]
 [ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="14_0krxf"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="14_cticm"]
@@ -50,6 +50,8 @@
 [ext_resource type="Resource" uid="uid://dqi1plxun8om5" path="res://Resources/Weapons/W_MACE.tres" id="28_djmp0"]
 [ext_resource type="Texture2D" uid="uid://dogoa4t2bqlss" path="res://Graphics/_Addons/Icons/fc1598.png" id="29_0o7lx"]
 [ext_resource type="Texture2D" uid="uid://q13wr5xbdeg0" path="res://Graphics/_Addons/Icons/fc1704.png" id="30_6y6hv"]
+[ext_resource type="PackedScene" uid="uid://cu5pn4twmfncq" path="res://combo_counter_Left.tscn" id="30_jdg1x"]
+[ext_resource type="PackedScene" uid="uid://dro0ydtil3s2c" path="res://combo_counter_Right.tscn" id="31_dpnnm"]
 [ext_resource type="Script" uid="uid://ckxf1aiw26v1v" path="res://Scenes/cameo.gd" id="31_qas6s"]
 [ext_resource type="Texture2D" uid="uid://d0w63aumid11l" path="res://Graphics/Comment.png" id="32_dpnnm"]
 [ext_resource type="Texture2D" uid="uid://2ki0ut25fcs4" path="res://Graphics/_Addons/Icons/fc1590.png" id="33_0o7lx"]
@@ -60,7 +62,6 @@
 [ext_resource type="AudioStream" uid="uid://ddx8pstv0i4qf" path="res://Audio/SFX/BattleBalls/se_demon_hit_catchattack.wav" id="35_qtgyu"]
 [ext_resource type="Texture2D" uid="uid://cj3174c1vhaci" path="res://Graphics/_Addons/Icons/fc17040.png" id="36_76u2v"]
 [ext_resource type="PackedScene" uid="uid://dj8vboys4os4r" path="res://Prefabs/Weapons/Armory/Sandevistan/W_SANDEVISTAN.tscn" id="36_d4oku"]
-[ext_resource type="Resource" uid="uid://dgbpfdn8qku06" path="res://Resources/Weapons/W_DAGGER.tres" id="38_6fdjq"]
 [ext_resource type="Texture2D" uid="uid://cfwyhor4kqo4c" path="res://Graphics/_Addons/Icons/fc888881.png" id="38_sy8k4"]
 [ext_resource type="Resource" uid="uid://b2572latobo8u" path="res://Resources/Weapons/W_BloodBow.tres" id="40_nsujd"]
 [ext_resource type="Resource" uid="uid://odj7lywcd7tq" path="res://Resources/Weapons/W_PLUME.tres" id="43_qtgyu"]
@@ -86,6 +87,7 @@
 [ext_resource type="Texture2D" uid="uid://beeis177bhwud" path="res://Graphics/_Addons/Icons/fcb_5.png" id="54_0krxf"]
 [ext_resource type="Texture2D" uid="uid://gpvk0iv2vacx" path="res://Graphics/_Addons/Icons/fcb_6.png" id="55_cticm"]
 [ext_resource type="Texture2D" uid="uid://udle51b6b48y" path="res://Graphics/_Addons/Icons/fcb_7.png" id="56_3gj21"]
+[ext_resource type="Resource" uid="uid://bf8pi3p1oxsvc" path="res://Resources/Weapons/W_SNEAKERS.tres" id="56_nfmlc"]
 [ext_resource type="PackedScene" uid="uid://c3asfx7u2p3x8" path="res://Prefabs/FX/fx_confettis.tscn" id="57_70hv1"]
 [ext_resource type="Shader" uid="uid://byxemq4tgaq5f" path="res://Graphics/Shaders/chromatic_aberration.gdshader" id="59_hdidk"]
 [ext_resource type="Resource" uid="uid://do40m4wrgehk5" path="res://Resources/Weapons/W_Traps.tres" id="60_ux8nf"]
@@ -249,6 +251,7 @@ melee = true
 ranged = false
 flip = false
 offset = 0.0
+y_offset = false
 base_rotation_direction = 1
 base_rotation_speed = 0.5
 base_damage = 0
@@ -285,6 +288,7 @@ melee = true
 ranged = false
 flip = false
 offset = 0.0
+y_offset = false
 base_rotation_direction = -1
 base_rotation_speed = 0.6
 base_damage = 0
@@ -321,6 +325,7 @@ melee = true
 ranged = false
 flip = false
 offset = 0.0
+y_offset = false
 base_rotation_direction = 1
 base_rotation_speed = 0.5
 base_damage = 0
@@ -374,6 +379,7 @@ melee = true
 ranged = false
 flip = false
 offset = 0.0
+y_offset = false
 base_rotation_direction = 0
 base_rotation_speed = 0.0
 base_damage = 1
@@ -423,6 +429,7 @@ melee = true
 ranged = false
 flip = false
 offset = 0.0
+y_offset = false
 base_rotation_direction = 0
 base_rotation_speed = 0.0
 base_damage = 1
@@ -917,7 +924,6 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [node name="Main2" type="Node2D" node_paths=PackedStringArray("new_challenger_ball", "battleblock_controller", "balls", "attraction_point")]
 rotation = 1.5708
 script = ExtResource("1_nmkph")
-devmode = true
 patchnote_s_per_page = 23.0
 new_challenger_ball = NodePath("Balls/Fighters/Reaper")
 time_attack_leaderboards = Dictionary[String, ExtResource("2_poh84")]({
@@ -930,7 +936,7 @@ battleblock_controller = NodePath("BlockBreaker/MinecraftDig")
 hypermatch_scales = Array[int]([20, 20])
 forced_start_dir = Vector2(0, -1)
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Fighters/Traps"), NodePath("Balls/Fighters/Sword")]
+balls = [NodePath("Balls/Fighters/Traps"), NodePath("Balls/Training/Dummy")]
 fx_hit_prefab = ExtResource("2_8wnqf")
 fx_death_prefab = ExtResource("3_uot50")
 fx_clash = ExtResource("4_0o7lx")
@@ -1246,6 +1252,8 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 15
 theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_fonts/bold_italics_font = ExtResource("12_per8v")
+theme_override_font_sizes/bold_italics_font_size = 100
 theme_override_font_sizes/normal_font_size = 50
 bbcode_enabled = true
 text = "%s"
@@ -1309,6 +1317,8 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 15
 theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_fonts/bold_italics_font = ExtResource("12_per8v")
+theme_override_font_sizes/bold_italics_font_size = 100
 theme_override_font_sizes/normal_font_size = 50
 bbcode_enabled = true
 text = " %s "
@@ -2140,6 +2150,26 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("13_vvmd2")
 
+[node name="Combos" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ComboCounterL1" parent="UI/Combos" instance=ExtResource("30_jdg1x")]
+offset_left = 100.0
+offset_top = 650.0
+offset_right = 100.0
+offset_bottom = 650.0
+scale = Vector2(0.8, 0.8)
+
+[node name="ComboCounterR1" parent="UI/Combos" instance=ExtResource("31_dpnnm")]
+offset_left = 897.0
+offset_top = 650.0
+offset_right = 897.0
+offset_bottom = 650.0
+scale = Vector2(0.8, 0.8)
+
 [node name="SpecialEffectsParent" type="Node2D" parent="."]
 rotation = -1.5708
 
@@ -2504,8 +2534,9 @@ base_weapon_rotation = 205.0
 color = Color(0.866667, 0.89375, 1, 1)
 dead = true
 stop = true
-max_speed = 1400.0
-min_horizontal = 100.0
+max_speed = 1500.0
+min_horizontal = 50.0
+gravity_strength = 1300.0
 drag_force = 0.05
 
 [node name="Sword" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
@@ -2573,10 +2604,11 @@ dead = true
 stop = true
 max_speed = 2000.0
 min_horizontal = 50.0
+drag_force = 0.1
 
 [node name="Dagger" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2355, 666.991)
-weapon_settings = ExtResource("38_6fdjq")
+weapon_settings = ExtResource("56_nfmlc")
 health = 50
 base_weapon_rotation = 120.0
 color = Color(0.214005, 0.730469, 0.379434, 1)
@@ -2586,6 +2618,20 @@ stop = true
 max_speed = 2000.0
 min_horizontal = 0.0
 gravity_strength = 1500.0
+
+[node name="Sneakers" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2355, 666.991)
+weapon_settings = ExtResource("56_nfmlc")
+health = 50
+color = Color(0.941406, 0.225356, 0.37064, 1)
+team = 1
+dead = true
+stop = true
+max_speed = 1500.0
+min_horizontal = 0.0
+gravity_strength = 1500.0
+drag_force = 0.05
+bounce_boost = 1000.0
 
 [node name="Vortex" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2355, 666.991)
@@ -2628,12 +2674,11 @@ drag_force = 0.05
 [node name="Traps" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(1991, 1197.99)
 weapon_settings = ExtResource("60_ux8nf")
-base_weapon_rotation = 135.0
 color = Color(0.418945, 0.6875, 0.530143, 1)
 stop = true
-max_speed = 1400.0
+max_speed = 1300.0
 min_horizontal = 150.0
-gravity_strength = 1200.0
+gravity_strength = 1300.0
 drag_force = 0.05
 bounce_boost = 150.0
 
@@ -3526,7 +3571,7 @@ scene_root = NodePath("../..")
 tournament_data = ExtResource("69_k7ahf")
 balls = Dictionary[String, ExtResource("24_3p5r5")]({
 "BOW": ExtResource("11_per8v"),
-"DAGGER": ExtResource("38_6fdjq"),
+"DAGGER": ExtResource("56_nfmlc"),
 "GEMS": ExtResource("34_g7d4c"),
 "KATANA": ExtResource("22_rcyw2"),
 "MACE": ExtResource("44_vebv7"),
@@ -3676,9 +3721,6 @@ texture_filter = 1
 position = Vector2(400, 175)
 scale = Vector2(2, 2)
 texture = ExtResource("47_7gphk")
-
-[node name="Node2D" type="Node2D" parent="."]
-position = Vector2(540, 540)
 
 [node name="Hook" type="RichTextLabel" parent="."]
 visible = false

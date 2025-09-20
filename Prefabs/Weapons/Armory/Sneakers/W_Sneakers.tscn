@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=3 uid="uid://bgo02e5k37iu5"]
+
+[ext_resource type="Script" uid="uid://dkecygu8eje4r" path="res://Prefabs/Weapons/Armory/Sneakers/weapon_sneakers.gd" id="1_cvcd5"]
+[ext_resource type="Texture2D" uid="uid://b3raxmeyc3cxi" path="res://Graphics/_Addons/Icons/fc8888.png" id="2_cvcd5"]
+[ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="3_0vw3f"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
+radius = 6.0
+height = 134.0
+
+[node name="WeaponSneakers" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]
+z_index = 1
+z_as_relative = false
+script = ExtResource("1_cvcd5")
+sprite_2d = NodePath("Sprite2D")
+hitboxes = [NodePath("Sprite2D/WeaponHitbox")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+position = Vector2(-32, 0)
+texture = ExtResource("2_cvcd5")
+
+[node name="SpriteParent" type="Node2D" parent="Sprite2D"]
+position = Vector2(32, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite2D/SpriteParent"]
+texture_filter = 1
+position = Vector2(-32, 0)
+texture = ExtResource("2_cvcd5")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Sprite2D/SpriteParent"]
+texture_filter = 1
+position = Vector2(32, 0)
+texture = ExtResource("2_cvcd5")
+flip_h = true
+
+[node name="WeaponHitbox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("weapon", "collider")]
+position = Vector2(32, 0)
+rotation = 1.5708
+script = ExtResource("3_0vw3f")
+weapon = NodePath("../..")
+collider = NodePath("CollisionShape2D")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
+position = Vector2(19, -6.87798e-05)
+shape = SubResource("CapsuleShape2D_1fhci")
+
+[connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_entered"]
+[connection signal="area_exited" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_exited"]

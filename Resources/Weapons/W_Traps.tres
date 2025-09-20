@@ -4,8 +4,8 @@
 [ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="2_5bohr"]
 [ext_resource type="AudioStream" uid="uid://dph6nnbsp0454" path="res://Audio/SFX/BattleBalls/se_marth_appeal_H01.wav" id="3_0hht0"]
 [ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="4_ievk0"]
-[ext_resource type="AudioStream" uid="uid://b24s7p40a8vl8" path="res://Audio/SFX/BattleBalls/se_edge_smash_L04.wav" id="5_mw0rc"]
-[ext_resource type="AudioStream" uid="uid://dvjax4ihvanbi" path="res://Audio/SFX/BattleBalls/holy3.wav" id="6_mq8tv"]
+[ext_resource type="AudioStream" uid="uid://xxx2rutvhj8f" path="res://Audio/SFX/BattleBalls/se_cloud_smash_S03.wav" id="5_yc7w1"]
+[ext_resource type="AudioStream" uid="uid://d4d8nigfj1d3o" path="res://Audio/SFX/BattleBalls/se_cloud_final_swing03.wav" id="6_yc7w1"]
 [ext_resource type="Texture2D" uid="uid://cglwc37jcx1vg" path="res://Graphics/_Addons/Icons/fc127.png" id="7_yc7w1"]
 [ext_resource type="PackedScene" uid="uid://crt45cgtoigfm" path="res://Prefabs/Weapons/Armory/Traps/W_Traps.tscn" id="8_yc7w1"]
 
@@ -21,9 +21,8 @@ volume = -45.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ypqnk"]
-random_pitch = 1.02
 streams_count = 1
-stream_0/stream = ExtResource("5_mw0rc")
+stream_0/stream = ExtResource("5_yc7w1")
 
 [sub_resource type="Resource" id="Resource_onar2"]
 script = ExtResource("4_ievk0")
@@ -34,7 +33,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qhs80"]
 random_pitch = 1.5
 streams_count = 1
-stream_0/stream = ExtResource("6_mq8tv")
+stream_0/stream = ExtResource("6_yc7w1")
 
 [sub_resource type="Resource" id="Resource_ypqnk"]
 script = ExtResource("4_ievk0")
@@ -49,18 +48,19 @@ spr = ExtResource("7_yc7w1")
 melee = false
 ranged = true
 flip = false
-offset = 50.0
+offset = 70.0
+y_offset = false
 base_rotation_direction = -1
-base_rotation_speed = 0.5
+base_rotation_speed = 0.15
 base_damage = 0
-base_knockback = 6000.0
+base_knockback = 4000.0
 base_attack_speed = 30.0
 base_shoot_speed = 1.0
-base_size = 8.0
+base_size = 6.0
 base_hitstop = 0.5
 base_projectiles = 1
-base_projectile_speed = 1500.0
-base_projectile_scale = 1.0
+base_projectile_speed = 1000.0
+base_projectile_scale = 1.35
 base_shoot_duration = 0.35
 base_rot_speed_bounce_boost = false
 projectile_self_hitstop = false

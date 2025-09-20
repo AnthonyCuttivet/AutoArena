@@ -32,9 +32,8 @@ texture_filter = 1
 material = SubResource("ShaderMaterial_uquli")
 texture = ExtResource("3_lgcis")
 
-[node name="WeaponHitbox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("collider")]
+[node name="WeaponHitbox" type="Area2D" parent="Sprite2D"]
 script = ExtResource("4_uquli")
-collider = NodePath("CollisionShape2D")
 metadata/owner = NodePath("../../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]

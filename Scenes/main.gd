@@ -110,7 +110,13 @@ class_name Main extends Node2D
 @onready var container_2v2_right: VBoxContainer = $UI/Top/CharactersRight_2p
 @onready var container_battlelock: Control = $UI/Bottom/BlockBreaker
 
+# -------------- Combos ----------------
+
+@onready var combo_counter_L1: ComboCounterUI = $UI/Combos/ComboCounterL1
+@onready var combo_counter_R1: ComboCounterUI = $UI/Combos/ComboCounterR1
+
 # -------------- BattleBlock ----------------
+
 @onready var bb_left: DynamicText = $UI/Bottom/BlockBreaker/BB_Left
 @onready var bb_blocks_left: GridContainer = $UI/Bottom/BlockBreaker/BB_Blocks_Left
 @onready var bb_right: DynamicText = $UI/Bottom/BlockBreaker/BB_Right
@@ -456,8 +462,8 @@ func reset_match():
 	balls[0].respawn(_1v1_spots[0], _1v1_hp);
 	balls[1].respawn(_1v1_spots[1], _1v1_hp);
 
-	fill_character_ui(balls[0], name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p);
-	fill_character_ui(balls[1], name_right_1p, sprite_right_1p, details_right_1p, stat_right_1p);
+	fill_character_ui(balls[0], name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1);
+	fill_character_ui(balls[1], name_right_1p, sprite_right_1p, details_right_1p, stat_right_1p, combo_counter_L1);
 
 	balls[0].weapon.reset();
 	balls[1].weapon.reset();
@@ -475,7 +481,7 @@ func init_ui():
 	container_battlelock.visible = battleblock_mode;
 	hook.visible = battleblock_mode;
 
-	fill_character_ui(balls[0], name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p);
+	fill_character_ui(balls[0], name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1);
 
 	container_1v1_left.visible = balls.size() <= 3;
 	container_1v1_right.visible = balls.size() == 2;
@@ -490,15 +496,15 @@ func init_ui():
 	stat_right_2_2p.visible = container_2v2_right.visible;
 
 	if(balls.size() == 2):
-		fill_character_ui(balls[1], name_right_1p, sprite_right_1p, details_right_1p, stat_right_1p);
+		fill_character_ui(balls[1], name_right_1p, sprite_right_1p, details_right_1p, stat_right_1p, combo_counter_R1);
 	elif(balls.size() == 3):
-		fill_character_ui(balls[1], name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p);
-		fill_character_ui(balls[2], name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p);
+		fill_character_ui(balls[1], name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p, combo_counter_L1);
+		fill_character_ui(balls[2], name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p, combo_counter_L1);
 	elif(balls.size() == 4):
-		fill_character_ui(balls[0], name_left_1_2p, sprite_left_1_2p, details_left_1_2p, stat_left_1_2p);
-		fill_character_ui(balls[1], name_left_2_2p, sprite_left_2_2p, details_left_2_2p, stat_left_2_2p);
-		fill_character_ui(balls[2], name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p);
-		fill_character_ui(balls[3], name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p);
+		fill_character_ui(balls[0], name_left_1_2p, sprite_left_1_2p, details_left_1_2p, stat_left_1_2p, combo_counter_L1);
+		fill_character_ui(balls[1], name_left_2_2p, sprite_left_2_2p, details_left_2_2p, stat_left_2_2p, combo_counter_L1);
+		fill_character_ui(balls[2], name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p, combo_counter_L1);
+		fill_character_ui(balls[3], name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p, combo_counter_L1);
 
 	if(battleblock_mode):
 		fill_battleblock_ui(balls[0], bb_left, bb_blocks_left);
@@ -512,7 +518,7 @@ func init_ui():
 	if(time_attack_mode):
 		ta_record.format([Utils.convert_time_to_string(time_attack_leaderboards[balls[0].weapon_settings.name.to_upper()].rankings[0].time)]);
 
-func fill_character_ui(ball:BattleBall, name_text:DynamicText, sprite:TextureRect, details_text:DynamicText, stat_text:DynamicText):
+func fill_character_ui(ball:BattleBall, name_text:DynamicText, sprite:TextureRect, details_text:DynamicText, stat_text:DynamicText, combo_counter:ComboCounterUI):
 	name_text.format([ball.weapon_settings.name]);
 	name_text.self_modulate = ball.color;
 	sprite.texture = ball.weapon.sprite_2d.texture;
@@ -532,6 +538,8 @@ func fill_character_ui(ball:BattleBall, name_text:DynamicText, sprite:TextureRec
 
 	ball.stat_text.self_modulate = ball.color;
 	ball.update_stat_text();
+
+	combo_counter.init(ball);
 
 func fill_battleblock_ui(ball:BattleBall, mult_text:DynamicText, bb_blocks:GridContainer):
 	ball.bb_mult_text = mult_text;
@@ -553,7 +561,6 @@ func generate_damage_dealt_string() -> String:
 
 	return "";
 
-
 func on_ball_damaged(id: int, amount:int, from:int):
 	if(!balls_ids.has(id)):
 		return;
@@ -561,10 +568,12 @@ func on_ball_damaged(id: int, amount:int, from:int):
 	if(!balls_ids.has(from)):
 		return;
 
+	var ball:BattleBall = get_ball_by_id(id);
+
 	add_damage_dealt(from, abs(amount));
+	get_ball_by_id(from).add_combo(ball);
 
 	var fx: GPUParticles2D = fx_hit_prefab.instantiate();
-	var ball:BattleBall = get_ball_by_id(id);
 
 	get_tree().current_scene.add_child(fx);
 	fx.position = Vector2.ZERO;
@@ -610,11 +619,12 @@ func on_ball_clash(id:int, clash_pos:Vector2, silent:bool):
 	if(!balls_ids.has(id)):
 		return;
 
-	get_ball_by_id(id).set_or_ignore_invincibility(balls[0].clash_invincibility);
+	var ball:BattleBall = get_ball_by_id(id);
+
+	ball.set_or_ignore_invincibility(balls[0].clash_invincibility);
+	ball.stop_combo();
 
 	if(!silent):
-		var ball:BattleBall = get_ball_by_id(id);
-
 		for i in range(2):
 			var fx: GPUParticles2D = fx_clash.instantiate();
 			add_child(fx);

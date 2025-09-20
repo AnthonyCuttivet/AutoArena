@@ -261,3 +261,6 @@ static func get_claimed_blocks_amount(ball:BattleBall) -> int:
 		if(ball.claimed_blocks[key]): r += 1;
 
 	return r;
+
+static func ease_in_cubic(v:float) -> float:
+	return v * v * v;
