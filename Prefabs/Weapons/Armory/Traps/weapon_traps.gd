@@ -91,10 +91,6 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit);
 	pass;
 
-func on_listened_event_received(id:int, _to:int, _is_projectile:bool):
-	if(id != ball_owner.get_instance_id()): return;
-	pass;
-
 func trap_hit_fxs(pos:Vector2):
 	ball_owner.main.spawn_fx(fx_trap_hit, pos, 0.0);
 	ball_owner.main.spawn_fx(fx_trap_hit, pos, 0.0);
@@ -110,9 +106,10 @@ func add_combo(ball_id:int, hit_pos:Vector2) -> int:
 	combo_values[ball_id] += 1;
 	combo_remainings[ball_id] = combo_duration;
 
-	# print(Utils.pf() + " Combo on " + str(ball_id) +  " : " + str(combo_values[ball_id]));
+	if(best_combo == 0): # Because the first hit deals no damage, so no event for "damaged"
+		ball_owner.add_combo(ball_owner.main.get_ball_by_id(ball_id));
 
-	update_details_combo(combo_values[ball_id]);
+	# update_details_combo(combo_values[ball_id]);
 
 	if(combo_values[ball_id] > best_combo):
 		on_best_combo(combo_values[ball_id], hit_pos);
@@ -122,7 +119,7 @@ func add_combo(ball_id:int, hit_pos:Vector2) -> int:
 func clear_combo(ball_id:int):
 	combo_values[ball_id] = 0;
 	combo_remainings[ball_id] = 0.0;
-	update_details_combo(0);
+	# update_details_combo(0);
 	# print(Utils.pf() + " Combo RESET");
 
 func is_in_combo(ball_id) -> bool:

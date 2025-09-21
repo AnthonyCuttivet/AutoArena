@@ -50,7 +50,7 @@ ranged = true
 flip = false
 offset = 70.0
 y_offset = false
-base_rotation_direction = -1
+base_rotation_direction = 1
 base_rotation_speed = 0.15
 base_damage = 0
 base_knockback = 4000.0
@@ -73,7 +73,7 @@ no_rotation_change = false
 weapon_prefab = ExtResource("8_yc7w1")
 projectile_prefab = ExtResource("1_yc7w1")
 bg_projectile = false
-details = ""
+details = "[wave amp=15.0 freq=4 connected=1]New combo system ![/wave]"
 white_details = false
 sfx_clash = SubResource("Resource_40vsq")
 sfx_hit = SubResource("Resource_onar2")

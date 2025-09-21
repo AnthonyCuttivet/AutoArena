@@ -1,22 +1,28 @@
 class_name ComboCounterUI extends Control
 
+@export var is_left:bool = false;
+
 @onready var number: RichTextLabel = $Node2D/Number
 @onready var hits: RichTextLabel = $Node2D/Hits
 @onready var progress_bar: ProgressBar = $Node2D/ProgressBar
 @onready var color_rect: ColorRect = $Node2D/VBars/ColorRect3
 
 var ball_owner:BattleBall = null;
+var base_position:Vector2;
+var active:bool = false;
+var ui_tween:Tween = null;
 
 func _ready() -> void:
 	EventBus.ball_combo_up.connect(on_ball_combo_up);
 	EventBus.ball_combo_reset.connect(on_ball_combo_reset);
+	base_position = position;
 
 func _process(_delta: float) -> void:
 	if(!visible): return;
-	progress_bar.value = Utils.ease_in_cubic(ball_owner.combo_remaining / ball_owner.max_combo_duration) * 100.0;
+	progress_bar.value = ball_owner.combo_remaining / ball_owner.max_combo_duration * 100.0;
 
 func init(o:BattleBall):
-	visible = false;
+	reset_ui(false);
 
 	ball_owner = o;
 
@@ -27,11 +33,15 @@ func on_ball_combo_up(id:int, _target:BattleBall):
 	if(id != ball_owner.get_instance_id()): return;
 	if(ball_owner.current_combo < 2): return;
 
+	active = true;
+
+	kill_tween();
+
 	if(!visible):
 		show_combo_counter();
 
 	number.text = str(ball_owner.current_combo);
-	gamefeel_tween(0.1, 30.0);
+	gamefeel_tween(0.1, 30.0 if is_left else -30.0);
 
 	pass;
 
@@ -39,17 +49,38 @@ func on_ball_combo_reset(id:int):
 	if(id != ball_owner.get_instance_id()): return;
 
 	if(visible):
-		visible = false;
+		active = false;
+		get_tree().create_timer(0.2).timeout.connect(hide_combo_counter.bind(30.0 if is_left else -30.0));
 
 	pass;
 
 func show_combo_counter():
-	visible = true;
+	active = true;
+	reset_ui(true);
 
+func hide_combo_counter(dist:float):
+	if(active): return;
+
+	kill_tween();
+
+	ui_tween = create_tween();
+	ui_tween.tween_property(self, "position:x", position.x - dist, 0.2);
+	ui_tween.parallel().tween_property(self, "modulate:a", 0.0, 0.08).set_delay(0.12);
+	ui_tween.finished.connect(reset_ui.bind(false));
+
+func reset_ui(s:bool):
+	kill_tween();
+	visible = s;
+	modulate.a = 1.0;
+	position.x = base_position.x;
 
 func gamefeel_tween(duration:float, dist:float):
-	var t:Tween = create_tween();
-
+	reset_ui(true);
 	position.x += dist;
+	ui_tween = create_tween();
+	ui_tween.tween_property(self, "position:x", position.x - dist, duration);
 
-	t.tween_property(self, "position:x", position.x - dist, duration);
+func kill_tween():
+	if ui_tween and ui_tween.is_running():
+		ui_tween.kill()
+	ui_tween = null

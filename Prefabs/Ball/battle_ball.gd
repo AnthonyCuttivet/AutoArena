@@ -678,7 +678,6 @@ func update_combo_remaining(dt:float):
 func add_combo(t:BattleBall):
 	current_combo += 1;
 	combo_remaining = max_combo_duration;
-	print(current_combo);
 
 	EventBus.ball_combo_up.emit(get_instance_id(), t);
 

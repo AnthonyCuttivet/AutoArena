@@ -32,6 +32,7 @@ func init(o:BattleBall, s:float, p:int = -1, b:int = -1):
 
 	velocity = transform.x * speed;
 	hitbox.ball_owner = o;
+	hitbox.projectile = self;
 
 func _physics_process(delta: float) -> void:
 	global_position += velocity * delta;
@@ -78,7 +79,9 @@ func _on_projectile_hitbox_body_entered(other: Node2D) -> void:
 		return;
 
 func on_hurtbox_hit(other:BattleBall):
-	ball_owner.weapon.on_weapon_hit(other, self.global_position, hitbox.get_instance_id(), true);
+	if(other != null):
+		ball_owner.weapon.on_weapon_hit(other, self.global_position, hitbox.get_instance_id(), true);
+
 	pierce_count -= 1;
 	if(pierce_count < 0):
 		destroy(3);
