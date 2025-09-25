@@ -58,12 +58,15 @@ stat_scale_value = 0.02
 stat_scale_name = "DMG"
 scaling_stat_float = false
 no_rotation_change = false
+no_projectile_scale_change = false
 weapon_prefab = ExtResource("4_gj2xt")
 bg_projectile = false
 details = "[color=gold]2~3 hits[/color] = +1 DMG"
 white_details = true
 sfx_clash = SubResource("Resource_gj2xt")
 sfx_hit = SubResource("Resource_ocopu")
+leaderboard_offset = 1.0
+leaderboard_rotation = 0.0
 scale_stat_multiplier = 1
 base_damage_multiplier = 1
 no_clash_on_block = false

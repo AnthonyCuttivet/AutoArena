@@ -24,6 +24,7 @@ func init_scaling_stat():
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
 	thunderstrike_duration += stat_scale_value;
+	shoot_speed += 0.02;
 	init_scaling_stat();
 
 func on_listened_event_received(id:int, _to:int, _is_projectile:bool):
@@ -81,7 +82,7 @@ func add_thunderstrike(i0:int, i1:int):
 	var strike:ProjectileThunderStrike = Utils.spawn_projectile(thunderstrike_prefab, ball_owner, pos, rot, self);
 	strike.weapon_owner = self;
 
-	strike.thunderstrike_hitbox.shape.height = p0.distance_to(p1);
+	strike.thunderstrike_hitbox.shape.height = (p0.distance_to(p1) / 2.3);
 	strike.thunderstrike_hitbox.shape.radius = 2.5;
 
 	strike.thunderstrike_line.set_point_position(0, strike.thunderstrike_line.to_local(p0));

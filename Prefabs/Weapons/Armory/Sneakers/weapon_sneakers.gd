@@ -2,6 +2,8 @@ class_name WeaponSneakers extends Weapon
 
 @onready var sprite_parent: Node2D = $Sprite2D/SpriteParent
 
+var dmg:float = 1.0;
+
 func _init() -> void:
 	EventBus.ball_weapon_hit.connect(on_weapon_hit_received);
 	EventBus.ball_weapon_clash.connect(on_weapon_clash_received);
@@ -12,8 +14,9 @@ func init_scaling_stat():
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
-	damage += stat_scale_value;
-	knockback += stat_scale_value * 100.0;
+	dmg += stat_scale_value;
+	damage = int(dmg);
+	knockback += 200.0;
 	init_scaling_stat();
 
 func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:bool = false) -> void:
@@ -35,13 +38,13 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	ball_owner.start_hitstop(0.0, hitstop);
 	other.start_hitstop(0.0, hitstop, kb);
 	on_hit_animation();
-	get_tree().create_timer(0.1).timeout.connect(on_weapon_hit_delayed.bind(d, other, kb, hit_pos));
+	get_tree().create_timer(0.15).timeout.connect(on_weapon_hit_delayed.bind(d, other, kb, hit_pos));
 	pass;
 
 func on_weapon_hit_delayed(d:int, other:BattleBall, kb:Vector2, hit_pos:Vector2):
 	other.affect_health(-d, ball_owner);
-	ball_owner.start_hitstop(0.0, 0.1);
-	other.start_hitstop(0.0, 0.1, kb, true);
+	ball_owner.start_hitstop(0.0, 0.125);
+	other.start_hitstop(0.0, 0.125, kb, true);
 	other.hitflash(hitstop);
 	other.hit_pos = hit_pos;
 	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), false);
@@ -58,10 +61,10 @@ func on_weapon_clash_received(id:int, _clash_pos:Vector2, _silent:bool):
 
 func on_hit_animation():
 	var t:Tween = create_tween();
-	t.tween_property(sprite_parent, "scale:y", 2.5, 0.08).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT);
-	t.parallel().tween_property(sprite_parent, "position:y", 50.0, 0.08).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT);
-	t.tween_property(sprite_parent, "scale:y", 1.0, 0.05).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT);
-	t.parallel().tween_property(sprite_parent, "position:y", 0.0, 0.05).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT);
+	t.tween_property(sprite_parent, "scale:y", 2.5, 0.12).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT).set_delay(0.15);
+	t.parallel().tween_property(sprite_parent, "position:y", 50.0, 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT);
+	t.tween_property(sprite_parent, "scale:y", 1.0, 0.15).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT);
+	t.parallel().tween_property(sprite_parent, "position:y", 0.0, 0.15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT);
 
 func on_clash_animation():
 	var t:Tween = create_tween();
@@ -71,5 +74,5 @@ func on_clash_animation():
 
 func set_battleblock_modifiers():
 	super.set_battleblock_modifiers();
-	ball_owner.gravity_strength /= 3.5;
-	ball_owner.relative_bounce_boost = 0.3;
+	ball_owner.gravity_strength /= 5.0;
+	ball_owner.relative_bounce_boost = 0.5;

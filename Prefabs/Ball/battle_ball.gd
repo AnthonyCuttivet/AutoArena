@@ -60,6 +60,7 @@ class_name BattleBall extends RigidBody2D
 @onready var root: CollisionShape2D = $Root
 @onready var trail_2d: Trail2D = $Root/Trail
 @onready var afterimage: Afterimage = $Root/Afterimage
+@onready var hyper: Sprite2D = $Root/Hyper
 
 var main:Main = null;
 var is_init:bool = false;
@@ -434,6 +435,8 @@ func death():
 	dead = true;
 	visible = false;
 	invincible_for = 99;
+	weapon.clear_owner_projectile();
+	stop_combo();
 	set_process(false);
 	set_deferred("global_position", Vector2.ONE * 9999 if !can_respawn else respawn_pos);
 	set_deferred("freeze", true);
@@ -618,8 +621,8 @@ func update_ui_details(c:Color, raw:bool = false):
 	details_text.modulate = c;
 
 func update_ui_stat(c:Color):
-	if(!dead):
-		stat_text.format([weapon_settings.name]);
+	# if(!dead):
+	# 	stat_text.format([weapon_settings.name]);
 	stat_text.self_modulate = c;
 
 func nerf_max_speed(v:float):
@@ -683,9 +686,9 @@ func add_combo(t:BattleBall):
 
 func stop_combo():
 	current_combo = 0;
-	combo_remaining = 0.0;
-
+	# combo_remaining = 0.0;
 	EventBus.ball_combo_reset.emit(get_instance_id());
+
 
 # ------- Cheats ---------
 
@@ -694,6 +697,8 @@ func update_cheat_hitbox_size(damaged_by:BattleBall, max_bonus:float):
 
 	if(is_underdog(damaged_by)):
 		w = 1.0 - (float(health) / float(base_health));
+	else:
+		w = 0.0;
 
 	var b:float = lerp(1.0, 1.0 + max_bonus, w);
 

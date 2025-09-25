@@ -162,8 +162,8 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 
 func on_weapon_clash(other:Node2D, clash_pos:Vector2, projectile_hit:bool = false, silent:bool = false):
 	if(other == null): return;
-	# if(ball_owner.is_in_same_team(other)):
-	# 	return;
+	if(ball_owner.is_in_same_team(other)):
+		return;
 
 	if(!silent):
 		AudioManager.play_sfx(settings.sfx_clash, "SFX");
@@ -210,7 +210,8 @@ func shoot_projectile():
 	p.global_position = sprite_2d.global_position;
 	p.rotation = ball_owner.weapon_slot.global_rotation;
 	p.scale = ball_owner.weapon_slot.scale * ball_owner.root.scale * projectile_scale;
-	p.hitbox.scale *= 1.0 + cheat_hitbox_scale_bonus;
+	if(!settings.no_projectile_scale_change):
+		p.hitbox.scale *= 1.0 + cheat_hitbox_scale_bonus;
 	p.weapon_owner = self;
 	p.init(ball_owner, projectile_speed, 0, 0);
 
@@ -233,12 +234,15 @@ func get_custom_damage_value() -> int:
 func get_custom_stat_format() -> String:
 	return "";
 
-func reset():
+func clear_owner_projectile():
 	for p in owned_projectiles:
 		if(p != null):
 			p.queue_free();
 
 	owned_projectiles.clear();
+
+func reset():
+	clear_owner_projectile();
 	init_scaling_stat();
 	pass;
 

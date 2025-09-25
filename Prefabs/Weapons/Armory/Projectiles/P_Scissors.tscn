@@ -22,7 +22,7 @@ height = 58.0
 [node name="ProjectileScissors" type="Node2D" node_paths=PackedStringArray("hitbox", "sprite_2d")]
 script = ExtResource("1_vlave")
 move_duration = 0.5
-fixed_lifetime = 5.0
+fixed_lifetime = 6.0
 acceleration_curve = SubResource("Curve_vlave")
 rotation_speed = 720.0
 hitbox = NodePath("Sprite2D/ProjectileHitbox")

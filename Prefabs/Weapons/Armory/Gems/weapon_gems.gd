@@ -19,6 +19,7 @@ var dice_index:int = 0;
 var dice_upgrade_effect_remaining:float = 0.0;
 var dice_roll_remaining:float = 0.0;
 var level_name_init:bool = false;
+var roll_bonus:float = 0.0;
 
 func _init() -> void:
 	EventBus.ball_weapon_hit.connect(on_weapon_hit_received);
@@ -62,13 +63,16 @@ func init_scaling_stat():
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
-	var r:int = get_dice_roll();
+	var r:float = get_dice_roll() + roll_bonus;
 	AudioManager.play_sfx(sfx_dice_roll, "SFX");
 	dice_roll_remaining += dice_roll_duration;
 
-	if(r == dice_values[dice_index]):
+	if(r >= dice_values[dice_index] && dice_index < dice_values.size() - 1):
+		roll_bonus = 0.0;
 		set_dice(dice_index+1);
 		on_dice_upgrade();
+	else:
+		roll_bonus += 0.2;
 
 	damage = r;
 	init_scaling_stat();
@@ -98,6 +102,9 @@ func on_dice_upgrade():
 
 func get_custom_stat_format() -> String:
 	var dmg:String = str(damage);
+
+	if(ball_owner.stop):
+		dice_roll_remaining = 0.0;
 
 	if(dice_upgrade_effect_remaining > 0.0):
 		dmg = "[color=" + max_roll_color.to_html()+"]" + str(damage) + "[/color]";

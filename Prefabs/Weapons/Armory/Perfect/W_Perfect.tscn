@@ -26,7 +26,7 @@ stream_0/stream = ExtResource("4_8dm6b")
 [sub_resource type="Resource" id="Resource_1rqyb"]
 script = ExtResource("3_qx20b")
 audio_stream = SubResource("AudioStreamRandomizer_piohh")
-volume = -20.0
+volume = -25.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]

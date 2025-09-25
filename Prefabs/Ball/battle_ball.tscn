@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://dq1w5q1d2hbls"]
+[gd_scene load_steps=17 format=3 uid="uid://dq1w5q1d2hbls"]
 
 [ext_resource type="Script" uid="uid://cp82leg5g74mt" path="res://Prefabs/Ball/battle_ball.gd" id="1_0l4tw"]
 [ext_resource type="Texture2D" uid="uid://bfvdgok43dr2p" path="res://Graphics/Images/circle-svgrepo-com.svg" id="1_lj2f6"]
 [ext_resource type="FontFile" uid="uid://bglbd1ylrt02k" path="res://Graphics/Fonts/big_noodle_titling.ttf" id="2_0l4tw"]
+[ext_resource type="Shader" uid="uid://b7sq5hxxopetp" path="res://addons/PaletteTools/Shaders/rainbow_shader.gdshader" id="3_ecnwd"]
 [ext_resource type="Shader" uid="uid://dtyu4fqs87aw3" path="res://Graphics/Shaders/hitflash.gdshader" id="4_5hbfo"]
 [ext_resource type="Script" uid="uid://d2dw2w8owaf37" path="res://Prefabs/Ball/hurtbox.gd" id="5_x46jw"]
 [ext_resource type="Script" uid="uid://c0yo17knk84wp" path="res://Prefabs/Ball/trail.gd" id="6_5hbfo"]
@@ -14,6 +15,12 @@ bounce = 1.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_j21cw"]
 radius = 370.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gn5uy"]
+shader = ExtResource("3_ecnwd")
+shader_parameter/strength = 0.5
+shader_parameter/speed = 0.5
+shader_parameter/angle = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yvhfn"]
 resource_local_to_scene = true
@@ -46,6 +53,7 @@ max_contacts_reported = 50
 linear_damp_mode = 1
 script = ExtResource("1_0l4tw")
 clash_invincibility = 0.15
+max_combo_duration = 1.2
 max_speed = 2300.0
 
 [node name="Root" type="CollisionShape2D" parent="."]
@@ -60,6 +68,13 @@ scale = Vector2(22, 22)
 self_modulate = Color(0, 0, 0, 1)
 texture_filter = 4
 scale = Vector2(1.12, 1.12)
+texture = ExtResource("1_lj2f6")
+
+[node name="Hyper" type="Sprite2D" parent="Root"]
+visible = false
+texture_filter = 4
+material = SubResource("ShaderMaterial_gn5uy")
+scale = Vector2(1.05, 1.05)
 texture = ExtResource("1_lj2f6")
 
 [node name="Circle" type="Sprite2D" parent="Root"]
@@ -95,6 +110,7 @@ ball_owner = NodePath("../..")
 shape = SubResource("CircleShape2D_x46jw")
 
 [node name="Trail" type="Line2D" parent="Root" node_paths=PackedStringArray("pos_reference")]
+visible = false
 show_behind_parent = true
 top_level = true
 width = 35.0
@@ -109,6 +125,7 @@ length = 10
 pos_reference = NodePath("../..")
 
 [node name="Afterimage" type="Node2D" parent="Root" node_paths=PackedStringArray("source_sprite")]
+visible = false
 script = ExtResource("7_yvhfn")
 source_sprite = NodePath("../Circle")
 spawn_interval = 0.01

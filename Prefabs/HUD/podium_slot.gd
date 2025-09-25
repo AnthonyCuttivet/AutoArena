@@ -22,17 +22,13 @@ func fill_data(data:TimeAttackData, time_color:String, time_freq:String):
 			data.ball_2_color.to_html(), str(data.ball_2_damage)
 		]
 	);
-	
+
 	color_1.self_modulate = data.ball_1_color;
 	weapon_1.texture = data.ball_1_sprite;
 	weapon_1.flip_h = data.ball_1_flip_h;
 	weapon_1.position.x = data.ball_1_offset;
-	#weapo.rotation += data.ball_1_rot;
 
 	color_2.self_modulate = data.ball_2_color;
 	weapon_2.texture = data.ball_2_sprite;
 	weapon_2.flip_h = data.ball_2_flip_h;
 	weapon_2.position.x = data.ball_2_offset;
-	#weapon_slot_2.rotation += data.ball_2_rot;
-	
-	

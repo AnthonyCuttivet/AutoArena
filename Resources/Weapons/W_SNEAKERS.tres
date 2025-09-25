@@ -1,32 +1,32 @@
 [gd_resource type="Resource" script_class="WeaponSettings" load_steps=11 format=3 uid="uid://bf8pi3p1oxsvc"]
 
 [ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="1_rv3uh"]
-[ext_resource type="AudioStream" uid="uid://cowlk46iwqau7" path="res://Audio/SFX/BattleBalls/se_jack_attackair_B01.wav" id="2_ssvrm"]
+[ext_resource type="AudioStream" uid="uid://c8sy0qipq1l5i" path="res://Audio/SFX/BattleBalls/bouncy-fart (mp3cut.net).mp3" id="2_rv3uh"]
 [ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="3_6d3lv"]
-[ext_resource type="AudioStream" uid="uid://dboluvfeqauop" path="res://Audio/SFX/BattleBalls/se_jack_smash_H01_ft.wav" id="4_bixdl"]
+[ext_resource type="AudioStream" uid="uid://sn0c03lcatoe" path="res://Audio/SFX/BattleBalls/basketball-bounce (mp3cut.net).mp3" id="4_ssvrm"]
 [ext_resource type="Texture2D" uid="uid://b3raxmeyc3cxi" path="res://Graphics/_Addons/Icons/fc8888.png" id="5_rv3uh"]
 [ext_resource type="PackedScene" uid="uid://bgo02e5k37iu5" path="res://Prefabs/Weapons/Armory/Sneakers/W_Sneakers.tscn" id="6_rv3uh"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5f5ec"]
 random_pitch = 1.05
 streams_count = 1
-stream_0/stream = ExtResource("2_ssvrm")
+stream_0/stream = ExtResource("2_rv3uh")
 
 [sub_resource type="Resource" id="Resource_g6hdt"]
 script = ExtResource("3_6d3lv")
 audio_stream = SubResource("AudioStreamRandomizer_5f5ec")
-volume = -29.0
+volume = -25.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_338fr"]
 random_pitch = 1.1
 streams_count = 1
-stream_0/stream = ExtResource("4_bixdl")
+stream_0/stream = ExtResource("4_ssvrm")
 
 [sub_resource type="Resource" id="Resource_tmfjn"]
 script = ExtResource("3_6d3lv")
 audio_stream = SubResource("AudioStreamRandomizer_338fr")
-volume = -26.0
+volume = -17.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [resource]
@@ -45,7 +45,7 @@ base_knockback = 3000.0
 base_attack_speed = 1.0
 base_shoot_speed = 1.0
 base_size = 8.0
-base_hitstop = 0.35
+base_hitstop = 0.5
 base_projectiles = 0
 base_projectile_speed = 1000.0
 base_projectile_scale = 0.75
@@ -54,17 +54,20 @@ base_rot_speed_bounce_boost = false
 projectile_self_hitstop = false
 lifesteal = false
 lifesteal_tick = 1
-stat_scale_value = 1.0
+stat_scale_value = 0.5
 stat_scale_name = "Damage"
 scaling_stat_float = false
 no_rotation_change = false
+no_projectile_scale_change = false
 weapon_prefab = ExtResource("6_rv3uh")
 bg_projectile = false
 details = ""
 white_details = false
 sfx_clash = SubResource("Resource_g6hdt")
 sfx_hit = SubResource("Resource_tmfjn")
+leaderboard_offset = 1.0
+leaderboard_rotation = 0.0
 scale_stat_multiplier = 1
-base_damage_multiplier = 1
+base_damage_multiplier = 6
 no_clash_on_block = false
 metadata/_custom_type_script = "uid://c1biydo2yju8x"

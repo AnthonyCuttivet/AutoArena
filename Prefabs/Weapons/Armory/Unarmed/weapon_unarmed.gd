@@ -66,7 +66,8 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 
 	var kb_dist:float = (knockback * (1.0 + (current_damage / 15.0))) + other.linear_velocity.length() if !other.is_boss else 0.0;
 	var kb:Vector2 = (other.global_position - ball_owner.global_position).normalized() * kb_dist;
-	var h:float = hitstop + (current_damage / 50.0);
+	# var h:float = hitstop + (current_damage / 50.0);
+	var h:float = hitstop;
 
 	if(projectile_hit):
 		kb = (hit_pos - ball_owner.global_position).normalized() * kb_dist;

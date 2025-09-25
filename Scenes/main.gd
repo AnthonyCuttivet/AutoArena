@@ -14,6 +14,7 @@ class_name Main extends Node2D
 @export var time_attack_endgame_delay:float = 2.0;
 @export var time_attack_ranking_duration:float = 15.0;
 @export var free_for_all:bool = false;
+@export var use_2v2_colors:bool = false;
 @export var _2v2_colors:Array[Color];
 @export var tournament_mode:bool = false;
 @export var bo3_mode:bool = false;
@@ -57,6 +58,7 @@ class_name Main extends Node2D
 @export var rainbow_borders:bool = false;
 @export var _1v1_hp:int = 50;
 @export var _1v2_hp:int = 75;
+@export var _2v2_hp:int = 75;
 @export var attraction_point:Node2D;
 
 @export var use_cheat_hitbox:bool = false;
@@ -112,8 +114,14 @@ class_name Main extends Node2D
 
 # -------------- Combos ----------------
 
-@onready var combo_counter_L1: ComboCounterUI = $UI/Combos/ComboCounterL1
-@onready var combo_counter_R1: ComboCounterUI = $UI/Combos/ComboCounterR1
+@onready var combo_counter_L1_1P: ComboCounterUI = $UI/Combos/ComboCounterL1_1P
+@onready var combo_counter_R1_1P: ComboCounterUI = $UI/Combos/ComboCounterR1_1P
+
+@onready var combo_counter_L1_2P: ComboCounterUI = $UI/Combos/ComboCounterL1_2P
+@onready var combo_counter_L2_2P: ComboCounterUI = $UI/Combos/ComboCounterL2_2P
+@onready var combo_counter_R1_2P: ComboCounterUI = $UI/Combos/ComboCounterR1_2P
+@onready var combo_counter_R2_2P: ComboCounterUI = $UI/Combos/ComboCounterR2_2P
+
 
 # -------------- BattleBlock ----------------
 
@@ -373,7 +381,7 @@ func start_game():
 	if(request.visible):
 		var t:Tween = create_tween();
 		t.tween_property(request, "position:y", 120.0, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK);
-		t.tween_property(request, "modulate:a", 0.0, 1.0).set_delay(4.0);
+		t.tween_property(request, "modulate:a", 0.0, 0.1).set_delay(4.0);
 
 	if(new_challenger_mode):
 		balls[1].stop = true;
@@ -462,8 +470,8 @@ func reset_match():
 	balls[0].respawn(_1v1_spots[0], _1v1_hp);
 	balls[1].respawn(_1v1_spots[1], _1v1_hp);
 
-	fill_character_ui(balls[0], name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1);
-	fill_character_ui(balls[1], name_right_1p, sprite_right_1p, details_right_1p, stat_right_1p, combo_counter_L1);
+	fill_character_ui(balls[0], name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
+	fill_character_ui(balls[1], name_right_1p, sprite_right_1p, details_right_1p, stat_right_1p, combo_counter_R1_1P);
 
 	balls[0].weapon.reset();
 	balls[1].weapon.reset();
@@ -481,8 +489,6 @@ func init_ui():
 	container_battlelock.visible = battleblock_mode;
 	hook.visible = battleblock_mode;
 
-	fill_character_ui(balls[0], name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1);
-
 	container_1v1_left.visible = balls.size() <= 3;
 	container_1v1_right.visible = balls.size() == 2;
 	container_2v2_left.visible = balls.size() == 4;
@@ -496,15 +502,17 @@ func init_ui():
 	stat_right_2_2p.visible = container_2v2_right.visible;
 
 	if(balls.size() == 2):
-		fill_character_ui(balls[1], name_right_1p, sprite_right_1p, details_right_1p, stat_right_1p, combo_counter_R1);
+		fill_character_ui(balls[0], name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
+		fill_character_ui(balls[1], name_right_1p, sprite_right_1p, details_right_1p, stat_right_1p, combo_counter_R1_1P);
 	elif(balls.size() == 3):
-		fill_character_ui(balls[1], name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p, combo_counter_L1);
-		fill_character_ui(balls[2], name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p, combo_counter_L1);
+		fill_character_ui(balls[0], name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
+		fill_character_ui(balls[1], name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p, combo_counter_R1_2P);
+		fill_character_ui(balls[2], name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p, combo_counter_R2_2P);
 	elif(balls.size() == 4):
-		fill_character_ui(balls[0], name_left_1_2p, sprite_left_1_2p, details_left_1_2p, stat_left_1_2p, combo_counter_L1);
-		fill_character_ui(balls[1], name_left_2_2p, sprite_left_2_2p, details_left_2_2p, stat_left_2_2p, combo_counter_L1);
-		fill_character_ui(balls[2], name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p, combo_counter_L1);
-		fill_character_ui(balls[3], name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p, combo_counter_L1);
+		fill_character_ui(balls[0], name_left_1_2p, sprite_left_1_2p, details_left_1_2p, stat_left_1_2p, combo_counter_L1_2P);
+		fill_character_ui(balls[1], name_left_2_2p, sprite_left_2_2p, details_left_2_2p, stat_left_2_2p, combo_counter_L2_2P);
+		fill_character_ui(balls[2], name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p, combo_counter_R1_2P);
+		fill_character_ui(balls[3], name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p, combo_counter_R2_2P);
 
 	if(battleblock_mode):
 		fill_battleblock_ui(balls[0], bb_left, bb_blocks_left);
@@ -572,6 +580,7 @@ func on_ball_damaged(id: int, amount:int, from:int):
 
 	add_damage_dealt(from, abs(amount));
 	get_ball_by_id(from).add_combo(ball);
+	ball.stop_combo();
 
 	var fx: GPUParticles2D = fx_hit_prefab.instantiate();
 
@@ -756,7 +765,7 @@ func setup_fight():
 		for block in block_breaker.get_child(0).get_children():
 			block.main = self;
 
-	if(balls.size() == 4 && !free_for_all):
+	if(use_2v2_colors && balls.size() == 4 && !free_for_all):
 		balls[0].color = _2v2_colors[0];
 		balls[1].color = _2v2_colors[1];
 		balls[2].color = _2v2_colors[2];
@@ -834,28 +843,28 @@ func place_fighting_balls():
 		balls[2].global_position = _2v2_spots[2] if !free_for_all else _4v_ffa_spots[2];
 		balls[3].global_position = _2v2_spots[3] if !free_for_all else _4v_ffa_spots[3];
 
-		balls[0].init_health(_1v1_hp);
-		balls[1].init_health(_1v1_hp);
-		balls[2].init_health(_1v1_hp);
-		balls[3].init_health(_1v1_hp);
+		balls[0].init_health(_2v2_hp);
+		balls[1].init_health(_2v2_hp);
+		balls[2].init_health(_2v2_hp);
+		balls[3].init_health(_2v2_hp);
 
 		balls[0].team = 0;
 		balls[1].team = 0 if !free_for_all else 1;
 		balls[2].team = 1 if !free_for_all else 2;
 		balls[3].team = 1 if !free_for_all else 3;
 
-		balls[0].nerf_max_speed(0.75);
-		balls[1].nerf_max_speed(0.75);
-		balls[2].nerf_max_speed(0.75);
-		balls[3].nerf_max_speed(0.75);
+		balls[0].nerf_max_speed(0.85);
+		balls[1].nerf_max_speed(0.85);
+		balls[2].nerf_max_speed(0.85);
+		balls[3].nerf_max_speed(0.85);
 
-		balls[0].root.scale *= 0.75;
-		balls[1].root.scale *= 0.75;
-		balls[2].root.scale *= 0.75;
-		balls[3].root.scale *= 0.75;
+		balls[0].root.scale *= 0.85;
+		balls[1].root.scale *= 0.85;
+		balls[2].root.scale *= 0.85;
+		balls[3].root.scale *= 0.85;
 
 		# Special trick for late game fake zoom
-		mult_author_font_size(0.75);
+		mult_author_font_size(0.85);
 
 	if(battleblock_mode):
 		for i in balls.size():
@@ -900,10 +909,16 @@ func add_time_attack_result():
 
 func show_time_attack_rankings():
 	print("Show");
+
 	time_attack_leaderboard_ui.position.x = 2000.0;
 	time_attack_leaderboard_ui.visible = true;
 	var tween:Tween = create_tween();
 	tween.tween_property(time_attack_leaderboard_ui, "position:x", 0.0, 1.0).set_trans(Tween.TRANS_SPRING);
+	tween.finished.connect(func():
+		for b in balls:
+			b.weapon.clear_owner_projectile();
+	);
+
 	var t_stop_record:SceneTreeTimer = get_tree().create_timer(time_attack_ranking_duration);
 	t_stop_record.timeout.connect(stop_record);
 
@@ -934,8 +949,16 @@ func set_time_scale_smooth(v: float, d:float, burst:float):
 	tween.tween_property(Engine, "time_scale", 1.0, d-burst).set_delay(burst);
 
 func show_winner_text(winners:Array[BattleBall]):
+
 	if(winners.size() == 1):
-		winner_text.format(["[color=" + winners[0].color.to_html() + "]" + winners[0].weapon_settings.name + "[/color] wins!"]);
+		var s:String = "";
+
+		if(hypermatch_mode):
+			s = "[color=#FF9494]✦[/color][color=#FFF094]Ｈ[/color][color=#B3FF94]Ｙ[/color][color=#94FFD1]Ｐ[/color][color=#94D1FF]Ξ[/color][color=#B394FF]Ｒ[/color][color=#FF94F0]✦[/color] "
+
+		s += "[color=" + winners[0].color.to_html() + "]" + winners[0].weapon_settings.name + "[/color] wins!"
+
+		winner_text.format([s]);
 
 	if(winners.size() == 2):
 		winner_text.format(
@@ -1035,10 +1058,11 @@ func apply_cheats(ball:BattleBall):
 
 func init_hypermatch():
 	for i in balls.size():
+		balls[i].hyper.visible = true;
 		balls[i].init_health(hypermatch_hp);
 		balls[i].update_health_text();
 		for j in hypermatch_scales[i]:
-			balls[i].weapon.scale_stat();
+			balls[i].weapon.scale_stat(true);
 
 func spawn_fx(fx_prefab:PackedScene, pos:Vector2, rot:float):
 	var fx: GPUParticles2D = fx_prefab.instantiate();

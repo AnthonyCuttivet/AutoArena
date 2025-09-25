@@ -31,6 +31,7 @@ class_name WeaponSettings extends Resource
 @export var scaling_stat_float:bool = false;
 
 @export var no_rotation_change:bool = false;
+@export var no_projectile_scale_change:bool = false;
 
 @export var weapon_prefab:PackedScene;
 @export var projectile_prefab:PackedScene;
@@ -41,6 +42,9 @@ class_name WeaponSettings extends Resource
 @export var sfx_clash:SFX;
 @export var sfx_hit:SFX;
 @export var sfx_shoot:SFX;
+
+@export var leaderboard_offset:float = 1.0;
+@export var leaderboard_rotation:float = 0.0;
 
 @export var scale_stat_multiplier:int = 1;
 @export var base_damage_multiplier:int = 1;

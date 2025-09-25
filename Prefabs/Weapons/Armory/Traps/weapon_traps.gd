@@ -1,7 +1,6 @@
 class_name WeaponTraps extends Weapon
 
 @export var trap_hit_total_duration:float = 0.4;
-@export var combo_duration:float = 1.0;
 @export var tx_neutral_trap:Texture;
 
 @export var tx_armed_trap:Texture;
@@ -20,7 +19,6 @@ class_name WeaponTraps extends Weapon
 @export var sfx_trap_broken:SFX;
 @export var sfx_trap_trigger:SFX;
 
-var combo_values:Dictionary[int,int];
 var combo_remainings:Dictionary[int,float];
 var best_combo:int = 0;
 
@@ -33,10 +31,10 @@ func _init() -> void:
 
 func _process(delta: float) -> void:
 	for ball_id in combo_remainings:
-		if(combo_remainings[ball_id] <= delta && combo_remainings[ball_id] > 0.0):
-			clear_combo(ball_id);
-		else:
-			combo_remainings[ball_id] -= delta;
+		# if(combo_remainings[ball_id] <= delta && combo_remainings[ball_id] > 0.0):
+		# 	clear_combo(ball_id);
+		# else:
+		combo_remainings[ball_id] -= delta;
 
 func init_scaling_stat():
 	scaling_stat_value = damage;
@@ -47,20 +45,20 @@ func scale_stat(force:bool = false):
 	damage += stat_scale_value;
 	init_scaling_stat();
 
-func on_trap_hit(other:BattleBall, hit_pos:Vector2, kb_dir:Vector2, hitstop:float):
+func on_trap_hit(other:BattleBall, hit_pos:Vector2, kb_dir:Vector2, h:float):
 	other.affect_health(-damage, ball_owner);
-	other.start_hitstop(0.0, hitstop, kb_dir * knockback, true, true);
-	other.hitflash(hitstop);
+	other.start_hitstop(0.0, h, kb_dir * knockback, true, true);
+	other.hitflash(h);
 	other.hit_pos = hit_pos;
 
 	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), false);
 	add_combo(other.get_instance_id(), hit_pos);
 
 	other.trail_2d.set_color(ball_owner.color);
-	other.show_trail_for(combo_duration);
+	other.show_trail_for(ball_owner.max_combo_duration);
 	other.afterimage.spawn_interval = 0.05;
 	other.afterimage.set_custom_color(ball_owner.color);
-	other.afterimage.draw_afterimages_for(combo_duration);
+	other.afterimage.draw_afterimages_for(ball_owner.max_combo_duration);
 
 func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:bool = false) -> void:
 	if(ball_owner.is_in_same_team(other)):
@@ -92,41 +90,30 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	pass;
 
 func trap_hit_fxs(pos:Vector2):
-	ball_owner.main.spawn_fx(fx_trap_hit, pos, 0.0);
-	ball_owner.main.spawn_fx(fx_trap_hit, pos, 0.0);
-	ball_owner.main.spawn_fx(fx_trap_hit, pos, 0.0);
-	ball_owner.main.spawn_fx(fx_trap_hit, pos, 0.0);
-	ball_owner.main.spawn_fx(fx_trap_hit, pos, 0.0);
+	for i in 5:
+		ball_owner.main.spawn_fx(fx_trap_hit, pos, 0.0);
 
-func add_combo(ball_id:int, hit_pos:Vector2) -> int:
-	if(!combo_values.has(ball_id)):
-		combo_values[ball_id] = 0;
+func add_combo(ball_id:int, hit_pos:Vector2):
+	if(!combo_remainings.has(ball_id)):
 		combo_remainings[ball_id] = 0.0;
 
-	combo_values[ball_id] += 1;
-	combo_remainings[ball_id] = combo_duration;
+	combo_remainings[ball_id] = ball_owner.max_combo_duration;
 
 	if(best_combo == 0): # Because the first hit deals no damage, so no event for "damaged"
 		ball_owner.add_combo(ball_owner.main.get_ball_by_id(ball_id));
 
 	# update_details_combo(combo_values[ball_id]);
 
-	if(combo_values[ball_id] > best_combo):
-		on_best_combo(combo_values[ball_id], hit_pos);
-
-	return combo_values[ball_id];
+	if(ball_owner.current_combo > best_combo):
+		on_best_combo(ball_owner.current_combo, hit_pos);
 
 func clear_combo(ball_id:int):
-	combo_values[ball_id] = 0;
 	combo_remainings[ball_id] = 0.0;
 	# update_details_combo(0);
 	# print(Utils.pf() + " Combo RESET");
 
 func is_in_combo(ball_id) -> bool:
 	return combo_remainings.has(ball_id) && combo_remainings[ball_id] > 0.0;
-
-func get_combo_value(ball_id) -> int:
-	return combo_values[ball_id] if combo_values.has(ball_id) else 0;
 
 func on_best_combo(v:int, hit_pos):
 	best_combo = v;

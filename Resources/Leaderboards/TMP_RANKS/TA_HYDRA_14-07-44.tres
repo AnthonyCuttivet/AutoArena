@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="TimeAttackData" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://Graphics/_Addons/Icons/fc1705.png" id="1_p25s2"]
+[ext_resource type="Script" path="res://Scripts/time_attack_data.gd" id="2_yy7qe"]
+
+[resource]
+script = ExtResource("2_yy7qe")
+boss = "HYDRA"
+time = 36.2019
+ball_1_name = "BloodBow"
+ball_1_color = Color(0.71, 0.368253, 0.1704, 1)
+ball_1_sprite = ExtResource("1_p25s2")
+ball_1_flip_h = false
+ball_1_rot = 0.0
+ball_1_offset = 12.0
+ball_1_damage = 12
+ball_2_name = "Sandevistan"
+ball_2_color = Color(0.75638, 0.745483, 0.769531, 1)
+ball_2_flip_h = false
+ball_2_rot = 0.0
+ball_2_offset = 25.0
+ball_2_damage = 148

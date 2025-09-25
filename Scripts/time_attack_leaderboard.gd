@@ -19,16 +19,16 @@ func add_line(time:float, balls:Array[BattleBall], damage:Array[int], boss_name:
 	l.ball_1_name = b0.name;
 	l.ball_1_sprite = b0.weapon.sprite_2d.texture;
 	l.ball_1_flip_h = b0.weapon.sprite_2d.flip_h;
-	l.ball_1_rot = b0.weapon.sprite_2d.rotation;
-	l.ball_1_offset = (b0.weapon_settings.offset) + b0.weapon_settings.base_size;
+	l.ball_1_rot = b0.weapon_settings.leaderboard_rotation;
+	l.ball_1_offset = (b0.weapon_settings.leaderboard_offset) + b0.weapon_settings.base_size;
 	l.ball_1_damage = damage[0];
 
 	l.ball_2_color = b1.color;
 	l.ball_2_name = b1.name;
 	l.ball_2_sprite = b1.weapon.sprite_2d.texture;
 	l.ball_2_flip_h = b1.weapon.sprite_2d.flip_h;
-	l.ball_2_rot = b1.weapon.sprite_2d.rotation;
-	l.ball_2_offset = (b1.weapon_settings.offset) + b1.weapon_settings.base_size;
+	l.ball_2_rot = b1.weapon_settings.leaderboard_rotation;
+	l.ball_2_offset = (b1.weapon_settings.leaderboard_offset) + b1.weapon_settings.base_size;
 	l.ball_2_damage = damage[1];
 
 	rankings.push_back(l);

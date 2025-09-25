@@ -1,0 +1,119 @@
+[gd_scene load_steps=5 format=3 uid="uid://os682eocqjf3"]
+
+[ext_resource type="Script" uid="uid://cfjns86fvtjy6" path="res://combo_counter.gd" id="1_5y5to"]
+[ext_resource type="FontFile" uid="uid://bglbd1ylrt02k" path="res://Graphics/Fonts/big_noodle_titling.ttf" id="2_vhsda"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5y5to"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vhsda"]
+bg_color = Color(1, 0.721569, 0.47451, 1)
+
+[node name="ComboCounterRight" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -268.0
+offset_top = -17.0
+offset_right = -268.0
+offset_bottom = -17.0
+script = ExtResource("1_5y5to")
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="Node2D"]
+offset_left = -4.0
+offset_top = 154.0
+offset_right = 109.0
+offset_bottom = 241.0
+color = Color(0, 0, 0, 1)
+
+[node name="Number" type="RichTextLabel" parent="Node2D"]
+clip_contents = false
+offset_left = -121.333
+offset_top = 0.000427246
+offset_right = 32.6667
+offset_bottom = 217.0
+scale = Vector2(1.5, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 21
+theme_override_constants/shadow_offset_y = 13
+theme_override_constants/shadow_offset_x = -12
+theme_override_fonts/normal_font = ExtResource("2_vhsda")
+theme_override_font_sizes/normal_font_size = 200
+text = "11"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 2
+justification_flags = 160
+
+[node name="Hits" type="RichTextLabel" parent="Node2D"]
+modulate = Color(1, 0.721569, 0.47451, 1)
+clip_contents = false
+offset_left = 3.99997
+offset_top = 178.0
+offset_right = 104.0
+offset_bottom = 265.0
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("2_vhsda")
+theme_override_font_sizes/normal_font_size = 50
+text = "HITS"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="Node2D"]
+offset_left = 3.0
+offset_top = 228.0
+offset_right = 103.0
+offset_bottom = 234.0
+theme_override_styles/background = SubResource("StyleBoxFlat_5y5to")
+theme_override_styles/fill = SubResource("StyleBoxFlat_vhsda")
+step = 1.0
+value = 100.0
+fill_mode = 1
+show_percentage = false
+
+[node name="VBars" type="Control" parent="Node2D"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect2" type="ColorRect" parent="Node2D/VBars"]
+layout_mode = 0
+offset_left = 30.0007
+offset_top = 183.0
+offset_right = 38.0007
+offset_bottom = 223.0
+
+[node name="ColorRect3" type="ColorRect" parent="Node2D/VBars"]
+layout_mode = 0
+offset_left = 19.0007
+offset_top = 183.0
+offset_right = 24.0007
+offset_bottom = 223.0
+
+[node name="ColorRect4" type="ColorRect" parent="Node2D/VBars"]
+layout_mode = 0
+offset_left = 11.0007
+offset_top = 183.0
+offset_right = 14.0007
+offset_bottom = 223.0
+
+[node name="ColorRect5" type="ColorRect" parent="Node2D/VBars"]
+layout_mode = 0
+offset_left = 6.0007
+offset_top = 183.0
+offset_right = 8.0007
+offset_bottom = 223.0
+
+[node name="ColorRect6" type="ColorRect" parent="Node2D/VBars"]
+layout_mode = 0
+offset_left = 3.0007
+offset_top = 183.0
+offset_right = 4.0007
+offset_bottom = 223.0

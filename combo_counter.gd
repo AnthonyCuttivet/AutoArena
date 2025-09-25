@@ -13,16 +13,21 @@ var active:bool = false;
 var ui_tween:Tween = null;
 
 func _ready() -> void:
-	EventBus.ball_combo_up.connect(on_ball_combo_up);
-	EventBus.ball_combo_reset.connect(on_ball_combo_reset);
 	base_position = position;
+
+	set_process(false);
+	reset_ui(false);
 
 func _process(_delta: float) -> void:
 	if(!visible): return;
 	progress_bar.value = ball_owner.combo_remaining / ball_owner.max_combo_duration * 100.0;
 
 func init(o:BattleBall):
+	set_process(true);
 	reset_ui(false);
+
+	EventBus.ball_combo_up.connect(on_ball_combo_up);
+	EventBus.ball_combo_reset.connect(on_ball_combo_reset);
 
 	ball_owner = o;
 
@@ -40,6 +45,7 @@ func on_ball_combo_up(id:int, _target:BattleBall):
 	if(!visible):
 		show_combo_counter();
 
+	progress_bar.value = 100.0;
 	number.text = str(ball_owner.current_combo);
 	gamefeel_tween(0.1, 30.0 if is_left else -30.0);
 

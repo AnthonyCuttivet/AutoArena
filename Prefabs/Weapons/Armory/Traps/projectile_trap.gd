@@ -131,7 +131,7 @@ func trigger_trap(ball:BattleBall):
 	get_tree().create_timer(armed_delay).timeout.connect(func():AudioManager.play_sfx(weapon_traps.sfx_trap_armed));
 	get_tree().create_timer(closed_delay).timeout.connect(
 		func():
-			AudioManager.play_sfx(weapon_traps.sfx_trap_trigger, "SFX", 1.0 + (0.15 * weapon_traps.get_combo_value(ball.get_instance_id())));
+			AudioManager.play_sfx(weapon_traps.sfx_trap_trigger, "SFX", 1.0 + (0.15 * ball_owner.current_combo));
 			AudioManager.play_sfx(weapon_traps.sfx_trap_crunch);
 	);
 
