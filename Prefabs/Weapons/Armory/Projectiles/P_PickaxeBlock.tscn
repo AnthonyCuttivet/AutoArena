@@ -1,0 +1,72 @@
+[gd_scene load_steps=10 format=3 uid="uid://6psnklbno0la"]
+
+[ext_resource type="Script" uid="uid://cdcs6lriyhi2y" path="res://Prefabs/Weapons/Armory/Pickaxe/projectile_pickaxe_block.gd" id="1_6p5cq"]
+[ext_resource type="Shader" uid="uid://dewdqohxf515x" path="res://Graphics/Shaders/dissolve.gdshader" id="2_bo2xs"]
+[ext_resource type="Texture2D" uid="uid://defb7rn8kxlg6" path="res://Graphics/_Addons/Icons/fcb_2.png" id="3_6p5cq"]
+[ext_resource type="Script" uid="uid://d27ne0poeo6c7" path="res://Prefabs/Ball/projectile_hitbox.gd" id="4_6p5cq"]
+[ext_resource type="Texture2D" uid="uid://bmre0584plxqj" path="res://Graphics/_Addons/Icons/fc198.png" id="5_47uhu"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uquli"]
+resource_local_to_scene = true
+shader = ExtResource("2_bo2xs")
+shader_parameter/sensitivity = 0.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6p5cq"]
+size = Vector2(33, 33)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vkdj5"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_syxqy"]
+size = Vector2(32, 32)
+
+[node name="ProjectilePickaxeBlock" type="Node2D" node_paths=PackedStringArray("wall", "hitbox", "sprite_2d")]
+script = ExtResource("1_6p5cq")
+wall = NodePath("Sprite2D/Wall")
+hitbox = NodePath("Sprite2D/WeaponHitbox")
+sprite_2d = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_uquli")
+texture = ExtResource("3_6p5cq")
+
+[node name="WeaponHitbox" type="Area2D" parent="Sprite2D"]
+script = ExtResource("4_6p5cq")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
+shape = SubResource("RectangleShape2D_6p5cq")
+
+[node name="Wall" type="StaticBody2D" parent="Sprite2D" groups=["DRYWALL"]]
+collision_mask = 2
+physics_material_override = SubResource("PhysicsMaterial_vkdj5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Wall"]
+shape = SubResource("RectangleShape2D_syxqy")
+debug_color = Color(0.6125, 0, 0.7, 0.42)
+
+[node name="Health" type="Node2D" parent="Sprite2D"]
+position = Vector2(0, 17)
+
+[node name="HP1" type="Sprite2D" parent="Sprite2D/Health"]
+position = Vector2(-7, 0)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("5_47uhu")
+
+[node name="HP2" type="Sprite2D" parent="Sprite2D/Health"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("5_47uhu")
+
+[node name="HP3" type="Sprite2D" parent="Sprite2D/Health"]
+position = Vector2(7, 0)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("5_47uhu")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(33, 0)
+rotation = -1.5708
+hit_from_inside = true
+
+[connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="." method="_on_weapon_hitbox_area_entered"]

@@ -221,7 +221,6 @@ func _process(delta: float) -> void:
 	update_combo_remaining(delta);
 
 func start(m:Main, dir:Vector2):
-	main = m;
 	if(debug_mode):return;
 	stop = false;
 	freeze = false;
@@ -418,8 +417,12 @@ func hitflash(d:float):
 	tween.tween_property(circle, "material:shader_parameter/flash_intensity", 1, 0);
 	tween.chain().tween_property(circle, "material:shader_parameter/flash_intensity", 0, 0).set_delay(d);
 
-func is_in_same_team(other: BattleBall) -> bool:
+func is_in_same_team(other: Node2D) -> bool:
 	if(other == null): return false;
+
+	if(other is not BattleBall):
+		return team == other.ball_owner.team;
+
 	return team == other.team;
 
 func set_or_ignore_invincibility(v:float):
@@ -435,17 +438,17 @@ func death():
 	dead = true;
 	visible = false;
 	invincible_for = 99;
-	weapon.clear_owner_projectile();
 	stop_combo();
 	set_process(false);
 	set_deferred("global_position", Vector2.ONE * 9999 if !can_respawn else respawn_pos);
 	set_deferred("freeze", true);
 	sleeping = true;
 	root.set_deferred("disabled", true);
-	for hitbox:Hitbox in weapon.hitboxes:
-		hitbox.set_deferred("monitorable", false);
-		hitbox.set_deferred("monitoring", false);
-		pass
+	if(weapon != null):
+		weapon.clear_owner_projectile();
+		for hitbox:Hitbox in weapon.hitboxes:
+			hitbox.set_deferred("monitorable", false);
+			hitbox.set_deferred("monitoring", false);
 
 	if(main != null):
 		update_ui_name(main.dead_ui_color);

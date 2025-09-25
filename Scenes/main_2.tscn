@@ -1,4 +1,4 @@
-[gd_scene load_steps=183 format=4 uid="uid://cmsck3y43hvak"]
+[gd_scene load_steps=184 format=4 uid="uid://cmsck3y43hvak"]
 
 [ext_resource type="Script" uid="uid://llbx2bxdfjwy" path="res://Scenes/main.gd" id="1_nmkph"]
 [ext_resource type="Shader" uid="uid://m275kdb8v68b" path="res://Graphics/Shaders/balatro.gdshader" id="1_y2yxb"]
@@ -23,8 +23,8 @@
 [ext_resource type="Texture2D" uid="uid://crarm12ndl2en" path="res://Graphics/_Addons/Icons/fc7.png" id="12_hvjex"]
 [ext_resource type="FontFile" uid="uid://bt2qq5v7nibma" path="res://Graphics/Fonts/PPFraktionMono-Bold.otf" id="12_p1oyv"]
 [ext_resource type="FontFile" uid="uid://bglbd1ylrt02k" path="res://Graphics/Fonts/big_noodle_titling.ttf" id="12_per8v"]
-[ext_resource type="AudioStream" uid="uid://cgrg6c0rjymok" path="res://Audio/SFX/BattleBalls/Announcer/download1758786475253 (mp3cut.net).mp3" id="13_870hc"]
 [ext_resource type="Script" uid="uid://dtqgj8e3uki5c" path="res://Scenes/dynamic_text.gd" id="13_vvmd2"]
+[ext_resource type="AudioStream" uid="uid://bqukcjsgklrgl" path="res://Audio/SFX/BattleBalls/Announcer/download1758823001697 (mp3cut.net).mp3" id="13_xxfh1"]
 [ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="14_0krxf"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="14_cticm"]
 [ext_resource type="AudioStream" uid="uid://cmirt736cd66y" path="res://Audio/BGM/midnight_questing.mp3" id="14_gcqa4"]
@@ -117,6 +117,7 @@
 [ext_resource type="AudioStream" uid="uid://bs064x7ls2nkq" path="res://Audio/SFX/BattleBalls/BattleBlocks/stone7.ogg" id="78_gcqa4"]
 [ext_resource type="AudioStream" uid="uid://cxrs3hwx2t827" path="res://Audio/SFX/BattleBalls/BattleBlocks/stone4.ogg" id="79_vebv7"]
 [ext_resource type="AudioStream" uid="uid://cdb311h237hpn" path="res://Audio/SFX/BattleBalls/BattleBlocks/stone5.ogg" id="80_ux8nf"]
+[ext_resource type="Resource" uid="uid://cv1of44l4du1b" path="res://Resources/Weapons/W_Pickaxe.tres" id="80_xxfh1"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_go1jf"]
 random_pitch = 1.1
@@ -152,7 +153,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="Resource" id="Resource_p1oyv"]
 script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("13_870hc")
+audio_stream = ExtResource("13_xxfh1")
 volume = -20.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
@@ -940,7 +941,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [node name="Main2" type="Node2D" node_paths=PackedStringArray("new_challenger_ball", "battleblock_controller", "balls", "attraction_point")]
 rotation = 1.5708
 script = ExtResource("1_nmkph")
-record = true
+devmode = true
 patchnote_s_per_page = 23.0
 new_challenger_ball = NodePath("Balls/Fighters/Reaper")
 time_attack_leaderboards = Dictionary[String, ExtResource("2_poh84")]({
@@ -954,7 +955,7 @@ hypermatch_hp = 300
 hypermatch_scales = Array[int]([10, 30])
 forced_start_dir = Vector2(0, -1)
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Fighters/Reaper"), NodePath("Balls/Fighters/Gems"), NodePath("Balls/Fighters/Plume"), NodePath("Balls/Fighters/Sandevistan")]
+balls = [NodePath("Balls/Fighters/Pickaxe"), NodePath("Balls/Training/Dummy")]
 fx_hit_prefab = ExtResource("2_8wnqf")
 fx_death_prefab = ExtResource("3_uot50")
 fx_clash = ExtResource("4_0o7lx")
@@ -1395,24 +1396,6 @@ justification_flags = 0
 script = ExtResource("13_vvmd2")
 
 [node name="VS" type="RichTextLabel" parent="UI/Top"]
-layout_mode = 2
-offset_left = 432.001
-offset_top = -103.002
-offset_right = 642.001
-offset_bottom = 113.998
-theme_override_constants/outline_size = 30
-theme_override_fonts/normal_font = ExtResource("12_per8v")
-theme_override_font_sizes/normal_font_size = 100
-text = " VS "
-fit_content = true
-scroll_active = false
-autowrap_mode = 0
-shortcut_keys_enabled = false
-horizontal_alignment = 1
-vertical_alignment = 1
-justification_flags = 0
-
-[node name="VSHyper" type="RichTextLabel" parent="UI/Top"]
 layout_mode = 2
 offset_left = 432.001
 offset_top = -103.002
@@ -2517,6 +2500,8 @@ color = Color(0.578125, 0.321429, 0.35312, 1)
 team = 1
 stop = true
 max_speed = 1400.0
+lock = true
+immobile = true
 
 [node name="Dummy2" parent="Balls/Training" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(3022.81, 1705.99)
@@ -2670,6 +2655,22 @@ gravity_strength = 1800.0
 drag_force = 0.025
 bounce_boost = 0.0
 relative_bounce_boost = 0.1
+
+[node name="Pickaxe" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2370.47, 297.991)
+weapon_settings = ExtResource("80_xxfh1")
+health = 50
+base_weapon_rotation = 120.0
+color = Color(1, 0.568627, 0.282353, 1)
+dead = true
+stop = true
+max_speed = 1700.0
+gravity_strength = 1800.0
+drag_force = 0.025
+bounce_boost = 0.0
+relative_bounce_boost = 0.2
+lock = true
+immobile = true
 
 [node name="Perfect" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2370.47, 297.991)
@@ -3307,11 +3308,11 @@ offset_bottom = 779.0
 [node name="Request" type="TextureRect" parent="."]
 visible = false
 material = SubResource("ShaderMaterial_nfmlc")
-offset_left = 153.002
-offset_top = 830.999
-offset_right = 1703.0
-offset_bottom = 1571.0
-scale = Vector2(0.5, 0.5)
+offset_left = 227.003
+offset_top = 780.999
+offset_right = 2237.0
+offset_bottom = 2071.0
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("32_dpnnm")
 
 [node name="RealRequest" type="TextureRect" parent="Request"]
@@ -3321,8 +3322,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 7.99909
 offset_top = 11.998
-offset_right = 8.0011
-offset_bottom = 12.002
+offset_right = 7.99915
+offset_bottom = 11.998
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("32_dpnnm")

@@ -1,0 +1,62 @@
+[gd_scene load_steps=17 format=3 uid="uid://c3jfjt8rntl4j"]
+
+[ext_resource type="Script" uid="uid://dilbf0r58on08" path="res://Prefabs/Weapons/Armory/Pickaxe/weapon_pickaxe.gd" id="1_chr8l"]
+[ext_resource type="PackedScene" uid="uid://6psnklbno0la" path="res://Prefabs/Weapons/Armory/Projectiles/P_PickaxeBlock.tscn" id="2_2jcoy"]
+[ext_resource type="Texture2D" uid="uid://fgimaxc7bt2j" path="res://Graphics/_Addons/Icons/fc6660.png" id="2_chr8l"]
+[ext_resource type="Texture2D" uid="uid://dp21pi2uxckfw" path="res://Graphics/_Addons/Icons/fc6661.png" id="3_6x4y2"]
+[ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="3_jiw2m"]
+[ext_resource type="Texture2D" uid="uid://dvec4cc8jak0t" path="res://Graphics/_Addons/Icons/fc6662.png" id="4_5ccbo"]
+[ext_resource type="Texture2D" uid="uid://dhxqxlea7mqjk" path="res://Graphics/_Addons/Icons/fc6663.png" id="5_1b8ah"]
+[ext_resource type="Texture2D" uid="uid://b12tes50p0wh2" path="res://Graphics/_Addons/Icons/fc6664.png" id="6_s35r8"]
+[ext_resource type="Texture2D" uid="uid://c2qys7vsmv5uv" path="res://Graphics/_Addons/Icons/fc6665.png" id="7_ud3bx"]
+[ext_resource type="Texture2D" uid="uid://defb7rn8kxlg6" path="res://Graphics/_Addons/Icons/fcb_2.png" id="8_ph152"]
+[ext_resource type="Texture2D" uid="uid://c1l1o15utsga5" path="res://Graphics/_Addons/Icons/fcb_3.png" id="9_7yi4s"]
+[ext_resource type="Texture2D" uid="uid://p8je28aijnxu" path="res://Graphics/_Addons/Icons/fcb_4.png" id="10_sfkfx"]
+[ext_resource type="Texture2D" uid="uid://beeis177bhwud" path="res://Graphics/_Addons/Icons/fcb_5.png" id="11_d1v26"]
+[ext_resource type="Texture2D" uid="uid://gpvk0iv2vacx" path="res://Graphics/_Addons/Icons/fcb_6.png" id="12_mcio3"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_chr8l"]
+height = 38.1838
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2jcoy"]
+radius = 11.3137
+
+[node name="WeaponPickaxe" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]
+script = ExtResource("1_chr8l")
+block_prefab = ExtResource("2_2jcoy")
+pickaxes_textures = Array[Texture]([ExtResource("3_6x4y2"), ExtResource("4_5ccbo"), ExtResource("5_1b8ah"), ExtResource("6_s35r8"), ExtResource("7_ud3bx")])
+blocks_textures = Array[Texture]([ExtResource("8_ph152"), ExtResource("9_7yi4s"), ExtResource("10_sfkfx"), ExtResource("11_d1v26"), ExtResource("12_mcio3")])
+block_spawn_positions = Array[Vector2]([Vector2(540, 977), Vector2(540, 677), Vector2(540, 1277), Vector2(840, 977), Vector2(240, 977), Vector2(240, 677), Vector2(240, 1277), Vector2(840, 1277), Vector2(840, 677)])
+sprite_2d = NodePath("Sprite2D")
+hitboxes = [NodePath("Sprite2D/WeaponHitbox")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(40, 0)
+rotation = 0.785398
+texture = ExtResource("2_chr8l")
+
+[node name="WeaponHitbox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("weapon", "collider")]
+rotation = 0.785398
+script = ExtResource("3_jiw2m")
+weapon = NodePath("../..")
+collider = NodePath("CollisionShape2D")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
+position = Vector2(-20, -11)
+rotation = 0.785398
+shape = SubResource("CapsuleShape2D_chr8l")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
+position = Vector2(20, -11)
+rotation = -0.785398
+shape = SubResource("CapsuleShape2D_chr8l")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
+position = Vector2(7.62939e-06, -29)
+rotation = -0.785398
+shape = SubResource("CircleShape2D_2jcoy")
+
+[connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_entered"]
+[connection signal="area_exited" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_exited"]

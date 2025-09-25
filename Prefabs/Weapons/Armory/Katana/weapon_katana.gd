@@ -43,7 +43,7 @@ func on_weapon_hit_received(id:int, to:int, _is_projectile:bool):
 	init_scaling_stat();
 	pass;
 
-func on_weapon_clash(other:Node2D, clash_pos:Vector2, projectile_hit:bool = false, silent:bool = false):
+func on_weapon_clash(other:Node2D, clash_pos:Vector2, projectile_hit:bool = false, silent:bool = false, force:bool = false):
 	if(!silent):
 		AudioManager.play_sfx(settings.sfx_clash, "SFX");
 

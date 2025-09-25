@@ -59,6 +59,7 @@ class_name Main extends Node2D
 @export var _1v1_hp:int = 50;
 @export var _1v2_hp:int = 75;
 @export var _2v2_hp:int = 75;
+@export var ffa_hp:int = 125;
 @export var attraction_point:Node2D;
 
 @export var use_cheat_hitbox:bool = false;
@@ -489,6 +490,9 @@ func init_ui():
 	container_battlelock.visible = battleblock_mode;
 	hook.visible = battleblock_mode;
 
+	if(free_for_all):
+		vs.text = "FFA";
+
 	container_1v1_left.visible = balls.size() <= 3;
 	container_1v1_right.visible = balls.size() == 2;
 	container_2v2_left.visible = balls.size() == 4;
@@ -501,7 +505,9 @@ func init_ui():
 	stat_right_1_2p.visible = container_2v2_right.visible;
 	stat_right_2_2p.visible = container_2v2_right.visible;
 
-	if(balls.size() == 2):
+	if(balls.size() == 1):
+		fill_character_ui(balls[0], name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
+	elif(balls.size() == 2):
 		fill_character_ui(balls[0], name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
 		fill_character_ui(balls[1], name_right_1p, sprite_right_1p, details_right_1p, stat_right_1p, combo_counter_R1_1P);
 	elif(balls.size() == 3):
@@ -773,10 +779,13 @@ func setup_fight():
 
 	for category in balls_container.get_children():
 		for ball:BattleBall in category.get_children():
-				ball.ready();
 				if(!balls.has(ball)):
 					ball.death();
 					ball.queue_free();
+				else:
+					ball.main = self;
+					ball.ready();
+
 
 	if(!new_challenger_mode):
 		place_fighting_balls();
@@ -843,28 +852,28 @@ func place_fighting_balls():
 		balls[2].global_position = _2v2_spots[2] if !free_for_all else _4v_ffa_spots[2];
 		balls[3].global_position = _2v2_spots[3] if !free_for_all else _4v_ffa_spots[3];
 
-		balls[0].init_health(_2v2_hp);
-		balls[1].init_health(_2v2_hp);
-		balls[2].init_health(_2v2_hp);
-		balls[3].init_health(_2v2_hp);
+		balls[0].init_health(_2v2_hp if !free_for_all else ffa_hp);
+		balls[1].init_health(_2v2_hp if !free_for_all else ffa_hp);
+		balls[2].init_health(_2v2_hp if !free_for_all else ffa_hp);
+		balls[3].init_health(_2v2_hp if !free_for_all else ffa_hp);
 
 		balls[0].team = 0;
 		balls[1].team = 0 if !free_for_all else 1;
 		balls[2].team = 1 if !free_for_all else 2;
 		balls[3].team = 1 if !free_for_all else 3;
 
-		balls[0].nerf_max_speed(0.85);
-		balls[1].nerf_max_speed(0.85);
-		balls[2].nerf_max_speed(0.85);
-		balls[3].nerf_max_speed(0.85);
+		balls[0].nerf_max_speed(0.75);
+		balls[1].nerf_max_speed(0.75);
+		balls[2].nerf_max_speed(0.75);
+		balls[3].nerf_max_speed(0.75);
 
-		balls[0].root.scale *= 0.85;
-		balls[1].root.scale *= 0.85;
-		balls[2].root.scale *= 0.85;
-		balls[3].root.scale *= 0.85;
+		balls[0].root.scale *= 0.75;
+		balls[1].root.scale *= 0.75;
+		balls[2].root.scale *= 0.75;
+		balls[3].root.scale *= 0.75;
 
 		# Special trick for late game fake zoom
-		mult_author_font_size(0.85);
+		mult_author_font_size(0.75);
 
 	if(battleblock_mode):
 		for i in balls.size():
@@ -1028,14 +1037,18 @@ func show_tournament_match_result(w:int):
 
 func on_block_destroyed(_id:int, block:MCBattleBlock):
 	var bb_scale:float = 0.3 if block.current_value <= 0 else 0.15;
+	spawn_fx_block_destroyed(block.global_position, (1.0 if !battleblock_mode else bb_scale), block.stx);
+
+func spawn_fx_block_destroyed(pos:Vector2, scale:float, tx:Texture):
 	var fx: GPUParticles2D = fx_block_destroyed.instantiate();
 	add_child(fx);
-	fx.global_position = block.global_position;
-	fx.texture = block.stx;
+	fx.global_position = pos;
+	fx.texture = tx;
 	fx.emitting = false;
-	fx.scale = Vector2.ONE * (1.0 if !battleblock_mode else bb_scale);
+	fx.scale = Vector2.ONE * scale;
 	fx.finished.connect(fx.queue_free);
 	just_spawned_fxs[fx] = 0;
+
 
 func get_opponent(id:int) -> BattleBall:
 	if(balls.size() != 2):

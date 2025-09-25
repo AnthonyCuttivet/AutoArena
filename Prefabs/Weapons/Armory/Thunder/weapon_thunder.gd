@@ -24,7 +24,7 @@ func init_scaling_stat():
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
 	thunderstrike_duration += stat_scale_value;
-	shoot_speed += 0.02;
+	shoot_speed += 0.015;
 	init_scaling_stat();
 
 func on_listened_event_received(id:int, _to:int, _is_projectile:bool):
