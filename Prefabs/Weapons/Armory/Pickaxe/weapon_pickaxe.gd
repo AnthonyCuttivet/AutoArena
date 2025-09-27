@@ -82,9 +82,17 @@ func spawn_block():
 	var block:ProjectilePickaxeBlock = Utils.spawn_projectile(block_prefab, ball_owner, pos, PI / 2.0, ball_owner.main);
 	block.scale *= block_scale;
 	block.weapon_pickaxe = self;
+
 	block.level = current_level + 1;
+
 	if(current_level >= 1):
-		block.sprite_2d.texture = blocks_textures[get_level_index()];
+		var rand:float = randf();
+		var malus:int = 0;
+		if(rand < 0.3):
+			malus = int(rand * 10) + 1;
+
+		block.level = clamp(block.level - malus, 1, blocks_textures.size());
+		block.sprite_2d.texture = blocks_textures[clamp(get_level_index() - malus, 0, blocks_textures.size())];
 
 	active_blocks.push_back(block);
 
@@ -102,7 +110,7 @@ func init_physics_params():
 	shape.radius = 100.0;
 
 	physics_params.shape = shape
-	physics_params.collide_with_areas = true
+	physics_params.collide_with_areas = false
 	physics_params.collide_with_bodies = true
 	physics_params.collision_mask = 0x00000003;
 
@@ -117,7 +125,7 @@ func on_block_destroyed(from:BattleBall, block:ProjectilePickaxeBlock):
 	active_blocks.erase(block);
 	block.destroy();
 
-	if(from == ball_owner && current_level < block.level):
+	if(from == ball_owner && (current_level < block.level || block.level == blocks_textures.size())):
 		scale_stat();
 		AudioManager.play_sfx(sfx_block_pickaxe, "SFX");
 

@@ -12,6 +12,7 @@ var ranged:bool = false;
 
 var rotation_direction:int = 0;
 var rotation_speed:float = 0.0;
+var rot_speed_multiplier:float = 1.0;
 var damage:int = 0;
 var knockback:float = 0.0;
 var attack_speed:float = 0.0;
@@ -22,7 +23,6 @@ var projectile_speed:float = 0.0;
 var projectile_scale:float = 0.75;
 var shoot_duration:float = 1.0;
 var hitstop:float = 0.0;
-var rot_speed_bounce_boost:bool = false;
 var projectile_self_hitstop:bool = false;
 var lifesteal:bool = false;
 var lifesteal_tick:int = 0;
@@ -48,7 +48,7 @@ var battleblock_mode:bool = false;
 
 var cheat_hitbox_scale_bonus:float = 0.0;
 
-var gamefeel_rot_speed_bonus:float = 0.0;
+var clash_tween:Tween = null;
 
 func init(s:WeaponSettings, o:BattleBall) -> void:
 
@@ -82,7 +82,6 @@ func init(s:WeaponSettings, o:BattleBall) -> void:
 	shoot_duration = settings.base_shoot_duration;
 	hitstop = settings.base_hitstop;
 	shoots_remaining = projectiles;
-	rot_speed_bounce_boost = settings.base_rot_speed_bounce_boost;
 	projectile_self_hitstop = settings.projectile_self_hitstop;
 
 	lifesteal = settings.lifesteal;
@@ -183,18 +182,19 @@ func on_weapon_clash(other:Node2D, clash_pos:Vector2, projectile_hit:bool = fals
 	EventBus.ball_weapon_clash.emit(ball_owner.get_instance_id(), clash_pos, silent);
 	pass;
 
-func clash_gamefeel():
-	if(gamefeel_rot_speed_bonus > 0.0):
-		rotation_speed -= gamefeel_rot_speed_bonus;
+func clash_gamefeel() -> void:
+	if clash_tween and clash_tween.is_running():
+		clash_tween.kill();
+		rot_speed_multiplier = 1.0;
 
-	gamefeel_rot_speed_bonus = rotation_speed * 2.0;
-	var rot_speed:float = rotation_speed;
+	# Boost instantly
+	rot_speed_multiplier = 5.0;
 
-	rotation_speed += gamefeel_rot_speed_bonus;
-
-	var t:Tween = create_tween();
-	t.tween_property(self, "rotation_speed", rot_speed, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT).set_delay(0.15);
-	t.finished.connect(func(): gamefeel_rot_speed_bonus = 0.0);
+	# Tween back smoothly
+	clash_tween = create_tween();
+	clash_tween.tween_property(self, "scale", Vector2.ONE * 1.2, 0.07).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT);
+	clash_tween.tween_property(self, "rot_speed_multiplier", 1.0, 0.2).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT).set_delay(0.1);
+	clash_tween.parallel().tween_property(self, "scale", Vector2.ONE, 0.07).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT);
 
 func reverse_rotation():
 	if(settings.no_rotation_change):

@@ -205,7 +205,7 @@ func _physics_process(delta: float) -> void:
 			# DebugDraw2D.arrow_vector(global_position, linear_velocity.normalized() * 50, Color.RED, 1.0, 1.0);
 			weapon_slot.rotation = linear_velocity.normalized().angle() - deg_to_rad(90.0);
 		elif(!block_weapon_rot):
-			weapon_slot.rotate(deg_to_rad(360.0 * weapon.rotation_speed * weapon.rotation_direction * time_scale) * delta);
+			weapon_slot.rotate(deg_to_rad(360.0 * weapon.rotation_speed * weapon.rotation_direction * weapon.rot_speed_multiplier * time_scale) * delta);
 
 		if(use_cheat_weapon_rotation && !align_weapon_to_velocity):
 			adjust_weapon_rotation(delta);
@@ -337,9 +337,6 @@ func start_hitstop(t:float, duration: float, knockback:Vector2 = Vector2.ZERO, o
 		print(Utils.pf() + " Hitstop Start for " + str(duration) + "s");
 		print(Utils.pf() + " Linear Velocity : " + str(linear_velocity));
 
-	if(weapon.rot_speed_bounce_boost):
-		weapon.rotation_speed = weapon_settings.base_rotation_speed;
-
 	time_scale = t;
 
 	prev_linear_velocity = linear_velocity;
@@ -405,9 +402,6 @@ func _on_body_entered(other: Node) -> void:
 
 	if(other.is_in_group("WALL")):
 		drift_dir *= -1;
-
-		if(weapon.rot_speed_bounce_boost):
-			weapon.rotation_speed += 0.01;
 
 	pass;
 
