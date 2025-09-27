@@ -48,6 +48,8 @@ var battleblock_mode:bool = false;
 
 var cheat_hitbox_scale_bonus:float = 0.0;
 
+var gamefeel_rot_speed_bonus:float = 0.0;
+
 func init(s:WeaponSettings, o:BattleBall) -> void:
 
 	ball_owner = o;
@@ -175,14 +177,30 @@ func on_weapon_clash(other:Node2D, clash_pos:Vector2, projectile_hit:bool = fals
 		kb = (ball_owner.global_position - other.global_position).normalized() * ball_owner.linear_velocity.length() * 1.5;
 		reverse_rotation();
 
+
 	ball_owner.start_hitstop_clash(0.0, 0.15, kb, other);
 
 	EventBus.ball_weapon_clash.emit(ball_owner.get_instance_id(), clash_pos, silent);
 	pass;
 
+func clash_gamefeel():
+	if(gamefeel_rot_speed_bonus > 0.0):
+		rotation_speed -= gamefeel_rot_speed_bonus;
+
+	gamefeel_rot_speed_bonus = rotation_speed * 2.0;
+	var rot_speed:float = rotation_speed;
+
+	rotation_speed += gamefeel_rot_speed_bonus;
+
+	var t:Tween = create_tween();
+	t.tween_property(self, "rotation_speed", rot_speed, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT).set_delay(0.15);
+	t.finished.connect(func(): gamefeel_rot_speed_bonus = 0.0);
+
 func reverse_rotation():
 	if(settings.no_rotation_change):
 		return;
+
+	clash_gamefeel();
 
 	rotation_direction *= -1;
 

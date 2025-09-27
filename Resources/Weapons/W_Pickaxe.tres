@@ -1,33 +1,33 @@
 [gd_resource type="Resource" script_class="WeaponSettings" load_steps=11 format=3 uid="uid://cv1of44l4du1b"]
 
 [ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="1_3d8cw"]
-[ext_resource type="AudioStream" uid="uid://wb7cigowqlsv" path="res://Audio/SFX/BattleBalls/WeaponClash.mp3" id="2_7o4ge"]
+[ext_resource type="AudioStream" uid="uid://boy3wm238wnst" path="res://Audio/SFX/BattleBalls/se_chrom_special_L01.wav" id="2_3d8cw"]
 [ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="3_a31f1"]
-[ext_resource type="AudioStream" uid="uid://cny7ve6gtvqba" path="res://Audio/SFX/BattleBalls/se_master_final02_02.wav" id="4_xri6o"]
+[ext_resource type="AudioStream" uid="uid://csbf2c4knmcgp" path="res://Audio/SFX/BattleBalls/se_edge_attackair_L03.wav" id="4_3d8cw"]
 [ext_resource type="Texture2D" uid="uid://fgimaxc7bt2j" path="res://Graphics/_Addons/Icons/fc6660.png" id="5_3d8cw"]
 [ext_resource type="PackedScene" uid="uid://c3jfjt8rntl4j" path="res://Prefabs/Weapons/Armory/Pickaxe/W_Pickaxe.tscn" id="6_3d8cw"]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4eslf"]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_a31f1"]
 random_pitch = 2.0
 random_volume_offset_db = 1.0
 streams_count = 1
-stream_0/stream = ExtResource("2_7o4ge")
+stream_0/stream = ExtResource("2_3d8cw")
 
-[sub_resource type="Resource" id="Resource_4ivty"]
+[sub_resource type="Resource" id="Resource_xri6o"]
 script = ExtResource("3_a31f1")
-audio_stream = SubResource("AudioStreamRandomizer_4eslf")
+audio_stream = SubResource("AudioStreamRandomizer_a31f1")
 volume = -33.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4ivty"]
-random_pitch = 1.1
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_gomoh"]
+random_pitch = 1.05
 streams_count = 1
-stream_0/stream = ExtResource("4_xri6o")
+stream_0/stream = ExtResource("4_3d8cw")
 
-[sub_resource type="Resource" id="Resource_wbgv2"]
+[sub_resource type="Resource" id="Resource_1cnyt"]
 script = ExtResource("3_a31f1")
-audio_stream = SubResource("AudioStreamRandomizer_4ivty")
-volume = -28.0
+audio_stream = SubResource("AudioStreamRandomizer_gomoh")
+volume = -25.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [resource]
@@ -40,7 +40,7 @@ flip = false
 offset = 8.0
 y_offset = false
 base_rotation_direction = -1
-base_rotation_speed = 0.9
+base_rotation_speed = 0.65
 base_damage = 1
 base_knockback = 3000.0
 base_attack_speed = 0.1
@@ -62,10 +62,10 @@ no_rotation_change = false
 no_projectile_scale_change = false
 weapon_prefab = ExtResource("6_3d8cw")
 bg_projectile = false
-details = ""
+details = "Spawns 1 block on hit"
 white_details = false
-sfx_clash = SubResource("Resource_4ivty")
-sfx_hit = SubResource("Resource_wbgv2")
+sfx_clash = SubResource("Resource_xri6o")
+sfx_hit = SubResource("Resource_1cnyt")
 leaderboard_offset = 1.0
 leaderboard_rotation = 0.0
 scale_stat_multiplier = 1

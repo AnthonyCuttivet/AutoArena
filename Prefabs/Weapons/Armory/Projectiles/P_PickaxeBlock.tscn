@@ -38,6 +38,7 @@ metadata/owner = NodePath("../../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
 shape = SubResource("RectangleShape2D_6p5cq")
+disabled = true
 
 [node name="Wall" type="StaticBody2D" parent="Sprite2D" groups=["DRYWALL"]]
 collision_mask = 2
@@ -48,6 +49,7 @@ shape = SubResource("RectangleShape2D_syxqy")
 debug_color = Color(0.6125, 0, 0.7, 0.42)
 
 [node name="Health" type="Node2D" parent="Sprite2D"]
+visible = false
 position = Vector2(0, 17)
 
 [node name="HP1" type="Sprite2D" parent="Sprite2D/Health"]
