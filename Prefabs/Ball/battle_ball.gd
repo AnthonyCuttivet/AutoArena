@@ -61,6 +61,7 @@ class_name BattleBall extends RigidBody2D
 @onready var trail_2d: Trail2D = $Root/Trail
 @onready var afterimage: Afterimage = $Root/Afterimage
 @onready var hyper: Sprite2D = $Root/Hyper
+@onready var hurtbox: Hurtbox = $Root/Hurtbox
 
 var main:Main = null;
 var is_init:bool = false;

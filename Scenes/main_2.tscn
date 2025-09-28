@@ -24,7 +24,7 @@
 [ext_resource type="FontFile" uid="uid://bt2qq5v7nibma" path="res://Graphics/Fonts/PPFraktionMono-Bold.otf" id="12_p1oyv"]
 [ext_resource type="FontFile" uid="uid://bglbd1ylrt02k" path="res://Graphics/Fonts/big_noodle_titling.ttf" id="12_per8v"]
 [ext_resource type="Script" uid="uid://dtqgj8e3uki5c" path="res://Scenes/dynamic_text.gd" id="13_vvmd2"]
-[ext_resource type="AudioStream" uid="uid://b843i0kd510c7" path="res://Audio/SFX/BattleBalls/Announcer/download1758962730479 (mp3cut.net).mp3" id="13_xxfh1"]
+[ext_resource type="AudioStream" uid="uid://csmws67ang1td" path="res://Audio/SFX/BattleBalls/Announcer/download1759045032073 (mp3cut.net).mp3" id="13_xxfh1"]
 [ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="14_0krxf"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="14_cticm"]
 [ext_resource type="AudioStream" uid="uid://cmirt736cd66y" path="res://Audio/BGM/midnight_questing.mp3" id="14_gcqa4"]
@@ -936,7 +936,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [node name="Main2" type="Node2D" node_paths=PackedStringArray("new_challenger_ball", "battleblock_controller", "balls", "attraction_point")]
 rotation = 1.5708
 script = ExtResource("1_nmkph")
-devmode = true
+record = true
 patchnote_s_per_page = 23.0
 new_challenger_ball = NodePath("Balls/Fighters/Reaper")
 time_attack_leaderboards = Dictionary[String, ExtResource("2_poh84")]({
@@ -950,7 +950,7 @@ hypermatch_hp = 500
 hypermatch_scales = Array[int]([0, 30])
 forced_start_dir = Vector2(0, -1)
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Fighters/Pickaxe"), NodePath("Balls/Fighters/BloodSword")]
+balls = [NodePath("Balls/Fighters/Pickaxe"), NodePath("Balls/Fighters/Bow")]
 fx_hit_prefab = ExtResource("2_8wnqf")
 fx_death_prefab = ExtResource("3_uot50")
 fx_clash = ExtResource("4_0o7lx")
@@ -964,12 +964,12 @@ sfx_death = SubResource("Resource_go1jf")
 ve_announcer = SubResource("Resource_p1oyv")
 announcer_delay = 1.5
 bgm = ExtResource("14_gcqa4")
-bgm_volume = -20.0
+bgm_volume = -25.0
 startup_sfx = ExtResource("15_gcqa4")
 startup_sfx_volume = -22.0
 obs_delay = 4.0
 earclacks_mode = true
-_1v1_hp = 999
+_1v1_hp = 100
 _1v2_hp = 50
 _2v2_hp = 100
 attraction_point = NodePath("AttractionPoint")
@@ -2601,12 +2601,12 @@ base_weapon_rotation = 120.0
 color = Color(0.75638, 0.745483, 0.769531, 1)
 dead = true
 stop = true
-max_speed = 800.0
+max_speed = 900.0
 min_horizontal = 0.0
 gravity_strength = 2000.0
 drag_force = 0.05
 bounce_boost = 0.0
-relative_bounce_boost = 0.4
+relative_bounce_boost = 0.5
 
 [node name="Gems" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2246, 1022.99)
@@ -2653,6 +2653,7 @@ relative_bounce_boost = 0.1
 position = Vector2(2370.47, 297.991)
 weapon_settings = ExtResource("80_xxfh1")
 health = 50
+base_weapon_rotation = 62.0
 color = Color(1, 0.568627, 0.282353, 1)
 dead = true
 stop = true

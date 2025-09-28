@@ -1,10 +1,17 @@
-[gd_scene load_steps=10 format=3 uid="uid://6psnklbno0la"]
+[gd_scene load_steps=12 format=3 uid="uid://6psnklbno0la"]
 
 [ext_resource type="Script" uid="uid://cdcs6lriyhi2y" path="res://Prefabs/Weapons/Armory/Pickaxe/projectile_pickaxe_block.gd" id="1_6p5cq"]
 [ext_resource type="Shader" uid="uid://dewdqohxf515x" path="res://Graphics/Shaders/dissolve.gdshader" id="2_bo2xs"]
+[ext_resource type="Shader" uid="uid://b7sq5hxxopetp" path="res://addons/PaletteTools/Shaders/rainbow_shader.gdshader" id="2_jyw2j"]
 [ext_resource type="Texture2D" uid="uid://defb7rn8kxlg6" path="res://Graphics/_Addons/Icons/fcb_2.png" id="3_6p5cq"]
 [ext_resource type="Script" uid="uid://d27ne0poeo6c7" path="res://Prefabs/Ball/projectile_hitbox.gd" id="4_6p5cq"]
 [ext_resource type="Texture2D" uid="uid://bmre0584plxqj" path="res://Graphics/_Addons/Icons/fc198.png" id="5_47uhu"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_24125"]
+shader = ExtResource("2_jyw2j")
+shader_parameter/strength = 0.6
+shader_parameter/speed = 0.5
+shader_parameter/angle = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uquli"]
 resource_local_to_scene = true
@@ -12,7 +19,7 @@ shader = ExtResource("2_bo2xs")
 shader_parameter/sensitivity = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6p5cq"]
-size = Vector2(33, 33)
+size = Vector2(38, 38)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vkdj5"]
 friction = 0.0
@@ -21,11 +28,20 @@ bounce = 1.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_syxqy"]
 size = Vector2(32, 32)
 
-[node name="ProjectilePickaxeBlock" type="Node2D" node_paths=PackedStringArray("wall", "hitbox", "sprite_2d")]
+[node name="ProjectilePickaxeBlock" type="Node2D" node_paths=PackedStringArray("wall", "upgrade", "hitbox", "sprite_2d")]
 script = ExtResource("1_6p5cq")
 wall = NodePath("Sprite2D/Wall")
+upgrade = NodePath("Upgrade")
 hitbox = NodePath("Sprite2D/WeaponHitbox")
 sprite_2d = NodePath("Sprite2D")
+
+[node name="Upgrade" type="ColorRect" parent="."]
+z_as_relative = false
+material = SubResource("ShaderMaterial_24125")
+offset_left = -17.0
+offset_top = -17.0
+offset_right = 17.0
+offset_bottom = 17.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

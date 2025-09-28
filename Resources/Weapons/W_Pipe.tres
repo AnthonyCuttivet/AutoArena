@@ -51,7 +51,6 @@ base_projectiles = 0
 base_projectile_speed = 1000.0
 base_projectile_scale = 0.75
 base_shoot_duration = 0.35
-base_rot_speed_bounce_boost = false
 projectile_self_hitstop = false
 lifesteal = false
 lifesteal_tick = 1

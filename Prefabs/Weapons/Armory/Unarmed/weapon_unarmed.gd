@@ -22,6 +22,7 @@ func init(s:WeaponSettings, o:BattleBall) -> void:
 	base_max_speed = o.max_speed;
 	ball_owner.afterimage.active = true;
 	ball_owner.afterimage.setup_afterimages(false, afterimages_interval, afterimages_opacity);
+	ball_owner.hurtbox.hurtbox_is_hitbox = true;
 
 func init_scaling_stat():
 	scaling_stat_value = fdamage;

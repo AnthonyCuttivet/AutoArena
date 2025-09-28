@@ -60,6 +60,7 @@ func level_up():
 	AudioManager.play_sfx(sfx_level_up, "SFX");
 	fx_confettis.emit();
 	ball_owner.update_ui_sprite();
+	update_alive_blocks();
 
 func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
@@ -80,6 +81,7 @@ func spawn_block():
 		pass
 
 	var block:ProjectilePickaxeBlock = Utils.spawn_projectile(block_prefab, ball_owner, pos, PI / 2.0, ball_owner.main);
+	block.upgrade.visible = false;
 	block.scale *= block_scale;
 	block.weapon_pickaxe = self;
 
@@ -88,11 +90,13 @@ func spawn_block():
 	if(current_level >= 1):
 		var rand:float = randf();
 		var malus:int = 0;
-		if(rand < 0.3):
+		if(rand <= 0.5):
 			malus = int(rand * 10) + 1;
 
 		block.level = clamp(block.level - malus, 1, blocks_textures.size());
 		block.sprite_2d.texture = blocks_textures[clamp(get_level_index() - malus, 0, blocks_textures.size())];
+
+	block.is_upgrade = block.level == current_level + 1;
 
 	active_blocks.push_back(block);
 
@@ -131,3 +135,8 @@ func on_block_destroyed(from:BattleBall, block:ProjectilePickaxeBlock):
 
 func get_level_index() -> int:
 	return current_level if current_level < blocks_textures.size() else blocks_textures.size() - 1;
+
+func update_alive_blocks():
+	for block in active_blocks:
+		block.is_upgrade = block.level == current_level + 1;
+		block.update_is_upgrade();

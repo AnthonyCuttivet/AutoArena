@@ -57,7 +57,7 @@ max_combo_duration = 1.2
 max_speed = 2300.0
 
 [node name="Root" type="CollisionShape2D" parent="."]
-scale = Vector2(0.17, 0.17)
+scale = Vector2(0.18, 0.18)
 shape = SubResource("CircleShape2D_j21cw")
 debug_color = Color(0.7, 0, 0, 0)
 

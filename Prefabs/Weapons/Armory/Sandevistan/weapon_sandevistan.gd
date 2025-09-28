@@ -34,6 +34,7 @@ func init(s:WeaponSettings, o:BattleBall) -> void:
 	base_max_speed = o.max_speed;
 	ball_owner.afterimage.active = true;
 	next_sandevistan_trigger = sandevistan_damage_threshold;
+	ball_owner.hurtbox.hurtbox_is_hitbox = true;
 
 func init_scaling_stat():
 	scaling_stat_value = fdamage;
