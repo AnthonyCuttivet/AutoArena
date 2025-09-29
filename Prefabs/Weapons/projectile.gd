@@ -19,6 +19,7 @@ var weapon_owner:Weapon;
 var velocity: Vector2 = Vector2.ZERO;
 var self_destruct_remaining:float = 0.0;
 var rand_shoot_elapsed_on_hit:bool = false;
+var custom_hit_sfx:SFX;
 
 func init(o:BattleBall, s:float, p:int = -1, b:int = -1):
 	ball_owner = o;
@@ -84,6 +85,7 @@ func _on_projectile_hitbox_body_entered(other: Node2D) -> void:
 func on_hurtbox_hit(other:BattleBall):
 	if(other != null):
 		ball_owner.weapon.on_weapon_hit(other, self.global_position, hitbox.get_instance_id(), self);
+		on_hit_effect(other);
 
 	pierce_count -= 1;
 	if(pierce_count < 0):
@@ -93,7 +95,7 @@ func on_hurtbox_hit(other:BattleBall):
 		self_destruct_remaining = destroy_on_hit_delay;
 
 	if(rand_shoot_elapsed_on_hit):
-		ball_owner.weapon.shoot_speed_elapsed = (1.0 / ball_owner.weapon.shoot_speed) * randf_range(0.8,0.9);
+		ball_owner.weapon.shoot_speed_elapsed = (1.0 / ball_owner.weapon.shoot_speed) * randf_range(0.7,0.85);
 
 
 func destroy(source:int = 0):
@@ -108,7 +110,7 @@ func destroy(source:int = 0):
 	get_tree().create_timer(ball_owner.weapon.hitstop).timeout.connect(queue_free);
 	# queue_free();
 
-func on_hit_effect():
+func on_hit_effect(other:BattleBall):
 	pass;
 
 func on_destroy_effect():

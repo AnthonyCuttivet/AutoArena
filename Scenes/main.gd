@@ -1074,7 +1074,7 @@ func init_hypermatch():
 		for j in hypermatch_scales[i]:
 			balls[i].weapon.scale_stat(true);
 
-func spawn_fx(fx_prefab:PackedScene, pos:Vector2, rot:float):
+func spawn_fx(fx_prefab:PackedScene, pos:Vector2, rot:float) -> GPUParticles2D:
 	var fx: GPUParticles2D = fx_prefab.instantiate();
 
 	get_tree().current_scene.add_child(fx);
@@ -1087,3 +1087,5 @@ func spawn_fx(fx_prefab:PackedScene, pos:Vector2, rot:float):
 	if(battleblock_mode):
 		fx.scale = Vector2.ONE * 0.5;
 	just_spawned_fxs[fx] = 0;
+
+	return fx;

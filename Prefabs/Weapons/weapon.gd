@@ -14,6 +14,7 @@ var ranged:bool = false;
 var rotation_direction:int = 0;
 var rotation_speed:float = 0.0;
 var rot_speed_multiplier:float = 1.0;
+var custom_rot_speed_multiplier:float = 1.0;
 var damage:int = 0;
 var knockback:float = 0.0;
 var attack_speed:float = 0.0;
@@ -135,7 +136,9 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	if(ball_owner.is_in_same_team(other)):
 		return;
 
-	if(!custom_sfx && !other.silent_on_hit):
+	if(projectile_hit && projectile_hit.custom_hit_sfx != null):
+		AudioManager.play_sfx(projectile_hit.custom_hit_sfx, "SFX");
+	elif(!custom_sfx && !other.silent_on_hit):
 		AudioManager.play_sfx(settings.sfx_hit, "SFX");
 
 	var d:int = get_custom_damage_value() if custom_damage else damage;

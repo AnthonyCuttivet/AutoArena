@@ -2,7 +2,7 @@ extends Node
 
 signal audio_finished(instance_id: int);
 
-var max_audio_players: int = 20;
+var max_audio_players: int = 30;
 var active_audio_players: int = 0;
 
 func play_sfx(sfx:SFX, bus: StringName = "SFX", pitch:float = 1.0, offset: float = 0.0, fade_in: float = 0.0, forced:bool = true) -> NodePath:

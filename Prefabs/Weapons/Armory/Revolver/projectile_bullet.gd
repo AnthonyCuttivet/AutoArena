@@ -1,9 +1,11 @@
 class_name ProjectileBullet extends Projectile
 
+@export var fx_hit:PackedScene;
+
 @onready var trail: Line2D = $Trail
 
 func _process(delta: float) -> void:
-	trail.points[1].x -= speed * delta * 0.5;
+	trail.points[1].x -= speed * delta * 0.75;
 
 func set_trail_color(color: Color):
 	var alphas:Array[float] = [trail.gradient.colors[0].a, trail.gradient.colors[1].a];
@@ -11,3 +13,9 @@ func set_trail_color(color: Color):
 	trail.gradient.colors[0].a = alphas[0];
 	trail.gradient.colors[1] = color;
 	trail.gradient.colors[1].a = alphas[1];
+
+func on_hit_effect(other:BattleBall):
+	var fx:GPUParticles2D = ball_owner.main.spawn_fx(fx_hit, other.global_position, global_rotation);
+	fx.modulate = trail.gradient.colors[0];
+	fx.modulate.a = 1.0;
+	fx.scale *= 2.0;

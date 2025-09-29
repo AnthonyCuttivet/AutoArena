@@ -8,8 +8,10 @@ class_name WeaponRevolver extends Weapon
 @export var bullets_weights:Array[float];
 @export var bullets_weights_scale:Array[float];
 @export var bullets_shoots_sfxs: Array[SFX];
+@export var bullets_hit_sfxs: Array[SFX];
 @export var bullets_ui:RevolverBullets;
 @export var chance_to_be_absolute:float = 0.8;
+@export var max_recoil:float = 1.0;
 
 @export var sfx_reload_bullet:SFX;
 @export var sfx_reload_barrel:SFX;
@@ -25,6 +27,7 @@ var absolute_next_buller_timer:Timer;
 var reloading:bool = false;
 var custom_stat_str:String = "";
 var absolute_next_bullet:float = 0.0;
+var recoil_multiplier:float = 1.0;
 
 func _init() -> void:
 	EventBus.ball_weapon_hit.connect(on_listened_event_received);
@@ -56,7 +59,7 @@ func scale_stat(force:bool = false):
 	scale_rarities();
 	init_scaling_stat();
 
-func on_listened_event_received(id:int, _to:int, _is_projectile:bool):
+func on_listened_event_received(id:int, to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	scale_stat();
 
@@ -73,6 +76,7 @@ func shoot_projectile():
 	remaining_bullets -= 1;
 
 	var bullet_id:int = magazine[remaining_bullets];
+	var recoil:float = 1.0 + randf_range(0.0, max_recoil);
 
 	custom_sfx_sound = bullets_shoots_sfxs[bullet_id];
 
@@ -82,24 +86,29 @@ func shoot_projectile():
 	bullet.custom_damage = bullets_damages[bullet_id];
 	bullet.custom_hitstop = hitstop + (0.06 * (bullet_id));
 	bullet.rand_shoot_elapsed_on_hit = true;
-	bullet.trail.width += 6 * bullet_id;
+	bullet.trail.width += 2.0 * bullet_id;
 	bullet.absolute = randf() <= chance_to_be_absolute;
+	bullet.custom_hit_sfx = bullets_hit_sfxs[bullet_id];
+
 	bullets_ui.consume_bullet(remaining_bullets);
+
+	custom_rot_speed_multiplier = recoil;
 
 func start_reloading():
 	magazine.clear();
 	reloading = true;
 	bullet_reload_timer.start();
-	rot_speed_multiplier -= 0.8;
+	rot_speed_multiplier -= 0.3;
 
 	var t:Tween = create_tween();
 	t.tween_property(sprite_2d, "rotation_degrees", -1440.0, 0.4).set_delay(reload_duration / max_bullets);
 	t.parallel().tween_callback(func(): AudioManager.play_sfx(sfx_reload_barrel)).set_delay(0.2);
+	t.tween_property(self, "custom_rot_speed_multiplier", 1.0 * sign(custom_rot_speed_multiplier), reload_duration / max_bullets).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT);
 	t.finished.connect(func(): sprite_2d.rotation_degrees = 0.0);
 
 func reloading_finished():
 	reloading = false;
-	rot_speed_multiplier += 0.8;
+	rot_speed_multiplier += 0.3;
 
 func reload_bullet():
 	var rarity:int = roll_bullet_rarity();

@@ -207,7 +207,7 @@ func _physics_process(delta: float) -> void:
 			# DebugDraw2D.arrow_vector(global_position, linear_velocity.normalized() * 50, Color.RED, 1.0, 1.0);
 			weapon_slot.rotation = linear_velocity.normalized().angle() - deg_to_rad(90.0);
 		elif(!block_weapon_rot):
-			weapon_slot.rotate(deg_to_rad(360.0 * weapon.rotation_speed * weapon.rotation_direction * weapon.rot_speed_multiplier * time_scale) * delta);
+			weapon_slot.rotate(deg_to_rad(360.0 * weapon.rotation_speed * weapon.rotation_direction * weapon.rot_speed_multiplier * weapon.custom_rot_speed_multiplier * time_scale) * delta);
 
 		if(use_cheat_weapon_rotation && !align_weapon_to_velocity):
 			adjust_weapon_rotation(delta);
