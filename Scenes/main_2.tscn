@@ -1,4 +1,4 @@
-[gd_scene load_steps=184 format=4 uid="uid://cmsck3y43hvak"]
+[gd_scene load_steps=185 format=4 uid="uid://cmsck3y43hvak"]
 
 [ext_resource type="Script" uid="uid://llbx2bxdfjwy" path="res://Scenes/main.gd" id="1_nmkph"]
 [ext_resource type="Shader" uid="uid://m275kdb8v68b" path="res://Graphics/Shaders/balatro.gdshader" id="1_y2yxb"]
@@ -23,8 +23,8 @@
 [ext_resource type="Texture2D" uid="uid://crarm12ndl2en" path="res://Graphics/_Addons/Icons/fc7.png" id="12_hvjex"]
 [ext_resource type="FontFile" uid="uid://bt2qq5v7nibma" path="res://Graphics/Fonts/PPFraktionMono-Bold.otf" id="12_p1oyv"]
 [ext_resource type="FontFile" uid="uid://bglbd1ylrt02k" path="res://Graphics/Fonts/big_noodle_titling.ttf" id="12_per8v"]
+[ext_resource type="AudioStream" uid="uid://bqxxj0cdyqyr1" path="res://Audio/SFX/BattleBalls/Announcer/download1759128161590 (mp3cut.net).mp3" id="13_uwghd"]
 [ext_resource type="Script" uid="uid://dtqgj8e3uki5c" path="res://Scenes/dynamic_text.gd" id="13_vvmd2"]
-[ext_resource type="AudioStream" uid="uid://csmws67ang1td" path="res://Audio/SFX/BattleBalls/Announcer/download1759045032073 (mp3cut.net).mp3" id="13_xxfh1"]
 [ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="14_0krxf"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="14_cticm"]
 [ext_resource type="AudioStream" uid="uid://cmirt736cd66y" path="res://Audio/BGM/midnight_questing.mp3" id="14_gcqa4"]
@@ -54,7 +54,6 @@
 [ext_resource type="PackedScene" uid="uid://dro0ydtil3s2c" path="res://combo_counter_Right.tscn" id="31_dpnnm"]
 [ext_resource type="Script" uid="uid://ckxf1aiw26v1v" path="res://Scenes/cameo.gd" id="31_qas6s"]
 [ext_resource type="Texture2D" uid="uid://d0w63aumid11l" path="res://Graphics/Comment.png" id="32_dpnnm"]
-[ext_resource type="Texture2D" uid="uid://2ki0ut25fcs4" path="res://Graphics/_Addons/Icons/fc1590.png" id="33_0o7lx"]
 [ext_resource type="Script" uid="uid://c50pcpoy1hh6r" path="res://Scenes/animfuncs.gd" id="34_ee1k8"]
 [ext_resource type="Resource" uid="uid://dckqlakpbmee2" path="res://Resources/Weapons/W_GEMS.tres" id="34_g7d4c"]
 [ext_resource type="PackedScene" uid="uid://cusidgv7v4vpc" path="res://Prefabs/Weapons/Armory/Unarmed/W_Unarmed.tscn" id="34_pegen"]
@@ -100,6 +99,7 @@
 [ext_resource type="Texture2D" uid="uid://keiqqa4o4670" path="res://Graphics/_Addons/Icons/fcb_10.png" id="66_wptt7"]
 [ext_resource type="Resource" uid="uid://b6swqgojaf77u" path="res://Resources/Weapons/W_UNARMED.tres" id="67_5aelx"]
 [ext_resource type="Resource" uid="uid://elqmbfmcai5r" path="res://Resources/Weapons/W_SANDEVISTAN.tres" id="68_t5fc8"]
+[ext_resource type="Resource" uid="uid://jkcb5410rk54" path="res://Resources/Weapons/W_REVOLVER.tres" id="68_xxfh1"]
 [ext_resource type="AudioStream" uid="uid://bq5jij2vxeg7v" path="res://Audio/SFX/BattleBalls/woosh.wav" id="69_a0vpb"]
 [ext_resource type="Resource" uid="uid://bjdnog3mj0quk" path="res://Resources/Tournaments/Tournament_D_08-46-59.tres" id="69_k7ahf"]
 [ext_resource type="AudioStream" uid="uid://mhwjhrlnb5ve" path="res://Audio/SFX/BattleBalls/Duel_Win.wav" id="70_08cjx"]
@@ -118,6 +118,7 @@
 [ext_resource type="AudioStream" uid="uid://cxrs3hwx2t827" path="res://Audio/SFX/BattleBalls/BattleBlocks/stone4.ogg" id="79_vebv7"]
 [ext_resource type="AudioStream" uid="uid://cdb311h237hpn" path="res://Audio/SFX/BattleBalls/BattleBlocks/stone5.ogg" id="80_ux8nf"]
 [ext_resource type="Resource" uid="uid://cv1of44l4du1b" path="res://Resources/Weapons/W_Pickaxe.tres" id="80_xxfh1"]
+[ext_resource type="Texture2D" uid="uid://lbtcr3rw5sw6" path="res://Graphics/_Addons/Icons/fc77777.png" id="98_uwghd"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_go1jf"]
 random_pitch = 1.1
@@ -153,7 +154,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="Resource" id="Resource_p1oyv"]
 script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("13_xxfh1")
+audio_stream = ExtResource("13_uwghd")
 volume = -20.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
@@ -936,7 +937,6 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [node name="Main2" type="Node2D" node_paths=PackedStringArray("new_challenger_ball", "battleblock_controller", "balls", "attraction_point")]
 rotation = 1.5708
 script = ExtResource("1_nmkph")
-record = true
 patchnote_s_per_page = 23.0
 new_challenger_ball = NodePath("Balls/Fighters/Reaper")
 time_attack_leaderboards = Dictionary[String, ExtResource("2_poh84")]({
@@ -950,7 +950,7 @@ hypermatch_hp = 500
 hypermatch_scales = Array[int]([0, 30])
 forced_start_dir = Vector2(0, -1)
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Fighters/Pickaxe"), NodePath("Balls/Fighters/Bow")]
+balls = [NodePath("Balls/Fighters/Revolver"), NodePath("Balls/Fighters/Sword")]
 fx_hit_prefab = ExtResource("2_8wnqf")
 fx_death_prefab = ExtResource("3_uot50")
 fx_clash = ExtResource("4_0o7lx")
@@ -964,7 +964,7 @@ sfx_death = SubResource("Resource_go1jf")
 ve_announcer = SubResource("Resource_p1oyv")
 announcer_delay = 1.5
 bgm = ExtResource("14_gcqa4")
-bgm_volume = -25.0
+bgm_volume = -28.0
 startup_sfx = ExtResource("15_gcqa4")
 startup_sfx_volume = -22.0
 obs_delay = 4.0
@@ -1124,14 +1124,14 @@ position = Vector2(540, 1082)
 scale = Vector2(2.765, 2.765)
 
 [node name="WallBot" type="StaticBody2D" parent="DeadZone" groups=["DEADZONE"]]
-position = Vector2(-5.98364e-06, 363.11)
+position = Vector2(0.000467952, 494.032)
 physics_material_override = SubResource("PhysicsMaterial_ya2e4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeadZone/WallBot"]
 shape = SubResource("RectangleShape2D_6sl1r")
 
 [node name="WallTop" type="StaticBody2D" parent="DeadZone" groups=["DEADZONE"]]
-position = Vector2(2.37922e-06, -445.57)
+position = Vector2(-0.000288268, -525.86)
 rotation = 3.14159
 physics_material_override = SubResource("PhysicsMaterial_ya2e4")
 
@@ -1139,7 +1139,7 @@ physics_material_override = SubResource("PhysicsMaterial_ya2e4")
 shape = SubResource("RectangleShape2D_6sl1r")
 
 [node name="WallLeft" type="StaticBody2D" parent="DeadZone" groups=["DEADZONE"]]
-position = Vector2(-391.68, 0.000564359)
+position = Vector2(-512.114, -14.8271)
 rotation = 1.5708
 physics_material_override = SubResource("PhysicsMaterial_ya2e4")
 
@@ -1147,7 +1147,7 @@ physics_material_override = SubResource("PhysicsMaterial_ya2e4")
 shape = SubResource("RectangleShape2D_6sl1r")
 
 [node name="WallRight" type="StaticBody2D" parent="DeadZone" groups=["DEADZONE"]]
-position = Vector2(382.642, -0.000509652)
+position = Vector2(491.502, -13.7457)
 rotation = -1.5708
 physics_material_override = SubResource("PhysicsMaterial_ya2e4")
 
@@ -2553,9 +2553,9 @@ drag_force = 0.01
 
 [node name="Mace" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2246, 1022.99)
-debug_hitstop = true
 weapon_settings = ExtResource("28_djmp0")
 health = 50
+base_weapon_rotation = 210.0
 color = Color(0.60915, 0.5115, 0.93, 1)
 dead = true
 stop = true
@@ -2653,7 +2653,6 @@ relative_bounce_boost = 0.1
 position = Vector2(2370.47, 297.991)
 weapon_settings = ExtResource("80_xxfh1")
 health = 50
-base_weapon_rotation = 62.0
 color = Color(1, 0.568627, 0.282353, 1)
 dead = true
 stop = true
@@ -2741,6 +2740,22 @@ max_speed = 1500.0
 min_horizontal = 150.0
 gravity_strength = 1500.0
 drag_force = 0.05
+
+[node name="Revolver" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2203.01, 1414.99)
+weapon_settings = ExtResource("68_xxfh1")
+health = 50
+base_weapon_rotation = 150.0
+color = Color(0.614273, 0.633649, 0.738281, 1)
+team = 1
+dead = true
+stop = true
+max_speed = 1444.0
+min_horizontal = 44.0
+gravity_strength = 1444.0
+drag_force = 0.044
+bounce_boost = 0.0
+relative_bounce_boost = 0.4
 
 [node name="Thunder" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2953, 826.989)
@@ -2980,8 +2995,7 @@ texture = ExtResource("30_6y6hv")
 
 [node name="Cameo" type="Node2D" parent="." node_paths=PackedStringArray("ball", "weapon_root")]
 process_mode = 4
-visible = false
-position = Vector2(-337.994, 1789)
+position = Vector2(-337.994, 1667)
 scale = Vector2(0.7, 0.7)
 script = ExtResource("31_qas6s")
 speed = 50.0
@@ -3008,7 +3022,7 @@ theme_override_constants/outline_size = 40
 theme_override_fonts/normal_font = ExtResource("12_per8v")
 theme_override_font_sizes/normal_font_size = 80
 bbcode_enabled = true
-text = "[wave amp=20.0 freq=3 connected=1] New ball coming soon 『[color=gold] Sword [/color][/wave]』"
+text = "[wave amp=20.0 freq=3 connected=1] New ball coming soon 『[color=#9da2bc] Revolver [/color][/wave]』"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
@@ -3027,8 +3041,8 @@ scale = Vector2(12, 12)
 
 [node name="Sprite2D" type="Sprite2D" parent="Cameo/BattleBall/Root/WeaponSlot"]
 texture_filter = 1
-position = Vector2(46.0319, -45.2373)
-texture = ExtResource("33_0o7lx")
+position = Vector2(58.95, 0)
+texture = ExtResource("98_uwghd")
 
 [node name="CircleBG" type="Sprite2D" parent="Cameo/BattleBall/Root"]
 modulate = Color(0, 0, 0, 1)
@@ -3036,7 +3050,7 @@ scale = Vector2(1.1, 1.1)
 texture = ExtResource("26_habdg")
 
 [node name="Circle" type="Sprite2D" parent="Cameo/BattleBall/Root"]
-self_modulate = Color(1, 0.8, 0, 1)
+self_modulate = Color(0.615686, 0.635294, 0.737255, 1)
 material = SubResource("ShaderMaterial_habdg")
 texture = ExtResource("26_habdg")
 
@@ -3310,12 +3324,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 7.99909
-offset_top = 11.998
-offset_right = 7.99915
-offset_bottom = 11.998
+offset_left = -2.00091
+offset_top = -1.33502
+offset_right = -1.9978
+offset_bottom = -1.33496
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.98, 0.98)
 texture = ExtResource("32_dpnnm")
 
 [node name="Center" type="Node2D" parent="."]
@@ -3619,7 +3634,7 @@ script = ExtResource("64_cfp74")
 scene_root = NodePath("../..")
 tournament_data = ExtResource("69_k7ahf")
 balls = Dictionary[String, ExtResource("24_3p5r5")]({
-"BOW": ExtResource("11_per8v"),
+"BOW": ExtResource("68_xxfh1"),
 "DAGGER": ExtResource("56_nfmlc"),
 "GEMS": ExtResource("34_g7d4c"),
 "KATANA": ExtResource("22_rcyw2"),

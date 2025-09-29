@@ -82,7 +82,7 @@ func on_listened_event_received(id:int, _to:int, _is_projectile:bool):
 		scale_stat();
 	pass;
 
-func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:bool = false) -> void:
+func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:Projectile = null) -> void:
 	if(other.is_invincible()):
 		# print(other.name + " is INVINCIBLE");
 		return;
@@ -110,7 +110,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	other.hitflash(hitstop);
 	other.hit_pos = hit_pos;
 
-	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit);
+	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit != null);
 	pass;
 
 func add_sub_weapon(i:int, update_spread:bool = false):

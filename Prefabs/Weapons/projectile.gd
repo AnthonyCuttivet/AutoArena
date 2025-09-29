@@ -14,9 +14,11 @@ class_name Projectile extends Node2D
 @onready var raycast: RayCast2D = $RayCast2D
 
 var custom_damage:int = -1;
+var custom_hitstop:float = -1.0;
 var weapon_owner:Weapon;
 var velocity: Vector2 = Vector2.ZERO;
 var self_destruct_remaining:float = 0.0;
+var rand_shoot_elapsed_on_hit:bool = false;
 
 func init(o:BattleBall, s:float, p:int = -1, b:int = -1):
 	ball_owner = o;
@@ -49,11 +51,12 @@ func set_speed(s:float):
 
 func _on_projectile_hitbox_area_entered(other: Area2D) -> void:
 	if(other is Hurtbox && other.ball_owner != ball_owner && other.ball_owner.team != ball_owner.team):
-		# if(ball_owner.weapon_settings.name == "BOW"):
-		# 	print(Utils.pf() + "")
 		on_hurtbox_hit(other.ball_owner);
 		if(weapon_owner.custom_sfx):
-			AudioManager.play_sfx(weapon_owner.sfx_hit, "SFX");
+			if(weapon_owner.get("sfx_hit") != null):
+				AudioManager.play_sfx(weapon_owner.sfx_hit, "SFX");
+			else:
+				AudioManager.play_sfx(weapon_owner.settings.sfx_hit, "SFX");
 		pass;
 
 	elif(other is Hitbox && other.ball_owner != null && other.ball_owner != ball_owner && other.ball_owner.team != ball_owner.team):
@@ -80,7 +83,7 @@ func _on_projectile_hitbox_body_entered(other: Node2D) -> void:
 
 func on_hurtbox_hit(other:BattleBall):
 	if(other != null):
-		ball_owner.weapon.on_weapon_hit(other, self.global_position, hitbox.get_instance_id(), true);
+		ball_owner.weapon.on_weapon_hit(other, self.global_position, hitbox.get_instance_id(), self);
 
 	pierce_count -= 1;
 	if(pierce_count < 0):
@@ -88,6 +91,10 @@ func on_hurtbox_hit(other:BattleBall):
 
 	if(destroy_on_hit_delay > 0.0 && self_destruct_remaining == 0.0):
 		self_destruct_remaining = destroy_on_hit_delay;
+
+	if(rand_shoot_elapsed_on_hit):
+		ball_owner.weapon.shoot_speed_elapsed = (1.0 / ball_owner.weapon.shoot_speed) * randf_range(0.8,0.9);
+
 
 func destroy(source:int = 0):
 	if(debug_destroy):
@@ -98,7 +105,8 @@ func destroy(source:int = 0):
 			3 : print("[P DESTROYED] 3 : Hit with no pierce remaining");
 
 	on_destroy_effect();
-	queue_free();
+	get_tree().create_timer(ball_owner.weapon.hitstop).timeout.connect(queue_free);
+	# queue_free();
 
 func on_hit_effect():
 	pass;

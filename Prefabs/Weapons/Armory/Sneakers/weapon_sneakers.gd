@@ -19,7 +19,7 @@ func scale_stat(force:bool = false):
 	knockback += 200.0;
 	init_scaling_stat();
 
-func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:bool = false) -> void:
+func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:Projectile = null) -> void:
 	if(ball_owner.is_in_same_team(other)):
 		return;
 

@@ -131,4 +131,6 @@ source_sprite = NodePath("../Circle")
 spawn_interval = 0.01
 gradient = SubResource("Gradient_ecnwd")
 
+[node name="AdditionalElement" type="Node2D" parent="Root"]
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

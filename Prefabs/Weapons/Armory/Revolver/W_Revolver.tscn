@@ -1,0 +1,128 @@
+[gd_scene load_steps=28 format=3 uid="uid://dqoee4ddvxg51"]
+
+[ext_resource type="Script" uid="uid://cvjoavpndb5si" path="res://Prefabs/Weapons/Armory/Revolver/weapon_revolver.gd" id="1_yauiy"]
+[ext_resource type="Texture2D" uid="uid://dgawkxl1bhfl5" path="res://Graphics/_Addons/Icons/fc77778.png" id="2_eos0i"]
+[ext_resource type="Texture2D" uid="uid://cerespddjwy8r" path="res://Graphics/_Addons/Icons/fc77776.png" id="2_f54ec"]
+[ext_resource type="Texture2D" uid="uid://lbtcr3rw5sw6" path="res://Graphics/_Addons/Icons/fc77777.png" id="2_yauiy"]
+[ext_resource type="Texture2D" uid="uid://6stjiwc7bacs" path="res://Graphics/_Addons/Icons/fc77779.png" id="3_bih3f"]
+[ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="3_by3ve"]
+[ext_resource type="PackedScene" uid="uid://cv500qcxtyy8f" path="res://Prefabs/Weapons/Armory/Revolver/Revolver_Bullets.tscn" id="5_a811k"]
+[ext_resource type="Texture2D" uid="uid://cahrxhtbgadgp" path="res://Graphics/_Addons/Icons/fc77780.png" id="5_fqqpt"]
+[ext_resource type="AudioStream" uid="uid://b62vidwix52cl" path="res://Audio/SFX/BattleBalls/365162__jack_freedom5712__small675-calibre-pistol-being-cocked (mp3cut.net) (1).wav" id="6_fqqpt"]
+[ext_resource type="AudioStream" uid="uid://cgcm770vjlbmx" path="res://Audio/SFX/BattleBalls/se_jack_special_N01.wav" id="7_2tdg8"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="7_xf0kl"]
+[ext_resource type="AudioStream" uid="uid://b63yx7wnfl58w" path="res://Audio/SFX/BattleBalls/se_jack_special_N06_01.wav" id="8_3qymh"]
+[ext_resource type="AudioStream" uid="uid://cmhw1qn6aurrc" path="res://Audio/SFX/BattleBalls/se_kamui_special_N03.wav" id="8_aa5os"]
+[ext_resource type="AudioStream" uid="uid://cbsvewmjlknbc" path="res://Audio/SFX/BattleBalls/se_sheik_final11.wav" id="9_aa5os"]
+[ext_resource type="AudioStream" uid="uid://bo6g3wermgq40" path="res://Audio/SFX/BattleBalls/Revolver Gun Cylinder Spin Sound Effect(1) (mp3cut.net).mp3" id="12_aa5os"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_iti1p"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("7_2tdg8")
+
+[sub_resource type="Resource" id="Resource_7rw87"]
+script = ExtResource("7_xf0kl")
+audio_stream = SubResource("AudioStreamRandomizer_iti1p")
+volume = -30.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_h8xgg"]
+random_pitch = 1.01
+streams_count = 1
+stream_0/stream = ExtResource("8_aa5os")
+
+[sub_resource type="Resource" id="Resource_5kpho"]
+script = ExtResource("7_xf0kl")
+audio_stream = SubResource("AudioStreamRandomizer_h8xgg")
+volume = -22.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_yhii4"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("8_3qymh")
+
+[sub_resource type="Resource" id="Resource_brri5"]
+script = ExtResource("7_xf0kl")
+audio_stream = SubResource("AudioStreamRandomizer_yhii4")
+volume = -22.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_yk2lh"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("9_aa5os")
+
+[sub_resource type="Resource" id="Resource_h8syi"]
+script = ExtResource("7_xf0kl")
+audio_stream = SubResource("AudioStreamRandomizer_yk2lh")
+volume = -17.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="Resource" id="Resource_titi2"]
+script = ExtResource("7_xf0kl")
+audio_stream = ExtResource("6_fqqpt")
+volume = -15.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_aa5os"]
+random_pitch = 1.02
+streams_count = 1
+stream_0/stream = ExtResource("12_aa5os")
+
+[sub_resource type="Resource" id="Resource_4slom"]
+script = ExtResource("7_xf0kl")
+audio_stream = SubResource("AudioStreamRandomizer_aa5os")
+volume = -25.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
+radius = 37.4411
+height = 81.089
+
+[node name="WeaponRevolver" type="Node2D" node_paths=PackedStringArray("bullets_ui", "sprite_2d", "hitboxes", "projectile_spawn")]
+script = ExtResource("1_yauiy")
+reload_duration = 1.0
+bullets_textures = Array[Texture2D]([ExtResource("2_eos0i"), ExtResource("3_bih3f"), ExtResource("2_f54ec"), ExtResource("5_fqqpt")])
+bullets_trail_colors = Array[Color]([Color(1, 0.639253, 0.582031, 1), Color(0.886719, 0.886719, 0.886719, 1), Color(1, 0.721569, 0.47451, 1), Color(0.471313, 0.675393, 0.914063, 1)])
+bullets_damages = Array[int]([1, 4, 16, 44])
+bullets_weights = Array[float]([80.0, 15.0, 4.0, 1.0])
+bullets_weights_scale = Array[float]([0.0, 4.0, 2.0, 0.5])
+bullets_shoots_sfxs = Array[ExtResource("7_xf0kl")]([SubResource("Resource_7rw87"), SubResource("Resource_5kpho"), SubResource("Resource_brri5"), SubResource("Resource_h8syi")])
+bullets_ui = NodePath("Sprite2D/Bullets")
+sfx_reload_bullet = SubResource("Resource_titi2")
+sfx_reload_barrel = SubResource("Resource_4slom")
+sprite_2d = NodePath("Sprite2D")
+hitboxes = [NodePath("Sprite2D/WeaponHitbox")]
+custom_sfx = true
+projectile_spawn = NodePath("Sprite2D/Spawn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(32, 0)
+texture = ExtResource("2_yauiy")
+
+[node name="WeaponHitbox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("weapon", "collider")]
+script = ExtResource("3_by3ve")
+weapon = NodePath("../..")
+collider = NodePath("CollisionShape2D")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
+position = Vector2(-5, 0)
+rotation = 3.99331
+shape = SubResource("CapsuleShape2D_1fhci")
+
+[node name="Spawn" type="Node2D" parent="Sprite2D"]
+position = Vector2(32, -10)
+
+[node name="Bullets" parent="Sprite2D" instance=ExtResource("5_a811k")]
+offset_left = -34.0
+offset_top = -56.0
+offset_right = -34.0
+offset_bottom = -56.0
+scale = Vector2(0.33, 0.33)
+
+[connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_entered"]
+[connection signal="area_exited" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_exited"]

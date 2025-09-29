@@ -20,7 +20,7 @@ func scale_stat(force:bool = false):
 	tipper_damage += stat_scale_value;
 	init_scaling_stat();
 
-func on_weapon_hit(other:BattleBall, hit_pos:Vector2, hitbox_id:int, projectile_hit:bool = false, silent:bool = false) -> void:
+func on_weapon_hit(other:BattleBall, hit_pos:Vector2, hitbox_id:int, projectile_hit:Projectile = null, silent:bool = false) -> void:
 	if(ball_owner.is_in_same_team(other)):
 		return;
 
@@ -64,7 +64,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, hitbox_id:int, projectile_
 	other.hitflash(h);
 	other.hit_pos = hit_pos;
 
-	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit);
+	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit != null);
 	pass;
 
 func set_battleblock_modifiers():

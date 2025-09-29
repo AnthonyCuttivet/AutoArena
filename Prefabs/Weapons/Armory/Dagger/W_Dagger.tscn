@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="3_jh3i0"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
+radius = 6.0
 height = 70.0
 
 [node name="WeaponDagger" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]
@@ -28,7 +29,7 @@ collider = NodePath("CollisionShape2D")
 metadata/owner = NodePath("../../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
-position = Vector2(3, 1)
+position = Vector2(3, -3)
 shape = SubResource("CapsuleShape2D_1fhci")
 
 [node name="SpriteCharged" type="Sprite2D" parent="Sprite2D"]

@@ -104,7 +104,7 @@ func sandevistan_mode(s:bool):
 	ball_owner.update_ui_name(ball_owner.color if !s else sandevistan_name_color);
 	ball_owner.update_ui_details(ball_owner.color if !s else psychosis_details_color, true);
 
-func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:bool = false) -> void:
+func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:Projectile = null) -> void:
 	# if(other.linear_velocity.length() > ball_owner.linear_velocity.length() && !sandevistan_active):
 	# 	scale_stat();
 	# 	return;
@@ -138,7 +138,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	other.hitflash(hitstop);
 	other.hit_pos = hit_pos;
 
-	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit);
+	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit != null);
 
 	if(sandevistan_active):
 		EventBus.set_chromatic_aberration.emit(3.0, 0.15);

@@ -46,7 +46,7 @@ func _process(delta: float) -> void:
 
 	ball_owner.update_stat_text(true);
 
-func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:bool = false) -> void:
+func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:Projectile = null) -> void:
 	# if(other.linear_velocity.length() > ball_owner.linear_velocity.length()):
 	# 	scale_stat();
 	# 	return;
@@ -86,7 +86,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 
 	ball_owner.linear_velocity = ball_owner.linear_velocity.normalized() * ball_owner.base_max_speed;
 
-	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit);
+	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit != null);
 
 	can_hit_cd_remaining += multi_hit_cd;
 

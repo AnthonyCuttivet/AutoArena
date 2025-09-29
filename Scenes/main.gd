@@ -255,12 +255,9 @@ func _ready() -> void:
 	for i in range(balls.size()):
 		balls_ids[balls[i].get_instance_id()] = i;
 		teams_alive_members[balls[i].team] += 1;
-		# if(i==0 && balls.size() > 1):
-		# 	balls[0].target = balls[1];
-		# else:
-		# 	balls[i].target = balls[0];
 
 		init_damage_dealt(balls[i].get_instance_id());
+		balls[i].weapon.weapon_is_ready();
 
 	if(display_damage_dealt):
 		update_damage_dealt_UI();

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bo6g3wermgq40"
+path="res://.godot/imported/Revolver Gun Cylinder Spin Sound Effect(1) (mp3cut.net).mp3-7c73699d1b7bf097ba922b475b97200b.mp3str"
+
+[deps]
+
+source_file="res://Audio/SFX/BattleBalls/Revolver Gun Cylinder Spin Sound Effect(1) (mp3cut.net).mp3"
+dest_files=["res://.godot/imported/Revolver Gun Cylinder Spin Sound Effect(1) (mp3cut.net).mp3-7c73699d1b7bf097ba922b475b97200b.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -264,3 +264,10 @@ static func get_claimed_blocks_amount(ball:BattleBall) -> int:
 
 static func ease_in_cubic(v:float) -> float:
 	return v * v * v;
+
+static func create_reusable_timer(parent:Node2D, duration:float) -> Timer:
+	var t:Timer = Timer.new();
+	t.one_shot = true;
+	t.wait_time = duration;
+	parent.add_child(t);
+	return t;

@@ -60,7 +60,7 @@ func on_trap_hit(other:BattleBall, hit_pos:Vector2, kb_dir:Vector2, h:float):
 	other.afterimage.set_custom_color(ball_owner.color);
 	other.afterimage.draw_afterimages_for(ball_owner.max_combo_duration);
 
-func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:bool = false) -> void:
+func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:Projectile = null) -> void:
 	if(ball_owner.is_in_same_team(other)):
 		return;
 
@@ -86,7 +86,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	other.hitflash(hitstop);
 	other.hit_pos = hit_pos;
 
-	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit);
+	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit != null);
 	pass;
 
 func trap_hit_fxs(pos:Vector2):

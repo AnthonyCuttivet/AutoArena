@@ -4,6 +4,7 @@ class_name Weapon extends Node2D
 @export var hitboxes: Array[Hitbox];
 @export var custom_damage:bool = false;
 @export var custom_sfx:bool = false;
+@export var projectile_spawn:Node2D;
 
 var settings:WeaponSettings;
 
@@ -49,6 +50,7 @@ var battleblock_mode:bool = false;
 var cheat_hitbox_scale_bonus:float = 0.0;
 
 var clash_tween:Tween = null;
+var custom_sfx_sound:SFX = null;
 
 func init(s:WeaponSettings, o:BattleBall) -> void:
 
@@ -101,6 +103,9 @@ func init(s:WeaponSettings, o:BattleBall) -> void:
 			hitbox.ball_owner = o;
 			hitbox.init();
 
+func weapon_is_ready():
+	pass;
+
 func _physics_process(delta: float) -> void:
 
 	if(ball_owner.dead || ball_owner.stop): return;
@@ -122,7 +127,7 @@ func reset_shoots():
 func add_remaining_shoot():
 	shoots_remaining += 1;
 
-func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:bool = false) -> void:
+func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:Projectile = null) -> void:
 	if(other.is_invincible()):
 		# print(other.name + " is INVINCIBLE");
 		return;
@@ -139,11 +144,16 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	var kb:Vector2 = (other.global_position - ball_owner.global_position).normalized() * kb_dist;
 	var h:float = hitstop;
 
+	if(projectile_hit && projectile_hit.custom_hitstop != -1.0):
+		h = projectile_hit.custom_hitstop;
+
 	if(lifesteal && lifesteal_active):
 		h *= 1.25;
 
 	if(projectile_hit):
 		kb = (hit_pos - ball_owner.global_position).normalized() * kb_dist;
+		if(projectile_hit.custom_damage != -1):
+			d = projectile_hit.custom_damage;
 
 	other.affect_health(-d, ball_owner);
 
@@ -153,12 +163,11 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 		if(projectile_self_hitstop):
 			ball_owner.start_hitstop(0.0, h);
 
-
-	other.start_hitstop(0.0, h, kb);
 	other.hitflash(h);
+	other.start_hitstop(0.0, h, kb);
 	other.hit_pos = hit_pos;
 
-	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit);
+	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit != null);
 	pass;
 
 func on_weapon_clash(other:Node2D, clash_pos:Vector2, projectile_hit:bool = false, silent:bool = false, force:bool = false):
@@ -219,18 +228,25 @@ func scale_stat(force:bool = false):
 	if(lifesteal && !lifesteal_active): return;
 	pass;
 
-func shoot_projectile():
+func shoot_projectile() -> Projectile:
 	if(ball_owner.no_shoot): return;
 	if(settings.projectile_prefab == null):return;
 
-	AudioManager.play_sfx(settings.sfx_shoot, "SFX");
+	AudioManager.play_sfx(settings.sfx_shoot if !custom_sfx else custom_sfx_sound, "SFX");
 
 	var p:Projectile = settings.projectile_prefab.instantiate();
-	p.global_position = sprite_2d.global_position;
+
+	if(projectile_spawn != null):
+		p.global_position = projectile_spawn.global_position;
+	else:
+		p.global_position = sprite_2d.global_position;
+
 	p.rotation = ball_owner.weapon_slot.global_rotation;
 	p.scale = ball_owner.weapon_slot.scale * ball_owner.root.scale * projectile_scale;
+
 	if(!settings.no_projectile_scale_change):
 		p.hitbox.scale *= 1.0 + cheat_hitbox_scale_bonus;
+
 	p.weapon_owner = self;
 	p.init(ball_owner, projectile_speed, 0, 0);
 
@@ -243,6 +259,8 @@ func shoot_projectile():
 
 	if(lifesteal_active):
 		p.sprite_2d.self_modulate = Color.DARK_RED;
+
+	return p;
 
 func on_listened_event_received(_id:int, _to:int, _is_projectile:bool):
 	pass;

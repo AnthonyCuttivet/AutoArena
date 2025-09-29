@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3 uid="uid://cums6cj7p8bxg"]
+
+[ext_resource type="Script" uid="uid://d3l5nv2n32akk" path="res://Prefabs/Weapons/Armory/Revolver/projectile_bullet.gd" id="1_gtho2"]
+[ext_resource type="Texture2D" uid="uid://dgawkxl1bhfl5" path="res://Graphics/_Addons/Icons/fc77778.png" id="2_gtho2"]
+[ext_resource type="Script" uid="uid://d27ne0poeo6c7" path="res://Prefabs/Ball/projectile_hitbox.gd" id="3_nky2v"]
+
+[sub_resource type="Curve" id="Curve_gtho2"]
+_limits = [0.0, 3.0, 0.0, 1.0]
+_data = [Vector2(0, 2.63928), 0.0, 6.40002, 0, 0, Vector2(1, 0.496191), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_gtho2"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.784314)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
+radius = 58.0001
+height = 600.0
+
+[node name="ProjectileBullet" type="Node2D" node_paths=PackedStringArray("hitbox", "sprite_2d")]
+script = ExtResource("1_gtho2")
+pierce_count = 999
+hitbox = NodePath("Sprite2D/ProjectileHitbox")
+sprite_2d = NodePath("Sprite2D")
+
+[node name="Trail" type="Line2D" parent="."]
+position = Vector2(507, 0)
+points = PackedVector2Array(0, 0, -500, 0)
+width = 6.0
+width_curve = SubResource("Curve_gtho2")
+gradient = SubResource("Gradient_gtho2")
+end_cap_mode = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(527, 2)
+rotation = 1.5708
+texture = ExtResource("2_gtho2")
+
+[node name="ProjectileHitbox" type="Area2D" parent="Sprite2D"]
+script = ExtResource("3_nky2v")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/ProjectileHitbox"]
+position = Vector2(-1.99906, 263)
+shape = SubResource("CapsuleShape2D_1fhci")
+debug_color = Color(0, 0.595, 0.7, 0)
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(507, 0)
+rotation = -1.5708
+hit_from_inside = true
+
+[connection signal="area_entered" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_area_entered"]
+[connection signal="area_exited" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_area_exited"]
+[connection signal="body_entered" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_body_entered"]

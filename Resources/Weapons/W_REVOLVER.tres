@@ -1,0 +1,87 @@
+[gd_resource type="Resource" script_class="WeaponSettings" load_steps=15 format=3 uid="uid://jkcb5410rk54"]
+
+[ext_resource type="PackedScene" uid="uid://cums6cj7p8bxg" path="res://Prefabs/Weapons/Armory/Projectiles/P_Bullet.tscn" id="1_2gerx"]
+[ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="2_3mdnq"]
+[ext_resource type="AudioStream" uid="uid://wb7cigowqlsv" path="res://Audio/SFX/BattleBalls/WeaponClash.mp3" id="3_k2etb"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="4_m7842"]
+[ext_resource type="AudioStream" uid="uid://c4nk4jom36gxd" path="res://Audio/SFX/BattleBalls/se_master_hit_attack100end.wav" id="5_2gerx"]
+[ext_resource type="AudioStream" uid="uid://cgcm770vjlbmx" path="res://Audio/SFX/BattleBalls/se_jack_special_N01.wav" id="6_3mdnq"]
+[ext_resource type="Texture2D" uid="uid://lbtcr3rw5sw6" path="res://Graphics/_Addons/Icons/fc77777.png" id="7_2gerx"]
+[ext_resource type="PackedScene" uid="uid://dqoee4ddvxg51" path="res://Prefabs/Weapons/Armory/Revolver/W_Revolver.tscn" id="8_3mdnq"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_6o23i"]
+random_pitch = 2.0
+streams_count = 1
+stream_0/stream = ExtResource("3_k2etb")
+
+[sub_resource type="Resource" id="Resource_8dpo0"]
+script = ExtResource("4_m7842")
+audio_stream = SubResource("AudioStreamRandomizer_6o23i")
+volume = -29.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k2etb"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("5_2gerx")
+
+[sub_resource type="Resource" id="Resource_m7842"]
+script = ExtResource("4_m7842")
+audio_stream = SubResource("AudioStreamRandomizer_k2etb")
+volume = -25.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_iti1p"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("6_3mdnq")
+
+[sub_resource type="Resource" id="Resource_7rw87"]
+script = ExtResource("4_m7842")
+audio_stream = SubResource("AudioStreamRandomizer_iti1p")
+volume = -30.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[resource]
+script = ExtResource("2_3mdnq")
+name = "REVOLVER"
+spr = ExtResource("7_2gerx")
+melee = false
+ranged = true
+flip = false
+offset = 30.0
+y_offset = false
+base_rotation_direction = 1
+base_rotation_speed = 0.6
+base_damage = 1
+base_knockback = 44.0
+base_attack_speed = 1.0
+base_shoot_speed = 10.0
+base_size = 10.0
+base_hitstop = 0.12
+base_projectiles = 1
+base_projectile_speed = 5000.0
+base_projectile_scale = 0.6
+base_shoot_duration = 0.35
+projectile_self_hitstop = true
+lifesteal = false
+lifesteal_tick = 1
+stat_scale_value = 1.0
+stat_scale_name = "[color=#9da2bc]Reload %"
+scaling_stat_float = false
+no_rotation_change = false
+no_projectile_scale_change = true
+weapon_prefab = ExtResource("8_3mdnq")
+projectile_prefab = ExtResource("1_2gerx")
+bg_projectile = false
+details = "Bullets "
+white_details = false
+sfx_clash = SubResource("Resource_8dpo0")
+sfx_hit = SubResource("Resource_m7842")
+sfx_shoot = SubResource("Resource_7rw87")
+leaderboard_offset = 1.0
+leaderboard_rotation = 0.0
+scale_stat_multiplier = 1
+base_damage_multiplier = 3
+no_clash_on_block = false
+metadata/_custom_type_script = "uid://c1biydo2yju8x"

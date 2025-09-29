@@ -25,7 +25,7 @@ func scale_stat(force:bool = false):
 
 	init_scaling_stat();
 
-func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:bool = false) -> void:
+func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:Projectile = null) -> void:
 	if(ball_owner.is_in_same_team(other)):
 		return;
 
@@ -55,7 +55,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	other.hitflash(hitstop);
 	other.hit_pos = hit_pos;
 
-	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit);
+	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit != null);
 	pass;
 
 func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
@@ -75,4 +75,3 @@ func set_battleblock_modifiers():
 	ball_owner.relative_bounce_boost = 0.3;
 	ball_owner.weapon.hitstop /= 0.2;
 	attack_speed = 2.0;
-
