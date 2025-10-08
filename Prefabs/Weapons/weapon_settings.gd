@@ -25,6 +25,8 @@ class_name WeaponSettings extends Resource
 @export var lifesteal:bool = false;
 @export var lifesteal_tick:int = 1;
 
+@export var independent_weapon:bool = false;
+
 @export var stat_scale_value:float = 1.0;
 @export var stat_scale_name:String = "NULL";
 @export var scaling_stat_float:bool = false;

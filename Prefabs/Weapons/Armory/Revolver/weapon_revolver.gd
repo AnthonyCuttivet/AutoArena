@@ -9,9 +9,10 @@ class_name WeaponRevolver extends Weapon
 @export var bullets_weights_scale:Array[float];
 @export var bullets_shoots_sfxs: Array[SFX];
 @export var bullets_hit_sfxs: Array[SFX];
-@export var bullets_ui:RevolverBullets;
+@export var bullets_ui_prefab:PackedScene;
 @export var chance_to_be_absolute:float = 0.8;
 @export var max_recoil:float = 1.0;
+@export var bullets_ui_x_offset:float = 50.0;
 
 @export var sfx_reload_bullet:SFX;
 @export var sfx_reload_barrel:SFX;
@@ -28,6 +29,8 @@ var reloading:bool = false;
 var custom_stat_str:String = "";
 var absolute_next_bullet:float = 0.0;
 var recoil_multiplier:float = 1.0;
+var bullets_ui:RevolverBullets = null;
+var lock_custom_rot:bool = false;
 
 func _init() -> void:
 	EventBus.ball_weapon_hit.connect(on_listened_event_received);
@@ -45,9 +48,21 @@ func init(s: WeaponSettings, o: BattleBall):
 	reload_over_timer.timeout.connect(reloading_finished);
 	absolute_next_buller_timer.timeout.connect(set_absolute_next_bullet.bind(false));
 
+func spawn_bullets_ui():
+	bullets_ui = bullets_ui_prefab.instantiate();
+	ball_owner.main.add_child(bullets_ui);
+
+	var pos_x:float = (bullets_ui_x_offset * 2.0) if ball_owner.team == 0 else 1080.0;
+	bullets_ui.position = Vector2(pos_x - bullets_ui_x_offset, 1420);
+
 func weapon_is_ready():
 	ball_owner.stat_text.self_modulate = Color.WHITE;
 	init_details();
+	spawn_bullets_ui();
+
+func set_custom_rot(v:float):
+	if(lock_custom_rot): return;
+	custom_rot_speed_multiplier = v;
 
 func init_scaling_stat():
 	scaling_stat_value = projectiles;
@@ -55,7 +70,6 @@ func init_scaling_stat():
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
-	rotation_speed += 0.02;
 	scale_rarities();
 	init_scaling_stat();
 
@@ -65,6 +79,7 @@ func on_listened_event_received(id:int, to:int, _is_projectile:bool):
 
 	set_absolute_next_bullet(true);
 
+	ball_owner.weapon.shoot_speed_elapsed = (1.0 / ball_owner.weapon.shoot_speed) * 0.99;
 	pass;
 
 func shoot_projectile():
@@ -84,15 +99,16 @@ func shoot_projectile():
 	bullet.sprite_2d.texture = bullets_textures[bullet_id];
 	bullet.set_trail_color(bullets_trail_colors[bullet_id]);
 	bullet.custom_damage = bullets_damages[bullet_id];
-	bullet.custom_hitstop = hitstop + (0.06 * (bullet_id));
-	bullet.rand_shoot_elapsed_on_hit = true;
-	bullet.trail.width += 2.0 * bullet_id;
+	bullet.custom_hitstop = hitstop + (0.1 * (bullet_id));
+	bullet.pierce_count = 999;
+	bullet.trail.width += 7.0 * bullet_id;
 	bullet.absolute = randf() <= chance_to_be_absolute;
 	bullet.custom_hit_sfx = bullets_hit_sfxs[bullet_id];
+	bullet.rarity = bullet_id;
 
 	bullets_ui.consume_bullet(remaining_bullets);
 
-	custom_rot_speed_multiplier = recoil;
+	set_custom_rot(recoil);
 
 func start_reloading():
 	magazine.clear();
@@ -111,6 +127,8 @@ func reloading_finished():
 	rot_speed_multiplier += 0.3;
 
 func reload_bullet():
+	if(ball_owner.health <= 0): return;
+
 	var rarity:int = roll_bullet_rarity();
 	magazine.push_back(rarity);
 
@@ -133,7 +151,7 @@ func update_cumulative_rarities():
 		cumulative_bullet_rarities.push_back(sum);
 
 func roll_bullet_rarity() -> int:
-	var rand:float = randf() * cumulative_bullet_rarities.back();
+	var rand:float = randf_range(0.0, cumulative_bullet_rarities.back());
 	for i in cumulative_bullet_rarities.size():
 		if(rand <= cumulative_bullet_rarities[i]):
 			return i;

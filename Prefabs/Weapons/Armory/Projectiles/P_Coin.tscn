@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4xhd3i228whh"]
+
+[ext_resource type="Script" uid="uid://cm6ahrw3loodu" path="res://Prefabs/Weapons/Armory/Coin/projectile_coin.gd" id="1_2h454"]
+[ext_resource type="Texture2D" uid="uid://ds0kc2fydlqpc" path="res://Graphics/_Addons/Icons/fc131.png" id="2_2h454"]
+[ext_resource type="Script" uid="uid://d27ne0poeo6c7" path="res://Prefabs/Ball/projectile_hitbox.gd" id="3_sknr1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2h454"]
+radius = 30.0
+
+[node name="ProjectileCoin" type="Node2D" node_paths=PackedStringArray("hitbox", "sprite_2d")]
+script = ExtResource("1_2h454")
+gravity_force = 0.5
+max_gravity = 50.0
+bounciness = 0.4
+local_rotation = true
+hitbox = NodePath("Sprite2D/ProjectileHitbox")
+sprite_2d = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_2h454")
+
+[node name="ProjectileHitbox" type="Area2D" parent="Sprite2D"]
+rotation = 0.785398
+script = ExtResource("3_sknr1")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/ProjectileHitbox"]
+shape = SubResource("CircleShape2D_2h454")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+rotation = -1.5708
+hit_from_inside = true
+
+[connection signal="area_entered" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_area_entered"]
+[connection signal="area_exited" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_area_exited"]
+[connection signal="body_entered" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_body_entered"]

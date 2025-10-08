@@ -130,7 +130,7 @@ func add_remaining_shoot():
 
 func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:Projectile = null) -> void:
 	if(other.is_invincible()):
-		# print(other.name + " is INVINCIBLE");
+		print(other.name + " is INVINCIBLE");
 		return;
 
 	if(ball_owner.is_in_same_team(other)):
@@ -232,7 +232,7 @@ func scale_stat(force:bool = false):
 	pass;
 
 func shoot_projectile() -> Projectile:
-	if(ball_owner.no_shoot): return;
+	if(ball_owner.debug_no_shoot): return;
 	if(settings.projectile_prefab == null):return;
 
 	AudioManager.play_sfx(settings.sfx_shoot if !custom_sfx else custom_sfx_sound, "SFX");

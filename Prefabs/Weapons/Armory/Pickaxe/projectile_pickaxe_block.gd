@@ -38,7 +38,7 @@ func set_state(s:bool):
 
 func hit_health() -> bool:
 	hp -= 1;
-	healthbar.get_child(hp).self_modulate = Color(0.3,0.3,0.3,1);
+	#healthbar.get_child(hp).self_modulate = Color(0.3,0.3,0.3,1);
 	AudioManager.play_sfx(weapon_pickaxe.sfx_block_hit, "SFX");
 	return hp == 0;
 

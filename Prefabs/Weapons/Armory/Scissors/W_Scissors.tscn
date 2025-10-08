@@ -48,8 +48,8 @@ radius = 6.0
 height = 28.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q615r"]
-radius = 11.4286
-height = 39.0476
+radius = 9.5
+height = 32.619
 
 [node name="WeaponScissors" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]
 script = ExtResource("1_1hprj")

@@ -55,6 +55,7 @@ class_name Main extends Node2D
 @export var obs_delay: float = 1.5;
 
 @export var earclacks_mode:bool = false;
+@export var dark_mode:bool = false;
 @export var rainbow_borders:bool = false;
 @export var _1v1_hp:int = 50;
 @export var _1v2_hp:int = 75;
@@ -147,10 +148,10 @@ class_name Main extends Node2D
 @onready var arena_bg: ColorRect = $Walls/ColorRect
 @onready var author: RichTextLabel = $author
 @onready var version: RichTextLabel = $Version
-@onready var wallbot: Polygon2D = $Walls/WallBot/CollisionShape2D/Polygon2D
-@onready var walltop: Polygon2D = $Walls/WallTop/CollisionShape2D/Polygon2D
-@onready var wallleft: Polygon2D = $Walls/WallLeft/CollisionShape2D/Polygon2D
-@onready var wallright: Polygon2D = $Walls/WallRight/CollisionShape2D/Polygon2D
+@onready var wallbot: Polygon2D = $Walls/WallBot/WallBotCollisionShape2D/Polygon2D
+@onready var walltop: Polygon2D = $Walls/WallTop/WallTopCollisionShape2D/Polygon2D
+@onready var wallleft: Polygon2D = $Walls/WallLeft/WallLeftCollisionShape2D/Polygon2D
+@onready var wallright: Polygon2D = $Walls/WallRight/WallRightCollisionShape2D/Polygon2D
 @onready var crt: ColorRect = $CRT
 
 @onready var patch_note: Control = $PatchNote
@@ -232,6 +233,9 @@ func _ready() -> void:
 
 	if(earclacks_mode):
 		set_earclacks_mode();
+
+	if(dark_mode):
+		set_dark_mode();
 
 	obs.establish_connection();
 
@@ -335,6 +339,25 @@ func set_earclacks_mode():
 
 		wallright.material = null;
 		wallright.color = Color.BLACK;
+
+func set_dark_mode():
+	bg.visible = false;
+	crt.visible = false;
+	author.self_modulate = Color.WHITE;
+	bg_earclacks.self_modulate = Color("#333333");
+
+	if(!rainbow_borders):
+		walltop.material = null;
+		walltop.color = Color.WHITE;
+
+		wallbot.material = null;
+		wallbot.color = Color.WHITE;
+
+		wallleft.material = null;
+		wallleft.color = Color.WHITE;
+
+		wallright.material = null;
+		wallright.color = Color.WHITE;
 
 func set_balatro_mode():
 	bg.visible = true;
@@ -587,6 +610,8 @@ func on_ball_damaged(id: int, amount:int, from:int):
 
 	var fx: GPUParticles2D = fx_hit_prefab.instantiate();
 
+	# EventBus.set_chromatic_aberration.emit(5, 0.2);
+
 	get_tree().current_scene.add_child(fx);
 	fx.position = Vector2.ZERO;
 	fx.global_position = ball.global_position;
@@ -659,6 +684,7 @@ func on_ball_dead(id: int):
 
 	AudioManager.play_sfx(sfx_death, "SFX", 1.0, 0.0, 0.0, true);
 	EventBus.camera_trigger_shake.emit(death_shake if !battleblock_mode else death_shake / 2.0);
+	EventBus.set_chromatic_aberration.emit(15, 0.3);
 
 	var ball:BattleBall = get_ball_by_id(id);
 
@@ -688,7 +714,7 @@ func on_ball_dead(id: int):
 	if(balls_alive_count == 2 && !time_attack_mode):
 		for b in balls:
 			if(!b.dead):
-				create_tween().tween_property(b.root, "scale", Vector2.ONE * b.base_root_scale, 2.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT);
+				create_tween().tween_property(b.root, "scale", Vector2.ONE * b.base_root_scale * 0.9, 2.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT);
 				b.max_speed += b.nerfed_speed;
 			pass
 

@@ -40,10 +40,10 @@ class_name BattleBall extends RigidBody2D
 @export var lock:bool = false;
 
 # --- Debug options ---
-@export var immobile:bool = false;
-@export var no_kb:bool = false;
-@export var no_shoot:bool = false;
-@export var no_rot:bool = false;
+@export var debug_immobile:bool = false;
+@export var debug_no_kb:bool = false;
+@export var debug_no_shoot:bool = false;
+@export var debug_no_rot:bool = false;
 
 # --- Push Duel ---
 @export var custom_ball_name:String = "";
@@ -163,7 +163,7 @@ func ready() -> void:
 
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	if(stop): return;
-	if(immobile): return;
+	if(debug_immobile): return;
 
 	var vel := linear_velocity
 
@@ -202,7 +202,7 @@ func _physics_process(delta: float) -> void:
 	if(invincible_for > 0.0):
 		invincible_for -= delta;
 
-	if(!no_rot):
+	if(!debug_no_rot):
 		if(align_weapon_to_velocity):
 			# DebugDraw2D.arrow_vector(global_position, linear_velocity.normalized() * 50, Color.RED, 1.0, 1.0);
 			weapon_slot.rotation = linear_velocity.normalized().angle() - deg_to_rad(90.0);
@@ -229,7 +229,7 @@ func start(m:Main, dir:Vector2):
 	show_trail(false);
 	trail_2d.default_color = color;
 	trail_2d.default_color.a = 0.75;
-	if(!immobile):
+	if(!debug_immobile):
 		impulse(dir * max_speed / 2.0);
 
 	if(lose_hp_per_s > 0):
@@ -629,7 +629,7 @@ func nerf_max_speed(v:float):
 	nerfed_speed = abs(base_max_speed - max_speed);
 
 func impulse(force:Vector2):
-	if(no_kb): return;
+	if(debug_no_kb): return;
 	apply_impulse(force);
 
 func reset_rigidbody():

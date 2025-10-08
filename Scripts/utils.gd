@@ -113,7 +113,12 @@ static func spawn_projectile(projectile_prefab:PackedScene, ball_owner:BattleBal
 	p.rotation = rotation;
 	p.scale = ball_owner.weapon_slot.scale * ball_owner.root.scale;
 	p.init(ball_owner, speed, pierce, bounces);
-	parent.get_tree().root.call_deferred("add_child", p);
+
+	if(ball_owner.weapon_settings.bg_projectile):
+		ball_owner.main.projectiles_bg_parent.call_deferred("add_child", p);
+	else:
+		parent.get_tree().root.call_deferred("add_child", p);
+
 	return p;
 
 static func convert_time_to_string(time: float) -> String:

@@ -1,0 +1,43 @@
+[gd_scene load_steps=9 format=3 uid="uid://0upw2ieuvlce"]
+
+[ext_resource type="Script" uid="uid://cdd72cih1ef78" path="res://Prefabs/Weapons/Armory/Coin/weapon_coin.gd" id="1_2rjjd"]
+[ext_resource type="Texture2D" uid="uid://ds0kc2fydlqpc" path="res://Graphics/_Addons/Icons/fc131.png" id="2_2rjjd"]
+[ext_resource type="PackedScene" uid="uid://2j584xlu7rw2" path="res://Prefabs/Weapons/Armory/Projectiles/P_Railgun.tscn" id="2_d0yr1"]
+[ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="3_w0miy"]
+[ext_resource type="Texture2D" uid="uid://b47vh7xo0iycr" path="res://Graphics/_Addons/Icons/fc132.png" id="4_w0miy"]
+[ext_resource type="Texture2D" uid="uid://ckxg570vhwic8" path="res://Graphics/_Addons/Icons/fc13100.png" id="5_6si0g"]
+[ext_resource type="Texture2D" uid="uid://c35016g545iko" path="res://Graphics/_Addons/Icons/fc688.png" id="6_qnido"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d0yr1"]
+radius = 30.0
+
+[node name="WeaponCoin" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]
+script = ExtResource("1_2rjjd")
+railgun_duration_scale = 0.05
+railgun_duration = 0.25
+railgun_prefab = ExtResource("2_d0yr1")
+coins_sprites = Array[Texture2D]([ExtResource("2_2rjjd"), ExtResource("4_w0miy")])
+flat_coin = ExtResource("5_6si0g")
+phantom_coin = ExtResource("6_qnido")
+coin_flip_rot_speed = 1080.0
+base_coin_tx = ExtResource("2_2rjjd")
+sprite_2d = NodePath("Sprite2D")
+hitboxes = [NodePath("Sprite2D/WeaponHitbox")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+rotation = 1.5708
+texture = ExtResource("2_2rjjd")
+
+[node name="WeaponHitbox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("weapon", "collider")]
+rotation = 2.35619
+script = ExtResource("3_w0miy")
+weapon = NodePath("../..")
+collider = NodePath("CollisionShape2D")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
+shape = SubResource("CircleShape2D_d0yr1")
+
+[connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_entered"]
+[connection signal="area_exited" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_exited"]

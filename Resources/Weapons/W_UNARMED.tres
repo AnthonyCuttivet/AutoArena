@@ -47,6 +47,7 @@ base_shoot_duration = 0.0
 projectile_self_hitstop = false
 lifesteal = false
 lifesteal_tick = 1
+independent_weapon = false
 stat_scale_value = 0.65
 stat_scale_name = "DMG / Max Speed"
 scaling_stat_float = false

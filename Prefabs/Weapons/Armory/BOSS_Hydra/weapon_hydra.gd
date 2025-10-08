@@ -37,7 +37,7 @@ func scale_stat(force:bool = false):
 	init_scaling_stat();
 
 func shoot_projectile():
-	if(ball_owner.no_shoot): return;
+	if(ball_owner.debug_no_shoot): return;
 	for head in heads:
 		if(head.can_shoot((1.0 / shoot_speed))):
 			AudioManager.play_sfx(head.sfx_shoot, "SFX");

@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://b8tw84rkc2w5c"]
 
-[ext_resource type="Script" uid="uid://3qhfvy3owk8d" path="res://Prefabs/Weapons/Armory/Bow/weapon_bloodBow.gd" id="1_umh7g"]
+[ext_resource type="Script" uid="uid://3qhfvy3owk8d" path="res://Prefabs/Weapons/Armory/BowBlood/weapon_bloodBow.gd" id="1_umh7g"]
 [ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="2_lsc2q"]
 [ext_resource type="AudioStream" uid="uid://bxyc71klmdsw0" path="res://Audio/SFX/BattleBalls/se_demon_ragedrive.wav" id="2_urbpa"]
 [ext_resource type="Texture2D" uid="uid://cwjj40qq4q74h" path="res://Graphics/_Addons/Icons/fc1705.png" id="2_xfgmd"]

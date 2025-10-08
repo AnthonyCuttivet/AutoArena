@@ -4,7 +4,7 @@ class_name WeaponVortexBubble extends Weapon
 
 @onready var r: Node2D = $Root
 
-@onready var weapon_hitbox: Hitbox = $Root/Sprite2D/WeaponHitbox;
+@onready var weapon_hitbox: Hitbox = $Root/Sprite2D/WeaponHitboxBubble;
 @onready var fx_bubbles: GPUParticles2D = $Root/FXBubbles;
 
 var weapon_vortex:WeaponVortex = null;
@@ -88,11 +88,12 @@ func set_bubble_state(s:bool, is_hit:bool):
 		if(is_hit):
 			sprite_2d.texture = weapon_vortex.hit_bubble_sprite;
 			fx_bubbles.self_modulate = weapon_vortex.hit_bubble_color;
+			sprite_2d.self_modulate.a = 0.3;
 		else:
 			sprite_2d.self_modulate = Color.GRAY;
 			fx_bubbles.self_modulate = Color.GRAY;
+			sprite_2d.self_modulate.a = 0.1;
 
-		sprite_2d.self_modulate.a = 0.3;
 		weapon_vortex.on_bubble_popped(is_hit);
 		AudioManager.play_sfx(weapon_vortex.sfx_popped_bubble, "SFX");
 	else:

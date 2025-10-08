@@ -66,6 +66,7 @@ base_shoot_duration = 0.2
 projectile_self_hitstop = true
 lifesteal = false
 lifesteal_tick = 1
+independent_weapon = false
 stat_scale_value = 1.0
 stat_scale_name = "Arrows"
 scaling_stat_float = false

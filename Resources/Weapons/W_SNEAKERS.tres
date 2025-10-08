@@ -53,6 +53,7 @@ base_shoot_duration = 0.35
 projectile_self_hitstop = false
 lifesteal = false
 lifesteal_tick = 1
+independent_weapon = false
 stat_scale_value = 0.5
 stat_scale_name = "Damage"
 scaling_stat_float = false

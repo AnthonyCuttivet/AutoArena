@@ -49,7 +49,7 @@ stream_0/stream = ExtResource("8_3qymh")
 [sub_resource type="Resource" id="Resource_brri5"]
 script = ExtResource("7_xf0kl")
 audio_stream = SubResource("AudioStreamRandomizer_yhii4")
-volume = -34.0
+volume = -32.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_yk2lh"]
@@ -60,7 +60,7 @@ stream_0/stream = ExtResource("9_aa5os")
 [sub_resource type="Resource" id="Resource_h8syi"]
 script = ExtResource("7_xf0kl")
 audio_stream = SubResource("AudioStreamRandomizer_yk2lh")
-volume = -27.0
+volume = -22.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_h8syi"]
@@ -71,7 +71,7 @@ stream_0/stream = ExtResource("11_5kpho")
 [sub_resource type="Resource" id="Resource_ngkxj"]
 script = ExtResource("7_xf0kl")
 audio_stream = SubResource("AudioStreamRandomizer_h8syi")
-volume = -29.0
+volume = -28.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="AudioStreamWAV" id="AudioStreamWAV_fb5gb"]
@@ -87,7 +87,7 @@ stream_0/stream = SubResource("AudioStreamWAV_fb5gb")
 [sub_resource type="Resource" id="Resource_qhecw"]
 script = ExtResource("7_xf0kl")
 audio_stream = SubResource("AudioStreamRandomizer_4l7ai")
-volume = -29.0
+volume = -28.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_dqacp"]
@@ -98,7 +98,7 @@ stream_0/stream = ExtResource("12_yhii4")
 [sub_resource type="Resource" id="Resource_rwvft"]
 script = ExtResource("7_xf0kl")
 audio_stream = SubResource("AudioStreamRandomizer_dqacp")
-volume = -29.0
+volume = -26.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_27hpw"]
@@ -109,13 +109,13 @@ stream_0/stream = ExtResource("13_brri5")
 [sub_resource type="Resource" id="Resource_s1vh6"]
 script = ExtResource("7_xf0kl")
 audio_stream = SubResource("AudioStreamRandomizer_27hpw")
-volume = -30.0
+volume = -25.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="Resource" id="Resource_titi2"]
 script = ExtResource("7_xf0kl")
 audio_stream = ExtResource("6_fqqpt")
-volume = -32.0
+volume = -30.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_aa5os"]
@@ -126,26 +126,27 @@ stream_0/stream = ExtResource("12_aa5os")
 [sub_resource type="Resource" id="Resource_4slom"]
 script = ExtResource("7_xf0kl")
 audio_stream = SubResource("AudioStreamRandomizer_aa5os")
-volume = -35.0
+volume = -34.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
-radius = 37.4411
-height = 81.089
+radius = 11.2888
+height = 46.4727
 
-[node name="WeaponRevolver" type="Node2D" node_paths=PackedStringArray("bullets_ui", "sprite_2d", "hitboxes", "projectile_spawn")]
+[node name="WeaponRevolver" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes", "projectile_spawn")]
 script = ExtResource("1_yauiy")
 reload_duration = 1.0
 bullets_textures = Array[Texture2D]([ExtResource("2_eos0i"), ExtResource("3_bih3f"), ExtResource("2_f54ec"), ExtResource("5_fqqpt")])
 bullets_trail_colors = Array[Color]([Color(1, 0.639253, 0.582031, 1), Color(0.589844, 0.589844, 0.589844, 1), Color(1, 0.721569, 0.47451, 1), Color(0.471313, 0.675393, 0.914063, 1)])
 bullets_damages = Array[int]([1, 4, 14, 44])
 bullets_weights = Array[float]([80.0, 15.0, 4.0, 1.0])
-bullets_weights_scale = Array[float]([0.0, 4.0, 2.0, 0.1])
+bullets_weights_scale = Array[float]([0.0, 2.4, 1.4, 0.1])
 bullets_shoots_sfxs = Array[ExtResource("7_xf0kl")]([SubResource("Resource_7rw87"), SubResource("Resource_5kpho"), SubResource("Resource_brri5"), SubResource("Resource_h8syi")])
 bullets_hit_sfxs = Array[ExtResource("7_xf0kl")]([SubResource("Resource_ngkxj"), SubResource("Resource_qhecw"), SubResource("Resource_rwvft"), SubResource("Resource_s1vh6")])
-bullets_ui = NodePath("Sprite2D/Bullets")
+bullets_ui_prefab = ExtResource("5_a811k")
 chance_to_be_absolute = 0.84
-max_recoil = 0.4
+max_recoil = 1.4
+bullets_ui_x_offset = 158.0
 sfx_reload_bullet = SubResource("Resource_titi2")
 sfx_reload_barrel = SubResource("Resource_4slom")
 sprite_2d = NodePath("Sprite2D")
@@ -165,19 +166,12 @@ collider = NodePath("CollisionShape2D")
 metadata/owner = NodePath("../../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
-position = Vector2(-5, 0)
+position = Vector2(12, -3)
 rotation = 3.99331
 shape = SubResource("CapsuleShape2D_1fhci")
 
 [node name="Spawn" type="Node2D" parent="Sprite2D"]
 position = Vector2(32, -10)
-
-[node name="Bullets" parent="Sprite2D" instance=ExtResource("5_a811k")]
-offset_left = -34.0
-offset_top = -56.0
-offset_right = -34.0
-offset_bottom = -56.0
-scale = Vector2(0.33, 0.33)
 
 [connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_entered"]
 [connection signal="area_exited" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_exited"]

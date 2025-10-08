@@ -1,0 +1,308 @@
+[gd_scene load_steps=49 format=3 uid="uid://2j584xlu7rw2"]
+
+[ext_resource type="Script" uid="uid://ddouoxgmca3li" path="res://Prefabs/Weapons/Armory/Coin/projectile_railgun.gd" id="1_ida4t"]
+[ext_resource type="Shader" uid="uid://bqw8t1j4f7yi7" path="res://Graphics/Shaders/lightning.gdshader" id="3_ida4t"]
+[ext_resource type="Script" uid="uid://d27ne0poeo6c7" path="res://Prefabs/Ball/projectile_hitbox.gd" id="3_v7f42"]
+[ext_resource type="PackedScene" uid="uid://fxlqqsregrlu" path="res://Prefabs/FX/fx_clash.tscn" id="4_psyov"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ida4t"]
+size = Vector2(950, 10)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_psyov"]
+frequency = 0.022
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0cwed"]
+noise = SubResource("FastNoiseLite_psyov")
+
+[sub_resource type="Gradient" id="Gradient_8so3l"]
+offsets = PackedFloat32Array(0, 0.996599)
+colors = PackedColorArray(0.90625, 0.991211, 1, 1, 0.4375, 0.920898, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_y81do"]
+resource_local_to_scene = true
+gradient = SubResource("Gradient_8so3l")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_gioh5"]
+frequency = 0.0216
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_sqf41"]
+normalize = false
+noise = SubResource("FastNoiseLite_gioh5")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_syl3g"]
+resource_local_to_scene = true
+shader = ExtResource("3_ida4t")
+shader_parameter/lightning_noise = SubResource("NoiseTexture2D_sqf41")
+shader_parameter/background_noise = SubResource("NoiseTexture2D_0cwed")
+shader_parameter/color_gradient = SubResource("GradientTexture1D_y81do")
+shader_parameter/use_color_gradient = true
+shader_parameter/color_effect_mod = 0.0
+shader_parameter/intensive = 0.3
+shader_parameter/lightning_thin = 1.0
+shader_parameter/number_lightning = 1
+shader_parameter/speed = 100.0
+shader_parameter/position = 0.5
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0cwed"]
+frequency = 0.022
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_8so3l"]
+noise = SubResource("FastNoiseLite_0cwed")
+
+[sub_resource type="Gradient" id="Gradient_y81do"]
+colors = PackedColorArray(0.664063, 0.992126, 1, 1, 0, 0.489685, 0.882813, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_gioh5"]
+resource_local_to_scene = true
+gradient = SubResource("Gradient_y81do")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_sqf41"]
+frequency = 0.0216
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_syl3g"]
+normalize = false
+noise = SubResource("FastNoiseLite_sqf41")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f80h1"]
+resource_local_to_scene = true
+shader = ExtResource("3_ida4t")
+shader_parameter/lightning_noise = SubResource("NoiseTexture2D_syl3g")
+shader_parameter/background_noise = SubResource("NoiseTexture2D_8so3l")
+shader_parameter/color_gradient = SubResource("GradientTexture1D_gioh5")
+shader_parameter/use_color_gradient = true
+shader_parameter/color_effect_mod = 0.0
+shader_parameter/intensive = 1.5
+shader_parameter/lightning_thin = 0.615
+shader_parameter/number_lightning = 3
+shader_parameter/speed = 5.0
+shader_parameter/position = 0.5
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ida4t"]
+frequency = 0.022
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_psyov"]
+noise = SubResource("FastNoiseLite_ida4t")
+
+[sub_resource type="Gradient" id="Gradient_0cwed"]
+colors = PackedColorArray(1, 0.771729, 0.570313, 1, 1, 0.547974, 0.371094, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8so3l"]
+resource_local_to_scene = true
+gradient = SubResource("Gradient_0cwed")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_y81do"]
+frequency = 0.0118
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_gioh5"]
+normalize = false
+noise = SubResource("FastNoiseLite_y81do")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sqf41"]
+resource_local_to_scene = true
+shader = ExtResource("3_ida4t")
+shader_parameter/lightning_noise = SubResource("NoiseTexture2D_gioh5")
+shader_parameter/background_noise = SubResource("NoiseTexture2D_psyov")
+shader_parameter/color_gradient = SubResource("GradientTexture1D_8so3l")
+shader_parameter/use_color_gradient = true
+shader_parameter/color_effect_mod = 0.25
+shader_parameter/intensive = 0.55
+shader_parameter/lightning_thin = 0.5
+shader_parameter/number_lightning = 3
+shader_parameter/speed = 5.0
+shader_parameter/position = 0.5
+
+[sub_resource type="Curve" id="Curve_0cwed"]
+_data = [Vector2(0, 1), 0.0, 0.0378346, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_8so3l"]
+curve = SubResource("Curve_0cwed")
+
+[sub_resource type="Gradient" id="Gradient_psyov"]
+colors = PackedColorArray(1, 0.854431, 0.648438, 1, 1, 0.663818, 0.367188, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0cwed"]
+gradient = SubResource("Gradient_psyov")
+
+[sub_resource type="Curve" id="Curve_y81do"]
+_limits = [-200.0, 201.365, 0.0, 1.0]
+_data = [Vector2(0, 201.365), 0.0, 0.0, 0, 0, Vector2(1, -200), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_gioh5"]
+curve = SubResource("Curve_y81do")
+
+[sub_resource type="Curve" id="Curve_sqf41"]
+_data = [Vector2(0, 0.1481), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_syl3g"]
+_limits = [0.0, 10.0, 0.0, 1.0]
+_data = [Vector2(0, 4.63303), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_f80h1"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_a52ah"]
+curve_x = SubResource("Curve_sqf41")
+curve_y = SubResource("Curve_syl3g")
+curve_z = SubResource("Curve_f80h1")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_psyov"]
+resource_local_to_scene = true
+lifetime_randomness = 0.2
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(250, 20, 1)
+direction = Vector3(0, 0, 0)
+spread = 0.0
+initial_velocity_min = 100.0
+initial_velocity_max = 300.0
+linear_accel_min = -2.23517e-06
+linear_accel_max = 100.0
+linear_accel_curve = SubResource("CurveTexture_gioh5")
+scale_min = 0.01
+scale_max = 0.03
+scale_curve = SubResource("CurveXYZTexture_a52ah")
+color = Color(1, 0.736816, 0.5625, 1)
+color_ramp = SubResource("GradientTexture1D_0cwed")
+alpha_curve = SubResource("CurveTexture_8so3l")
+turbulence_noise_strength = 8.86
+
+[sub_resource type="Curve" id="Curve_psyov"]
+_data = [Vector2(0, 1), 0.0, 0.0378346, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_0cwed"]
+curve = SubResource("Curve_psyov")
+
+[sub_resource type="Gradient" id="Gradient_gioh5"]
+colors = PackedColorArray(0.851563, 0.996521, 1, 1, 0.339844, 0.412048, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_sqf41"]
+gradient = SubResource("Gradient_gioh5")
+
+[sub_resource type="Curve" id="Curve_8so3l"]
+_limits = [-200.0, 201.365, 0.0, 1.0]
+_data = [Vector2(0, 201.365), 0.0, 0.0, 0, 0, Vector2(1, -200), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_y81do"]
+curve = SubResource("Curve_8so3l")
+
+[sub_resource type="Curve" id="Curve_gioh5"]
+_data = [Vector2(0, 0.1481), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_a52ah"]
+_limits = [0.0, 10.0, 0.0, 1.0]
+_data = [Vector2(0, 4.63303), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_eeait"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_3gqh1"]
+curve_x = SubResource("Curve_gioh5")
+curve_y = SubResource("Curve_a52ah")
+curve_z = SubResource("Curve_eeait")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0cwed"]
+resource_local_to_scene = true
+lifetime_randomness = 0.2
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(250, 20, 1)
+direction = Vector3(0, 0, 0)
+spread = 0.0
+initial_velocity_min = 100.0
+initial_velocity_max = 300.0
+linear_accel_min = -2.23517e-06
+linear_accel_max = 100.0
+linear_accel_curve = SubResource("CurveTexture_y81do")
+scale_min = 0.01
+scale_max = 0.02
+scale_curve = SubResource("CurveXYZTexture_3gqh1")
+color_ramp = SubResource("GradientTexture1D_sqf41")
+alpha_curve = SubResource("CurveTexture_0cwed")
+turbulence_noise_strength = 8.86
+
+[node name="ProjectileRailgun" type="Node2D" node_paths=PackedStringArray("coin_projectile", "railgun_laser", "collider", "hitbox", "sprite_2d")]
+script = ExtResource("1_ida4t")
+railgun_length = 10000.0
+railgun_length_duration = 0.01
+railgun_width = 12.0
+lifetime = 0.25
+railgun_tick_time = 0.05
+coin_projectile = NodePath("Sprite2D/CoinProjectile")
+railgun_laser = NodePath("Sprite2D/RailgunLaser")
+collider = NodePath("Sprite2D/ProjectileHitbox/CollisionShape2D")
+pierce_count = 999
+absolute = true
+hitbox = NodePath("Sprite2D/ProjectileHitbox")
+sprite_2d = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+
+[node name="ProjectileHitbox" type="Area2D" parent="Sprite2D"]
+script = ExtResource("3_v7f42")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/ProjectileHitbox"]
+position = Vector2(500, -0.5)
+shape = SubResource("RectangleShape2D_ida4t")
+debug_color = Color(0.7, 0, 0, 0.42)
+
+[node name="CoinProjectile" type="Node2D" parent="Sprite2D"]
+
+[node name="CoinThunder" type="Line2D" parent="Sprite2D/CoinProjectile"]
+material = SubResource("ShaderMaterial_syl3g")
+points = PackedVector2Array(0, 0, 1000, 0)
+texture_mode = 2
+
+[node name="RailgunLaser" type="Node2D" parent="Sprite2D"]
+
+[node name="MainLaser" type="Line2D" parent="Sprite2D/RailgunLaser"]
+points = PackedVector2Array(0, 0, 1000, 0)
+width = 1.0
+default_color = Color(1, 0.852661, 0.734375, 1)
+
+[node name="BlueThunder" type="Line2D" parent="Sprite2D/RailgunLaser"]
+material = SubResource("ShaderMaterial_f80h1")
+points = PackedVector2Array(0, 0, 1000, 0)
+texture_mode = 2
+
+[node name="OrangeThunder" type="Line2D" parent="Sprite2D/RailgunLaser"]
+material = SubResource("ShaderMaterial_sqf41")
+points = PackedVector2Array(0, 0, 1000, 0)
+texture_mode = 2
+
+[node name="FXOrangeParticles" parent="Sprite2D/RailgunLaser" instance=ExtResource("4_psyov")]
+position = Vector2(112, 1)
+scale = Vector2(0.5, 0.5)
+emitting = true
+lifetime = 0.2
+one_shot = false
+process_material = SubResource("ParticleProcessMaterial_psyov")
+
+[node name="FXBlueParticles" parent="Sprite2D/RailgunLaser" instance=ExtResource("4_psyov")]
+position = Vector2(106, 0)
+scale = Vector2(0.5, 0.5)
+emitting = true
+lifetime = 0.2
+one_shot = false
+process_material = SubResource("ParticleProcessMaterial_0cwed")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+rotation = -1.5708
+hit_from_inside = true
+
+[connection signal="area_entered" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_area_entered"]
+[connection signal="area_exited" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_area_exited"]
+[connection signal="body_entered" from="Sprite2D/ProjectileHitbox" to="." method="_on_projectile_hitbox_body_entered"]

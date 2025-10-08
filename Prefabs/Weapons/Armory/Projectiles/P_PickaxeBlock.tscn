@@ -38,10 +38,10 @@ sprite_2d = NodePath("Sprite2D")
 [node name="Upgrade" type="ColorRect" parent="."]
 z_as_relative = false
 material = SubResource("ShaderMaterial_24125")
-offset_left = -17.0
-offset_top = -17.0
-offset_right = 17.0
-offset_bottom = 17.0
+offset_left = -19.0
+offset_top = -19.0
+offset_right = 19.0
+offset_bottom = 19.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

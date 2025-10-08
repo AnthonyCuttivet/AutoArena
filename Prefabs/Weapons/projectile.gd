@@ -1,9 +1,13 @@
 class_name Projectile extends Node2D
 
 @export var speed:float = 0.0;
+@export var gravity_force:float = 0.0;
+@export var max_gravity:float = 1.0;
 @export var pierce_count:int = 0;
 @export var bounce_count:int = 0;
+@export var bounciness:float = 1.0;
 @export var rotation_speed:float = 0.0;
+@export var local_rotation:bool = false;
 @export var absolute:bool = false;
 @export var hitbox:ProjectileHitbox;
 @export var destroy_on_hit_delay:float = 0.0;
@@ -20,6 +24,8 @@ var velocity: Vector2 = Vector2.ZERO;
 var self_destruct_remaining:float = 0.0;
 var rand_shoot_elapsed_on_hit:bool = false;
 var custom_hit_sfx:SFX;
+var accumulated_gravity:float = 0.0;
+var multihit_delay:float = 0.0;
 
 func init(o:BattleBall, s:float, p:int = -1, b:int = -1):
 	ball_owner = o;
@@ -38,8 +44,16 @@ func init(o:BattleBall, s:float, p:int = -1, b:int = -1):
 	hitbox.projectile = self;
 
 func _physics_process(delta: float) -> void:
+	if(accumulated_gravity < max_gravity):
+		accumulated_gravity = clamp(accumulated_gravity +  gravity_force, 0.0, max_gravity);
+
+	velocity += accumulated_gravity * -ball_owner.transform.x;
 	global_position += velocity * delta;
-	global_rotation_degrees += rotation_speed * delta;
+
+	if(local_rotation):
+		sprite_2d.rotation_degrees += rotation_speed * delta;
+	else:
+		global_rotation_degrees += rotation_speed * delta;
 
 	if(self_destruct_remaining > 0.0):
 		self_destruct_remaining = clamp(self_destruct_remaining - delta, 0.0, 100.0);
@@ -61,7 +75,11 @@ func _on_projectile_hitbox_area_entered(other: Area2D) -> void:
 		pass;
 
 	elif(other is Hitbox && other.ball_owner != null && other.ball_owner != ball_owner && other.ball_owner.team != ball_owner.team):
-		if(absolute) : return;
+		if(absolute):
+			if(other.ball_owner.weapon_settings.independent_weapon):
+				other.weapon.on_weapon_clash(ball_owner, other.global_position, true);
+			return;
+
 		other.ball_owner.weapon.on_weapon_clash(ball_owner, other.global_position, true);
 		velocity = velocity.rotated(deg_to_rad(randf_range(90,270)));
 		self.rotation = velocity.angle();
@@ -72,8 +90,9 @@ func _on_projectile_hitbox_body_entered(other: Node2D) -> void:
 	if(other.is_in_group("WALL")):
 		bounce_count -= 1;
 		if(bounce_count >= 0):
+			accumulated_gravity = 0.0;
 			if(raycast.get_collision_normal() != Vector2.ZERO):
-				velocity = velocity.bounce(raycast.get_collision_normal());
+				velocity = velocity.bounce(raycast.get_collision_normal()) * bounciness;
 				if(velocity == Vector2.ZERO):
 					destroy(1);
 				self.rotation = velocity.angle();
@@ -103,11 +122,11 @@ func destroy(source:int = 0):
 		match source:
 			0 : print("[P DESTROYED] 0 : Self-Destruct");
 			1 : print("[P DESTROYED] 1 : Wall collision with no velocity");
-			#2 : print("[P DESTROYED] 2 : Deadzone");
+			2 : print("[P DESTROYED] 2 : Deadzone");
 			3 : print("[P DESTROYED] 3 : Hit with no pierce remaining");
 
 	on_destroy_effect();
-	get_tree().create_timer(ball_owner.weapon.hitstop).timeout.connect(queue_free);
+	get_tree().create_timer(0.05).timeout.connect(queue_free);
 	# queue_free();
 
 func on_hit_effect(other:BattleBall):
