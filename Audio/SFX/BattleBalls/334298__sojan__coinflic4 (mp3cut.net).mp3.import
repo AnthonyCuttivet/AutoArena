@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bdt8kr4tmabgu"
+path="res://.godot/imported/334298__sojan__coinflic4 (mp3cut.net).mp3-f973bc3feea55c5b3ae5758335fbbf74.mp3str"
+
+[deps]
+
+source_file="res://Audio/SFX/BattleBalls/334298__sojan__coinflic4 (mp3cut.net).mp3"
+dest_files=["res://.godot/imported/334298__sojan__coinflic4 (mp3cut.net).mp3-f973bc3feea55c5b3ae5758335fbbf74.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://fxlqqsregrlu" path="res://Prefabs/FX/fx_clash.tscn" id="4_psyov"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ida4t"]
-size = Vector2(950, 10)
+size = Vector2(950, 8)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_psyov"]
 frequency = 0.022
@@ -255,7 +255,7 @@ script = ExtResource("3_v7f42")
 metadata/owner = NodePath("../../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/ProjectileHitbox"]
-position = Vector2(500, -0.5)
+position = Vector2(525, -0.5)
 shape = SubResource("RectangleShape2D_ida4t")
 debug_color = Color(0.7, 0, 0, 0.42)
 

@@ -24,8 +24,8 @@ func on_weapon_hit_received(id:int, to:int, _is_projectile:bool):
 		return;
 
 	if(lifesteal_active):
-		apply_lifesteal(damage, to);
 		scale_stat();
+		apply_lifesteal(damage, to);
 
 	update_lifesteal_status();
 	update_details();

@@ -21,6 +21,7 @@ func _on_projectile_hitbox_area_entered(other: Area2D) -> void:
 		absolute = true;
 		accumulated_gravity = 0.0;
 		gravity_force = 0.0;
+		custom_hitstop = 0.5;
 		sprite_2d.texture = coin_parent.coins_sprites[1];
 		no_destroy_callback = true;
 		velocity = ball_owner.weapon_slot.global_transform.x * 6666.0;
@@ -31,6 +32,7 @@ func _on_projectile_hitbox_body_entered(other: Node2D) -> void:
 		if(!has_bounced):
 			bounce_count = 1;
 			has_bounced = true;
+			AudioManager.play_sfx(coin_parent.sfx_coin_bounce, "SFX");
 		else:
 			coin_parent.set_can_shoot(true);
 

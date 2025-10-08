@@ -30,6 +30,7 @@ func init(o:BattleBall, s:float, p:int = -1, b:int = -1):
 	coin_projectile.scale.y = 3.0;
 	railgun_laser.scale.x = 0.0;
 
+	AudioManager.play_sfx(weapon_coin_owner.sfx_railgun, "SFX");
 	laser_tween();
 
 func _physics_process(delta: float) -> void:

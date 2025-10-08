@@ -80,7 +80,11 @@ func _on_projectile_hitbox_area_entered(other: Area2D) -> void:
 				other.weapon.on_weapon_clash(ball_owner, other.global_position, true);
 			return;
 
-		other.ball_owner.weapon.on_weapon_clash(ball_owner, other.global_position, true);
+		if(other.ball_owner.weapon_settings.independent_weapon):
+			other.weapon.on_weapon_clash(ball_owner, other.global_position, true);
+		else:
+			other.ball_owner.weapon.on_weapon_clash(ball_owner, other.global_position, true);
+
 		velocity = velocity.rotated(deg_to_rad(randf_range(90,270)));
 		self.rotation = velocity.angle();
 

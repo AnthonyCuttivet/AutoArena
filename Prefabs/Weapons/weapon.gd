@@ -130,7 +130,7 @@ func add_remaining_shoot():
 
 func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:Projectile = null) -> void:
 	if(other.is_invincible()):
-		print(other.name + " is INVINCIBLE");
+		# print(other.name + " is INVINCIBLE");
 		return;
 
 	if(ball_owner.is_in_same_team(other)):

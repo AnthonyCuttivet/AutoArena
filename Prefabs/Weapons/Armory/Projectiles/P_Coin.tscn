@@ -9,9 +9,9 @@ radius = 30.0
 
 [node name="ProjectileCoin" type="Node2D" node_paths=PackedStringArray("hitbox", "sprite_2d")]
 script = ExtResource("1_2h454")
-gravity_force = 0.5
-max_gravity = 50.0
-bounciness = 0.4
+gravity_force = 0.6
+max_gravity = 70.0
+bounciness = 0.3
 local_rotation = true
 hitbox = NodePath("Sprite2D/ProjectileHitbox")
 sprite_2d = NodePath("Sprite2D")

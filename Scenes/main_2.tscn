@@ -23,7 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://crarm12ndl2en" path="res://Graphics/_Addons/Icons/fc7.png" id="12_hvjex"]
 [ext_resource type="FontFile" uid="uid://bt2qq5v7nibma" path="res://Graphics/Fonts/PPFraktionMono-Bold.otf" id="12_p1oyv"]
 [ext_resource type="FontFile" uid="uid://bglbd1ylrt02k" path="res://Graphics/Fonts/big_noodle_titling.ttf" id="12_per8v"]
-[ext_resource type="AudioStream" uid="uid://7xb6nwqm5lj7" path="res://Audio/SFX/BattleBalls/Announcer/download1759860371043 (mp3cut.net).mp3" id="13_c0wg0"]
+[ext_resource type="AudioStream" uid="uid://cxona6gvjl03x" path="res://Audio/SFX/BattleBalls/Announcer/download1759947804770 (mp3cut.net).mp3" id="13_c0wg0"]
 [ext_resource type="Script" uid="uid://dtqgj8e3uki5c" path="res://Scenes/dynamic_text.gd" id="13_vvmd2"]
 [ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="14_0krxf"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="14_cticm"]
@@ -588,7 +588,7 @@ projectile_self_hitstop = false
 lifesteal = false
 lifesteal_tick = 1
 independent_weapon = false
-stat_scale_value = 0.2
+stat_scale_value = 0.3
 stat_scale_name = "DMG / Max Speed"
 scaling_stat_float = false
 no_rotation_change = false
@@ -943,7 +943,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [node name="Main2" type="Node2D" node_paths=PackedStringArray("new_challenger_ball", "battleblock_controller", "balls", "attraction_point")]
 rotation = 1.5708
 script = ExtResource("1_nmkph")
-devmode = true
+record = true
 patchnote_s_per_page = 23.0
 new_challenger_ball = NodePath("Balls/Fighters/Reaper")
 time_attack_leaderboards = Dictionary[String, ExtResource("2_poh84")]({
@@ -958,7 +958,7 @@ hypermatch_hp = 500
 hypermatch_scales = Array[int]([500, 50])
 forced_start_dir = Vector2(0, -1)
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Fighters/Coin")]
+balls = [NodePath("Balls/Fighters/Coin"), NodePath("Balls/Fighters/Bow")]
 fx_hit_prefab = ExtResource("2_8wnqf")
 fx_death_prefab = ExtResource("3_uot50")
 fx_clash = ExtResource("4_0o7lx")
@@ -971,7 +971,6 @@ sfx_bounce_boss = SubResource("Resource_gaafq")
 sfx_death = SubResource("Resource_go1jf")
 ve_announcer = SubResource("Resource_p1oyv")
 announcer_delay = 1.0
-no_announcer = true
 bgm = ExtResource("14_gcqa4")
 bgm_volume = -28.0
 startup_sfx = ExtResource("15_gcqa4")
@@ -1763,9 +1762,9 @@ grow_vertical = 0
 clip_contents = false
 custom_minimum_size = Vector2(350, 0)
 layout_mode = 2
-offset_left = 69.9997
+offset_left = 76.9997
 offset_top = -69.0002
-offset_right = 420.0
+offset_right = 427.0
 offset_bottom = 70.9998
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -1828,9 +1827,9 @@ script = ExtResource("13_vvmd2")
 clip_contents = false
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-offset_left = 1025.01
+offset_left = 1018.01
 offset_top = -27.0037
-offset_right = 1025.01
+offset_right = 1018.01
 offset_bottom = 12.9963
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -2646,7 +2645,7 @@ relative_bounce_boost = 0.2
 position = Vector2(2203.01, 1414.99)
 weapon_settings = ExtResource("70_c0wg0")
 health = 50
-color = Color(1, 0.609375, 0, 1)
+color = Color(1, 0.92549, 0.643137, 1)
 team = 1
 dead = true
 stop = true
@@ -3013,6 +3012,7 @@ scale = Vector2(12, 12)
 texture = ExtResource("30_6y6hv")
 
 [node name="Cameo" type="Node2D" parent="." node_paths=PackedStringArray("ball", "weapon_root")]
+process_mode = 4
 visible = false
 position = Vector2(-337.994, 1667)
 scale = Vector2(0.7, 0.7)

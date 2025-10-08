@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dqvgfcy0fxxlf"
+path="res://.godot/imported/se_brave_final05 (mp3cut.net).wav-a74e3e8d3a85eeab44ea62c12752e232.sample"
+
+[deps]
+
+source_file="res://Audio/SFX/BattleBalls/se_brave_final05 (mp3cut.net).wav"
+dest_files=["res://.godot/imported/se_brave_final05 (mp3cut.net).wav-a74e3e8d3a85eeab44ea62c12752e232.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,6 +1,5 @@
 class_name WeaponCoin extends Weapon
 
-@export var railgun_ticks:float = 5.0;
 @export var railgun_duration_scale:float = 0.5;
 @export var railgun_hitstop:float = 0.2;
 @export var railgun_duration:float = 0.2;
@@ -8,14 +7,15 @@ class_name WeaponCoin extends Weapon
 @export var coins_sprites:Array[Texture2D];
 @export var flat_coin:Texture2D;
 @export var phantom_coin:Texture2D;
-@export var coin_flip_rot_speed:float = 360.0;
+@export var coin_flip_rot_speed:Vector2 = Vector2(720.0, 1080.0);
 @export var coin_flip_scale:float = 1.3;
 @export var base_coin_tx:Texture2D;
+@export var collider:CollisionShape2D;
 
 @export var sfx_railgun:SFX;
-@export var sfx_coin_launch:SFX;
 @export var sfx_coin_hit:SFX;
 @export var sfx_coin_bounce:SFX;
+@export var sfx_coin_catch:SFX;
 
 var can_shoot:bool = true;
 var active_coin:ProjectileCoin = null;
@@ -65,15 +65,19 @@ func shoot_projectile():
 
 	var coin:ProjectileCoin = super.shoot_projectile();
 	active_coin = coin;
+	coin.custom_hit_sfx = sfx_coin_hit;
 	coin.global_rotation = PI;
 	coin.coin_parent = self;
-	coin.rotation_speed = coin_flip_rot_speed;
+	coin.rotation_speed = randf_range(coin_flip_rot_speed.x, coin_flip_rot_speed.y) * (1 if randf() >= 0.5 else -1);
 	coin.sprite_2d.texture = flat_coin;
 	coin.sprite_2d.scale *= coin_flip_scale;
 	coin.velocity = ball_owner.transform.x * coin.velocity.length();
 
 func on_coin_caught():
 	# print(Utils.pf() + " Caught coin");
+	AudioManager.play_sfx(sfx_coin_catch, "SFX");
+
+	set_can_shoot(false);
 	active_coin = null;
 	ball_owner.start_hitstop(0.0, railgun_duration + 0.5, Vector2.ZERO, true, true);
 
@@ -89,8 +93,7 @@ func set_can_shoot(s:bool):
 	sprite_2d.texture = phantom_coin if !s else base_coin_tx;
 	sprite_2d.self_modulate.a = 0.2 if !s else 1.0;
 
-	for h in hitboxes:
-		h.unclashable = !s;
+	collider.set_deferred("disabled", !s);
 
 func on_bb_death():
 	if(active_coin != null):
@@ -100,4 +103,4 @@ func on_bb_death():
 		active_railgun.queue_free();
 
 func get_custom_stat_format() -> String:
-	return str(damage) + " // " + str(railgun_duration) + "s";
+	return str(damage) + " ⟐ " + str(railgun_duration) + " s";
