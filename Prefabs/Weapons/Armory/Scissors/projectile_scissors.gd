@@ -49,7 +49,7 @@ func _on_projectile_hitbox_area_entered(other: Area2D) -> void:
 	if(other is not Hurtbox): return;
 	if(other.ball_owner != ball_owner): return;
 	if(move_elapsed < move_duration): return;
-	weapon_owner.start_dash(transform.x);
+	weapon_owner.start_dash(global_transform.x);
 	destroy();
 
 func _on_projectile_hitbox_body_entered(other: Node2D) -> void:

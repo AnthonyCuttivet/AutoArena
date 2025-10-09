@@ -137,7 +137,7 @@ func start_dash(dir:Vector2):
 	ball_owner.max_speed *= speed_boost;
 	ball_owner.drag_force = 0.2;
 
-	ball_owner.start_hitstop(0.00, dash_self_hitstop, dir * ball_owner.max_speed * speed_boost);
+	ball_owner.start_hitstop(0.0, dash_self_hitstop, dir * ball_owner.max_speed);
 
 	ball_owner.trail_2d.set_color(ball_owner.color);
 	ball_owner.show_trail_for((dash_duration * 2.0) + dash_self_hitstop, additional_trail_length);
@@ -152,6 +152,7 @@ func start_dash(dir:Vector2):
 func configure_afterimage():
 	ball_owner.afterimage.spawn_interval = (dash_duration + dash_self_hitstop) / 50.0;
 	ball_owner.afterimage.afterimage_lifetime = (dash_duration + dash_self_hitstop) * 2.0;
+	ball_owner.afterimage.opacity = 0.25;
 	ball_owner.afterimage.active = true;
 
 func kill_dash_timer():
@@ -167,13 +168,14 @@ func dash_hit():
 	ball_owner.afterimage.active = false;
 	ball_owner.max_speed = pre_dash_max_speed;
 	ball_owner.drag_force = pre_dash_drag_force;
+	ball_owner.linear_velocity = ball_owner.linear_velocity.normalized() * ball_owner.max_speed;
 
 func dash_hit_stop():
 	# print(Utils.pf() + " STOP DASH (HIT)");
+	clear_opened();
 	dash_hit_registered = false;
 	ball_owner.ghost = false;
 	ball_owner.toggle_ball_ball_collision(true);
-	clear_opened();
 
 func stop_dash():
 	# print(Utils.pf() + " STOP DASH (TIMEOUT)");

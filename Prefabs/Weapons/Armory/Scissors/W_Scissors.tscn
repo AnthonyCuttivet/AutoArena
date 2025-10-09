@@ -48,13 +48,13 @@ radius = 6.0
 height = 28.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q615r"]
-radius = 9.5
-height = 32.619
+radius = 11.0
+height = 24.0
 
 [node name="WeaponScissors" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]
 script = ExtResource("1_1hprj")
 invincibility = 0.0
-speed_boost = 2.65
+speed_boost = 4.0
 dash_duration = 0.25
 dash_self_hitstop = 0.1
 additional_trail_length = 50
@@ -101,7 +101,7 @@ unclashable = true
 metadata/owner = NodePath("../../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Opened/ScissorsOpenedHitbox"]
-position = Vector2(-16.1905, -7.51426e-05)
+position = Vector2(-12, -5.57005e-05)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_q615r")
 disabled = true
