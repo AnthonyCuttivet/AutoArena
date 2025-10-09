@@ -13,5 +13,30 @@ enum SCALING
     LOG,
     EXP,
     FACTORIAL,
+}
 
+enum WEAPONS
+{
+    BOW,
+    BLOODBOW,
+    MACE,
+    PIPE,
+    UNARMED,
+    SANDEVISTAN,
+    GEMS,
+    SWORD,
+    BLOODSWORD,
+    COIN,
+    PICKAXE,
+    PERFECT,
+    QIANG,
+    KATANA,
+    DAGGER,
+    KICKS,
+    VORTEX,
+    REVOLVER,
+    THUNDER,
+    PLUME,
+    TRAPS,
+    REAPER
 }

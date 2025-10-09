@@ -1,10 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://dq1w5q1d2hbls"]
+[gd_scene load_steps=19 format=3 uid="uid://dq1w5q1d2hbls"]
 
 [ext_resource type="Script" uid="uid://cp82leg5g74mt" path="res://Prefabs/Ball/battle_ball.gd" id="1_0l4tw"]
 [ext_resource type="Texture2D" uid="uid://bfvdgok43dr2p" path="res://Graphics/Images/circle-svgrepo-com.svg" id="1_lj2f6"]
 [ext_resource type="FontFile" uid="uid://bglbd1ylrt02k" path="res://Graphics/Fonts/big_noodle_titling.ttf" id="2_0l4tw"]
 [ext_resource type="Shader" uid="uid://b7sq5hxxopetp" path="res://addons/PaletteTools/Shaders/rainbow_shader.gdshader" id="3_ecnwd"]
 [ext_resource type="Shader" uid="uid://dtyu4fqs87aw3" path="res://Graphics/Shaders/hitflash.gdshader" id="4_5hbfo"]
+[ext_resource type="Shader" uid="uid://4vcrogcalxqx" path="res://Graphics/Shaders/warped_stripes.gdshader" id="4_ecnwd"]
 [ext_resource type="Script" uid="uid://d2dw2w8owaf37" path="res://Prefabs/Ball/hurtbox.gd" id="5_x46jw"]
 [ext_resource type="Script" uid="uid://c0yo17knk84wp" path="res://Prefabs/Ball/trail.gd" id="6_5hbfo"]
 [ext_resource type="Script" uid="uid://dohcthnjvwg7e" path="res://Prefabs/Ball/afterimage.gd" id="7_yvhfn"]
@@ -25,6 +26,23 @@ shader_parameter/angle = 0.0
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yvhfn"]
 resource_local_to_scene = true
 shader = ExtResource("4_5hbfo")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_intensity = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o008c"]
+resource_local_to_scene = true
+shader = ExtResource("4_ecnwd")
+shader_parameter/stripes = 4.82
+shader_parameter/stripe_thickness = 1.33
+shader_parameter/stripe_color = Color(0.59, 0.98, 0.69, 1)
+shader_parameter/background_color = Color(0, 0, 0, 1)
+shader_parameter/uv_offset = 0.5
+shader_parameter/warp_strength = 50.0
+shader_parameter/warp_uv_mult = 2.0
+shader_parameter/wave_strength = 1.0
+shader_parameter/oscillation_mult = 1.275
+shader_parameter/rotation = 13.0
+shader_parameter/rot_time = 10.0
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/flash_intensity = 0.0
 
@@ -82,6 +100,17 @@ texture_filter = 4
 material = SubResource("ShaderMaterial_yvhfn")
 texture = ExtResource("1_lj2f6")
 
+[node name="DWCircleMask" type="Sprite2D" parent="Root"]
+visible = false
+clip_children = 2
+texture_filter = 4
+texture = ExtResource("1_lj2f6")
+
+[node name="DWCircle" type="Sprite2D" parent="Root/DWCircleMask"]
+texture_filter = 4
+material = SubResource("ShaderMaterial_o008c")
+texture = ExtResource("1_lj2f6")
+
 [node name="HP_Text" type="RichTextLabel" parent="Root"]
 anchors_preset = 8
 anchor_left = 0.5
@@ -108,6 +137,7 @@ ball_owner = NodePath("../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Root/Hurtbox"]
 shape = SubResource("CircleShape2D_x46jw")
+debug_color = Color(0, 0.6, 0.701961, 0)
 
 [node name="Trail" type="Line2D" parent="Root" node_paths=PackedStringArray("pos_reference")]
 visible = false

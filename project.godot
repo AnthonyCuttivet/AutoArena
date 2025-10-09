@@ -26,6 +26,7 @@ PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_came
 
 [debug]
 
+gdscript/warnings/unused_variable=2
 gdscript/warnings/unused_signal=0
 gdscript/warnings/integer_division=0
 gdscript/warnings/narrowing_conversion=0

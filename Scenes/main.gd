@@ -30,6 +30,9 @@ class_name Main extends Node2D
 @export var dead_ui_color:Color;
 
 @export var balls: Array[BattleBall];
+@export var all_weapons:Dictionary[Enums.WEAPONS, WeaponSettings];
+
+
 @export var fx_hit_prefab: PackedScene;
 @export var fx_death_prefab: PackedScene;
 @export var fx_clash:PackedScene;

@@ -50,3 +50,17 @@ class_name WeaponSettings extends Resource
 @export var scale_stat_multiplier:int = 1;
 @export var base_damage_multiplier:int = 1;
 @export var no_clash_on_block:bool = false;
+
+# Battleball settings
+
+@export var base_weapon_rotation:float = 0.0;
+@export var color:Color;
+
+@export var max_speed: float = 2200.0
+@export var min_horizontal: float = 200.0
+@export var gravity_strength: float = 1400.0
+@export var drag_force: float = 0.02
+@export var bounce_boost: float = 250.0;
+@export var relative_bounce_boost:float = 0.0;
+@export var acceleration:float = 1.0;
+@export var knockback_resistance:float = 1.0;

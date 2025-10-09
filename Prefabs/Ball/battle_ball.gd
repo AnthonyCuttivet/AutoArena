@@ -5,12 +5,10 @@ class_name BattleBall extends RigidBody2D
 @export var debug_physics:bool = false;
 @export var weapon_settings:WeaponSettings;
 @export var start_dir:Vector2;
-# @export var speed:float = 30.0;
 @export var health:int = 100;
 @export var base_weapon_rotation:float = 0.0;
 @export var no_weapon:bool;
 @export var color:Color;
-@export var base_target_attraction:float = 1.0;
 
 @export var team:int = 0;
 @export var clash_invincibility:float = 0.6;
@@ -72,7 +70,6 @@ var accumulated_forces:Vector2 = Vector2.ZERO;
 var invincible_for:float = false;
 var unkillable:bool = false;
 var hit_pos:Vector2 = Vector2.ZERO;
-var current_target_attraction:float = 0.0;
 var end_game:bool = false;
 
 var prev_linear_velocity:Vector2 = Vector2.ZERO;
@@ -145,7 +142,6 @@ func ready() -> void:
 	base_root_scale = root.scale.x;
 	base_health = health;
 
-	current_target_attraction = base_target_attraction;
 
 	# Ensure perfect bounce
 	if physics_material_override:
@@ -646,7 +642,6 @@ func reset_rigidbody():
 	time_scale = 1.0;
 	max_speed = base_max_speed;
 	drag_force = base_drag_force;
-	current_target_attraction = base_target_attraction;
 	hitstop_remaining = 0.0;
 
 func set_color_overlay(c:Color, text_color:Color):

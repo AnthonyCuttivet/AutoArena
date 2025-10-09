@@ -1,4 +1,4 @@
-[gd_scene load_steps=186 format=4 uid="uid://cmsck3y43hvak"]
+[gd_scene load_steps=192 format=4 uid="uid://cmsck3y43hvak"]
 
 [ext_resource type="Script" uid="uid://llbx2bxdfjwy" path="res://Scenes/main.gd" id="1_nmkph"]
 [ext_resource type="Shader" uid="uid://m275kdb8v68b" path="res://Graphics/Shaders/balatro.gdshader" id="1_y2yxb"]
@@ -90,6 +90,7 @@
 [ext_resource type="Resource" uid="uid://dgbpfdn8qku06" path="res://Resources/Weapons/W_DAGGER.tres" id="58_870hc"]
 [ext_resource type="Shader" uid="uid://byxemq4tgaq5f" path="res://Graphics/Shaders/chromatic_aberration.gdshader" id="59_hdidk"]
 [ext_resource type="Resource" uid="uid://do40m4wrgehk5" path="res://Resources/Weapons/W_Traps.tres" id="60_ux8nf"]
+[ext_resource type="Shader" uid="uid://4vcrogcalxqx" path="res://Graphics/Shaders/warped_stripes.gdshader" id="61_312b1"]
 [ext_resource type="Script" uid="uid://bc4psjkpwis32" path="res://Scenes/mc_layer_settings.gd" id="62_3gj21"]
 [ext_resource type="Script" uid="uid://bxdnuwaammth0" path="res://Scenes/mc_block_settings.gd" id="63_2p8oi"]
 [ext_resource type="Script" uid="uid://c51lyrulb6e1q" path="res://Scripts/Tournament/tournament_bracket.gd" id="64_cfp74"]
@@ -346,13 +347,64 @@ shader = ExtResource("14_vvmd2")
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/flash_intensity = 0.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u6wsj"]
+resource_local_to_scene = true
+shader = ExtResource("61_312b1")
+shader_parameter/stripes = 4.82
+shader_parameter/stripe_thickness = 1.33
+shader_parameter/stripe_color = Color(0.59, 0.98, 0.69, 1)
+shader_parameter/background_color = Color(0, 0, 0, 1)
+shader_parameter/uv_offset = 0.5
+shader_parameter/warp_strength = 50.0
+shader_parameter/warp_uv_mult = 2.0
+shader_parameter/wave_strength = 1.0
+shader_parameter/oscillation_mult = 0.2
+shader_parameter/rotation = 0.05
+shader_parameter/rot_time = 10.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_intensity = 0.0
+
 [sub_resource type="Gradient" id="Gradient_wkwug"]
 resource_local_to_scene = true
 colors = PackedColorArray(0.727539, 1, 0.71875, 0.4, 0.367, 0.367, 0.367, 0.15)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5o85w"]
+resource_local_to_scene = true
+shader = ExtResource("61_312b1")
+shader_parameter/stripes = 4.82
+shader_parameter/stripe_thickness = 1.33
+shader_parameter/stripe_color = Color(0.59, 0.98, 0.69, 1)
+shader_parameter/background_color = Color(0, 0, 0, 1)
+shader_parameter/uv_offset = 0.5
+shader_parameter/warp_strength = 50.0
+shader_parameter/warp_uv_mult = 2.0
+shader_parameter/wave_strength = 1.0
+shader_parameter/oscillation_mult = 0.2
+shader_parameter/rotation = 0.05
+shader_parameter/rot_time = 10.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_intensity = 0.0
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0qwvu"]
 resource_local_to_scene = true
 shader = ExtResource("14_vvmd2")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_intensity = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oi3sm"]
+resource_local_to_scene = true
+shader = ExtResource("61_312b1")
+shader_parameter/stripes = 4.82
+shader_parameter/stripe_thickness = 1.33
+shader_parameter/stripe_color = Color(0.59, 0.98, 0.69, 1)
+shader_parameter/background_color = Color(0, 0, 0, 1)
+shader_parameter/uv_offset = 0.5
+shader_parameter/warp_strength = 50.0
+shader_parameter/warp_uv_mult = 2.0
+shader_parameter/wave_strength = 1.0
+shader_parameter/oscillation_mult = 0.2
+shader_parameter/rotation = 0.05
+shader_parameter/rot_time = 10.0
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/flash_intensity = 0.0
 
@@ -366,9 +418,43 @@ shader = ExtResource("14_vvmd2")
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/flash_intensity = 0.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kek2w"]
+resource_local_to_scene = true
+shader = ExtResource("61_312b1")
+shader_parameter/stripes = 4.82
+shader_parameter/stripe_thickness = 1.33
+shader_parameter/stripe_color = Color(0.59, 0.98, 0.69, 1)
+shader_parameter/background_color = Color(0, 0, 0, 1)
+shader_parameter/uv_offset = 0.5
+shader_parameter/warp_strength = 50.0
+shader_parameter/warp_uv_mult = 2.0
+shader_parameter/wave_strength = 1.0
+shader_parameter/oscillation_mult = 0.2
+shader_parameter/rotation = 0.05
+shader_parameter/rot_time = 10.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_intensity = 0.0
+
 [sub_resource type="Gradient" id="Gradient_d4iat"]
 resource_local_to_scene = true
 colors = PackedColorArray(0.727539, 1, 0.71875, 0.4, 0.367, 0.367, 0.367, 0.15)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bnc2j"]
+resource_local_to_scene = true
+shader = ExtResource("61_312b1")
+shader_parameter/stripes = 4.82
+shader_parameter/stripe_thickness = 1.33
+shader_parameter/stripe_color = Color(0.59, 0.98, 0.69, 1)
+shader_parameter/background_color = Color(0, 0, 0, 1)
+shader_parameter/uv_offset = 0.5
+shader_parameter/warp_strength = 50.0
+shader_parameter/warp_uv_mult = 2.0
+shader_parameter/wave_strength = 1.0
+shader_parameter/oscillation_mult = 0.2
+shader_parameter/rotation = 0.05
+shader_parameter/rot_time = 10.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_intensity = 0.0
 
 [sub_resource type="Gradient" id="Gradient_y7asl"]
 resource_local_to_scene = true
@@ -412,6 +498,16 @@ leaderboard_rotation = 0.0
 scale_stat_multiplier = 1
 base_damage_multiplier = 1
 no_clash_on_block = false
+base_weapon_rotation = 0.0
+color = Color(0, 0, 0, 1)
+max_speed = 2200.0
+min_horizontal = 200.0
+gravity_strength = 1400.0
+drag_force = 0.02
+bounce_boost = 250.0
+relative_bounce_boost = 0.0
+acceleration = 1.0
+knockback_resistance = 1.0
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 
 [sub_resource type="Resource" id="Resource_ee1k8"]
@@ -452,6 +548,16 @@ leaderboard_rotation = 0.0
 scale_stat_multiplier = 1
 base_damage_multiplier = 1
 no_clash_on_block = false
+base_weapon_rotation = 0.0
+color = Color(0, 0, 0, 1)
+max_speed = 2200.0
+min_horizontal = 200.0
+gravity_strength = 1400.0
+drag_force = 0.02
+bounce_boost = 250.0
+relative_bounce_boost = 0.0
+acceleration = 1.0
+knockback_resistance = 1.0
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 
 [sub_resource type="Resource" id="Resource_76u2v"]
@@ -492,6 +598,16 @@ leaderboard_rotation = 0.0
 scale_stat_multiplier = 1
 base_damage_multiplier = 1
 no_clash_on_block = false
+base_weapon_rotation = 0.0
+color = Color(0, 0, 0, 1)
+max_speed = 2200.0
+min_horizontal = 200.0
+gravity_strength = 1400.0
+drag_force = 0.02
+bounce_boost = 250.0
+relative_bounce_boost = 0.0
+acceleration = 1.0
+knockback_resistance = 1.0
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 
 [sub_resource type="AudioStreamWAV" id="AudioStreamWAV_pegen"]
@@ -550,6 +666,16 @@ leaderboard_rotation = 0.0
 scale_stat_multiplier = 3
 base_damage_multiplier = 5
 no_clash_on_block = false
+base_weapon_rotation = 120.0
+color = Color(0.77, 0.77, 0.77, 1)
+max_speed = 600.0
+min_horizontal = 0.0
+gravity_strength = 2000.0
+drag_force = 0.05
+bounce_boost = 0.0
+relative_bounce_boost = 0.75
+acceleration = 1.0
+knockback_resistance = 1.0
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lt4ae"]
@@ -603,6 +729,16 @@ leaderboard_rotation = 0.0
 scale_stat_multiplier = 3
 base_damage_multiplier = 5
 no_clash_on_block = false
+base_weapon_rotation = 120.0
+color = Color(0.75638, 0.745483, 0.769531, 1)
+max_speed = 1000.0
+min_horizontal = 0.0
+gravity_strength = 3000.0
+drag_force = 0.05
+bounce_boost = 1000.0
+relative_bounce_boost = 0.0
+acceleration = 1.0
+knockback_resistance = 1.0
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
 
 [sub_resource type="Environment" id="Environment_p1oyv"]
@@ -958,7 +1094,7 @@ hypermatch_hp = 500
 hypermatch_scales = Array[int]([500, 50])
 forced_start_dir = Vector2(0, -1)
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Fighters/Coin"), NodePath("Balls/Fighters/Reaper")]
+balls = [NodePath("Balls/Fighters/Mace")]
 fx_hit_prefab = ExtResource("2_8wnqf")
 fx_death_prefab = ExtResource("3_uot50")
 fx_clash = ExtResource("4_0o7lx")
@@ -2383,7 +2519,13 @@ scale = Vector2(10, 10)
 [node name="Circle" parent="Balls/Bosses/HYDRA/Root" index="3"]
 material = SubResource("ShaderMaterial_g7d4c")
 
-[node name="Trail" parent="Balls/Bosses/HYDRA/Root" index="6"]
+[node name="DWCircleMask" parent="Balls/Bosses/HYDRA/Root" index="4"]
+material = SubResource("ShaderMaterial_u6wsj")
+
+[node name="DWCircle" parent="Balls/Bosses/HYDRA/Root/DWCircleMask" index="0"]
+material = SubResource("ShaderMaterial_u6wsj")
+
+[node name="Trail" parent="Balls/Bosses/HYDRA/Root" index="7"]
 gradient = SubResource("Gradient_wkwug")
 
 [node name="TITAN" parent="Balls/Bosses" groups=["BALL"] instance=ExtResource("4_ya2e4")]
@@ -2409,7 +2551,13 @@ scale = Vector2(10, 10)
 [node name="Circle" parent="Balls/Bosses/TITAN/Root" index="3"]
 material = SubResource("ShaderMaterial_g7d4c")
 
-[node name="Trail" parent="Balls/Bosses/TITAN/Root" index="6"]
+[node name="DWCircleMask" parent="Balls/Bosses/TITAN/Root" index="4"]
+material = SubResource("ShaderMaterial_5o85w")
+
+[node name="DWCircle" parent="Balls/Bosses/TITAN/Root/DWCircleMask" index="0"]
+material = SubResource("ShaderMaterial_5o85w")
+
+[node name="Trail" parent="Balls/Bosses/TITAN/Root" index="7"]
 gradient = SubResource("Gradient_wkwug")
 
 [node name="WARLOCK" parent="Balls/Bosses" groups=["BALL"] instance=ExtResource("4_ya2e4")]
@@ -2433,13 +2581,19 @@ scale = Vector2(10, 10)
 [node name="Circle" parent="Balls/Bosses/WARLOCK/Root" index="3"]
 material = SubResource("ShaderMaterial_0qwvu")
 
+[node name="DWCircleMask" parent="Balls/Bosses/WARLOCK/Root" index="4"]
+material = SubResource("ShaderMaterial_oi3sm")
+
+[node name="DWCircle" parent="Balls/Bosses/WARLOCK/Root/DWCircleMask" index="0"]
+material = SubResource("ShaderMaterial_oi3sm")
+
 [node name="Hat" type="Sprite2D" parent="Balls/Bosses/WARLOCK/Root" index="5"]
 texture_filter = 1
 position = Vector2(-16.6682, -425)
 scale = Vector2(10, 10)
 texture = ExtResource("23_o08cq")
 
-[node name="Trail" parent="Balls/Bosses/WARLOCK/Root" index="7"]
+[node name="Trail" parent="Balls/Bosses/WARLOCK/Root" index="8"]
 gradient = SubResource("Gradient_w5ut2")
 
 [node name="HYDRA_Void" parent="Balls/Bosses" groups=["BALL"] instance=ExtResource("4_ya2e4")]
@@ -2463,7 +2617,13 @@ scale = Vector2(10, 10)
 [node name="Circle" parent="Balls/Bosses/HYDRA_Void/Root" index="3"]
 material = SubResource("ShaderMaterial_qyfoh")
 
-[node name="Trail" parent="Balls/Bosses/HYDRA_Void/Root" index="6"]
+[node name="DWCircleMask" parent="Balls/Bosses/HYDRA_Void/Root" index="4"]
+material = SubResource("ShaderMaterial_kek2w")
+
+[node name="DWCircle" parent="Balls/Bosses/HYDRA_Void/Root/DWCircleMask" index="0"]
+material = SubResource("ShaderMaterial_kek2w")
+
+[node name="Trail" parent="Balls/Bosses/HYDRA_Void/Root" index="7"]
 gradient = SubResource("Gradient_d4iat")
 
 [node name="HYDRA_Acid" parent="Balls/Bosses" groups=["BALL"] instance=ExtResource("4_ya2e4")]
@@ -2487,7 +2647,13 @@ scale = Vector2(10, 10)
 [node name="Circle" parent="Balls/Bosses/HYDRA_Acid/Root" index="3"]
 material = SubResource("ShaderMaterial_qyfoh")
 
-[node name="Trail" parent="Balls/Bosses/HYDRA_Acid/Root" index="6"]
+[node name="DWCircleMask" parent="Balls/Bosses/HYDRA_Acid/Root" index="4"]
+material = SubResource("ShaderMaterial_bnc2j")
+
+[node name="DWCircle" parent="Balls/Bosses/HYDRA_Acid/Root/DWCircleMask" index="0"]
+material = SubResource("ShaderMaterial_bnc2j")
+
+[node name="Trail" parent="Balls/Bosses/HYDRA_Acid/Root" index="7"]
 gradient = SubResource("Gradient_y7asl")
 
 [node name="Training" type="Node2D" parent="Balls"]
@@ -2641,19 +2807,6 @@ drag_force = 0.025
 bounce_boost = 0.0
 relative_bounce_boost = 0.2
 
-[node name="Coin" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
-position = Vector2(2203.01, 1414.99)
-weapon_settings = ExtResource("70_c0wg0")
-health = 50
-color = Color(1, 0.92549, 0.643137, 1)
-team = 1
-dead = true
-stop = true
-max_speed = 1500.0
-min_horizontal = 250.0
-drag_force = 0.05
-bounce_boost = 400.0
-
 [node name="BloodSword" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2370.47, 297.991)
 weapon_settings = ExtResource("50_1t3vj")
@@ -2667,6 +2820,19 @@ gravity_strength = 1800.0
 drag_force = 0.025
 bounce_boost = 0.0
 relative_bounce_boost = 0.1
+
+[node name="Coin" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2203.01, 1414.99)
+weapon_settings = ExtResource("70_c0wg0")
+health = 50
+color = Color(1, 0.92549, 0.643137, 1)
+team = 1
+dead = true
+stop = true
+max_speed = 1500.0
+min_horizontal = 250.0
+drag_force = 0.05
+bounce_boost = 400.0
 
 [node name="Pickaxe" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2370.47, 297.991)
