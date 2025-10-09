@@ -1094,7 +1094,7 @@ hypermatch_hp = 500
 hypermatch_scales = Array[int]([500, 50])
 forced_start_dir = Vector2(0, -1)
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Fighters/Mace")]
+balls = [NodePath("Balls/Fighters/Coin"), NodePath("Balls/Fighters/Reaper")]
 fx_hit_prefab = ExtResource("2_8wnqf")
 fx_death_prefab = ExtResource("3_uot50")
 fx_clash = ExtResource("4_0o7lx")
@@ -2499,16 +2499,10 @@ position = Vector2(2320.01, 1817.99)
 weapon_settings = ExtResource("11_uot50")
 start_dir = Vector2(0, -1)
 health = 150
-base_weapon_rotation = 90.0
-color = Color(0.917647, 0.384314, 0.384314, 1)
 team = 1
 stop = true
 is_boss = true
 knockback_immune = true
-max_speed = 800.0
-min_horizontal = 100.0
-gravity_strength = 0.0
-drag_force = 0.05
 
 [node name="Root" parent="Balls/Bosses/HYDRA" index="0"]
 scale = Vector2(0.21, 0.21)
@@ -2533,14 +2527,9 @@ position = Vector2(2320.01, 1817.99)
 weapon_settings = ExtResource("26_gbt1t")
 start_dir = Vector2(0, -1)
 health = 150
-color = Color(0.662745, 0.517647, 0.403922, 1)
 team = 1
 stop = true
 is_boss = true
-max_speed = 1000.0
-min_horizontal = 0.0
-gravity_strength = 100.0
-drag_force = 0.5
 
 [node name="Root" parent="Balls/Bosses/TITAN" index="0"]
 scale = Vector2(0.21, 0.21)
@@ -2565,15 +2554,10 @@ position = Vector2(2566, 1339.99)
 weapon_settings = ExtResource("21_gaafq")
 start_dir = Vector2(0, -1)
 health = 10
-color = Color(0.473327, 0.455078, 0.5, 1)
 team = 1
 stop = true
 is_boss = true
 knockback_immune = true
-max_speed = 900.0
-min_horizontal = 100.0
-gravity_strength = 0.0
-drag_force = 0.03
 
 [node name="WeaponSlot" parent="Balls/Bosses/WARLOCK/Root" index="0"]
 scale = Vector2(10, 10)
@@ -2601,12 +2585,10 @@ position = Vector2(2320.01, 1817.99)
 mass = 10.0
 weapon_settings = ExtResource("21_wy0uv")
 start_dir = Vector2(0, -1)
-color = Color(0.69375, 0.422073, 0.777344, 1)
 team = 1
 stop = true
 is_boss = true
 knockback_immune = true
-max_speed = 2200.0
 
 [node name="Root" parent="Balls/Bosses/HYDRA_Void" index="0"]
 scale = Vector2(0.24, 0.24)
@@ -2631,12 +2613,10 @@ position = Vector2(2320.01, 1817.99)
 mass = 10.0
 weapon_settings = ExtResource("22_630qq")
 start_dir = Vector2(0, -1)
-color = Color(0.350708, 0.863281, 0.528401, 1)
 team = 1
 stop = true
 is_boss = true
 knockback_immune = true
-max_speed = 2200.0
 
 [node name="Root" parent="Balls/Bosses/HYDRA_Acid" index="0"]
 scale = Vector2(0.24, 0.24)
@@ -2664,22 +2644,17 @@ weapon_settings = SubResource("Resource_uhddi")
 start_dir = Vector2(-1, -0.5)
 health = 4
 no_weapon = true
-color = Color(0.578125, 0.321429, 0.35312, 1)
 team = 1
 stop = true
-max_speed = 1400.0
 
 [node name="Dummy2" parent="Balls/Training" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(3022.81, 1705.99)
 weapon_settings = SubResource("Resource_ee1k8")
 start_dir = Vector2(-1, -0.5)
 health = 50
-base_weapon_rotation = 135.0
 no_weapon = true
-color = Color(0.578125, 0.321429, 0.35312, 1)
 team = 1
 stop = true
-max_speed = 2200.0
 
 [node name="Immobile" parent="Balls/Training" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2610, 925.99)
@@ -2688,14 +2663,8 @@ freeze = true
 weapon_settings = SubResource("Resource_76u2v")
 start_dir = Vector2(-1, -0.5)
 health = 50
-base_weapon_rotation = 135.0
 no_weapon = true
-color = Color(0.578125, 0.321429, 0.35312, 1)
 stop = true
-max_speed = 1.0
-min_horizontal = 1.0
-gravity_strength = 1.0
-drag_force = 1.0
 
 [node name="Fighters" type="Node2D" parent="Balls"]
 
@@ -2703,291 +2672,157 @@ drag_force = 1.0
 position = Vector2(2203.01, 1414.99)
 weapon_settings = ExtResource("11_per8v")
 health = 50
-base_weapon_rotation = 230.0
-color = Color(0.682353, 0.886275, 1, 1)
 team = 1
 dead = true
 stop = true
-max_speed = 1500.0
-min_horizontal = 50.0
-bounce_boost = 150.0
 
 [node name="BloodBow" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2203.01, 1414.99)
 weapon_settings = ExtResource("40_nsujd")
 health = 50
-color = Color(0.71, 0.368253, 0.1704, 1)
 team = 1
 dead = true
 stop = true
-max_speed = 1300.0
-min_horizontal = 50.0
-drag_force = 0.01
 
 [node name="Mace" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2246, 1022.99)
 weapon_settings = ExtResource("28_djmp0")
 health = 50
-base_weapon_rotation = 210.0
-color = Color(0.60915, 0.5115, 0.93, 1)
 dead = true
 stop = true
-max_speed = 1300.0
-min_horizontal = 100.0
-gravity_strength = 2200.0
-drag_force = 0.05
-relative_bounce_boost = 0.1
 
 [node name="Pipe" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2246, 1022.99)
 weapon_settings = ExtResource("44_vebv7")
 health = 50
-color = Color(0.607269, 0.701772, 0.785156, 1)
 dead = true
 stop = true
-max_speed = 1500.0
-gravity_strength = 2200.0
-drag_force = 0.03
-bounce_boost = 0.0
-relative_bounce_boost = 0.1
 
 [node name="Unarmed" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2246, 1022.99)
 weapon_settings = SubResource("Resource_hdidk")
 health = 50
-base_weapon_rotation = 120.0
-color = Color(0.77, 0.77, 0.77, 1)
 dead = true
 stop = true
-max_speed = 600.0
-min_horizontal = 0.0
-gravity_strength = 2000.0
-drag_force = 0.05
-bounce_boost = 0.0
-relative_bounce_boost = 0.75
 
 [node name="Sandevistan" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2246, 1022.99)
 weapon_settings = SubResource("Resource_pegen")
 health = 50
-base_weapon_rotation = 120.0
-color = Color(0.75638, 0.745483, 0.769531, 1)
 dead = true
 stop = true
-max_speed = 1000.0
-min_horizontal = 0.0
-gravity_strength = 3000.0
-drag_force = 0.05
-bounce_boost = 1000.0
 
 [node name="Gems" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2246, 1022.99)
 weapon_settings = ExtResource("34_g7d4c")
 health = 50
-base_weapon_rotation = 205.0
-color = Color(0.866667, 0.89375, 1, 1)
 dead = true
 stop = true
-max_speed = 1500.0
-min_horizontal = 50.0
-gravity_strength = 2500.0
-drag_force = 0.05
 
 [node name="Sword" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2370.47, 297.991)
 weapon_settings = ExtResource("23_76u2v")
 health = 50
-base_weapon_rotation = 120.0
-color = Color(1, 0.843137, 0, 1)
 dead = true
 stop = true
-max_speed = 1700.0
-gravity_strength = 2000.0
-drag_force = 0.025
-bounce_boost = 0.0
-relative_bounce_boost = 0.2
 
 [node name="BloodSword" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2370.47, 297.991)
 weapon_settings = ExtResource("50_1t3vj")
 health = 50
-base_weapon_rotation = 120.0
-color = Color(0.59, 0.0413, 0.57171, 1)
 dead = true
 stop = true
-max_speed = 1500.0
-gravity_strength = 1800.0
-drag_force = 0.025
-bounce_boost = 0.0
-relative_bounce_boost = 0.1
 
 [node name="Coin" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2203.01, 1414.99)
 weapon_settings = ExtResource("70_c0wg0")
 health = 50
-color = Color(1, 0.92549, 0.643137, 1)
 team = 1
 dead = true
 stop = true
-max_speed = 1500.0
-min_horizontal = 250.0
-drag_force = 0.05
-bounce_boost = 400.0
 
 [node name="Pickaxe" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2370.47, 297.991)
 weapon_settings = ExtResource("80_xxfh1")
 health = 50
-color = Color(1, 0.568627, 0.282353, 1)
 dead = true
 stop = true
-max_speed = 1400.0
-gravity_strength = 2000.0
-drag_force = 0.05
-bounce_boost = 750.0
 
 [node name="Perfect" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2370.47, 297.991)
 weapon_settings = ExtResource("49_1t3vj")
 health = 50
-base_weapon_rotation = 120.0
-color = Color(1, 0.835327, 0.703125, 1)
 dead = true
 stop = true
-max_speed = 1700.0
-min_horizontal = 100.0
-gravity_strength = 1850.0
-drag_force = 0.05
-bounce_boost = 350.0
 
 [node name="Qiang" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2669, 374.99)
 weapon_settings = ExtResource("22_ee1k8")
 health = 75
-base_weapon_rotation = 120.0
-color = Color(0.42041, 0.875, 0.70994, 1)
 stop = true
-max_speed = 2000.0
-min_horizontal = 50.0
-gravity_strength = 1000.0
-drag_force = 0.1
 
 [node name="Katana" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2355, 666.991)
 weapon_settings = ExtResource("22_rcyw2")
 health = 50
-base_weapon_rotation = 120.0
-color = Color(1, 0.721569, 0.47451, 1)
 team = 1
 dead = true
 stop = true
-max_speed = 2000.0
-min_horizontal = 50.0
-drag_force = 0.1
 
 [node name="Dagger" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2355, 666.991)
 weapon_settings = ExtResource("58_870hc")
 health = 50
-base_weapon_rotation = 120.0
-color = Color(0.214005, 0.730469, 0.379434, 1)
 team = 1
 dead = true
 stop = true
-max_speed = 2000.0
-min_horizontal = 0.0
-gravity_strength = 1500.0
 
 [node name="Sneakers" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2355, 666.991)
 weapon_settings = ExtResource("56_nfmlc")
 health = 50
-color = Color(0.941406, 0.225356, 0.37064, 1)
 team = 1
 dead = true
 stop = true
-max_speed = 1500.0
-min_horizontal = 0.0
-gravity_strength = 1500.0
-drag_force = 0.05
-bounce_boost = 1000.0
 
 [node name="Vortex" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2355, 666.991)
 weapon_settings = ExtResource("45_k7ahf")
 health = 50
-base_weapon_rotation = 120.0
-color = Color(0.583012, 0.706805, 1, 1)
 team = 1
 dead = true
 stop = true
-max_speed = 1500.0
-min_horizontal = 150.0
-gravity_strength = 1500.0
-drag_force = 0.05
 
 [node name="Revolver" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2203.01, 1414.99)
 weapon_settings = ExtResource("68_xxfh1")
-base_weapon_rotation = 300.0
-color = Color(0.614273, 0.633649, 0.738281, 1)
 team = 1
 dead = true
 stop = true
-max_speed = 1444.0
-min_horizontal = 44.0
-gravity_strength = 1444.0
-drag_force = 0.044
-bounce_boost = 0.0
-relative_bounce_boost = 0.4
 
 [node name="Thunder" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2953, 826.989)
 weapon_settings = ExtResource("23_n5n48")
 health = 75
-base_weapon_rotation = 135.0
-color = Color(0.933333, 0.560784, 0.796078, 1)
 stop = true
-max_speed = 1800.0
-min_horizontal = 100.0
-drag_force = 0.05
 
 [node name="Plume" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2034, 710.993)
 weapon_settings = ExtResource("43_qtgyu")
 health = 50
-base_weapon_rotation = 135.0
-color = Color(0.89, 0.4361, 0.655485, 1)
 team = 1
 dead = true
 stop = true
-max_speed = 1600.0
-min_horizontal = 50.0
-drag_force = 0.05
 
 [node name="Traps" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(1991, 1197.99)
 weapon_settings = ExtResource("60_ux8nf")
-color = Color(0.418945, 0.6875, 0.530143, 1)
 stop = true
-max_speed = 1300.0
-min_horizontal = 150.0
-gravity_strength = 1300.0
-drag_force = 0.05
-bounce_boost = 150.0
 
 [node name="Reaper" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(1991, 1197.99)
 weapon_settings = ExtResource("27_djmp0")
-base_weapon_rotation = 135.0
-color = Color(0.341176, 1, 0.498039, 1)
 stop = true
-max_speed = 1700.0
-min_horizontal = 0.0
-gravity_strength = 500.0
-drag_force = 0.05
-bounce_boost = 0.0
-relative_bounce_boost = 0.2
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_p1oyv")

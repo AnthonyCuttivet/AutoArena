@@ -6,9 +6,7 @@ class_name BattleBall extends RigidBody2D
 @export var weapon_settings:WeaponSettings;
 @export var start_dir:Vector2;
 @export var health:int = 100;
-@export var base_weapon_rotation:float = 0.0;
 @export var no_weapon:bool;
-@export var color:Color;
 
 @export var team:int = 0;
 @export var clash_invincibility:float = 0.6;
@@ -26,14 +24,7 @@ class_name BattleBall extends RigidBody2D
 @export var max_combo_duration:float = 1.0;
 
 # --- Tweakable settings ---
-@export var max_speed: float = 2200.0
-@export var min_horizontal: float = 200.0
-@export var gravity_strength: float = 1400.0
-@export var drag_force: float = 0.02
-@export var bounce_boost: float = 250.0;
-@export var relative_bounce_boost:float = 0.0;
-@export var acceleration:float = 1.0;
-@export var knockback_resistance:float = 1.0;
+
 @export var ghost:bool = false;
 @export var lock:bool = false;
 
@@ -71,6 +62,17 @@ var invincible_for:float = false;
 var unkillable:bool = false;
 var hit_pos:Vector2 = Vector2.ZERO;
 var end_game:bool = false;
+
+var base_weapon_rotation:float = 0.0;
+var color:Color;
+var max_speed: float = 0.0;
+var min_horizontal: float = 0.0;
+var gravity_strength: float = 0.0;
+var drag_force: float = 0.0;
+var bounce_boost: float = 0.0;
+var relative_bounce_boost:float = 0.0;
+var acceleration:float = 1.0;
+var knockback_resistance:float = 1.0;
 
 var prev_linear_velocity:Vector2 = Vector2.ZERO;
 var target:BattleBall = null;
@@ -123,6 +125,9 @@ var cheat_underdog_clash_mult: float = 0.2;
 
 func ready() -> void:
 	spawn_weapon();
+
+	fill_values_from_weapon_settings();
+
 	circle.self_modulate = color;
 
 	if(use_white_name_color):
@@ -217,6 +222,18 @@ func _process(delta: float) -> void:
 			stop_hitstop();
 
 	update_combo_remaining(delta);
+
+func fill_values_from_weapon_settings():
+	base_weapon_rotation = weapon_settings.base_weapon_rotation;
+	color = weapon_settings.color;
+	max_speed = weapon_settings.max_speed;
+	min_horizontal = weapon_settings.min_horizontal;
+	gravity_strength = weapon_settings.gravity_strength;
+	drag_force = weapon_settings.drag_force;
+	bounce_boost = weapon_settings.bounce_boost;
+	relative_bounce_boost = weapon_settings.relative_bounce_boost;
+	acceleration = weapon_settings.acceleration;
+	knockback_resistance = weapon_settings.knockback_resistance;
 
 func start(m:Main, dir:Vector2):
 	if(debug_mode):return;
