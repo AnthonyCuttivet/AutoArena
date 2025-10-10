@@ -82,6 +82,7 @@ func recall():
 	position_fixed = false;
 	move_elapsed = 0.0;
 	move_duration = recall_duration;
+	destruction_delay = 0.0;
 	self_destruct_remaining = recall_duration * 1.1;
 
 	collision_shape_recall.set_deferred("disabled", false);

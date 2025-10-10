@@ -402,6 +402,9 @@ func hitflash(d:float):
 
 func is_in_same_team(other: Node2D) -> bool:
 	if(other == null): return false;
+	
+	if(other is MCBattleBlock):
+		return team == other.hurtbox.ball_owner.team;
 
 	if(other is not BattleBall):
 		return team == other.ball_owner.team;

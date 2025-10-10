@@ -26,6 +26,7 @@ var rand_shoot_elapsed_on_hit:bool = false;
 var custom_hit_sfx:SFX;
 var accumulated_gravity:float = 0.0;
 var multihit_delay:float = 0.0;
+var destruction_delay:float = 0.05;
 
 func init(o:BattleBall, w:Weapon, s:float, p:int = -1, b:int = -1):
 	ball_owner = o;
@@ -131,7 +132,7 @@ func destroy(source:int = 0):
 			3 : print("[P DESTROYED] 3 : Hit with no pierce remaining");
 
 	on_destroy_effect();
-	get_tree().create_timer(0.05).timeout.connect(queue_free);
+	get_tree().create_timer(destruction_delay).timeout.connect(queue_free);
 	# queue_free();
 
 func on_hit_effect(other:BattleBall):

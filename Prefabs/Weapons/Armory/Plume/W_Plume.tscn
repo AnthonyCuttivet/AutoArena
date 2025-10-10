@@ -42,6 +42,7 @@ script = ExtResource("1_wumdj")
 dmg_to_feather_conversion = 5
 feather_move_duration = 0.2
 recall_delay = 1.2
+feather_recall_duration = 0.075
 recall_self_hitstop_t = 0.0
 feather_sub_weapon_prefab = ExtResource("2_ys7b7")
 feather_sub_weapon_spread = 90.0
