@@ -9,8 +9,8 @@ var max_hp:int = 3;
 var hp:int = 0;
 var inactive_for:float = 0.0;
 
-func init(o:BattleBall, s:float, p:int = -1, b:int = -1):
-	super.init(o,s,p,b);
+func init(o:BattleBall, w:Weapon, s:float, p:int = -1, b:int = -1):
+	super.init(o,w,s,p,b);
 	hp = max_hp;
 	set_state(false);
 

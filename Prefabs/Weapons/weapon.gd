@@ -10,7 +10,8 @@ var settings:WeaponSettings;
 
 var melee:bool = false;
 var ranged:bool = false;
-
+var weapon_slot:Node2D = null;
+var weapon_slot_id:int = 0;
 var rotation_direction:int = 0;
 var rotation_speed:float = 0.0;
 var rot_speed_multiplier:float = 1.0;
@@ -34,6 +35,9 @@ var lifesteal_active:bool = false;
 var scaling_stat_value:float = 0.0;
 var stat_scale_value:float = 0.0;
 
+var scaling_index:int = 0;
+var scaling_damage:int = 1;
+
 var ball_owner:BattleBall;
 
 var attack_speed_elapsed:float = 0.0;
@@ -52,6 +56,12 @@ var cheat_hitbox_scale_bonus:float = 0.0;
 
 var clash_tween:Tween = null;
 var custom_sfx_sound:SFX = null;
+
+var name_text:DynamicText = null;
+var ui_sprite:TextureRect = null;
+var details_text:DynamicText = null;
+var stat_text:DynamicText = null;
+var bb_mult_text:DynamicText = null;
 
 func init(s:WeaponSettings, o:BattleBall) -> void:
 
@@ -191,7 +201,7 @@ func on_weapon_clash(other:Node2D, clash_pos:Vector2, projectile_hit:bool = fals
 
 	ball_owner.start_hitstop_clash(0.0, 0.15, kb, other);
 
-	EventBus.ball_weapon_clash.emit(ball_owner.get_instance_id(), clash_pos, silent);
+	EventBus.ball_weapon_clash.emit(ball_owner.get_instance_id(), weapon_slot_id, clash_pos, silent);
 	pass;
 
 func clash_gamefeel() -> void:
@@ -244,14 +254,14 @@ func shoot_projectile() -> Projectile:
 	else:
 		p.global_position = sprite_2d.global_position;
 
-	p.rotation = ball_owner.weapon_slot.global_rotation;
-	p.scale = ball_owner.weapon_slot.scale * ball_owner.root.scale * projectile_scale;
+	p.rotation = weapon_slot.global_rotation;
+	p.scale = weapon_slot.scale * ball_owner.root.scale * projectile_scale;
 
 	if(!settings.no_projectile_scale_change):
 		p.hitbox.scale *= 1.0 + cheat_hitbox_scale_bonus;
 
 	p.weapon_owner = self;
-	p.init(ball_owner, projectile_speed, 0, 0);
+	p.init(ball_owner, self, projectile_speed, 0, 0);
 
 	if(settings.bg_projectile):
 		ball_owner.main.projectiles_bg_parent.add_child(p);
@@ -326,3 +336,55 @@ func set_battleblock_modifiers():
 
 func on_bb_death():
 	pass;
+
+# ---------- UI -------------
+
+func update_stat_text(no_bump:bool = false):
+	if(stat_text == null): return;
+
+	var s:String = get_custom_stat_format();
+
+	if(s == ""):
+		if(settings.scaling_stat_float):
+			s = Utils.format_float(scaling_stat_value, 1);
+		else:
+			s = str(int(scaling_stat_value));
+
+	stat_text.format([settings.stat_scale_name, s]);
+	if(!no_bump):
+		stat_text.bump(1.08, 0.08);
+
+func update_scaling_stat_text():
+	if(stat_text == null): return;
+
+	stat_text.format([settings.stat_scale_name, Utils.format_number_with_dots(scaling_damage)]);
+	stat_text.bump(1.08, 0.08);
+
+func update_bb_mult_text():
+	if(bb_mult_text == null): return;
+
+	bb_mult_text.format(["Multiplier", "x " + str(scale_stat_multiplier)]);
+	bb_mult_text.bump(1.08, 0.08);
+
+func update_ui_name(c:Color, t:String = ""):
+	if(t == ""):
+		name_text.format([settings.name]);
+	else:
+		name_text.text = t;
+
+	name_text.self_modulate = c;
+
+func update_ui_sprite(c:Color = Color.WHITE):
+	ui_sprite.texture = sprite_2d.texture;
+	ui_sprite.self_modulate = c;
+
+func update_ui_details(c:Color, raw:bool = false):
+	if(raw):
+		details_text.text = settings.details;
+	else:
+		details_text.format([settings.details]);
+
+	details_text.modulate = c;
+
+func update_ui_stat(c:Color):
+	stat_text.self_modulate = c;

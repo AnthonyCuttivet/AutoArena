@@ -60,7 +60,7 @@ colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0.286275)
 offsets = PackedFloat32Array(0, 0.33, 0.66, 1)
 colors = PackedColorArray(1, 0.109375, 0.109375, 1, 1, 0.709473, 0.335938, 1, 0.734467, 0.414, 0.92, 1, 0.408, 0.842633, 0.85, 1)
 
-[node name="BattleBall" type="RigidBody2D"]
+[node name="BattleBall" type="RigidBody2D" node_paths=PackedStringArray("weapon_slots", "dual_wield_mask", "dual_wield_sprite")]
 collision_layer = 2
 collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_5hbfo")
@@ -70,8 +70,11 @@ contact_monitor = true
 max_contacts_reported = 50
 linear_damp_mode = 1
 script = ExtResource("1_0l4tw")
+weapon_slots = [NodePath("Root/WeaponSlot"), NodePath("Root/WeaponSlot2")]
 clash_invincibility = 0.15
 max_combo_duration = 1.2
+dual_wield_mask = NodePath("Root/DWCircleMask")
+dual_wield_sprite = NodePath("Root/DWCircleMask/DWCircle")
 
 [node name="Root" type="CollisionShape2D" parent="."]
 scale = Vector2(0.18, 0.18)
@@ -79,6 +82,9 @@ shape = SubResource("CircleShape2D_j21cw")
 debug_color = Color(0.7, 0, 0, 0)
 
 [node name="WeaponSlot" type="Node2D" parent="Root"]
+scale = Vector2(22, 22)
+
+[node name="WeaponSlot2" type="Node2D" parent="Root"]
 scale = Vector2(22, 22)
 
 [node name="CircleBG" type="Sprite2D" parent="Root"]

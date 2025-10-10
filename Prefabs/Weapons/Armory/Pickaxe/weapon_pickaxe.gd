@@ -80,7 +80,7 @@ func spawn_block():
 			break;
 		pass
 
-	var block:ProjectilePickaxeBlock = Utils.spawn_projectile(block_prefab, ball_owner, pos, PI / 2.0, ball_owner.main);
+	var block:ProjectilePickaxeBlock = Utils.spawn_projectile(block_prefab, ball_owner, self, pos, PI / 2.0, ball_owner.main);
 	block.upgrade.visible = false;
 	block.scale *= block_scale;
 	block.weapon_pickaxe = self;

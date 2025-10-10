@@ -4,6 +4,12 @@ class_name BattleBall extends RigidBody2D
 @export var debug_hitstop:bool = false;
 @export var debug_physics:bool = false;
 @export var weapon_settings:WeaponSettings;
+@export var use_dual_wield:bool = false;
+@export var dual_wield:Array[Enums.WEAPONS];
+@export var weapon_settings_2:Array[WeaponSettings];
+
+@export var weapon_slots:Array[Node2D];
+
 @export var start_dir:Vector2;
 @export var health:int = 100;
 @export var no_weapon:bool;
@@ -17,11 +23,13 @@ class_name BattleBall extends RigidBody2D
 @export var knockback_immune:bool = false;
 @export var hp_immunity:bool = false;
 
-@export var weapon:Weapon;
 @export var align_weapon_to_velocity:bool = false;
 @export var lose_hp_per_s:int = 0;
 
 @export var max_combo_duration:float = 1.0;
+
+@export var dual_wield_mask:Sprite2D;
+@export var dual_wield_sprite:Sprite2D;
 
 # --- Tweakable settings ---
 
@@ -45,7 +53,6 @@ class_name BattleBall extends RigidBody2D
 @onready var hp_text: RichTextLabel = $Root/HP_Text;
 @onready var circle: Sprite2D = $Root/Circle
 @onready var circle_bg: Sprite2D = $Root/CircleBG
-@onready var weapon_slot: Node2D = $Root/WeaponSlot
 @onready var root: CollisionShape2D = $Root
 @onready var trail_2d: Trail2D = $Root/Trail
 @onready var afterimage: Afterimage = $Root/Afterimage
@@ -62,6 +69,7 @@ var invincible_for:float = false;
 var unkillable:bool = false;
 var hit_pos:Vector2 = Vector2.ZERO;
 var end_game:bool = false;
+var weapons:Array[Weapon];
 
 var base_weapon_rotation:float = 0.0;
 var color:Color;
@@ -80,12 +88,6 @@ var target:BattleBall = null;
 var hitstop_remaining:float = 0.0;
 var absolute_hitstop:bool = false;
 
-var name_text:DynamicText = null;
-var ui_sprite:TextureRect = null;
-var details_text:DynamicText = null;
-var stat_text:DynamicText = null;
-var bb_mult_text:DynamicText = null;
-
 var vel_to_apply:Vector2 = Vector2.ZERO;
 var lose_hp_timer:Timer = null;
 
@@ -97,9 +99,6 @@ var base_health:int = 0;
 var lock_pos:bool = false;
 var locked_pos:Vector2;
 var block_weapon_rot:bool = false;
-
-var scaling_index:int = 0;
-var scaling_damage:int = 1;
 
 var base_root_scale:float = 0.0;
 var nerfed_speed:float = 0.0;
@@ -115,6 +114,8 @@ var silent_on_hit:bool = false;
 var current_combo:int = 0;
 var combo_remaining:float = 0.0;
 
+var active_sprite:Sprite2D;
+
 var use_cheat_weapon_rotation:bool = false;
 var cheat_weapon_rotation_angle: float = 20.0;
 
@@ -124,11 +125,17 @@ var cheat_underdog_clash_mult: float = 0.2;
 # var aled:bool = false;
 
 func ready() -> void:
-	spawn_weapon();
+
+	if(dual_wield):
+		load_dual_wield_weapon_settings();
+		spawn_weapon(weapon_settings_2[0], weapon_slots[0]);
+		spawn_weapon(weapon_settings_2[1], weapon_slots[1]);
+	else:
+		spawn_weapon(weapon_settings, weapon_slots[0]);
 
 	fill_values_from_weapon_settings();
 
-	circle.self_modulate = color;
+	set_ball_color();
 
 	if(use_white_name_color):
 		hp_text.self_modulate = Color.WHITE;
@@ -188,7 +195,6 @@ func _physics_process(delta: float) -> void:
 	if(debug_physics):
 		debug_collisions();
 	if(!is_init): return;
-	if(weapon == null): return;
 	if(dead): return;
 	if(lock_pos):
 		freeze = true;
@@ -204,14 +210,15 @@ func _physics_process(delta: float) -> void:
 		invincible_for -= delta;
 
 	if(!debug_no_rot):
-		if(align_weapon_to_velocity):
-			# DebugDraw2D.arrow_vector(global_position, linear_velocity.normalized() * 50, Color.RED, 1.0, 1.0);
-			weapon_slot.rotation = linear_velocity.normalized().angle() - deg_to_rad(90.0);
-		elif(!block_weapon_rot):
-			weapon_slot.rotate(deg_to_rad(360.0 * weapon.rotation_speed * weapon.rotation_direction * weapon.rot_speed_multiplier * weapon.custom_rot_speed_multiplier * time_scale) * delta);
+		for weapon in weapons:
+			if(align_weapon_to_velocity):
+				# DebugDraw2D.arrow_vector(global_position, linear_velocity.normalized() * 50, Color.RED, 1.0, 1.0);
+				weapon.weapon_slot.rotation = linear_velocity.normalized().angle() - deg_to_rad(90.0);
+			elif(!block_weapon_rot):
+				weapon.weapon_slot.rotate(deg_to_rad(360.0 * weapon.rotation_speed * weapon.rotation_direction * weapon.rot_speed_multiplier * weapon.custom_rot_speed_multiplier * time_scale) * delta);
 
-		if(use_cheat_weapon_rotation && !align_weapon_to_velocity):
-			adjust_weapon_rotation(delta);
+			if(use_cheat_weapon_rotation && !align_weapon_to_velocity):
+				adjust_weapon_rotation(delta, weapon);
 
 	# max_speed += 2 * delta;
 
@@ -256,23 +263,24 @@ func start_duel():
 	trail_2d.default_color = color;
 	trail_2d.default_color.a = 0.75;
 
-func spawn_weapon() -> Weapon:
-	if(weapon_settings == null): return;
-	if(weapon_settings.weapon_prefab == null): return;
+func spawn_weapon(settings:WeaponSettings, slot:Node2D) -> Weapon:
+	if(settings == null): return;
+	if(settings.weapon_prefab == null): return;
 
-	var w:Weapon = weapon_settings.weapon_prefab.instantiate();
-	weapon_slot.scale = Vector2.ONE * weapon_settings.base_size;
-	weapon_slot.add_child(w);
-	weapon = w;
-	w.position.x += weapon_settings.offset;
+	var w:Weapon = settings.weapon_prefab.instantiate();
+	slot.scale = Vector2.ONE * settings.base_size;
+	slot.add_child(w);
+	w.weapon_slot = slot;
+	weapons.push_back(w);
+	w.position.x += settings.offset;
 
-	if(weapon_settings.y_offset):
+	if(settings.y_offset):
 		w.position.x = 0.0;
-		w.position.y = weapon_settings.offset;
+		w.position.y = settings.offset;
 
-	w.init(weapon_settings, self);
-	weapon_slot.rotation = deg_to_rad(base_weapon_rotation);
-	if(debug_mode): weapon_slot.global_rotation_degrees = 0.0;
+	w.init(settings, self);
+	slot.rotation = deg_to_rad(base_weapon_rotation);
+	if(debug_mode): slot.global_rotation_degrees = 0.0;
 	return w;
 
 func init_health(v:float):
@@ -282,40 +290,6 @@ func init_health(v:float):
 func update_health_text():
 	if(hp_text == null): return;
 	hp_text.text = str(health);
-
-func update_stat_text(no_bump:bool = false):
-	if(stat_text == null): return;
-
-	var s:String = weapon.get_custom_stat_format();
-
-	if(s == ""):
-		if(weapon_settings.scaling_stat_float):
-			s = Utils.format_float(weapon.scaling_stat_value, 1);
-		else:
-			s = str(int(weapon.scaling_stat_value));
-
-	stat_text.format([weapon_settings.stat_scale_name, s]);
-	if(!no_bump):
-		stat_text.bump(1.08, 0.08);
-
-func update_scaling_stat_text():
-	if(stat_text == null): return;
-
-	# var s:String = "";
-
-	# if(weapon_settings.scaling_stat_float):
-	# 	s = str("%0.2f" % scaling_damage);
-	# else:
-	# 	s = str(scaling_damage);
-
-	stat_text.format([weapon_settings.stat_scale_name, Utils.format_number_with_dots(scaling_damage)]);
-	stat_text.bump(1.08, 0.08);
-
-func update_bb_mult_text():
-	if(bb_mult_text == null): return;
-
-	bb_mult_text.format(["Multiplier", "x " + str(weapon.scale_stat_multiplier)]);
-	bb_mult_text.bump(1.08, 0.08);
 
 func affect_health(v:int, from:BattleBall, silent:bool = false):
 	if(is_invincible()):
@@ -421,10 +395,10 @@ func _on_body_entered(other: Node) -> void:
 	pass;
 
 func hitflash(d:float):
-	if(circle == null): return;
+	if(active_sprite == null): return;
 	var tween = create_tween().set_parallel(true);
-	tween.tween_property(circle, "material:shader_parameter/flash_intensity", 1, 0);
-	tween.chain().tween_property(circle, "material:shader_parameter/flash_intensity", 0, 0).set_delay(d);
+	tween.tween_property(active_sprite, "material:shader_parameter/flash_intensity", 1, 0);
+	tween.chain().tween_property(active_sprite, "material:shader_parameter/flash_intensity", 0, 0).set_delay(d);
 
 func is_in_same_team(other: Node2D) -> bool:
 	if(other == null): return false;
@@ -453,24 +427,25 @@ func death():
 	set_deferred("freeze", true);
 	sleeping = true;
 	root.set_deferred("disabled", true);
-	if(weapon != null):
+
+	for weapon in weapons:
 		weapon.clear_owner_projectile();
 		for hitbox:Hitbox in weapon.hitboxes:
 			hitbox.set_deferred("monitorable", false);
 			hitbox.set_deferred("monitoring", false);
 
-	if(main != null):
-		update_ui_name(main.dead_ui_color);
-		update_ui_details(main.dead_ui_color);
-		update_ui_sprite(main.dead_ui_color);
-		update_ui_stat(main.dead_ui_color);
+		if(main != null):
+			weapon.update_ui_name(main.dead_ui_color);
+			weapon.update_ui_details(main.dead_ui_color);
+			weapon.update_ui_sprite(main.dead_ui_color);
+			weapon.update_ui_stat(main.dead_ui_color);
 
-		if(can_respawn):
-			set_color_overlay(main.dead_ui_color, Color.WHITE);
-			bb_blocks_ui.modulate = main.dead_ui_color;
-			bb_mult_text.modulate = main.dead_ui_color;
-			if(weapon.battleblock_mode):
-				weapon.on_bb_death();
+			if(can_respawn):
+				set_color_overlay(main.dead_ui_color, Color.WHITE);
+				bb_blocks_ui.modulate = main.dead_ui_color;
+				weapon.bb_mult_text.modulate = main.dead_ui_color;
+				if(weapon.battleblock_mode):
+					weapon.on_bb_death();
 
 	if(can_respawn):
 		var t:int = 1 + respawn_count;
@@ -489,7 +464,9 @@ func raw_respawn():
 	root.set_deferred("disabled", false);
 	set_color_overlay(Color.WHITE, Color.BLACK);
 	bb_blocks_ui.modulate = Color.WHITE;
-	bb_mult_text.modulate = Color.WHITE;
+
+	for weapon in weapons:
+		weapon.bb_mult_text.modulate = Color.WHITE;
 
 	linear_velocity = Vector2.ZERO
 	prev_linear_velocity = Vector2.ZERO;
@@ -499,18 +476,19 @@ func raw_respawn():
 	health = respawn_count * 5;
 	update_health_text();
 
-	for hitbox:Hitbox in weapon.hitboxes:
-		hitbox.set_deferred("monitorable", true);
-		hitbox.set_deferred("monitoring", true);
-		pass
+	for weapon in weapons:
+		for hitbox:Hitbox in weapon.hitboxes:
+			hitbox.set_deferred("monitorable", true);
+			hitbox.set_deferred("monitoring", true);
+			pass
 
-	if(main != null):
-		update_ui_name(color);
-		update_ui_details(color);
-		update_ui_sprite(Color.WHITE);
-		update_ui_stat(color);
+		if(main != null):
+			weapon.update_ui_name(color);
+			weapon.update_ui_details(color);
+			weapon.update_ui_sprite(Color.WHITE);
+			weapon.update_ui_stat(color);
 
-	weapon.init_scaling_stat();
+		weapon.init_scaling_stat();
 
 func respawn(pos:Vector2, h:int = -1):
 	global_position = pos;
@@ -521,20 +499,22 @@ func respawn(pos:Vector2, h:int = -1):
 	root.set_deferred("disabled", false);
 
 	reset_rigidbody();
-	weapon.init(weapon_settings, self);
 	health = base_health if h == -1 else h;
 	update_health_text();
 
-	for hitbox:Hitbox in weapon.hitboxes:
-		hitbox.set_deferred("monitorable", true);
-		hitbox.set_deferred("monitoring", true);
-		pass
+	for weapon in weapons:
+		weapon.init(weapon_settings, self);
 
-	if(main != null):
-		update_ui_name(color);
-		update_ui_details(color);
-		update_ui_sprite(Color.WHITE);
-		update_ui_stat(color);
+		for hitbox:Hitbox in weapon.hitboxes:
+			hitbox.set_deferred("monitorable", true);
+			hitbox.set_deferred("monitoring", true);
+			pass
+
+		if(main != null):
+			weapon.update_ui_name(color);
+			weapon.update_ui_details(color);
+			weapon.update_ui_sprite(Color.WHITE);
+			weapon.update_ui_stat(color);
 
 
 func lose_hp_timeout():
@@ -612,31 +592,6 @@ func set_physics_time_scale(v: float, d:float):
 
 	physics_time_scale = v;
 
-func update_ui_name(c:Color, t:String = ""):
-	if(t == ""):
-		name_text.format([weapon_settings.name]);
-	else:
-		name_text.text = t;
-
-	name_text.self_modulate = c;
-
-func update_ui_sprite(c:Color = Color.WHITE):
-	ui_sprite.texture = weapon.sprite_2d.texture;
-	ui_sprite.self_modulate = c;
-
-func update_ui_details(c:Color, raw:bool = false):
-	if(raw):
-		details_text.text = weapon_settings.details;
-	else:
-		details_text.format([weapon_settings.details]);
-
-	details_text.modulate = c;
-
-func update_ui_stat(c:Color):
-	# if(!dead):
-	# 	stat_text.format([weapon_settings.name]);
-	stat_text.self_modulate = c;
-
 func nerf_max_speed(v:float):
 	max_speed *= v;
 	nerfed_speed = abs(base_max_speed - max_speed);
@@ -662,8 +617,9 @@ func reset_rigidbody():
 	hitstop_remaining = 0.0;
 
 func set_color_overlay(c:Color, text_color:Color):
-	weapon_slot.modulate = c;
-	circle.modulate = c;
+	for slot in weapon_slots:
+		slot.modulate = c;
+	active_sprite.modulate = c;
 	circle_bg.modulate = c;
 	hp_text.set("theme_override_colors/default_color", text_color);
 
@@ -700,6 +656,22 @@ func stop_combo():
 	# combo_remaining = 0.0;
 	EventBus.ball_combo_reset.emit(get_instance_id());
 
+func set_ball_color():
+	if(dual_wield):
+		dual_wield_mask.visible = true;
+		dual_wield_sprite.material.set("shader_parameter/stripe_color", Color.CYAN);
+		dual_wield_sprite.material.set("shader_parameter/background_color", Color.GOLD);
+		active_sprite = dual_wield_sprite;
+	else:
+		circle.self_modulate = color;
+		active_sprite = circle;
+
+func load_dual_wield_weapon_settings():
+	weapon_settings_2.push_back(main.all_weapons[dual_wield[0]]);
+	weapon_settings_2.push_back(main.all_weapons[dual_wield[1]]);
+
+func get_weapon(id:int):
+	return weapons[id];
 
 # ------- Cheats ---------
 
@@ -713,15 +685,16 @@ func update_cheat_hitbox_size(damaged_by:BattleBall, max_bonus:float):
 
 	var b:float = lerp(1.0, 1.0 + max_bonus, w);
 
-	for h in weapon.hitboxes:
-		h.collider.scale = Vector2.ONE * b;
+	for weapon in weapons:
+		for h in weapon.hitboxes:
+			h.collider.scale = Vector2.ONE * b;
 
-	weapon.cheat_hitbox_scale_bonus = b;
+		weapon.cheat_hitbox_scale_bonus = b;
 
-func adjust_weapon_rotation(delta: float) -> void:
+func adjust_weapon_rotation(delta: float, weapon:Weapon) -> void:
 	if(weapon.hitboxes[0].collider.global_position.distance_to(target.global_position) > 200.0): return;
 	var dir: Vector2 = (target.global_position - global_position).normalized()
-	var weapon_dir: Vector2 = Vector2.RIGHT.rotated(weapon_slot.rotation)
+	var weapon_dir: Vector2 = Vector2.RIGHT.rotated(weapon.weapon_slot.rotation)
 
 	# Angle difference in radians
 	var angle_diff: float = dir.angle_to(weapon_dir)
@@ -732,4 +705,4 @@ func adjust_weapon_rotation(delta: float) -> void:
 	if abs(angle_diff) < deg_to_rad(cheat_weapon_rotation_angle):
 		# Small bias rotation, scaled by delta
 		var bias_speed: float = 5.0  # radians per second
-		weapon_slot.rotation += sign(angle_diff) * bias_speed * delta
+		weapon.weapon_slot.rotation += sign(angle_diff) * bias_speed * delta

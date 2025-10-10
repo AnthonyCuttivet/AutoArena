@@ -98,21 +98,21 @@ static func get_random_color() -> Color:
 		randf_range(0.0, 1.0), # BRIGHTNESS
 	);
 
-static func shoot_projectile(projectile_prefab:PackedScene, ball_owner:BattleBall, rotation:float, parent:Node2D, speed:float = -1.0, pierce:int = -1, bounces:int = -1) -> Projectile:
+static func shoot_projectile(projectile_prefab:PackedScene, ball_owner:BattleBall, weapon:Weapon, rotation:float, parent:Node2D, speed:float = -1.0, pierce:int = -1, bounces:int = -1) -> Projectile:
 	var p:Projectile = projectile_prefab.instantiate();
 	p.global_position = parent.global_position;
 	p.rotation = rotation;
-	p.scale = ball_owner.weapon_slot.scale * ball_owner.root.scale;
-	p.init(ball_owner, speed, pierce, bounces);
+	p.scale = weapon.weapon_slot.scale * ball_owner.root.scale;
+	p.init(ball_owner, weapon, speed, pierce, bounces);
 	parent.get_tree().root.call_deferred("add_child", p);
 	return p;
 
-static func spawn_projectile(projectile_prefab:PackedScene, ball_owner:BattleBall, position:Vector2, rotation:float, parent:Node2D, speed:float = -1.0, pierce:int = -1, bounces:int = -1) -> Projectile:
+static func spawn_projectile(projectile_prefab:PackedScene, ball_owner:BattleBall, weapon:Weapon, position:Vector2, rotation:float, parent:Node2D, speed:float = -1.0, pierce:int = -1, bounces:int = -1) -> Projectile:
 	var p:Projectile = projectile_prefab.instantiate();
 	p.global_position = position;
 	p.rotation = rotation;
-	p.scale = ball_owner.weapon_slot.scale * ball_owner.root.scale;
-	p.init(ball_owner, speed, pierce, bounces);
+	p.scale = weapon.weapon_slot.scale * ball_owner.root.scale;
+	p.init(ball_owner, weapon, speed, pierce, bounces);
 
 	if(ball_owner.weapon_settings.bg_projectile):
 		ball_owner.main.projectiles_bg_parent.call_deferred("add_child", p);

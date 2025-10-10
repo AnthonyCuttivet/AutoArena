@@ -27,7 +27,7 @@ func _ready() -> void:
 	hurtbox.ball_owner.hp_text = value;
 	hurtbox.ball_owner.unkillable = true;
 	hurtbox.ball_owner.silent_on_hit = true;
-	hurtbox.ball_owner.weapon = Weapon.new();
+	hurtbox.ball_owner.weapons.push_back(Weapon.new()); 
 
 	current_value = block_value;
 	update_value_text();

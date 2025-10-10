@@ -47,7 +47,7 @@ func _process(_delta: float) -> void:
 
 func init_scaling_stat():
 	scaling_stat_value = recall_dmg;
-	ball_owner.update_stat_text();
+	update_stat_text();
 
 func shoot_projectile():
 	spawn_feather();
@@ -72,7 +72,7 @@ func scale_stat(force:bool = false):
 		add_sub_weapon(max_feathers -1, true);
 
 		settings.details = plume_details();
-		ball_owner.update_ui_details(ball_owner.color, true);
+		update_ui_details(settings.color, true);
 
 	init_scaling_stat();
 
@@ -143,8 +143,8 @@ func spawn_feather():
 		shoot_speed_elapsed = 0.0;
 		shoot_speed = recall_delay;
 
-	var p:ProjectilePlume = Utils.shoot_projectile(settings.projectile_prefab, ball_owner, ball_owner.weapon_slot.global_rotation, self);
-	p.scale *= ball_owner.weapon.projectile_scale;
+	var p:ProjectilePlume = Utils.shoot_projectile(settings.projectile_prefab, ball_owner, self, weapon_slot.global_rotation, self);
+	p.scale *= projectile_scale;
 	p.set_speed(projectile_speed);
 	p.weapon_owner = self;
 	p.move_duration = feather_move_duration;

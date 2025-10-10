@@ -37,7 +37,7 @@ func _init() -> void:
 
 func init_scaling_stat():
 	scaling_stat_value = projectiles;
-	ball_owner.update_stat_text();
+	update_stat_text();
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
@@ -81,7 +81,7 @@ func on_coin_caught():
 	active_coin = null;
 	ball_owner.start_hitstop(0.0, railgun_duration + 0.5, Vector2.ZERO, true, true);
 
-	var railgun:ProjectileRailgun = Utils.spawn_projectile(railgun_prefab, ball_owner, ball_owner.global_position, ball_owner.weapon_slot.global_rotation, ball_owner.main);
+	var railgun:ProjectileRailgun = Utils.spawn_projectile(railgun_prefab, ball_owner, self, ball_owner.global_position, weapon_slot.global_rotation, ball_owner.main);
 	active_railgun = railgun;
 	railgun.weapon_owner = self;
 	railgun.custom_damage = 1;

@@ -12,8 +12,8 @@ var weapon_pickaxe:WeaponPickaxe = null;
 var level:int = 0;
 var is_upgrade:bool = false;
 
-func init(o:BattleBall, s:float, p:int = -1, b:int = -1):
-	super.init(o,s,p,b);
+func init(o:BattleBall, w:Weapon, s:float, p:int = -1, b:int = -1):
+	super.init(o,w,s,p,b);
 	hp = max_hp;
 
 	on_spawn_tween();

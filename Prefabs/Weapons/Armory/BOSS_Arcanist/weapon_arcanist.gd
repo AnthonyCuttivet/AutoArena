@@ -79,7 +79,7 @@ func add_thunder():
 	if(increase_after_next):
 		increase_thunder_needed();
 
-	var p:Projectile = Utils.shoot_projectile(settings.projectile_prefab, ball_owner, ball_owner.weapon_slot.global_rotation, self);
+	var p:Projectile = Utils.shoot_projectile(settings.projectile_prefab, ball_owner, self, ball_owner.weapon_slot.global_rotation, self);
 	p.set_speed(projectile_speed);
 	p.weapon_owner = self;
 	p.scale *= projectile_scale;
@@ -127,7 +127,7 @@ func add_thunderstrike(i0:int, i1:int):
 	var rot:float = (p1 - p0).angle();
 	var dist:float = p0.distance_to(p1);
 
-	var strike:ProjectileBlackThunderStrike = Utils.spawn_projectile(thunderstrike_prefab, ball_owner, pos, rot, self);
+	var strike:ProjectileBlackThunderStrike = Utils.spawn_projectile(thunderstrike_prefab, ball_owner, self, pos, rot, self);
 	strike.weapon_owner = self;
 
 	strike.thunderstrike_line.set_point_position(0, strike.thunderstrike_line.to_local(p0));

@@ -1094,7 +1094,30 @@ hypermatch_hp = 500
 hypermatch_scales = Array[int]([500, 50])
 forced_start_dir = Vector2(0, -1)
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Fighters/Coin"), NodePath("Balls/Fighters/Reaper")]
+balls = [NodePath("Balls/Fighters/Coin"), NodePath("Balls/Fighters/Plume")]
+all_weapons = Dictionary[int, ExtResource("24_3p5r5")]({
+0: ExtResource("11_per8v"),
+1: ExtResource("40_nsujd"),
+2: ExtResource("28_djmp0"),
+3: ExtResource("44_vebv7"),
+4: ExtResource("67_5aelx"),
+5: ExtResource("68_t5fc8"),
+6: ExtResource("34_g7d4c"),
+7: ExtResource("23_76u2v"),
+8: ExtResource("50_1t3vj"),
+9: ExtResource("70_c0wg0"),
+10: ExtResource("80_xxfh1"),
+11: ExtResource("49_1t3vj"),
+12: ExtResource("22_ee1k8"),
+13: ExtResource("22_rcyw2"),
+14: ExtResource("58_870hc"),
+15: ExtResource("56_nfmlc"),
+16: ExtResource("45_k7ahf"),
+17: ExtResource("68_xxfh1"),
+18: ExtResource("23_n5n48"),
+19: ExtResource("43_qtgyu"),
+20: ExtResource("60_ux8nf")
+})
 fx_hit_prefab = ExtResource("2_8wnqf")
 fx_death_prefab = ExtResource("3_uot50")
 fx_clash = ExtResource("4_0o7lx")
@@ -2510,16 +2533,16 @@ scale = Vector2(0.21, 0.21)
 [node name="WeaponSlot" parent="Balls/Bosses/HYDRA/Root" index="0"]
 scale = Vector2(10, 10)
 
-[node name="Circle" parent="Balls/Bosses/HYDRA/Root" index="3"]
+[node name="Circle" parent="Balls/Bosses/HYDRA/Root" index="4"]
 material = SubResource("ShaderMaterial_g7d4c")
 
-[node name="DWCircleMask" parent="Balls/Bosses/HYDRA/Root" index="4"]
+[node name="DWCircleMask" parent="Balls/Bosses/HYDRA/Root" index="5"]
 material = SubResource("ShaderMaterial_u6wsj")
 
 [node name="DWCircle" parent="Balls/Bosses/HYDRA/Root/DWCircleMask" index="0"]
 material = SubResource("ShaderMaterial_u6wsj")
 
-[node name="Trail" parent="Balls/Bosses/HYDRA/Root" index="7"]
+[node name="Trail" parent="Balls/Bosses/HYDRA/Root" index="8"]
 gradient = SubResource("Gradient_wkwug")
 
 [node name="TITAN" parent="Balls/Bosses" groups=["BALL"] instance=ExtResource("4_ya2e4")]
@@ -2537,16 +2560,16 @@ scale = Vector2(0.21, 0.21)
 [node name="WeaponSlot" parent="Balls/Bosses/TITAN/Root" index="0"]
 scale = Vector2(10, 10)
 
-[node name="Circle" parent="Balls/Bosses/TITAN/Root" index="3"]
+[node name="Circle" parent="Balls/Bosses/TITAN/Root" index="4"]
 material = SubResource("ShaderMaterial_g7d4c")
 
-[node name="DWCircleMask" parent="Balls/Bosses/TITAN/Root" index="4"]
+[node name="DWCircleMask" parent="Balls/Bosses/TITAN/Root" index="5"]
 material = SubResource("ShaderMaterial_5o85w")
 
 [node name="DWCircle" parent="Balls/Bosses/TITAN/Root/DWCircleMask" index="0"]
 material = SubResource("ShaderMaterial_5o85w")
 
-[node name="Trail" parent="Balls/Bosses/TITAN/Root" index="7"]
+[node name="Trail" parent="Balls/Bosses/TITAN/Root" index="8"]
 gradient = SubResource("Gradient_wkwug")
 
 [node name="WARLOCK" parent="Balls/Bosses" groups=["BALL"] instance=ExtResource("4_ya2e4")]
@@ -2562,14 +2585,8 @@ knockback_immune = true
 [node name="WeaponSlot" parent="Balls/Bosses/WARLOCK/Root" index="0"]
 scale = Vector2(10, 10)
 
-[node name="Circle" parent="Balls/Bosses/WARLOCK/Root" index="3"]
+[node name="Circle" parent="Balls/Bosses/WARLOCK/Root" index="4"]
 material = SubResource("ShaderMaterial_0qwvu")
-
-[node name="DWCircleMask" parent="Balls/Bosses/WARLOCK/Root" index="4"]
-material = SubResource("ShaderMaterial_oi3sm")
-
-[node name="DWCircle" parent="Balls/Bosses/WARLOCK/Root/DWCircleMask" index="0"]
-material = SubResource("ShaderMaterial_oi3sm")
 
 [node name="Hat" type="Sprite2D" parent="Balls/Bosses/WARLOCK/Root" index="5"]
 texture_filter = 1
@@ -2577,7 +2594,13 @@ position = Vector2(-16.6682, -425)
 scale = Vector2(10, 10)
 texture = ExtResource("23_o08cq")
 
-[node name="Trail" parent="Balls/Bosses/WARLOCK/Root" index="8"]
+[node name="DWCircleMask" parent="Balls/Bosses/WARLOCK/Root" index="6"]
+material = SubResource("ShaderMaterial_oi3sm")
+
+[node name="DWCircle" parent="Balls/Bosses/WARLOCK/Root/DWCircleMask" index="0"]
+material = SubResource("ShaderMaterial_oi3sm")
+
+[node name="Trail" parent="Balls/Bosses/WARLOCK/Root" index="9"]
 gradient = SubResource("Gradient_w5ut2")
 
 [node name="HYDRA_Void" parent="Balls/Bosses" groups=["BALL"] instance=ExtResource("4_ya2e4")]
@@ -2596,16 +2619,16 @@ scale = Vector2(0.24, 0.24)
 [node name="WeaponSlot" parent="Balls/Bosses/HYDRA_Void/Root" index="0"]
 scale = Vector2(10, 10)
 
-[node name="Circle" parent="Balls/Bosses/HYDRA_Void/Root" index="3"]
+[node name="Circle" parent="Balls/Bosses/HYDRA_Void/Root" index="4"]
 material = SubResource("ShaderMaterial_qyfoh")
 
-[node name="DWCircleMask" parent="Balls/Bosses/HYDRA_Void/Root" index="4"]
+[node name="DWCircleMask" parent="Balls/Bosses/HYDRA_Void/Root" index="5"]
 material = SubResource("ShaderMaterial_kek2w")
 
 [node name="DWCircle" parent="Balls/Bosses/HYDRA_Void/Root/DWCircleMask" index="0"]
 material = SubResource("ShaderMaterial_kek2w")
 
-[node name="Trail" parent="Balls/Bosses/HYDRA_Void/Root" index="7"]
+[node name="Trail" parent="Balls/Bosses/HYDRA_Void/Root" index="8"]
 gradient = SubResource("Gradient_d4iat")
 
 [node name="HYDRA_Acid" parent="Balls/Bosses" groups=["BALL"] instance=ExtResource("4_ya2e4")]
@@ -2624,16 +2647,16 @@ scale = Vector2(0.24, 0.24)
 [node name="WeaponSlot" parent="Balls/Bosses/HYDRA_Acid/Root" index="0"]
 scale = Vector2(10, 10)
 
-[node name="Circle" parent="Balls/Bosses/HYDRA_Acid/Root" index="3"]
+[node name="Circle" parent="Balls/Bosses/HYDRA_Acid/Root" index="4"]
 material = SubResource("ShaderMaterial_qyfoh")
 
-[node name="DWCircleMask" parent="Balls/Bosses/HYDRA_Acid/Root" index="4"]
+[node name="DWCircleMask" parent="Balls/Bosses/HYDRA_Acid/Root" index="5"]
 material = SubResource("ShaderMaterial_bnc2j")
 
 [node name="DWCircle" parent="Balls/Bosses/HYDRA_Acid/Root/DWCircleMask" index="0"]
 material = SubResource("ShaderMaterial_bnc2j")
 
-[node name="Trail" parent="Balls/Bosses/HYDRA_Acid/Root" index="7"]
+[node name="Trail" parent="Balls/Bosses/HYDRA_Acid/Root" index="8"]
 gradient = SubResource("Gradient_y7asl")
 
 [node name="Training" type="Node2D" parent="Balls"]
@@ -2667,6 +2690,16 @@ no_weapon = true
 stop = true
 
 [node name="Fighters" type="Node2D" parent="Balls"]
+
+[node name="DW1" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2203.01, 1414.99)
+weapon_settings = ExtResource("11_per8v")
+use_dual_wield = true
+dual_wield = Array[int]([0, 7])
+health = 50
+team = 1
+dead = true
+stop = true
 
 [node name="Bow" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2203.01, 1414.99)

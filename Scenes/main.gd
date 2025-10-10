@@ -32,7 +32,6 @@ class_name Main extends Node2D
 @export var balls: Array[BattleBall];
 @export var all_weapons:Dictionary[Enums.WEAPONS, WeaponSettings];
 
-
 @export var fx_hit_prefab: PackedScene;
 @export var fx_death_prefab: PackedScene;
 @export var fx_clash:PackedScene;
@@ -264,7 +263,8 @@ func _ready() -> void:
 		teams_alive_members[balls[i].team] += 1;
 
 		init_damage_dealt(balls[i].get_instance_id());
-		balls[i].weapon.weapon_is_ready();
+		for weapon in balls[i].weapons:
+			weapon.weapon_is_ready();
 
 	if(display_damage_dealt):
 		update_damage_dealt_UI();
@@ -494,8 +494,8 @@ func reset_match():
 	balls[0].respawn(_1v1_spots[0], _1v1_hp);
 	balls[1].respawn(_1v1_spots[1], _1v1_hp);
 
-	fill_character_ui(balls[0], name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
-	fill_character_ui(balls[1], name_right_1p, sprite_right_1p, details_right_1p, stat_right_1p, combo_counter_R1_1P);
+	fill_weapon_ui(balls[0], 0, name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
+	fill_weapon_ui(balls[1], 0, name_right_1p, sprite_right_1p, details_right_1p, stat_right_1p, combo_counter_R1_1P);
 
 	balls[0].weapon.reset();
 	balls[1].weapon.reset();
@@ -529,19 +529,19 @@ func init_ui():
 	stat_right_2_2p.visible = container_2v2_right.visible;
 
 	if(balls.size() == 1):
-		fill_character_ui(balls[0], name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
+		fill_weapon_ui(balls[0], 0, name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
 	elif(balls.size() == 2):
-		fill_character_ui(balls[0], name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
-		fill_character_ui(balls[1], name_right_1p, sprite_right_1p, details_right_1p, stat_right_1p, combo_counter_R1_1P);
+		fill_weapon_ui(balls[0], 0, name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
+		fill_weapon_ui(balls[1], 0, name_right_1p, sprite_right_1p, details_right_1p, stat_right_1p, combo_counter_R1_1P);
 	elif(balls.size() == 3):
-		fill_character_ui(balls[0], name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
-		fill_character_ui(balls[1], name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p, combo_counter_R1_2P);
-		fill_character_ui(balls[2], name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p, combo_counter_R2_2P);
+		fill_weapon_ui(balls[0], 0, name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
+		fill_weapon_ui(balls[1], 0, name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p, combo_counter_R1_2P);
+		fill_weapon_ui(balls[2], 0, name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p, combo_counter_R2_2P);
 	elif(balls.size() == 4):
-		fill_character_ui(balls[0], name_left_1_2p, sprite_left_1_2p, details_left_1_2p, stat_left_1_2p, combo_counter_L1_2P);
-		fill_character_ui(balls[1], name_left_2_2p, sprite_left_2_2p, details_left_2_2p, stat_left_2_2p, combo_counter_L2_2P);
-		fill_character_ui(balls[2], name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p, combo_counter_R1_2P);
-		fill_character_ui(balls[3], name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p, combo_counter_R2_2P);
+		fill_weapon_ui(balls[0], 0, name_left_1_2p, sprite_left_1_2p, details_left_1_2p, stat_left_1_2p, combo_counter_L1_2P);
+		fill_weapon_ui(balls[1], 0, name_left_2_2p, sprite_left_2_2p, details_left_2_2p, stat_left_2_2p, combo_counter_L2_2P);
+		fill_weapon_ui(balls[2], 0, name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p, combo_counter_R1_2P);
+		fill_weapon_ui(balls[3], 0, name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p, combo_counter_R2_2P);
 
 	if(battleblock_mode):
 		fill_battleblock_ui(balls[0], bb_left, bb_blocks_left);
@@ -555,12 +555,16 @@ func init_ui():
 	if(time_attack_mode):
 		ta_record.format([Utils.convert_time_to_string(time_attack_leaderboards[balls[0].weapon_settings.name.to_upper()].rankings[0].time)]);
 
-func fill_character_ui(ball:BattleBall, name_text:DynamicText, sprite:TextureRect, details_text:DynamicText, stat_text:DynamicText, combo_counter:ComboCounterUI):
-	name_text.format([ball.weapon_settings.name]);
+func fill_weapon_ui(ball:BattleBall, weapon_index:int, name_text:DynamicText, sprite:TextureRect, details_text:DynamicText, stat_text:DynamicText, combo_counter:ComboCounterUI):
+	var weapon:Weapon = ball.get_weapon(weapon_index);
+
+	name_text.format([weapon.settings.name]);
 	name_text.self_modulate = ball.color;
-	sprite.texture = ball.weapon.sprite_2d.texture;
-	details_text.format([ball.weapon_settings.details]);
-	if(ball.weapon_settings.white_details):
+	sprite.texture = weapon.sprite_2d.texture;
+
+	details_text.format([weapon.settings.details]);
+
+	if(weapon.settings.white_details):
 		details_text.text = "[color=" + ball.color.to_html() + "]" + details_text.text + "[/color]";
 		details_text.modulate = Color.WHITE;
 	else:
@@ -568,13 +572,13 @@ func fill_character_ui(ball:BattleBall, name_text:DynamicText, sprite:TextureRec
 
 	if(details_text.text == ""):details_text.text = " ";
 
-	ball.name_text = name_text;
-	ball.ui_sprite = sprite;
-	ball.details_text = details_text;
-	ball.stat_text = stat_text;
+	weapon.name_text = name_text;
+	weapon.ui_sprite = sprite;
+	weapon.details_text = details_text;
+	weapon.stat_text = stat_text;
 
-	ball.stat_text.self_modulate = ball.color;
-	ball.update_stat_text();
+	weapon.stat_text.self_modulate = ball.color;
+	weapon.update_stat_text();
 
 	combo_counter.init(ball);
 
@@ -655,7 +659,7 @@ func on_ball_lifesteal(target:int, origin:int):
 
 	pass ;
 
-func on_ball_clash(id:int, clash_pos:Vector2, silent:bool):
+func on_ball_clash(id:int, weapon_slot_id:int,  clash_pos:Vector2, silent:bool):
 	if(!balls_ids.has(id)):
 		return;
 
@@ -670,7 +674,7 @@ func on_ball_clash(id:int, clash_pos:Vector2, silent:bool):
 			add_child(fx);
 			fx.global_position = clash_pos + Vector2.ONE * randf_range(-15.0, 15.0);
 			fx.modulate = ball.color;
-			fx.rotation = ball.weapon_slot.global_rotation;
+			fx.rotation = ball.get_weapon(weapon_slot_id).weapon_slot.global_rotation;
 			fx.emitting = false;
 			fx.finished.connect(fx.queue_free);
 			if(battleblock_mode):

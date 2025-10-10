@@ -18,8 +18,8 @@ var timeout:bool = false;
 var disabled:bool = true;
 var triggered:bool = false;
 
-func init(o:BattleBall, s:float, _p:int = 0, _b:int = 0):
-	super.init(o, s);
+func init(o:BattleBall, w:Weapon, s:float, p:int = -1, b:int = -1):
+	super.init(o,w,s);
 
 	weapon_traps = weapon_owner;
 

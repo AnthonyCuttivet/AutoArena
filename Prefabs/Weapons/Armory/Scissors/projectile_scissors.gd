@@ -9,8 +9,8 @@ var fixed_lifetime_elapsed:float = 0.0;
 var fixed_dir:Vector2 = Vector2.ZERO;
 var position_fixed:bool = false;
 
-func init(o:BattleBall, s:float, _p:int = 0, _b:int = 0):
-	super.init(o, s);
+func init(o:BattleBall, w:Weapon, s:float, p:int = -1, b:int = -1):
+	super.init(o,w,s);
 
 	fixed_dir = transform.x;
 
