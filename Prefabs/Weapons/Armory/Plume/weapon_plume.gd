@@ -6,7 +6,6 @@ class_name WeaponPlume extends Weapon
 @export var recall_delay:float = 1.0;
 @export var feather_recall_duration:float = 0.1;
 @export var recall_self_hitstop_t:float = 0.1;
-@export var recall_speed_multiplier:float = 2.0;
 @export var recall_hitstop:float = 0.35;
 @export var feather_sub_weapon_prefab:PackedScene;
 @export var feather_sub_weapon_spread:float;

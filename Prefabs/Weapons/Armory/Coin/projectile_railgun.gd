@@ -25,6 +25,8 @@ func init(o:BattleBall, s:float, p:int = -1, b:int = -1):
 
 	weapon_coin_owner = o.weapon;
 
+	railgun_width *= weapon_coin_owner.railgun_width_modifier;
+
 	self.scale.x = 5.0;
 	collider.shape.size.x = 0.0;
 	coin_projectile.scale.y = 3.0;

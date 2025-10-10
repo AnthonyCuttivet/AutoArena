@@ -20,6 +20,7 @@ class_name WeaponCoin extends Weapon
 var can_shoot:bool = true;
 var active_coin:ProjectileCoin = null;
 var active_railgun:ProjectileRailgun = null;
+var railgun_width_modifier:float = 1.0;
 
 func _init() -> void:
 	EventBus.ball_weapon_hit.connect(on_listened_event_received);
@@ -104,3 +105,12 @@ func on_bb_death():
 
 func get_custom_stat_format() -> String:
 	return str(damage) + " ⟐ " + str(railgun_duration) + " s";
+
+func set_battleblock_modifiers():
+	super.set_battleblock_modifiers();
+
+	railgun_duration = 0.1;
+	railgun_width_modifier = 0.5;
+
+	ball_owner.gravity_strength /= 3.5;
+	ball_owner.relative_bounce_boost = 0.3;

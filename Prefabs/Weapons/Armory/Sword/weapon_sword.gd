@@ -16,4 +16,3 @@ func scale_stat(force:bool = false):
 func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	scale_stat();
-
