@@ -23,7 +23,6 @@
 [ext_resource type="Texture2D" uid="uid://crarm12ndl2en" path="res://Graphics/_Addons/Icons/fc7.png" id="12_hvjex"]
 [ext_resource type="FontFile" uid="uid://bt2qq5v7nibma" path="res://Graphics/Fonts/PPFraktionMono-Bold.otf" id="12_p1oyv"]
 [ext_resource type="FontFile" uid="uid://bglbd1ylrt02k" path="res://Graphics/Fonts/big_noodle_titling.ttf" id="12_per8v"]
-[ext_resource type="AudioStream" uid="uid://b0c5putbs1udd" path="res://Audio/SFX/BattleBalls/Announcer/download1760022563005 (mp3cut.net).mp3" id="13_c0wg0"]
 [ext_resource type="Script" uid="uid://dtqgj8e3uki5c" path="res://Scenes/dynamic_text.gd" id="13_vvmd2"]
 [ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="14_0krxf"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="14_cticm"]
@@ -56,6 +55,7 @@
 [ext_resource type="Script" uid="uid://c50pcpoy1hh6r" path="res://Scenes/animfuncs.gd" id="34_ee1k8"]
 [ext_resource type="Resource" uid="uid://dckqlakpbmee2" path="res://Resources/Weapons/W_GEMS.tres" id="34_g7d4c"]
 [ext_resource type="PackedScene" uid="uid://cusidgv7v4vpc" path="res://Prefabs/Weapons/Armory/Unarmed/W_Unarmed.tscn" id="34_pegen"]
+[ext_resource type="AudioStream" uid="uid://d12q52ues5yn0" path="res://Audio/SFX/BattleBalls/Announcer/download1760114291853 (mp3cut.net).mp3" id="35_312b1"]
 [ext_resource type="Texture2D" uid="uid://5w30wj6j3tig" path="res://Graphics/_Addons/Icons/fc88888.png" id="35_k7ahf"]
 [ext_resource type="AudioStream" uid="uid://ddx8pstv0i4qf" path="res://Audio/SFX/BattleBalls/se_demon_hit_catchattack.wav" id="35_qtgyu"]
 [ext_resource type="Texture2D" uid="uid://cj3174c1vhaci" path="res://Graphics/_Addons/Icons/fc17040.png" id="36_76u2v"]
@@ -156,7 +156,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="Resource" id="Resource_p1oyv"]
 script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("13_c0wg0")
+audio_stream = ExtResource("35_312b1")
 volume = -20.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
@@ -499,7 +499,7 @@ scale_stat_multiplier = 1
 base_damage_multiplier = 1
 no_clash_on_block = false
 base_weapon_rotation = 0.0
-color = Color(0, 0, 0, 1)
+color = Color(1, 1, 1, 1)
 max_speed = 2200.0
 min_horizontal = 200.0
 gravity_strength = 1400.0
@@ -549,7 +549,7 @@ scale_stat_multiplier = 1
 base_damage_multiplier = 1
 no_clash_on_block = false
 base_weapon_rotation = 0.0
-color = Color(0, 0, 0, 1)
+color = Color(1, 1, 1, 1)
 max_speed = 2200.0
 min_horizontal = 200.0
 gravity_strength = 1400.0
@@ -599,7 +599,7 @@ scale_stat_multiplier = 1
 base_damage_multiplier = 1
 no_clash_on_block = false
 base_weapon_rotation = 0.0
-color = Color(0, 0, 0, 1)
+color = Color(1, 1, 1, 1)
 max_speed = 2200.0
 min_horizontal = 200.0
 gravity_strength = 1400.0
@@ -1094,7 +1094,7 @@ hypermatch_hp = 500
 hypermatch_scales = Array[int]([500, 50])
 forced_start_dir = Vector2(0, -1)
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Fighters/Coin"), NodePath("Balls/Fighters/Plume")]
+balls = [NodePath("Balls/Fighters/DW1"), NodePath("Balls/Training/Dummy")]
 all_weapons = Dictionary[int, ExtResource("24_3p5r5")]({
 0: ExtResource("11_per8v"),
 1: ExtResource("40_nsujd"),
@@ -1130,6 +1130,7 @@ sfx_bounce_boss = SubResource("Resource_gaafq")
 sfx_death = SubResource("Resource_go1jf")
 ve_announcer = SubResource("Resource_p1oyv")
 announcer_delay = 1.0
+no_announcer = true
 bgm = ExtResource("14_gcqa4")
 bgm_volume = -28.0
 startup_sfx = ExtResource("15_gcqa4")

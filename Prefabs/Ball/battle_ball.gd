@@ -128,10 +128,11 @@ func ready() -> void:
 
 	if(dual_wield):
 		load_dual_wield_weapon_settings();
-		spawn_weapon(weapon_settings_2[0], weapon_slots[0]);
-		spawn_weapon(weapon_settings_2[1], weapon_slots[1]);
+		spawn_weapon(weapon_settings_2[0], weapon_slots[0], 0);
+		weapon_settings_2[1].base_rotation_direction = -weapon_settings_2[0].base_rotation_direction;
+		spawn_weapon(weapon_settings_2[1], weapon_slots[1], 1);
 	else:
-		spawn_weapon(weapon_settings, weapon_slots[0]);
+		spawn_weapon(weapon_settings, weapon_slots[0], 0);
 
 	fill_values_from_weapon_settings();
 
@@ -263,11 +264,12 @@ func start_duel():
 	trail_2d.default_color = color;
 	trail_2d.default_color.a = 0.75;
 
-func spawn_weapon(settings:WeaponSettings, slot:Node2D) -> Weapon:
+func spawn_weapon(settings:WeaponSettings, slot:Node2D, slot_id:int) -> Weapon:
 	if(settings == null): return;
 	if(settings.weapon_prefab == null): return;
 
 	var w:Weapon = settings.weapon_prefab.instantiate();
+	w.weapon_slot_id = slot_id;
 	slot.scale = Vector2.ONE * settings.base_size;
 	slot.add_child(w);
 	w.weapon_slot = slot;
@@ -291,7 +293,7 @@ func update_health_text():
 	if(hp_text == null): return;
 	hp_text.text = str(health);
 
-func affect_health(v:int, from:BattleBall, silent:bool = false):
+func affect_health(v:int, from:BattleBall, weapon_slot_id:int, silent:bool = false):
 	if(is_invincible()):
 		# print(Utils.pf() + " Prevented " + str(v) + " thanks to INVINCIBILITY");
 		return;
@@ -301,7 +303,7 @@ func affect_health(v:int, from:BattleBall, silent:bool = false):
 		update_health_text();
 
 	if(v < 0 && !silent):
-		EventBus.ball_damaged.emit(get_instance_id(), abs(v), from.get_instance_id());
+		EventBus.ball_damaged.emit(get_instance_id(), abs(v), from.get_instance_id(), weapon_slot_id);
 
 	if(health <= 0 && !dead && !unkillable):
 		main.set_time_scale(0.1, 0.5);
@@ -402,7 +404,7 @@ func hitflash(d:float):
 
 func is_in_same_team(other: Node2D) -> bool:
 	if(other == null): return false;
-	
+
 	if(other is MCBattleBlock):
 		return team == other.hurtbox.ball_owner.team;
 
@@ -522,7 +524,7 @@ func respawn(pos:Vector2, h:int = -1):
 
 func lose_hp_timeout():
 	if(self.health == 1): return;
-	affect_health(-1,self, true);
+	affect_health(-1, self, 0, true);
 
 func show_trail_for(d:float, additionnal_length:int = 0):
 	trail_2d.length += additionnal_length;
@@ -648,16 +650,19 @@ func update_combo_remaining(dt:float):
 	if(combo_remaining <= 0.0):
 		stop_combo();
 
-func add_combo(t:BattleBall):
+func add_combo(t:BattleBall, slot_id:int):
 	current_combo += 1;
 	combo_remaining = max_combo_duration;
 
-	EventBus.ball_combo_up.emit(get_instance_id(), t);
+	# print(Utils.pf() + " " + t.name + " // " + str(slot_id) + " Combos:" + str(current_combo));
+
+	EventBus.ball_combo_up.emit(get_instance_id(), slot_id, t);
 
 func stop_combo():
 	current_combo = 0;
 	# combo_remaining = 0.0;
-	EventBus.ball_combo_reset.emit(get_instance_id());
+	for weapon in weapons:
+		EventBus.ball_combo_reset.emit(get_instance_id(), weapon.weapon_slot_id);
 
 func set_ball_color():
 	if(dual_wield):

@@ -50,14 +50,14 @@ func init(s:WeaponSettings, o:BattleBall):
 
 func init_scaling_stat():
 	scaling_stat_value = damage;
-	ball_owner.update_stat_text();
+	update_stat_text();
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
 	damage += stat_scale_value;
 	init_scaling_stat();
 
-func on_listened_event_received(id:int, _to:int, _is_projectile:bool):
+func on_listened_event_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	if(scaled_at == next_thunderstrike_at): return;
 	scaled_at = next_thunderstrike_at;

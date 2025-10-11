@@ -19,7 +19,7 @@ func _init() -> void:
 
 func init_scaling_stat():
 	scaling_stat_value = thunderstrike_duration;
-	ball_owner.update_stat_text();
+	update_stat_text();
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
@@ -27,7 +27,7 @@ func scale_stat(force:bool = false):
 	shoot_speed += 0.015;
 	init_scaling_stat();
 
-func on_listened_event_received(id:int, _to:int, _is_projectile:bool):
+func on_listened_event_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	scale_stat();
 	pass;

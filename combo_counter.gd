@@ -11,6 +11,7 @@ var ball_owner:BattleBall = null;
 var base_position:Vector2;
 var active:bool = false;
 var ui_tween:Tween = null;
+var weapon_slot_id:int = 0;
 
 func _ready() -> void:
 	base_position = position;
@@ -22,7 +23,7 @@ func _process(_delta: float) -> void:
 	if(!visible): return;
 	progress_bar.value = ball_owner.combo_remaining / ball_owner.max_combo_duration * 100.0;
 
-func init(o:BattleBall):
+func init(o:BattleBall, slot_id:int):
 	set_process(true);
 	reset_ui(false);
 
@@ -30,12 +31,15 @@ func init(o:BattleBall):
 	EventBus.ball_combo_reset.connect(on_ball_combo_reset);
 
 	ball_owner = o;
+	weapon_slot_id = slot_id;
 
-	hits.modulate = ball_owner.color;
-	progress_bar.get("theme_override_styles/fill").bg_color = ball_owner.color;
+	var settings:WeaponSettings = o.get_weapon(slot_id).settings;
 
-func on_ball_combo_up(id:int, _target:BattleBall):
-	if(id != ball_owner.get_instance_id()): return;
+	hits.modulate = settings.color;
+	progress_bar.get("theme_override_styles/fill").bg_color = settings.color;
+
+func on_ball_combo_up(id:int, slot_id:int, _target:BattleBall):
+	if(id != ball_owner.get_instance_id() || slot_id != weapon_slot_id): return;
 	if(ball_owner.current_combo < 2): return;
 
 	active = true;
@@ -51,8 +55,8 @@ func on_ball_combo_up(id:int, _target:BattleBall):
 
 	pass;
 
-func on_ball_combo_reset(id:int):
-	if(id != ball_owner.get_instance_id()): return;
+func on_ball_combo_reset(id:int, slot_id:int):
+	if(id != ball_owner.get_instance_id() || slot_id != weapon_slot_id): return;
 
 	if(visible):
 		active = false;

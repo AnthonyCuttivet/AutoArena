@@ -13,7 +13,7 @@ var last_tipper:int = 0;
 
 func init_scaling_stat():
 	scaling_stat_value = tipper_damage;
-	ball_owner.update_stat_text();
+	update_stat_text();
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
@@ -55,7 +55,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, hitbox_id:int, projectile_
 	if(projectile_hit):
 		kb = Vector2.ZERO;
 
-	other.affect_health(-d, ball_owner);
+	other.affect_health(-d, ball_owner, weapon_slot_id);
 
 	if(!projectile_hit):
 		ball_owner.start_hitstop(0.01, h, Vector2.ZERO, true, true);

@@ -21,7 +21,7 @@ func init(s:WeaponSettings, o:BattleBall):
 
 func init_scaling_stat():
 	scaling_stat_value = damage;
-	ball_owner.update_stat_text();
+	update_stat_text();
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
@@ -39,7 +39,7 @@ func shoot_projectile():
 	rock.scale = ball_owner.weapon_slot.scale * ball_owner.root.scale * projectile_scale;
 	active_rocks.push_back(rock);
 
-func on_weapon_hit_received(id:int, _to:int, is_projectile:bool):
+func on_weapon_hit_received(id:int, slot_id:int, _to:int, is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	if(is_projectile):
 		scale_stat();

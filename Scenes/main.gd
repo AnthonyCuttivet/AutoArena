@@ -521,6 +521,14 @@ func init_ui():
 	container_2v2_left.visible = balls.size() == 4;
 	container_2v2_right.visible = balls.size() >= 3;
 
+	if(balls.size() >= 1 && balls[0].use_dual_wield):
+		container_1v1_left.visible = false;
+		container_2v2_left.visible = true;
+
+	if(balls.size() >= 2 && balls[1].use_dual_wield):
+		container_1v1_right.visible = false;
+		container_2v2_right.visible = true;
+
 	stat_left_1p.visible = container_1v1_left.visible;
 	stat_right_1p.visible = container_1v1_right.visible;
 	stat_left_1_2p.visible = container_2v2_left.visible;
@@ -528,11 +536,25 @@ func init_ui():
 	stat_right_1_2p.visible = container_2v2_right.visible;
 	stat_right_2_2p.visible = container_2v2_right.visible;
 
+
 	if(balls.size() == 1):
-		fill_weapon_ui(balls[0], 0, name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
+		if(balls[0].use_dual_wield):
+			fill_weapon_ui(balls[0], 0, name_left_1_2p, sprite_left_1_2p, details_left_1_2p, stat_left_1_2p, combo_counter_L1_2P);
+			fill_weapon_ui(balls[0], 1, name_left_2_2p, sprite_left_2_2p, details_left_2_2p, stat_left_2_2p, combo_counter_L2_2P);
+		else:
+			fill_weapon_ui(balls[0], 0, name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
 	elif(balls.size() == 2):
-		fill_weapon_ui(balls[0], 0, name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
-		fill_weapon_ui(balls[1], 0, name_right_1p, sprite_right_1p, details_right_1p, stat_right_1p, combo_counter_R1_1P);
+		if(balls[0].use_dual_wield):
+			fill_weapon_ui(balls[0], 0, name_left_1_2p, sprite_left_1_2p, details_left_1_2p, stat_left_1_2p, combo_counter_L1_2P);
+			fill_weapon_ui(balls[0], 1, name_left_2_2p, sprite_left_2_2p, details_left_2_2p, stat_left_2_2p, combo_counter_L2_2P);
+		else:
+			fill_weapon_ui(balls[0], 0, name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
+
+		if(balls[1].use_dual_wield):
+			fill_weapon_ui(balls[1], 0, name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p, combo_counter_R1_2P);
+			fill_weapon_ui(balls[1], 1, name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p, combo_counter_R2_2P);
+		else:
+			fill_weapon_ui(balls[1], 0, name_right_1p, sprite_right_1p, details_right_1p, stat_right_1p, combo_counter_R1_1P);
 	elif(balls.size() == 3):
 		fill_weapon_ui(balls[0], 0, name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
 		fill_weapon_ui(balls[1], 0, name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p, combo_counter_R1_2P);
@@ -559,16 +581,16 @@ func fill_weapon_ui(ball:BattleBall, weapon_index:int, name_text:DynamicText, sp
 	var weapon:Weapon = ball.get_weapon(weapon_index);
 
 	name_text.format([weapon.settings.name]);
-	name_text.self_modulate = ball.color;
+	name_text.self_modulate = weapon.settings.color;
 	sprite.texture = weapon.sprite_2d.texture;
 
 	details_text.format([weapon.settings.details]);
 
 	if(weapon.settings.white_details):
-		details_text.text = "[color=" + ball.color.to_html() + "]" + details_text.text + "[/color]";
+		details_text.text = "[color=" + weapon.settings.color.to_html() + "]" + details_text.text + "[/color]";
 		details_text.modulate = Color.WHITE;
 	else:
-		details_text.modulate = ball.color;
+		details_text.modulate = weapon.settings.color;
 
 	if(details_text.text == ""):details_text.text = " ";
 
@@ -577,10 +599,10 @@ func fill_weapon_ui(ball:BattleBall, weapon_index:int, name_text:DynamicText, sp
 	weapon.details_text = details_text;
 	weapon.stat_text = stat_text;
 
-	weapon.stat_text.self_modulate = ball.color;
+	weapon.stat_text.self_modulate = weapon.settings.color;
 	weapon.update_stat_text();
 
-	combo_counter.init(ball);
+	combo_counter.init(ball, weapon_index);
 
 func fill_battleblock_ui(ball:BattleBall, mult_text:DynamicText, bb_blocks:GridContainer):
 	ball.bb_mult_text = mult_text;
@@ -602,7 +624,7 @@ func generate_damage_dealt_string() -> String:
 
 	return "";
 
-func on_ball_damaged(id: int, amount:int, from:int):
+func on_ball_damaged(id: int, amount:int, from:int, slot_id:int):
 	if(!balls_ids.has(id)):
 		return;
 
@@ -612,7 +634,7 @@ func on_ball_damaged(id: int, amount:int, from:int):
 	var ball:BattleBall = get_ball_by_id(id);
 
 	add_damage_dealt(from, abs(amount));
-	get_ball_by_id(from).add_combo(ball);
+	get_ball_by_id(from).add_combo(ball, slot_id);
 	ball.stop_combo();
 
 	var fx: GPUParticles2D = fx_hit_prefab.instantiate();

@@ -66,14 +66,14 @@ func set_custom_rot(v:float):
 
 func init_scaling_stat():
 	scaling_stat_value = projectiles;
-	ball_owner.update_stat_text();
+	update_stat_text();
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
 	scale_rarities();
 	init_scaling_stat();
 
-func on_listened_event_received(id:int, to:int, _is_projectile:bool):
+func on_listened_event_received(id:int, slot_id:int, to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	scale_stat();
 

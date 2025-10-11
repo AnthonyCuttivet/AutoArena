@@ -41,7 +41,7 @@ func _init() -> void:
 
 func init_scaling_stat():
 	scaling_stat_value = dash_damage;
-	ball_owner.update_stat_text();
+	update_stat_text();
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
@@ -77,7 +77,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	if(!other.silent_on_hit):
 		AudioManager.play_sfx(settings.sfx_hit if !weapon_opened else sfx_dash_hit, "SFX");
 
-	other.affect_health(-d, ball_owner);
+	other.affect_health(-d, ball_owner, weapon_slot_id);
 
 	# if(weapon_opened): print(Utils.pf() + " Open Hit");
 	# else: print(Utils.pf() + " Closed hit");
@@ -95,7 +95,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit != null);
 	pass;
 
-func on_listened_event_received(id:int, _to:int, _is_projectile:bool):
+func on_listened_event_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	pass;
 
@@ -214,7 +214,7 @@ func toggle_opened(s:bool):
 func dash_hit_snip_2(other:BattleBall, kb:Vector2):
 	AudioManager.play_sfx(sfx_dash_snip, "SFX");
 	opened.texture = hit_attack_texture;
-	other.affect_health(-dash_damage / 2, ball_owner);
+	other.affect_health(-dash_damage / 2, ball_owner, weapon_slot_id);
 	other.hitflash(hitstop);
 	scale_stat();
 

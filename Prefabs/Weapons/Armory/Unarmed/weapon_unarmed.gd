@@ -73,7 +73,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	if(projectile_hit):
 		kb = (hit_pos - ball_owner.global_position).normalized() * kb_dist;
 
-	other.affect_health(-current_damage, ball_owner);
+	other.affect_health(-current_damage, ball_owner, weapon_slot_id);
 
 	if(battleblock_mode):
 		ball_owner.start_hitstop(0.01, h);
@@ -120,7 +120,7 @@ func on_ball_bounced_battleblock(id:int, block:MCBattleBlock):
 func can_hit() -> bool:
 	return can_hit_cd_remaining <= 0.0;
 
-func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
+func on_weapon_hit_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	scale_stat();
 	pass;

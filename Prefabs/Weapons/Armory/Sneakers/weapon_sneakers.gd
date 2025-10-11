@@ -10,7 +10,7 @@ func _init() -> void:
 
 func init_scaling_stat():
 	scaling_stat_value = damage;
-	ball_owner.update_stat_text();
+	update_stat_text();
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
@@ -42,14 +42,14 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	pass;
 
 func on_weapon_hit_delayed(d:int, other:BattleBall, kb:Vector2, hit_pos:Vector2):
-	other.affect_health(-d, ball_owner);
+	other.affect_health(-d, ball_owner, weapon_slot_id);
 	ball_owner.start_hitstop(0.0, 0.125);
 	other.start_hitstop(0.0, 0.125, kb, true);
 	other.hitflash(hitstop);
 	other.hit_pos = hit_pos;
 	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), false);
 
-func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
+func on_weapon_hit_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	scale_stat();
 	pass;

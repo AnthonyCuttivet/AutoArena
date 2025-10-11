@@ -75,7 +75,7 @@ func scale_stat(force:bool = false):
 
 	init_scaling_stat();
 
-func on_listened_event_received(id:int, _to:int, _is_projectile:bool):
+func on_listened_event_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	if(recalling):
 		scale_stat();
@@ -100,7 +100,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	if(projectile_hit):
 		kb = (hit_pos - ball_owner.global_position).normalized() * kb_dist;
 
-	other.affect_health(-d, ball_owner);
+	other.affect_health(-d, ball_owner, weapon_slot_id);
 
 	if(!projectile_hit):
 		ball_owner.start_hitstop(0.0, h);

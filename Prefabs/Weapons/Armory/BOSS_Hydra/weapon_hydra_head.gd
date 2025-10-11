@@ -16,14 +16,14 @@ func _init() -> void:
 
 func init_scaling_stat():
 	scaling_stat_value = rotation_speed;
-	ball_owner.update_stat_text();
+	update_stat_text();
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
 	rotation_speed += stat_scale_value;
 	init_scaling_stat();
 
-func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
+func on_weapon_hit_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	AudioManager.play_sfx(ball_owner.weapon.settings.sfx_hit, "SFX");
 	pass;

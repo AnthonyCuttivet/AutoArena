@@ -13,6 +13,6 @@ func scale_stat(force:bool = false):
 	damage += stat_scale_value;
 	init_scaling_stat();
 
-func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
-	if(id != ball_owner.get_instance_id()): return;
+func on_weapon_hit_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
+	if(id != ball_owner.get_instance_id() || slot_id != weapon_slot_id): return;
 	scale_stat();

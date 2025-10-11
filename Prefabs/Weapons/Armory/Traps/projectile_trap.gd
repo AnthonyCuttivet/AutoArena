@@ -73,7 +73,7 @@ func _on_projectile_hitbox_area_entered(other: Area2D) -> void:
 		if(weapon_traps.is_in_combo(other.ball_owner.get_instance_id())): return;
 
 		if(other is Hitbox):
-			other.ball_owner.weapon.on_weapon_clash(weapon_traps.ball_owner, global_position);
+			other.weapon.on_weapon_clash(weapon_traps.ball_owner, global_position);
 		else:
 			other.projectile.on_hurtbox_hit(null);
 

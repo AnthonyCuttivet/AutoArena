@@ -14,7 +14,7 @@ func scale_stat(force:bool = false):
 	init_scaling_stat();
 	add_remaining_shoot();
 
-func on_listened_event_received(id:int, _to:int, _is_projectile:bool):
-	if(id != ball_owner.get_instance_id()): return;
+func on_listened_event_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
+	if(id != ball_owner.get_instance_id() || slot_id != weapon_slot_id): return;
 	scale_stat();
 	pass;

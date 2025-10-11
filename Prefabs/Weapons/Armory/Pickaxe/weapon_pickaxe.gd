@@ -44,7 +44,7 @@ func _physics_process(delta: float) -> void:
 
 func init_scaling_stat():
 	scaling_stat_value = damage;
-	ball_owner.update_stat_text();
+	update_stat_text();
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
@@ -59,10 +59,10 @@ func level_up():
 	current_level += 1;
 	AudioManager.play_sfx(sfx_level_up, "SFX");
 	fx_confettis.emit();
-	ball_owner.update_ui_sprite();
+	update_ui_sprite();
 	update_alive_blocks();
 
-func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
+func on_weapon_hit_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	request_spawn_block();
 

@@ -168,7 +168,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 		if(projectile_hit.custom_damage != -1):
 			d = projectile_hit.custom_damage;
 
-	other.affect_health(-d, ball_owner);
+	other.affect_health(-d, ball_owner, weapon_slot_id);
 
 	if(!projectile_hit):
 		ball_owner.start_hitstop(0.0, h);
@@ -180,7 +180,9 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	other.start_hitstop(0.0, h, kb);
 	other.hit_pos = hit_pos;
 
-	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit != null);
+	# print(Utils.pf() + " Emit BALL_WEAPON_HIT - " + str(ball_owner.get_instance_id()) + " // " + str(weapon_slot_id));
+
+	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), weapon_slot_id, other.get_instance_id(), projectile_hit != null);
 	pass;
 
 func on_weapon_clash(other:Node2D, clash_pos:Vector2, projectile_hit:bool = false, silent:bool = false, force:bool = false):
@@ -275,7 +277,7 @@ func shoot_projectile() -> Projectile:
 
 	return p;
 
-func on_listened_event_received(_id:int, _to:int, _is_projectile:bool):
+func on_listened_event_received(_id:int, _slot_id:int, _to:int, _is_projectile:bool):
 	pass;
 
 func get_custom_damage_value() -> int:
@@ -297,7 +299,7 @@ func reset():
 	pass;
 
 func apply_lifesteal(v:int, target:int):
-	ball_owner.affect_health(v, ball_owner);
+	ball_owner.affect_health(v, ball_owner, weapon_slot_id);
 	EventBus.ball_lifesteal.emit(target, ball_owner.get_instance_id());
 
 func update_lifesteal_status():
@@ -312,8 +314,8 @@ func update_lifesteal_status():
 func toggle_lifesteal_state(s:bool):
 	lifesteal_active = s;
 	sprite_2d.self_modulate = Color.WHITE if !s else Color.DARK_RED;
-	ball_owner.update_ui_stat(ball_owner.color if !s else Color.DARK_RED);
-	ball_owner.update_stat_text();
+	update_ui_stat(ball_owner.color if !s else Color.DARK_RED);
+	update_stat_text();
 
 func set_battleblock_modifiers():
 	ball_owner.can_respawn = true;

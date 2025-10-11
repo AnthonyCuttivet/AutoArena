@@ -44,7 +44,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	if(projectile_hit):
 		kb = (hit_pos - ball_owner.global_position).normalized() * kb_dist;
 
-	other.affect_health(-d, ball_owner);
+	other.affect_health(-d, ball_owner, weapon_slot_id);
 
 	if(!projectile_hit):
 		ball_owner.start_hitstop(0.01, hitstop);
