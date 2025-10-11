@@ -39,7 +39,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [resource]
 script = ExtResource("1_mqpld")
-name = "B. Sword"
+name = "B.SWORD"
 spr = ExtResource("3_8xgnx")
 melee = true
 ranged = false

@@ -54,7 +54,7 @@ load_path = "res://.godot/imported/fc1705.png-bba6a8b380b0e8bffb2cf1a9cfab5360.c
 
 [resource]
 script = ExtResource("2_kmirj")
-name = "B. BOW"
+name = "B.BOW"
 spr = SubResource("CompressedTexture2D_u6wsj")
 melee = false
 ranged = true
