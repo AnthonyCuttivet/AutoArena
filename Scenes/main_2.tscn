@@ -1,10 +1,10 @@
-[gd_scene load_steps=234 format=4 uid="uid://cmsck3y43hvak"]
+[gd_scene load_steps=205 format=4 uid="uid://cmsck3y43hvak"]
 
 [ext_resource type="Script" uid="uid://llbx2bxdfjwy" path="res://Scenes/main.gd" id="1_nmkph"]
 [ext_resource type="Shader" uid="uid://m275kdb8v68b" path="res://Graphics/Shaders/balatro.gdshader" id="1_y2yxb"]
 [ext_resource type="PackedScene" uid="uid://0r37n5w5ilfl" path="res://Prefabs/FX/fx_hit.tscn" id="2_8wnqf"]
 [ext_resource type="Script" uid="uid://bentp5io1j8mf" path="res://Scripts/time_attack_leaderboard.gd" id="2_poh84"]
-[ext_resource type="Resource" uid="uid://o13yfa8og5fl" path="res://Resources/Leaderboards/LDB_HYDRA.tres" id="3_0qwvu"]
+[ext_resource type="Resource" uid="uid://cc1iycaa3m5bu" path="res://Resources/Leaderboards/LDB_HYDRA_25K.tres" id="3_cr7au"]
 [ext_resource type="PackedScene" uid="uid://cqqg6uhjxrrtk" path="res://Prefabs/FX/fx_death_neutral.tscn" id="3_uot50"]
 [ext_resource type="Shader" uid="uid://0jlda65pnjoo" path="res://Graphics/Shaders/CRT.gdshader" id="3_ya2e4"]
 [ext_resource type="PackedScene" uid="uid://fxlqqsregrlu" path="res://Prefabs/FX/fx_clash.tscn" id="4_0o7lx"]
@@ -23,7 +23,6 @@
 [ext_resource type="Texture2D" uid="uid://crarm12ndl2en" path="res://Graphics/_Addons/Icons/fc7.png" id="12_hvjex"]
 [ext_resource type="FontFile" uid="uid://bt2qq5v7nibma" path="res://Graphics/Fonts/PPFraktionMono-Bold.otf" id="12_p1oyv"]
 [ext_resource type="FontFile" uid="uid://bglbd1ylrt02k" path="res://Graphics/Fonts/big_noodle_titling.ttf" id="12_per8v"]
-[ext_resource type="AudioStream" uid="uid://d12q52ues5yn0" path="res://Audio/SFX/BattleBalls/Announcer/download1760114291853 (mp3cut.net).mp3" id="13_312b1"]
 [ext_resource type="Script" uid="uid://dtqgj8e3uki5c" path="res://Scenes/dynamic_text.gd" id="13_vvmd2"]
 [ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="14_0krxf"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="14_cticm"]
@@ -55,6 +54,7 @@
 [ext_resource type="Texture2D" uid="uid://5w30wj6j3tig" path="res://Graphics/_Addons/Icons/fc88888.png" id="35_k7ahf"]
 [ext_resource type="AudioStream" uid="uid://ddx8pstv0i4qf" path="res://Audio/SFX/BattleBalls/se_demon_hit_catchattack.wav" id="35_qtgyu"]
 [ext_resource type="Texture2D" uid="uid://cj3174c1vhaci" path="res://Graphics/_Addons/Icons/fc17040.png" id="36_76u2v"]
+[ext_resource type="AudioStream" uid="uid://cbcvllk0cei4m" path="res://Audio/SFX/BattleBalls/Announcer/download1760353656320 (mp3cut.net).mp3" id="36_cr7au"]
 [ext_resource type="PackedScene" uid="uid://dj8vboys4os4r" path="res://Prefabs/Weapons/Armory/Sandevistan/W_SANDEVISTAN.tscn" id="36_d4oku"]
 [ext_resource type="Texture2D" uid="uid://cfwyhor4kqo4c" path="res://Graphics/_Addons/Icons/fc888881.png" id="38_sy8k4"]
 [ext_resource type="Resource" uid="uid://b2572latobo8u" path="res://Resources/Weapons/W_BloodBow.tres" id="40_nsujd"]
@@ -115,34 +115,19 @@
 [ext_resource type="AudioStream" uid="uid://cxrs3hwx2t827" path="res://Audio/SFX/BattleBalls/BattleBlocks/stone4.ogg" id="79_vebv7"]
 [ext_resource type="AudioStream" uid="uid://cdb311h237hpn" path="res://Audio/SFX/BattleBalls/BattleBlocks/stone5.ogg" id="80_ux8nf"]
 [ext_resource type="Resource" uid="uid://cv1of44l4du1b" path="res://Resources/Weapons/W_Pickaxe.tres" id="80_xxfh1"]
-[ext_resource type="Script" uid="uid://di5fqfudd1drt" path="res://Scenes/hydra_tournament_selector.gd" id="94_5o85w"]
 [ext_resource type="Script" uid="uid://hfqf6sfh86m4" path="res://Scenes/hydra_tournament_teamline.gd" id="95_oi3sm"]
-[ext_resource type="AudioStream" uid="uid://cefgrlrkejxpf" path="res://Audio/SFX/BattleBalls/Announcer/sp/Intro_Teams.mp3" id="97_tifgg"]
-[ext_resource type="AudioStream" uid="uid://d31m6v2lgfn3o" path="res://Audio/SFX/BattleBalls/Announcer/sp/Intro_Teams_1.mp3" id="98_a4n88"]
 [ext_resource type="Texture2D" uid="uid://d4l1y4s7l5txd" path="res://Graphics/_Addons/Icons/fc226.png" id="98_oi3sm"]
-[ext_resource type="AudioStream" uid="uid://b1p6r5rnqrgd8" path="res://Audio/SFX/BattleBalls/Announcer/sp/Intro_Teams_2.mp3" id="99_7ndj3"]
 [ext_resource type="Texture2D" uid="uid://ds0kc2fydlqpc" path="res://Graphics/_Addons/Icons/fc131.png" id="99_c0wg0"]
 [ext_resource type="Texture2D" uid="uid://b6mqwj6vvm3q4" path="res://Graphics/_Addons/Icons/fc1789.png" id="100_kek2w"]
-[ext_resource type="AudioStream" uid="uid://okhq3e6mqokg" path="res://Audio/SFX/BattleBalls/Announcer/sp/Intro_Teams_3.mp3" id="100_p180d"]
 [ext_resource type="Texture2D" uid="uid://b6w1xcngywbfd" path="res://Graphics/_Addons/Icons/fc1506.png" id="101_bnc2j"]
-[ext_resource type="AudioStream" uid="uid://1kohenbq72h2" path="res://Audio/SFX/BattleBalls/Announcer/sp/Intro_Teams_4.mp3" id="101_y8j1h"]
 [ext_resource type="Texture2D" uid="uid://d1hxmwy404ahx" path="res://Graphics/_Addons/Icons/fc14900.png" id="102_3w0lg"]
 [ext_resource type="Texture2D" uid="uid://dc5knneal447y" path="res://Graphics/tiktok-comment-1759857183443.png" id="102_c0wg0"]
-[ext_resource type="AudioStream" uid="uid://blyokbc8q5iay" path="res://Audio/SFX/BattleBalls/Announcer/sp/Intro_Teams_5.mp3" id="102_u1in0"]
 [ext_resource type="Texture2D" uid="uid://b6evq06wve5y3" path="res://Graphics/_Addons/Icons/fc169.png" id="103_qctyh"]
-[ext_resource type="AudioStream" uid="uid://c3va66qcu42g8" path="res://Audio/SFX/BattleBalls/Announcer/sp/Intro_Teams_6.mp3" id="103_u1in0"]
-[ext_resource type="AudioStream" uid="uid://221igqt4ugs7" path="res://Audio/SFX/BattleBalls/Announcer/sp/Intro_Teams_7.mp3" id="104_makhe"]
 [ext_resource type="Texture2D" uid="uid://ct0dd3ycrrp8w" path="res://Graphics/_Addons/Icons/fc1713.png" id="105_42wbm"]
-[ext_resource type="AudioStream" uid="uid://c42ai4r8ijy3p" path="res://Audio/SFX/BattleBalls/Announcer/sp/Intro_Teams_8.mp3" id="105_c8dqd"]
-[ext_resource type="AudioStream" uid="uid://ddue5tfodxcdi" path="res://Audio/SFX/BattleBalls/Announcer/sp/Intro_Teams_9.mp3" id="106_nf4eo"]
-[ext_resource type="AudioStream" uid="uid://cxnv5b6umkk33" path="res://Audio/SFX/BattleBalls/Announcer/sp/Intro_Teams_10.mp3" id="107_2o3ip"]
 [ext_resource type="Texture2D" uid="uid://fgimaxc7bt2j" path="res://Graphics/_Addons/Icons/fc6660.png" id="107_jhnfg"]
 [ext_resource type="Texture2D" uid="uid://dk67ayj7q31q1" path="res://Graphics/_Addons/Icons/fc1726.png" id="108_os224"]
-[ext_resource type="AudioStream" uid="uid://ddv8tgmu7f8qm" path="res://Audio/SFX/BattleBalls/Announcer/sp/Intro_Teams_11.mp3" id="108_y3gcd"]
-[ext_resource type="AudioStream" uid="uid://cluq5dq0uss1i" path="res://Audio/SFX/BattleBalls/Announcer/sp/Rules.mp3" id="109_4k3mx"]
 [ext_resource type="Texture2D" uid="uid://y6121dnrlsoe" path="res://Graphics/_Addons/Icons/fc170401.png" id="109_vs7vu"]
 [ext_resource type="Texture2D" uid="uid://cwf4at5rm7o78" path="res://Graphics/_Addons/Icons/fc1453.png" id="110_cr7au"]
-[ext_resource type="AudioStream" uid="uid://cud4mkqpu25rw" path="res://Audio/SFX/BattleBalls/Announcer/sp/Outro.mp3" id="110_qrdy0"]
 [ext_resource type="Texture2D" uid="uid://2lhd2x1lrlww" path="res://Graphics/_Addons/Icons/fc1694.png" id="111_ajexl"]
 [ext_resource type="Texture2D" uid="uid://b3raxmeyc3cxi" path="res://Graphics/_Addons/Icons/fc8888.png" id="112_tifgg"]
 [ext_resource type="Texture2D" uid="uid://lbtcr3rw5sw6" path="res://Graphics/_Addons/Icons/fc77777.png" id="114_a4n88"]
@@ -183,7 +168,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="Resource" id="Resource_p1oyv"]
 script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("13_312b1")
+audio_stream = ExtResource("36_cr7au")
 volume = -20.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
@@ -522,6 +507,7 @@ details = ""
 white_details = false
 leaderboard_offset = 1.0
 leaderboard_rotation = 0.0
+leaderboard_no_spr = false
 scale_stat_multiplier = 1
 base_damage_multiplier = 1
 no_clash_on_block = false
@@ -572,6 +558,7 @@ details = ""
 white_details = false
 leaderboard_offset = 1.0
 leaderboard_rotation = 0.0
+leaderboard_no_spr = false
 scale_stat_multiplier = 1
 base_damage_multiplier = 1
 no_clash_on_block = false
@@ -622,6 +609,7 @@ details = ""
 white_details = false
 leaderboard_offset = 1.0
 leaderboard_rotation = 0.0
+leaderboard_no_spr = false
 scale_stat_multiplier = 1
 base_damage_multiplier = 1
 no_clash_on_block = false
@@ -690,6 +678,7 @@ white_details = false
 sfx_hit = SubResource("Resource_qtgyu")
 leaderboard_offset = 1.0
 leaderboard_rotation = 0.0
+leaderboard_no_spr = true
 scale_stat_multiplier = 3
 base_damage_multiplier = 5
 no_clash_on_block = false
@@ -753,6 +742,7 @@ white_details = false
 sfx_hit = SubResource("Resource_3duvo")
 leaderboard_offset = 0.0
 leaderboard_rotation = 0.0
+leaderboard_no_spr = true
 scale_stat_multiplier = 3
 base_damage_multiplier = 5
 no_clash_on_block = false
@@ -773,90 +763,6 @@ background_mode = 3
 adjustment_enabled = true
 adjustment_brightness = 0.9
 adjustment_saturation = 1.5
-
-[sub_resource type="Resource" id="Resource_a4n88"]
-script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("97_tifgg")
-volume = -25.0
-metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
-
-[sub_resource type="Resource" id="Resource_7ndj3"]
-script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("98_a4n88")
-volume = -25.0
-metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
-
-[sub_resource type="Resource" id="Resource_p180d"]
-script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("99_7ndj3")
-volume = -25.0
-metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
-
-[sub_resource type="Resource" id="Resource_573uv"]
-script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("100_p180d")
-volume = -25.0
-metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
-
-[sub_resource type="Resource" id="Resource_makhe"]
-script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("101_y8j1h")
-volume = -25.0
-metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
-
-[sub_resource type="Resource" id="Resource_c8dqd"]
-script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("102_u1in0")
-volume = -25.0
-metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
-
-[sub_resource type="Resource" id="Resource_2o3ip"]
-script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("103_u1in0")
-volume = -25.0
-metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
-
-[sub_resource type="Resource" id="Resource_4k3mx"]
-script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("104_makhe")
-volume = -25.0
-metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
-
-[sub_resource type="Resource" id="Resource_c2bga"]
-script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("105_c8dqd")
-volume = -25.0
-metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
-
-[sub_resource type="Resource" id="Resource_6f254"]
-script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("106_nf4eo")
-volume = -25.0
-metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
-
-[sub_resource type="Resource" id="Resource_yashm"]
-script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("107_2o3ip")
-volume = -25.0
-metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
-
-[sub_resource type="Resource" id="Resource_snaom"]
-script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("108_y3gcd")
-volume = -25.0
-metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
-
-[sub_resource type="Resource" id="Resource_qrdy0"]
-script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("109_4k3mx")
-volume = -25.0
-metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
-
-[sub_resource type="Resource" id="Resource_3q5rd"]
-script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("110_qrdy0")
-volume = -25.0
-metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_j21cw"]
 radius = 370.0
@@ -1193,12 +1099,14 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [node name="Main2" type="Node2D" node_paths=PackedStringArray("patchnote_pages", "new_challenger_ball", "battleblock_controller", "balls", "attraction_point")]
 rotation = 1.5708
 script = ExtResource("1_nmkph")
-patchnote_mode = true
+record = true
 patchnote_s_per_page = 42.0
 patchnote_pages = [NodePath("PatchNote/Line"), NodePath("PatchNote/Line2"), NodePath("PatchNote/Line3")]
 new_challenger_ball = NodePath("Balls/Fighters/Reaper")
+time_attack_mode = true
+display_damage_dealt = true
 time_attack_leaderboards = Dictionary[String, ExtResource("2_poh84")]({
-"HYDRA": ExtResource("3_0qwvu"),
+"HYDRA": ExtResource("3_cr7au"),
 "WARLOCK": ExtResource("4_g7d4c")
 })
 time_attack_ranking_duration = 10.0
@@ -1209,7 +1117,7 @@ hypermatch_hp = 500
 hypermatch_scales = Array[int]([500, 50])
 forced_start_dir = Vector2(0, -1)
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Fighters/Coin")]
+balls = [NodePath("Balls/Bosses/HYDRA"), NodePath("Balls/Fighters/Vortex"), NodePath("Balls/Fighters/Thunder")]
 all_weapons = Dictionary[int, ExtResource("24_3p5r5")]({
 0: ExtResource("11_per8v"),
 1: ExtResource("40_nsujd"),
@@ -1253,7 +1161,7 @@ startup_sfx_volume = -22.0
 obs_delay = 4.0
 dark_mode = true
 _1v1_hp = 100
-_1v2_hp = 50
+_1v2_hp = 100
 attraction_point = NodePath("AttractionPoint")
 use_cheat_hitbox = true
 cheat_hitbox_max_hitbox_bonus = 0.4
@@ -1330,7 +1238,6 @@ offset_right = 1080.0
 offset_bottom = 1920.0
 
 [node name="Walls" type="Node2D" parent="."]
-visible = false
 position = Vector2(540, 978)
 scale = Vector2(0.95, 0.95)
 
@@ -1439,7 +1346,6 @@ physics_material_override = SubResource("PhysicsMaterial_ya2e4")
 shape = SubResource("RectangleShape2D_6sl1r")
 
 [node name="author" type="RichTextLabel" parent="."]
-visible = false
 offset_left = 404.0
 offset_top = 1350.0
 offset_right = 692.0
@@ -1516,7 +1422,6 @@ ExtResource("56_3gj21"): ExtResource("80_ux8nf")
 distribution = Array[ExtResource("62_3gj21")]([SubResource("Resource_nrq88"), SubResource("Resource_es7pt"), SubResource("Resource_jw8b7"), SubResource("Resource_2lkqs"), SubResource("Resource_xisi7"), SubResource("Resource_vanr6"), SubResource("Resource_3gj21")])
 
 [node name="UI" type="Control" parent="."]
-visible = false
 custom_minimum_size = Vector2(1080, 1920)
 layout_mode = 3
 anchors_preset = 8
@@ -1970,7 +1875,6 @@ vertical_alignment = 1
 justification_flags = 0
 
 [node name="TARecord" type="RichTextLabel" parent="UI/Top"]
-self_modulate = Color(0.121569, 0.0627451, 0.164706, 1)
 layout_mode = 2
 offset_left = 382.998
 offset_top = 263.999
@@ -2178,14 +2082,13 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -209.999
-offset_top = -17.0012
+offset_top = -60.0012
 offset_right = 210.001
-offset_bottom = 116.999
+offset_bottom = 73.999
 grow_horizontal = 2
 grow_vertical = 0
 
 [node name="DamageDoneHeader" type="RichTextLabel" parent="UI/Bottom/DamageDoneContainer"]
-self_modulate = Color(0, 0, 0, 1)
 custom_minimum_size = Vector2(350, 0)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("12_p1oyv")
@@ -2633,7 +2536,6 @@ main = NodePath("../..")
 stx = ExtResource("51_204xj")
 
 [node name="Balls" type="Node2D" parent="."]
-visible = false
 
 [node name="Bosses" type="Node2D" parent="Balls"]
 
@@ -2641,8 +2543,9 @@ visible = false
 position = Vector2(2320.01, 1817.99)
 weapon_settings = ExtResource("11_uot50")
 start_dir = Vector2(0, -1)
-health = 150
+health = 180
 team = 1
+clash_invincibility = 0.05
 stop = true
 is_boss = true
 knockback_immune = true
@@ -2920,7 +2823,7 @@ team = 1
 dead = true
 stop = true
 
-[node name="Sneakers" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+[node name="Kicks" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2355, 666.991)
 weapon_settings = ExtResource("56_nfmlc")
 health = 50
@@ -2971,6 +2874,8 @@ stop = true
 environment = SubResource("Environment_p1oyv")
 
 [node name="PatchNote" type="Control" parent="."]
+process_mode = 4
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -3002,7 +2907,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 justification_flags = 0
 
-[node name="Line" type="RichTextLabel" parent="PatchNote" node_paths=PackedStringArray("main", "teams", "single_sprites")]
+[node name="Line" type="RichTextLabel" parent="PatchNote"]
 clip_contents = false
 custom_minimum_size = Vector2(980, 100)
 layout_mode = 2
@@ -3022,39 +2927,6 @@ shortcut_keys_enabled = false
 horizontal_alignment = 1
 vertical_alignment = 1
 justification_flags = 0
-script = ExtResource("94_5o85w")
-main = NodePath("../..")
-teams = [NodePath("Teams/TeamLine"), NodePath("Teams/TeamLine2"), NodePath("Teams/TeamLine3"), NodePath("Teams/TeamLine4"), NodePath("Teams/TeamLine5"), NodePath("Teams/TeamLine6"), NodePath("Teams/TeamLine7"), NodePath("Teams/TeamLine8"), NodePath("Teams/TeamLine9"), NodePath("Teams/TeamLine10"), NodePath("Teams/TeamLine11")]
-team_p1s = Array[int]([1, 6, 13, 3, 21, 16, 9, 10, 0, 4, 14])
-team_p2s = Array[int]([8, 17, 7, 15, 19, 18, 11, 20, 2, 5, 12])
-team_names = Array[String](["VAMPIRES", "GAMBLERS", "BLADES", "MEMES", "EMPRESSES", "ELEMENTS", "ALL-INS", "SPAWNS", "OGS", "JABS", "XTREMES"])
-team_colors = Array[Color]([Color(0.541176, 0.0117647, 0.0117647, 1), Color(1, 0.814453, 0.375, 1), Color(0.832031, 0.972443, 1, 1), Color(0.313293, 0.679688, 0.413479, 1), Color(0.752228, 0.431061, 0.882813, 1), Color(0.886719, 0.53458, 0.301346, 1), Color(0.820313, 0.374908, 0.374908, 1), Color(0.558594, 0.219411, 0.128738, 1), Color(0.455154, 0.495731, 0.714844, 1), Color(0.527344, 0.453186, 0.519233, 1), Color(0.550781, 1, 0.9263, 1)])
-single_sprites = {
-0: NodePath("Sprites/VBoxContainer/HBoxContainer/Sprite1"),
-1: NodePath("Sprites/VBoxContainer/HBoxContainer/Sprite2"),
-2: NodePath("Sprites/VBoxContainer/HBoxContainer/Sprite3"),
-3: NodePath("Sprites/VBoxContainer/HBoxContainer/Sprite4"),
-4: NodePath("Sprites/VBoxContainer/HBoxContainer2/Sprite1"),
-5: NodePath("Sprites/VBoxContainer/HBoxContainer2/Sprite2"),
-6: NodePath("Sprites/VBoxContainer/HBoxContainer2/Sprite3"),
-7: NodePath("Sprites/VBoxContainer/HBoxContainer3/Sprite1"),
-8: NodePath("Sprites/VBoxContainer/HBoxContainer3/Sprite2"),
-9: NodePath("Sprites/VBoxContainer/HBoxContainer3/Sprite3"),
-10: NodePath("Sprites/VBoxContainer/HBoxContainer3/Sprite4"),
-11: NodePath("Sprites/VBoxContainer2/HBoxContainer/Sprite1"),
-12: NodePath("Sprites/VBoxContainer2/HBoxContainer/Sprite2"),
-13: NodePath("Sprites/VBoxContainer2/HBoxContainer/Sprite3"),
-14: NodePath("Sprites/VBoxContainer2/HBoxContainer/Sprite4"),
-15: NodePath("Sprites/VBoxContainer2/HBoxContainer2/Sprite1"),
-16: NodePath("Sprites/VBoxContainer2/HBoxContainer2/Sprite2"),
-17: NodePath("Sprites/VBoxContainer2/HBoxContainer2/Sprite3"),
-18: NodePath("Sprites/VBoxContainer2/HBoxContainer3/Sprite1"),
-19: NodePath("Sprites/VBoxContainer2/HBoxContainer3/Sprite2"),
-20: NodePath("Sprites/VBoxContainer2/HBoxContainer3/Sprite3"),
-21: NodePath("Sprites/VBoxContainer2/HBoxContainer3/Sprite4")
-}
-announcer_ve = Array[ExtResource("5_1v8r1")]([SubResource("Resource_a4n88"), SubResource("Resource_7ndj3"), SubResource("Resource_p180d"), SubResource("Resource_573uv"), SubResource("Resource_makhe"), SubResource("Resource_c8dqd"), SubResource("Resource_2o3ip"), SubResource("Resource_4k3mx"), SubResource("Resource_c2bga"), SubResource("Resource_6f254"), SubResource("Resource_yashm"), SubResource("Resource_snaom"), SubResource("Resource_qrdy0"), SubResource("Resource_3q5rd")])
-delays = Array[float]([2.7, 3.2, 2.5, 2.85, 2.4, 2.5, 2.85, 2.6, 2.85, 2.65, 2.7])
 
 [node name="Teams" type="Control" parent="PatchNote/Line"]
 anchors_preset = 0

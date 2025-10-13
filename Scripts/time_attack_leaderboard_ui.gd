@@ -25,6 +25,7 @@ func update_leaderboard_ui(data:TimeAttackLeaderboard):
 		ranks.get_child(i).visible = leaderboard_data.rankings.size() >= i + 4;
 
 	for i in leaderboard_data.rankings.size():
+		if(i >= 7): continue;
 		if(i == 0): podium_1.fill_data(leaderboard_data.rankings[i], podium_colors[i].to_html(), str(podium_freqs[i])); continue;
 		if(i == 1): podium_2.fill_data(leaderboard_data.rankings[i], podium_colors[i].to_html(), str(podium_freqs[i])); continue;
 		if(i == 2): podium_3.fill_data(leaderboard_data.rankings[i], podium_colors[i].to_html(), str(podium_freqs[i])); continue;

@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="2_a78xx"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
-radius = 10.83
+radius = 5.83
 height = 26.0
 
 [node name="WHydraHead" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]

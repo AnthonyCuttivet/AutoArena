@@ -62,6 +62,9 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 func on_weapon_clash(other:Node2D, clash_pos:Vector2, projectile_hit:bool = false, silent:bool = false, force:bool = false):
 	if(other == null): return;
 
+	if(ball_owner.is_in_same_team(other)):
+		return;
+
 	if(!silent):
 		AudioManager.play_sfx(settings.sfx_clash, "SFX");
 

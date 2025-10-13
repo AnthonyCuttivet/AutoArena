@@ -553,7 +553,10 @@ func init_ui():
 	ta_record.visible = time_attack_mode;
 	damage_dealt_container.visible = display_damage_dealt;
 	if(time_attack_mode):
-		ta_record.format([Utils.convert_time_to_string(time_attack_leaderboards[balls[0].weapon_settings.name.to_upper()].rankings[0].time)]);
+		if(time_attack_leaderboards[balls[0].weapon_settings.name.to_upper()].rankings.size() == 0):
+			ta_record.visible = false;
+		else:
+			ta_record.format([Utils.convert_time_to_string(time_attack_leaderboards[balls[0].weapon_settings.name.to_upper()].rankings[0].time)]);
 
 func fill_character_ui(ball:BattleBall, name_text:DynamicText, sprite:TextureRect, details_text:DynamicText, stat_text:DynamicText, combo_counter:ComboCounterUI):
 	name_text.format([ball.weapon_settings.name]);
@@ -863,11 +866,11 @@ func place_fighting_balls():
 			balls[1].team = 1;
 			balls[2].team = 1;
 
-			balls[1].max_speed *= 0.7;
-			balls[2].max_speed *= 0.7;
+			balls[1].max_speed *= 0.8;
+			balls[2].max_speed *= 0.8;
 
-			balls[1].gravity_strength *= 0.7;
-			balls[2].gravity_strength *= 0.7;
+			balls[1].gravity_strength *= 0.8;
+			balls[2].gravity_strength *= 0.8;
 
 			balls[1].root.scale *= 0.9;
 			balls[2].root.scale *= 0.9;

@@ -46,6 +46,7 @@ class_name WeaponSettings extends Resource
 
 @export var leaderboard_offset:float = 1.0;
 @export var leaderboard_rotation:float = 0.0;
+@export var leaderboard_no_spr:bool = false;
 
 @export var scale_stat_multiplier:int = 1;
 @export var base_damage_multiplier:int = 1;

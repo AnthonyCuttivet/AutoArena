@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="TimeAttackLeaderboard" load_steps=10 format=3 uid="uid://o13yfa8og5fl"]
+[gd_resource type="Resource" script_class="TimeAttackLeaderboard" load_steps=13 format=3 uid="uid://o13yfa8og5fl"]
 
 [ext_resource type="Script" uid="uid://m3rw1428wsq2" path="res://Scripts/time_attack_data.gd" id="1_d5lvs"]
 [ext_resource type="Texture2D" uid="uid://b6w1xcngywbfd" path="res://Graphics/_Addons/Icons/fc1506.png" id="2_0jv5s"]
@@ -44,6 +44,31 @@ ball_2_rot = 0.785398
 ball_2_offset = 40.0
 ball_2_damage = 11
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_sh04o"]
+load_path = "res://.godot/imported/fc14900.png-d8b7df5b88efc88c66d853983ced05ef.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_spass"]
+load_path = "res://.godot/imported/fc8888.png-27764f0807a6cde20aa2a187889ebdf7.ctex"
+
+[sub_resource type="Resource" id="Resource_w3bo4"]
+script = ExtResource("1_d5lvs")
+boss = "HYDRA"
+time = 84.7466
+ball_1_name = "Pipe"
+ball_1_color = Color(0.607269, 0.701772, 0.785156, 1)
+ball_1_sprite = SubResource("CompressedTexture2D_sh04o")
+ball_1_flip_h = false
+ball_1_rot = 0.0
+ball_1_offset = 9.0
+ball_1_damage = 67
+ball_2_name = "Kicks"
+ball_2_color = Color(0.941406, 0.225356, 0.37064, 1)
+ball_2_sprite = SubResource("CompressedTexture2D_spass")
+ball_2_flip_h = false
+ball_2_rot = 0.0
+ball_2_offset = 38.0
+ball_2_damage = 83
+
 [sub_resource type="Resource" id="Resource_0jv5s"]
 script = ExtResource("1_d5lvs")
 boss = "BOSS_NAME"
@@ -65,5 +90,5 @@ ball_2_damage = 80
 
 [resource]
 script = ExtResource("2_kwaul")
-rankings = Array[ExtResource("1_d5lvs")]([SubResource("Resource_sh04o"), SubResource("Resource_spass"), SubResource("Resource_0jv5s")])
+rankings = Array[ExtResource("1_d5lvs")]([SubResource("Resource_sh04o"), SubResource("Resource_spass"), SubResource("Resource_w3bo4"), SubResource("Resource_0jv5s")])
 metadata/_custom_type_script = "uid://bentp5io1j8mf"

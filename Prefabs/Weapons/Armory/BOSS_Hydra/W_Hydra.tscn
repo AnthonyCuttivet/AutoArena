@@ -83,10 +83,10 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [node name="WeaponHydra" type="Node2D" node_paths=PackedStringArray("heads_root", "sprite_2d")]
 script = ExtResource("1_pcjnu")
 heads_colors = Array[Color]([Color(0.660156, 0.278503, 0.278503, 1), Color(0.350708, 0.863281, 0.528401, 1), Color(0.69375, 0.422073, 0.777344, 1)])
-spawn_head_each_hp_lost = 50
+spawn_head_each_hp_lost = 60
 heads_projectiles = Array[PackedScene]([ExtResource("2_b8h4t"), ExtResource("3_wbc4p"), ExtResource("4_vxkip")])
-projectiles_scales = Array[float]([1.2, 0.6, 0.9])
-heads_shoot_delay = Array[float]([0.8, 0.5, 1.8])
+projectiles_scales = Array[float]([1.5, 0.6, 0.9])
+heads_shoot_delay = Array[float]([0.7, 0.5, 1.8])
 head_prefab = ExtResource("4_u6ls7")
 heads_root = NodePath("Heads")
 head_offset = 50.0

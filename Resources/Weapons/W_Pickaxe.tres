@@ -68,6 +68,7 @@ sfx_clash = SubResource("Resource_xri6o")
 sfx_hit = SubResource("Resource_1cnyt")
 leaderboard_offset = 1.0
 leaderboard_rotation = 0.0
+leaderboard_no_spr = false
 scale_stat_multiplier = 1
 base_damage_multiplier = 1
 no_clash_on_block = false
