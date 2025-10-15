@@ -54,7 +54,7 @@
 [ext_resource type="Texture2D" uid="uid://5w30wj6j3tig" path="res://Graphics/_Addons/Icons/fc88888.png" id="35_k7ahf"]
 [ext_resource type="AudioStream" uid="uid://ddx8pstv0i4qf" path="res://Audio/SFX/BattleBalls/se_demon_hit_catchattack.wav" id="35_qtgyu"]
 [ext_resource type="Texture2D" uid="uid://cj3174c1vhaci" path="res://Graphics/_Addons/Icons/fc17040.png" id="36_76u2v"]
-[ext_resource type="AudioStream" uid="uid://cbcvllk0cei4m" path="res://Audio/SFX/BattleBalls/Announcer/download1760353656320 (mp3cut.net).mp3" id="36_cr7au"]
+[ext_resource type="AudioStream" uid="uid://cvyjwjfg6448s" path="res://Audio/SFX/BattleBalls/Announcer/download1760526697054 (mp3cut.net).mp3" id="36_cr7au"]
 [ext_resource type="PackedScene" uid="uid://dj8vboys4os4r" path="res://Prefabs/Weapons/Armory/Sandevistan/W_SANDEVISTAN.tscn" id="36_d4oku"]
 [ext_resource type="Texture2D" uid="uid://cfwyhor4kqo4c" path="res://Graphics/_Addons/Icons/fc888881.png" id="38_sy8k4"]
 [ext_resource type="Resource" uid="uid://b2572latobo8u" path="res://Resources/Weapons/W_BloodBow.tres" id="40_nsujd"]
@@ -1117,7 +1117,7 @@ hypermatch_hp = 500
 hypermatch_scales = Array[int]([500, 50])
 forced_start_dir = Vector2(0, -1)
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Bosses/HYDRA"), NodePath("Balls/Fighters/Vortex"), NodePath("Balls/Fighters/Thunder")]
+balls = [NodePath("Balls/Bosses/HYDRA"), NodePath("Balls/Fighters/Pickaxe"), NodePath("Balls/Fighters/Traps")]
 all_weapons = Dictionary[int, ExtResource("24_3p5r5")]({
 0: ExtResource("11_per8v"),
 1: ExtResource("40_nsujd"),
@@ -4446,6 +4446,7 @@ speed = 25.0
 
 [node name="TimeAttackLeaderboard" type="Control" parent="."]
 visible = false
+z_index = 10
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

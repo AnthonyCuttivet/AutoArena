@@ -90,7 +90,7 @@ func spawn_block():
 	if(current_level >= 1):
 		var rand:float = randf();
 		var malus:int = 0;
-		if(rand <= 0.5):
+		if(rand <= 0.1):
 			malus = int(rand * 10) + 1;
 
 		block.level = clamp(block.level - malus, 1, blocks_textures.size());

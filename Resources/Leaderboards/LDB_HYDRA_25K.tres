@@ -3,6 +3,31 @@
 [ext_resource type="Script" uid="uid://m3rw1428wsq2" path="res://Scripts/time_attack_data.gd" id="1_wf2t1"]
 [ext_resource type="Script" uid="uid://bentp5io1j8mf" path="res://Scripts/time_attack_leaderboard.gd" id="6_lcf2g"]
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0p1iw"]
+load_path = "res://.godot/imported/fc131.png-6909bdb4591bc545dc059866fb72645e.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_pgk1x"]
+load_path = "res://.godot/imported/fc1726.png-8b3bffb05e78a69dc2b53efc20aeeda5.ctex"
+
+[sub_resource type="Resource" id="Resource_gognn"]
+script = ExtResource("1_wf2t1")
+boss = "HYDRA"
+time = 51.9813
+ball_1_name = "Coin"
+ball_1_color = Color(1, 0.92549, 0.643137, 1)
+ball_1_sprite = SubResource("CompressedTexture2D_0p1iw")
+ball_1_flip_h = false
+ball_1_rot = 0.0
+ball_1_offset = 9.0
+ball_1_damage = 64
+ball_2_name = "Perfect"
+ball_2_color = Color(1, 0.835327, 0.703125, 1)
+ball_2_sprite = SubResource("CompressedTexture2D_pgk1x")
+ball_2_flip_h = false
+ball_2_rot = 0.0
+ball_2_offset = 56.0
+ball_2_damage = 119
+
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0yjo0"]
 load_path = "res://.godot/imported/fc953000.png-afcc049a99bbb8dc4f4eac7780313ca7.ctex"
 
@@ -128,32 +153,7 @@ ball_2_rot = 0.0
 ball_2_offset = 38.0
 ball_2_damage = 156
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0p1iw"]
-load_path = "res://.godot/imported/fc1705.png-bba6a8b380b0e8bffb2cf1a9cfab5360.ctex"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_pgk1x"]
-load_path = "res://.godot/imported/fc1713.png-c2694fca77d8163e5add819595615ddc.ctex"
-
-[sub_resource type="Resource" id="Resource_gognn"]
-script = ExtResource("1_wf2t1")
-boss = "HYDRA"
-time = 106.046
-ball_1_name = "B.Bow"
-ball_1_color = Color(0.71, 0.368253, 0.1704, 1)
-ball_1_sprite = SubResource("CompressedTexture2D_0p1iw")
-ball_1_flip_h = false
-ball_1_rot = 0.0
-ball_1_offset = 14.0
-ball_1_damage = 90
-ball_2_name = "B.Sword"
-ball_2_color = Color(0.59, 0.0413, 0.57171, 1)
-ball_2_sprite = SubResource("CompressedTexture2D_pgk1x")
-ball_2_flip_h = false
-ball_2_rot = 0.0
-ball_2_offset = 59.0
-ball_2_damage = 90
-
 [resource]
 script = ExtResource("6_lcf2g")
-rankings = Array[ExtResource("1_wf2t1")]([SubResource("Resource_2se0k"), SubResource("Resource_bhva0"), SubResource("Resource_wf2t1"), SubResource("Resource_0wudk"), SubResource("Resource_0yjo0"), SubResource("Resource_gognn")])
+rankings = Array[ExtResource("1_wf2t1")]([SubResource("Resource_gognn"), SubResource("Resource_2se0k"), SubResource("Resource_bhva0"), SubResource("Resource_wf2t1"), SubResource("Resource_0wudk"), SubResource("Resource_0yjo0")])
 metadata/_custom_type_script = "uid://bentp5io1j8mf"

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="TimeAttackData" load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://Graphics/_Addons/Icons/fc6660.png" id="1_mt4dq"]
+[ext_resource type="Texture2D" path="res://Graphics/_Addons/Icons/fc127.png" id="2_6vjqt"]
+[ext_resource type="Script" path="res://Scripts/time_attack_data.gd" id="3_3sxvw"]
+
+[resource]
+script = ExtResource("3_3sxvw")
+boss = "HYDRA"
+time = 74.4968
+ball_1_name = "Pickaxe"
+ball_1_color = Color(1, 0.568627, 0.282353, 1)
+ball_1_sprite = ExtResource("1_mt4dq")
+ball_1_flip_h = false
+ball_1_rot = 0.0
+ball_1_offset = 11.0
+ball_1_damage = 65
+ball_2_name = "Traps"
+ball_2_color = Color(0.418945, 0.6875, 0.530143, 1)
+ball_2_sprite = ExtResource("2_6vjqt")
+ball_2_flip_h = false
+ball_2_rot = 120.0
+ball_2_offset = 41.0
+ball_2_damage = 117
