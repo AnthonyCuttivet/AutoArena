@@ -168,6 +168,8 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 		if(projectile_hit.custom_damage != -1):
 			d = projectile_hit.custom_damage;
 
+	other.hit_pos = hit_pos;
+
 	other.affect_health(-d, ball_owner, weapon_slot_id);
 
 	if(!projectile_hit):
@@ -178,7 +180,6 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 
 	other.hitflash(h);
 	other.start_hitstop(0.0, h, kb);
-	other.hit_pos = hit_pos;
 
 	# print(Utils.pf() + " Emit BALL_WEAPON_HIT - " + str(ball_owner.get_instance_id()) + " // " + str(weapon_slot_id));
 

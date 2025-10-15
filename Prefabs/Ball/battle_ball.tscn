@@ -32,12 +32,12 @@ shader_parameter/flash_intensity = 0.0
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o008c"]
 resource_local_to_scene = true
 shader = ExtResource("4_ecnwd")
-shader_parameter/stripes = 4.82
+shader_parameter/stripes = 1.0
 shader_parameter/stripe_thickness = 1.33
 shader_parameter/stripe_color = Color(0.59, 0.98, 0.69, 1)
 shader_parameter/background_color = Color(0, 0, 0, 1)
 shader_parameter/uv_offset = 0.5
-shader_parameter/warp_strength = 50.0
+shader_parameter/warp_strength = 49.805
 shader_parameter/warp_uv_mult = 2.0
 shader_parameter/wave_strength = 1.0
 shader_parameter/oscillation_mult = 1.275
@@ -77,7 +77,7 @@ dual_wield_mask = NodePath("Root/DWCircleMask")
 dual_wield_sprite = NodePath("Root/DWCircleMask/DWCircle")
 
 [node name="Root" type="CollisionShape2D" parent="."]
-scale = Vector2(0.18, 0.18)
+scale = Vector2(0.2, 0.2)
 shape = SubResource("CircleShape2D_j21cw")
 debug_color = Color(0.7, 0, 0, 0)
 

@@ -6,7 +6,7 @@ class_name BattleBall extends RigidBody2D
 @export var weapon_settings:WeaponSettings;
 @export var use_dual_wield:bool = false;
 @export var dual_wield:Array[Enums.WEAPONS];
-@export var weapon_settings_2:Array[WeaponSettings];
+@export var weapon_settings_dual:Array[WeaponSettings];
 
 @export var weapon_slots:Array[Node2D];
 
@@ -128,9 +128,9 @@ func ready() -> void:
 
 	if(dual_wield):
 		load_dual_wield_weapon_settings();
-		spawn_weapon(weapon_settings_2[0], weapon_slots[0], 0);
-		weapon_settings_2[1].base_rotation_direction = -weapon_settings_2[0].base_rotation_direction;
-		spawn_weapon(weapon_settings_2[1], weapon_slots[1], 1);
+		spawn_weapon(weapon_settings_dual[0], weapon_slots[0], 0);
+		weapon_settings_dual[1].base_rotation_direction = -weapon_settings_dual[0].base_rotation_direction;
+		spawn_weapon(weapon_settings_dual[1], weapon_slots[1], 1);
 	else:
 		spawn_weapon(weapon_settings, weapon_slots[0], 0);
 
@@ -242,6 +242,16 @@ func fill_values_from_weapon_settings():
 	relative_bounce_boost = weapon_settings.relative_bounce_boost;
 	acceleration = weapon_settings.acceleration;
 	knockback_resistance = weapon_settings.knockback_resistance;
+
+	if(use_dual_wield):
+		max_speed = (weapon_settings_dual[0].max_speed + weapon_settings_dual[1].max_speed) / 2.0;
+		min_horizontal = (weapon_settings_dual[0].min_horizontal + weapon_settings_dual[1].min_horizontal) / 2.0;
+		gravity_strength = (weapon_settings_dual[0].gravity_strength + weapon_settings_dual[1].gravity_strength) / 2.0;
+		drag_force = (weapon_settings_dual[0].drag_force + weapon_settings_dual[1].drag_force) / 2.0;
+		bounce_boost = (weapon_settings_dual[0].bounce_boost + weapon_settings_dual[1].bounce_boost) / 2.0;
+		relative_bounce_boost = (weapon_settings_dual[0].relative_bounce_boost + weapon_settings_dual[1].relative_bounce_boost) / 2.0;
+		acceleration = (weapon_settings_dual[0].acceleration + weapon_settings_dual[1].acceleration) / 2.0;
+		knockback_resistance = (weapon_settings_dual[0].knockback_resistance + weapon_settings_dual[1].knockback_resistance) / 2.0;
 
 func start(m:Main, dir:Vector2):
 	if(debug_mode):return;
@@ -667,19 +677,32 @@ func stop_combo():
 func set_ball_color():
 	if(dual_wield):
 		dual_wield_mask.visible = true;
-		dual_wield_sprite.material.set("shader_parameter/stripe_color", Color.CYAN);
-		dual_wield_sprite.material.set("shader_parameter/background_color", Color.GOLD);
+
+		var c1:Color = weapon_settings_dual[0].color;
+		var c2:Color = weapon_settings_dual[1].color;
+
+		dual_wield_sprite.material.set("shader_parameter/stripe_color", Vector3(c1.r,c1.g,c1.b));
+		dual_wield_sprite.material.set("shader_parameter/background_color", Vector3(c2.r,c2.g,c2.b));
+		dual_wield_sprite.material.set("shader_parameter/rotation", randf() * 360.0);
+
 		active_sprite = dual_wield_sprite;
 	else:
 		circle.self_modulate = color;
 		active_sprite = circle;
 
 func load_dual_wield_weapon_settings():
-	weapon_settings_2.push_back(main.all_weapons[dual_wield[0]]);
-	weapon_settings_2.push_back(main.all_weapons[dual_wield[1]]);
+	weapon_settings_dual.push_back(get_weapon_settings(dual_wield[0]));
+	weapon_settings_dual.push_back(get_weapon_settings(dual_wield[1]));
+
+	weapon_settings_dual[0].base_rotation_speed *= 0.75;
+	weapon_settings_dual[1].base_rotation_speed *= 0.75;
 
 func get_weapon(id:int):
 	return weapons[id];
+
+func get_weapon_settings(w:Enums.WEAPONS) -> WeaponSettings:
+	return main.all_weapons[w];
+
 
 # ------- Cheats ---------
 

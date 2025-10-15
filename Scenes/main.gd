@@ -637,21 +637,24 @@ func on_ball_damaged(id: int, amount:int, from:int, slot_id:int):
 	get_ball_by_id(from).add_combo(ball, slot_id);
 	ball.stop_combo();
 
-	var fx: GPUParticles2D = fx_hit_prefab.instantiate();
+	var c:Color = ball.color;
 
-	# EventBus.set_chromatic_aberration.emit(5, 0.2);
+	for i in range(2):
+		if(ball.use_dual_wield):
+			c = ball.weapon_settings_dual[i].color;
 
-	get_tree().current_scene.add_child(fx);
-	fx.position = Vector2.ZERO;
-	fx.global_position = ball.global_position;
-	fx.modulate = ball.color;
-	fx.global_rotation = (ball.global_position - ball.hit_pos).normalized().angle();
-	fx.finished.connect(fx.queue_free);
-	fx.visible = true;
-	fx.emitting = false;
-	if(battleblock_mode):
-		fx.scale = Vector2.ONE * 0.5;
-	just_spawned_fxs[fx] = 0;
+		var fx: GPUParticles2D = fx_hit_prefab.instantiate();
+		get_tree().current_scene.add_child(fx);
+		fx.position = Vector2.ZERO;
+		fx.global_position = ball.global_position;
+		fx.modulate = c;
+		fx.global_rotation = (ball.global_position - ball.hit_pos).normalized().angle();
+		fx.finished.connect(fx.queue_free);
+		fx.visible = true;
+		fx.emitting = false;
+		if(battleblock_mode):
+			fx.scale = Vector2.ONE * 0.5;
+		just_spawned_fxs[fx] = 0;
 
 	EventBus.camera_trigger_shake.emit( max(hit_shake + amount, 0, hit_max_shake));
 
@@ -681,7 +684,7 @@ func on_ball_lifesteal(target:int, origin:int):
 
 	pass ;
 
-func on_ball_clash(id:int, weapon_slot_id:int,  clash_pos:Vector2, silent:bool):
+func on_ball_clash(id:int, weapon_slot_id:int, clash_pos:Vector2, silent:bool):
 	if(!balls_ids.has(id)):
 		return;
 
@@ -690,13 +693,15 @@ func on_ball_clash(id:int, weapon_slot_id:int,  clash_pos:Vector2, silent:bool):
 	ball.set_or_ignore_invincibility(balls[0].clash_invincibility);
 	ball.stop_combo();
 
+	var w:Weapon = ball.get_weapon(weapon_slot_id);
+
 	if(!silent):
 		for i in range(2):
 			var fx: GPUParticles2D = fx_clash.instantiate();
 			add_child(fx);
 			fx.global_position = clash_pos + Vector2.ONE * randf_range(-15.0, 15.0);
-			fx.modulate = ball.color;
-			fx.rotation = ball.get_weapon(weapon_slot_id).weapon_slot.global_rotation;
+			fx.modulate = w.settings.color;
+			fx.rotation = w.weapon_slot.global_rotation;
 			fx.emitting = false;
 			fx.finished.connect(fx.queue_free);
 			if(battleblock_mode):
@@ -1017,7 +1022,12 @@ func show_winner_text(winners:Array[BattleBall]):
 		if(hypermatch_mode):
 			s = "[color=#FF9494]✦[/color][color=#FFF094]Ｈ[/color][color=#B3FF94]Ｙ[/color][color=#94FFD1]Ｐ[/color][color=#94D1FF]Ξ[/color][color=#B394FF]Ｒ[/color][color=#FF94F0]✦[/color] "
 
-		s += "[color=" + winners[0].color.to_html() + "]" + winners[0].weapon_settings.name + "[/color] wins!"
+		if(winners[0].use_dual_wield):
+			s += "[color=" + winners[0].weapon_settings_dual[0].color.to_html() + "]" + winners[0].weapon_settings_dual[0].name + "[/color]";
+			s += "[color=" + winners[0].weapon_settings_dual[1].color.to_html() + "] /[/color][color=" + winners[0].weapon_settings_dual[0].color.to_html() + "]/ [/color]";
+			s += "[color=" + winners[0].weapon_settings_dual[1].color.to_html() + "]" + winners[0].weapon_settings_dual[1].name + "[/color] wins!";
+		else:
+			s += "[color=" + winners[0].color.to_html() + "]" + winners[0].weapon_settings.name + "[/color] wins!"
 
 		winner_text.format([s]);
 
