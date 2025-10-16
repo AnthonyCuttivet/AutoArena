@@ -56,7 +56,7 @@ func spawn_bullets_ui():
 	bullets_ui.position = Vector2(pos_x - bullets_ui_x_offset, 1420);
 
 func weapon_is_ready():
-	ball_owner.stat_text.self_modulate = Color.WHITE;
+	stat_text.self_modulate = Color.WHITE;
 	init_details();
 	spawn_bullets_ui();
 
@@ -74,12 +74,12 @@ func scale_stat(force:bool = false):
 	init_scaling_stat();
 
 func on_listened_event_received(id:int, slot_id:int, to:int, _is_projectile:bool):
-	if(id != ball_owner.get_instance_id()): return;
+	if(!is_valid_slot_it(id, slot_id)): return;
 	scale_stat();
 
 	set_absolute_next_bullet(true);
 
-	ball_owner.weapon.shoot_speed_elapsed = (1.0 / ball_owner.weapon.shoot_speed) * 0.99;
+	shoot_speed_elapsed = (1.0 / shoot_speed) * 0.99;
 	pass;
 
 func shoot_projectile():
@@ -165,15 +165,15 @@ func scale_rarities():
 	update_cumulative_rarities();
 
 func init_details():
-	ball_owner.details_text.modulate = Color.WHITE;
-	ball_owner.details_text.text = "[color=#" + ball_owner.color.to_html() + "] DMG : [/color]";
+	details_text.modulate = Color.WHITE;
+	details_text.text = "[color=#" + ball_owner.color.to_html() + "] DMG : [/color]";
 
 	for i in bullets_damages.size():
-		ball_owner.details_text.text += "[color=#" + bullets_trail_colors[i].to_html() + "]" + str(bullets_damages[i]) + "[/color]";
+		details_text.text += "[color=#" + bullets_trail_colors[i].to_html() + "]" + str(bullets_damages[i]) + "[/color]";
 		if(i < bullets_damages.size() - 1):
-			ball_owner.details_text.text += "[color=#" + ball_owner.color.to_html() + "] / " + "[/color]";
+			details_text.text += "[color=#" + ball_owner.color.to_html() + "] / " + "[/color]";
 
-	settings.details = ball_owner.details_text.text;
+	settings.details = details_text.text;
 
 func get_custom_stat_format() -> String:
 	custom_stat_str = "[/color]";

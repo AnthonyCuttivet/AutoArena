@@ -79,7 +79,7 @@ func add_thunder():
 	if(increase_after_next):
 		increase_thunder_needed();
 
-	var p:Projectile = Utils.shoot_projectile(settings.projectile_prefab, ball_owner, self, ball_owner.weapon_slot.global_rotation, self);
+	var p:Projectile = Utils.shoot_projectile(settings.projectile_prefab, ball_owner, self, weapon_slot.global_rotation, self);
 	p.set_speed(projectile_speed);
 	p.weapon_owner = self;
 	p.scale *= projectile_scale;

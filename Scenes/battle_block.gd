@@ -60,7 +60,7 @@ func update_value_text():
 	#else:
 		#polygon_color.color.a = 1.0 - (current_value/float(block_value));
 
-func on_damaged_received(id:int, _amount:int, _slot_id:int, _from:int):
+func on_damaged_received(id:int, _amount:int, _from:int, _slot_id:int):
 	if(id != hurtbox.ball_owner.get_instance_id()): return;
 
 	on_impact(main.get_ball_by_id(_from), _amount);

@@ -14,5 +14,5 @@ func scale_stat(force:bool = false):
 	init_scaling_stat();
 
 func on_weapon_hit_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
-	if(id != ball_owner.get_instance_id() || slot_id != weapon_slot_id): return;
+	if(!is_valid_slot_it(id, slot_id)): return;
 	scale_stat();

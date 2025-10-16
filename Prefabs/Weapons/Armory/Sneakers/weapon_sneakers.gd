@@ -47,14 +47,14 @@ func on_weapon_hit_delayed(d:int, other:BattleBall, kb:Vector2, hit_pos:Vector2)
 	other.start_hitstop(0.0, 0.125, kb, true);
 	other.hitflash(hitstop);
 	other.hit_pos = hit_pos;
-	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), false);
+	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), weapon_slot_id, other.get_instance_id(), false);
 
 func on_weapon_hit_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
-	if(id != ball_owner.get_instance_id()): return;
+	if(!is_valid_slot_it(id, slot_id)): return;
 	scale_stat();
 	pass;
 
-func on_weapon_clash_received(id:int, _clash_pos:Vector2, _silent:bool):
+func on_weapon_clash_received(id:int, slot_id:int, _clash_pos:Vector2, _silent:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	on_clash_animation();
 	pass;

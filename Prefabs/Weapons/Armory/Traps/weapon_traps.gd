@@ -42,7 +42,7 @@ func init_scaling_stat():
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
-	damage += stat_scale_value;
+	damage = best_combo;
 	init_scaling_stat();
 
 func on_trap_hit(other:BattleBall, hit_pos:Vector2, kb_dir:Vector2, h:float):
@@ -51,7 +51,7 @@ func on_trap_hit(other:BattleBall, hit_pos:Vector2, kb_dir:Vector2, h:float):
 	other.hitflash(h);
 	other.hit_pos = hit_pos;
 
-	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), false);
+	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), weapon_slot_id, other.get_instance_id(), false);
 	add_combo(other.get_instance_id(), hit_pos);
 
 	other.trail_2d.set_color(ball_owner.color);
@@ -86,7 +86,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	other.hitflash(hitstop);
 	other.hit_pos = hit_pos;
 
-	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit != null);
+	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), weapon_slot_id, other.get_instance_id(), projectile_hit != null);
 	pass;
 
 func trap_hit_fxs(pos:Vector2):

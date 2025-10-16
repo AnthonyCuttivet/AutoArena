@@ -28,7 +28,7 @@ func scale_stat(force:bool = false):
 	init_scaling_stat();
 
 func on_listened_event_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
-	if(id != ball_owner.get_instance_id()): return;
+	if(!is_valid_slot_it(id, slot_id)): return;
 	scale_stat();
 	pass;
 
@@ -36,10 +36,10 @@ func shoot_projectile():
 	add_thunder();
 
 func add_thunder():
-	var p:Projectile = Utils.shoot_projectile(settings.projectile_prefab, ball_owner, self, ball_owner.weapon_slot.global_rotation, self);
+	var p:Projectile = Utils.shoot_projectile(settings.projectile_prefab, ball_owner, self, weapon_slot.global_rotation, self);
 	p.set_speed(projectile_speed + scaling_stat_value * 50.0);
 	p.weapon_owner = self;
-	p.scale = ball_owner.weapon_slot.scale * ball_owner.root.scale * projectile_scale;
+	p.scale = weapon_slot.scale * ball_owner.root.scale * projectile_scale;
 	p.global_position = p_spawn.global_position;
 	p.global_rotation = p_spawn.global_rotation;
 	p.sprite_2d.modulate = Color.GRAY;

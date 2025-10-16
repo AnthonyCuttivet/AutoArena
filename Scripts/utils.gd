@@ -114,7 +114,7 @@ static func spawn_projectile(projectile_prefab:PackedScene, ball_owner:BattleBal
 	p.scale = weapon.weapon_slot.scale * ball_owner.root.scale;
 	p.init(ball_owner, weapon, speed, pierce, bounces);
 
-	if(ball_owner.weapon_settings.bg_projectile):
+	if(weapon.settings.bg_projectile):
 		ball_owner.main.projectiles_bg_parent.call_deferred("add_child", p);
 	else:
 		parent.get_tree().root.call_deferred("add_child", p);

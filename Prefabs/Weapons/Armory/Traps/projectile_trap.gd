@@ -21,6 +21,7 @@ var triggered:bool = false;
 func init(o:BattleBall, w:Weapon, s:float, p:int = -1, b:int = -1):
 	super.init(o,w,s);
 
+	weapon_owner = w;
 	weapon_traps = weapon_owner;
 
 	fixed_dir = weapon_owner.global_transform.x;
@@ -38,8 +39,6 @@ func init(o:BattleBall, w:Weapon, s:float, p:int = -1, b:int = -1):
 
 
 func _physics_process(delta: float) -> void:
-	weapon_owner = ball_owner.weapon;
-
 	move_elapsed += delta;
 
 	if(!position_fixed):

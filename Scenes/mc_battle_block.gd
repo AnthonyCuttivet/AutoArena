@@ -66,7 +66,7 @@ func update_value_text():
 	value.format([Utils.format_number_with_dots(current_value)]);
 	sprite.self_modulate.a = lerp(0.5, 1.0, clamp(current_value / float(block_value), 0.0, 1.0));
 
-func on_damaged_received(id:int, _amount:int, _slot_id:int, _from:int):
+func on_damaged_received(id:int, _amount:int, _from:int, _slot_id:int):
 	if(id != hurtbox.ball_owner.get_instance_id()): return;
 
 	on_impact(main.get_ball_by_id(_from), _amount);

@@ -64,7 +64,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, hitbox_id:int, projectile_
 	other.hitflash(h);
 	other.hit_pos = hit_pos;
 
-	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit != null);
+	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), weapon_slot_id, other.get_instance_id(), projectile_hit != null);
 	pass;
 
 func set_battleblock_modifiers():

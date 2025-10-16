@@ -19,10 +19,10 @@ func scale_stat(force:bool = false):
 	init_scaling_stat();
 
 func on_weapon_hit_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
-	if(id != ball_owner.get_instance_id()): return;
+	if(!is_valid_slot_it(id, slot_id)): return;
 	scale_stat();
 
-func on_ball_damaged_received(id:int, _amount:int, _from:int):
+func on_ball_damaged_received(id:int, _amount:int, _from:int, _slot_id:int):
 	if(id != ball_owner.get_instance_id()): return;
 	damage = 1;
 	init_scaling_stat();

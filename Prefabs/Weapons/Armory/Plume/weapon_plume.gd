@@ -76,7 +76,7 @@ func scale_stat(force:bool = false):
 	init_scaling_stat();
 
 func on_listened_event_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
-	if(id != ball_owner.get_instance_id()): return;
+	if(!is_valid_slot_it(id, slot_id)): return;
 	if(recalling):
 		scale_stat();
 	pass;
@@ -109,7 +109,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	other.hitflash(hitstop);
 	other.hit_pos = hit_pos;
 
-	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit != null);
+	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), weapon_slot_id, other.get_instance_id(), projectile_hit != null);
 	pass;
 
 func add_sub_weapon(i:int, update_spread:bool = false):

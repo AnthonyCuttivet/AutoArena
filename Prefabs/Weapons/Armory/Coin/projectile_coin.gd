@@ -9,7 +9,11 @@ var has_bounced:bool = false;
 
 func init(o:BattleBall, w:Weapon, s:float, p:int = -1, b:int = -1):
 	super.init(o,w,s);
-	o.get_tree().create_timer(catch_delay).timeout.connect(func(): can_be_caught = true);
+	o.get_tree().create_timer(catch_delay).timeout.connect(
+		func():
+			can_be_caught = true;
+			always_clash = true;
+	);
 
 
 func _on_projectile_hitbox_area_entered(other: Area2D) -> void:

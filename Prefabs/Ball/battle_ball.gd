@@ -129,7 +129,10 @@ func ready() -> void:
 	if(dual_wield):
 		load_dual_wield_weapon_settings();
 		spawn_weapon(weapon_settings_dual[0], weapon_slots[0], 0);
-		weapon_settings_dual[1].base_rotation_direction = -weapon_settings_dual[0].base_rotation_direction;
+
+		if(weapon_settings_dual[0].base_rotation_direction != 0.0):
+			weapon_settings_dual[1].base_rotation_direction = -weapon_settings_dual[0].base_rotation_direction;
+
 		spawn_weapon(weapon_settings_dual[1], weapon_slots[1], 1);
 	else:
 		spawn_weapon(weapon_settings, weapon_slots[0], 0);
@@ -678,8 +681,10 @@ func set_ball_color():
 	if(dual_wield):
 		dual_wield_mask.visible = true;
 
-		var c1:Color = weapon_settings_dual[0].color;
-		var c2:Color = weapon_settings_dual[1].color;
+
+		var c1:Color = weapon_settings_dual[0].color.srgb_to_linear();
+		var c2:Color = weapon_settings_dual[1].color.srgb_to_linear();
+
 
 		dual_wield_sprite.material.set("shader_parameter/stripe_color", Vector3(c1.r,c1.g,c1.b));
 		dual_wield_sprite.material.set("shader_parameter/background_color", Vector3(c2.r,c2.g,c2.b));

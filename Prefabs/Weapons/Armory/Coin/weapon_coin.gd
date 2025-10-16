@@ -25,17 +25,6 @@ var railgun_width_modifier:float = 1.0;
 func _init() -> void:
 	EventBus.ball_weapon_hit.connect(on_listened_event_received);
 
-# func _process(_delta: float) -> void:
-# 	if(active_coin != null):
-# 		var dir_to_center:Vector2 = (ball_owner.main.arena_center.global_position - ball_owner.global_position).normalized();
-# 		var angle_between_deg:float = rad_to_deg(ball_owner.weapon_slot.global_transform.x.angle_to(dir_to_center));
-
-# 		if(abs(angle_between_deg) > 45.0):
-# 			custom_rot_speed_multiplier = 3.0;
-# 		else:
-# 			custom_rot_speed_multiplier = 1.0;
-
-
 func init_scaling_stat():
 	scaling_stat_value = projectiles;
 	update_stat_text();
@@ -56,7 +45,7 @@ func scale_stat(force:bool = false):
 	init_scaling_stat();
 
 func on_listened_event_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
-	if(id != ball_owner.get_instance_id()): return;
+	if(!is_valid_slot_it(id, slot_id)): return;
 	scale_stat();
 	pass;
 

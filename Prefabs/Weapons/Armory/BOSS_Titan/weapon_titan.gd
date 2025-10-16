@@ -36,7 +36,7 @@ func shoot_projectile():
 	rock.weapon_owner = self;
 	rock.hitbox.weapon = self;
 	rock.inactive_for = rock_inactive_for;
-	rock.scale = ball_owner.weapon_slot.scale * ball_owner.root.scale * projectile_scale;
+	rock.scale = weapon_slot.scale * ball_owner.root.scale * projectile_scale;
 	active_rocks.push_back(rock);
 
 func on_weapon_hit_received(id:int, slot_id:int, _to:int, is_projectile:bool):

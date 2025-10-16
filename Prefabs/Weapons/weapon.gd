@@ -48,6 +48,7 @@ var no_shoot:bool = false;
 var owned_projectiles:Array[Projectile] = [];
 
 var no_stat_scale:bool = false;
+var dual_scale:bool = true;
 var scale_stat_multiplier:int = 1;
 
 var battleblock_mode:bool = false;
@@ -315,7 +316,7 @@ func update_lifesteal_status():
 func toggle_lifesteal_state(s:bool):
 	lifesteal_active = s;
 	sprite_2d.self_modulate = Color.WHITE if !s else Color.DARK_RED;
-	update_ui_stat(ball_owner.color if !s else Color.DARK_RED);
+	update_ui_stat(settings.color if !s else Color.DARK_RED);
 	update_stat_text();
 
 func set_battleblock_modifiers():
@@ -339,6 +340,15 @@ func set_battleblock_modifiers():
 
 func on_bb_death():
 	pass;
+
+func is_valid_slot_it(id:int, slot_id:int) -> bool:
+	if(id != ball_owner.get_instance_id()): return false;
+
+	if(dual_scale):
+		return true;
+	else:
+		return slot_id == weapon_slot_id;
+
 
 # ---------- UI -------------
 

@@ -42,7 +42,7 @@ func shoot_projectile():
 		if(head.can_shoot((1.0 / shoot_speed))):
 			AudioManager.play_sfx(head.sfx_shoot, "SFX");
 			shooted_projectile = Utils.shoot_projectile(head.projectile, ball_owner, self, head.global_rotation, head.sprite_2d);
-			shooted_projectile.scale = head.p_scale * ball_owner.weapon_slot.scale * ball_owner.root.scale;;
+			shooted_projectile.scale = head.p_scale * weapon_slot.scale * ball_owner.root.scale;;
 			shooted_projectile.weapon_owner = head;
 
 func get_custom_damage_value() -> int:

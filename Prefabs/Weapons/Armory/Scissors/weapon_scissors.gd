@@ -92,11 +92,12 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	#if(weapon_opened):
 		#scale_stat();
 
-	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit != null);
+	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), weapon_slot_id, other.get_instance_id(), projectile_hit != null);
 	pass;
 
 func on_listened_event_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
-	if(id != ball_owner.get_instance_id()): return;
+	if(!is_valid_slot_it(id, slot_id) || slot_id == weapon_slot_id): return;
+	scale_stat();
 	pass;
 
 func on_ball_bounce_other_ball(id:int, other:int):
@@ -130,7 +131,7 @@ func start_dash(dir:Vector2):
 
 	ball_owner.toggle_ball_ball_collision(false);
 	ball_owner.ghost = true;
-	ball_owner.weapon_slot.rotation = dir.angle() - deg_to_rad(90.0);
+	weapon_slot.rotation = dir.angle() - deg_to_rad(90.0);
 	ball_owner.block_weapon_rot = true;
 	ball_owner.linear_velocity = dir * ball_owner.linear_velocity.length();
 	ball_owner.align_weapon_to_velocity = true;
@@ -139,7 +140,7 @@ func start_dash(dir:Vector2):
 
 	ball_owner.start_hitstop(0.0, dash_self_hitstop, dir * ball_owner.max_speed);
 
-	ball_owner.trail_2d.set_color(ball_owner.color);
+	ball_owner.trail_2d.set_color(settings.color);
 	ball_owner.show_trail_for((dash_duration * 2.0) + dash_self_hitstop, additional_trail_length);
 
 	configure_afterimage();
@@ -152,8 +153,10 @@ func start_dash(dir:Vector2):
 func configure_afterimage():
 	ball_owner.afterimage.spawn_interval = (dash_duration + dash_self_hitstop) / 50.0;
 	ball_owner.afterimage.afterimage_lifetime = (dash_duration + dash_self_hitstop) * 2.0;
-	ball_owner.afterimage.opacity = 0.25;
+	ball_owner.afterimage.opacity = 0.1;
 	ball_owner.afterimage.active = true;
+	ball_owner.afterimage.use_custom_color = true;
+	ball_owner.afterimage.custom_color = settings.color;
 
 func kill_dash_timer():
 	if(dash_timer.timeout.is_connected(stop_dash)):
