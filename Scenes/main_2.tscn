@@ -54,7 +54,7 @@
 [ext_resource type="Texture2D" uid="uid://5w30wj6j3tig" path="res://Graphics/_Addons/Icons/fc88888.png" id="35_k7ahf"]
 [ext_resource type="AudioStream" uid="uid://ddx8pstv0i4qf" path="res://Audio/SFX/BattleBalls/se_demon_hit_catchattack.wav" id="35_qtgyu"]
 [ext_resource type="Texture2D" uid="uid://cj3174c1vhaci" path="res://Graphics/_Addons/Icons/fc17040.png" id="36_76u2v"]
-[ext_resource type="AudioStream" uid="uid://cvyjwjfg6448s" path="res://Audio/SFX/BattleBalls/Announcer/download1760526697054 (mp3cut.net).mp3" id="36_cr7au"]
+[ext_resource type="AudioStream" uid="uid://ctk16xr480g5d" path="res://Audio/SFX/BattleBalls/Announcer/download1760614423029 (mp3cut.net).mp3" id="36_cr7au"]
 [ext_resource type="PackedScene" uid="uid://dj8vboys4os4r" path="res://Prefabs/Weapons/Armory/Sandevistan/W_SANDEVISTAN.tscn" id="36_d4oku"]
 [ext_resource type="Texture2D" uid="uid://cfwyhor4kqo4c" path="res://Graphics/_Addons/Icons/fc888881.png" id="38_sy8k4"]
 [ext_resource type="Resource" uid="uid://b2572latobo8u" path="res://Resources/Weapons/W_BloodBow.tres" id="40_nsujd"]
@@ -666,7 +666,7 @@ projectile_self_hitstop = false
 lifesteal = false
 lifesteal_tick = 1
 independent_weapon = false
-stat_scale_value = 1.0
+stat_scale_value = 0.6
 stat_scale_name = "DMG / Speed"
 scaling_stat_float = false
 no_rotation_change = false
@@ -684,9 +684,9 @@ base_damage_multiplier = 5
 no_clash_on_block = false
 base_weapon_rotation = 120.0
 color = Color(0.77, 0.77, 0.77, 1)
-max_speed = 600.0
-min_horizontal = 0.0
-gravity_strength = 2000.0
+max_speed = 500.0
+min_horizontal = 100.0
+gravity_strength = 3000.0
 drag_force = 0.05
 bounce_boost = 0.0
 relative_bounce_boost = 0.75
@@ -730,14 +730,14 @@ projectile_self_hitstop = false
 lifesteal = false
 lifesteal_tick = 1
 independent_weapon = false
-stat_scale_value = 0.3
+stat_scale_value = 0.4
 stat_scale_name = "DMG / Max Speed"
 scaling_stat_float = false
 no_rotation_change = false
 no_projectile_scale_change = false
 weapon_prefab = ExtResource("36_d4oku")
 bg_projectile = false
-details = "Triggers at 6 / 6 Speed"
+details = "Triggers at 7 / 7 Speed"
 white_details = false
 sfx_hit = SubResource("Resource_3duvo")
 leaderboard_offset = 0.0
@@ -748,12 +748,12 @@ base_damage_multiplier = 5
 no_clash_on_block = false
 base_weapon_rotation = 120.0
 color = Color(0.75638, 0.745483, 0.769531, 1)
-max_speed = 1000.0
-min_horizontal = 0.0
+max_speed = 400.0
+min_horizontal = 100.0
 gravity_strength = 3000.0
 drag_force = 0.05
-bounce_boost = 1000.0
-relative_bounce_boost = 0.0
+bounce_boost = 0.0
+relative_bounce_boost = 0.75
 acceleration = 1.0
 knockback_resistance = 1.0
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
@@ -1117,7 +1117,7 @@ hypermatch_hp = 500
 hypermatch_scales = Array[int]([500, 50])
 forced_start_dir = Vector2(0, -1)
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Bosses/HYDRA"), NodePath("Balls/Fighters/Pickaxe"), NodePath("Balls/Fighters/Traps")]
+balls = [NodePath("Balls/Bosses/HYDRA"), NodePath("Balls/Fighters/Unarmed"), NodePath("Balls/Fighters/Sandevistan")]
 all_weapons = Dictionary[int, ExtResource("24_3p5r5")]({
 0: ExtResource("11_per8v"),
 1: ExtResource("40_nsujd"),

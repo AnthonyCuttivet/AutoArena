@@ -308,7 +308,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if(process_timer && time_attack_mode):
-		time_attack_elapsed += delta;
+		time_attack_elapsed += (delta + (delta * (1.0 - Engine.time_scale)));
 		update_time_attack_timer();
 
 	for fx in just_spawned_fxs.keys():
@@ -971,7 +971,7 @@ func set_chromatic_aberration(v: float, d:float):
 func set_time_scale(v: float, d:float):
 	var t:Timer = Timer.new();
 	t.ignore_time_scale = true;
-	t.one_shot = true;;
+	t.one_shot = true;
 	t.autostart = true;
 	t.wait_time = d;
 	t.timeout.connect(func(): Engine.time_scale = 1.0);

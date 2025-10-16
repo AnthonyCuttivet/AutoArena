@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="TimeAttackData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/time_attack_data.gd" id="1_uwoe6"]
+
+[resource]
+script = ExtResource("1_uwoe6")
+boss = "HYDRA"
+time = 47.5577
+ball_1_name = "Unarmed"
+ball_1_color = Color(0.77, 0.77, 0.77, 1)
+ball_1_flip_h = false
+ball_1_rot = 0.0
+ball_1_offset = 26.0
+ball_1_damage = 92
+ball_2_name = "Sandevistan"
+ball_2_color = Color(0.75638, 0.745483, 0.769531, 1)
+ball_2_flip_h = false
+ball_2_rot = 0.0
+ball_2_offset = 25.0
+ball_2_damage = 88

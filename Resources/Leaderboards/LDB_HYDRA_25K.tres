@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="TimeAttackLeaderboard" load_steps=21 format=3 uid="uid://cc1iycaa3m5bu"]
+[gd_resource type="Resource" script_class="TimeAttackLeaderboard" load_steps=24 format=3 uid="uid://cc1iycaa3m5bu"]
 
 [ext_resource type="Script" uid="uid://m3rw1428wsq2" path="res://Scripts/time_attack_data.gd" id="1_wf2t1"]
 [ext_resource type="Script" uid="uid://bentp5io1j8mf" path="res://Scripts/time_attack_leaderboard.gd" id="6_lcf2g"]
@@ -103,6 +103,31 @@ ball_2_rot = 0.0
 ball_2_offset = 48.0
 ball_2_damage = 108
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bhva0"]
+load_path = "res://.godot/imported/fc6660.png-1026c8536cd17ff09dbdfe434f61eb10.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_r7csm"]
+load_path = "res://.godot/imported/fc127.png-463695313d56fa40aa54db804edbe878.ctex"
+
+[sub_resource type="Resource" id="Resource_vhcus"]
+script = ExtResource("1_wf2t1")
+boss = "HYDRA"
+time = 57.8143
+ball_1_name = "Pickaxe"
+ball_1_color = Color(1, 0.568627, 0.282353, 1)
+ball_1_sprite = SubResource("CompressedTexture2D_bhva0")
+ball_1_flip_h = false
+ball_1_rot = 0.0
+ball_1_offset = 11.0
+ball_1_damage = 45
+ball_2_name = "Traps"
+ball_2_color = Color(0.418945, 0.6875, 0.530143, 1)
+ball_2_sprite = SubResource("CompressedTexture2D_r7csm")
+ball_2_flip_h = false
+ball_2_rot = 120.0
+ball_2_offset = 41.0
+ball_2_damage = 138
+
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wf2t1"]
 load_path = "res://.godot/imported/fc1453.png-c251bd05fdcf4efe02b779be01d977f2.ctex"
 
@@ -129,31 +154,31 @@ ball_2_offset = 55.0
 ball_2_damage = 55
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0wudk"]
-load_path = "res://.godot/imported/fc14900.png-d8b7df5b88efc88c66d853983ced05ef.ctex"
+load_path = "res://.godot/imported/fc1789.png-8a815f68d524d05ed914343d6a0a9a92.ctex"
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_a6fqi"]
-load_path = "res://.godot/imported/fc8888.png-27764f0807a6cde20aa2a187889ebdf7.ctex"
+load_path = "res://.godot/imported/fc1506.png-5b75825f544c2d71699bde571f98ba38.ctex"
 
 [sub_resource type="Resource" id="Resource_0yjo0"]
 script = ExtResource("1_wf2t1")
 boss = "HYDRA"
-time = 75.9136
-ball_1_name = "Pipe"
-ball_1_color = Color(0.607269, 0.701772, 0.785156, 1)
+time = 60.5142
+ball_1_name = "Bow"
+ball_1_color = Color(0.682353, 0.886275, 1, 1)
 ball_1_sprite = SubResource("CompressedTexture2D_0wudk")
 ball_1_flip_h = false
 ball_1_rot = 0.0
 ball_1_offset = 9.0
-ball_1_damage = 33
-ball_2_name = "Kicks"
-ball_2_color = Color(0.941406, 0.225356, 0.37064, 1)
+ball_1_damage = 150
+ball_2_name = "Mace"
+ball_2_color = Color(0.60915, 0.5115, 0.93, 1)
 ball_2_sprite = SubResource("CompressedTexture2D_a6fqi")
-ball_2_flip_h = false
+ball_2_flip_h = true
 ball_2_rot = 0.0
-ball_2_offset = 38.0
-ball_2_damage = 156
+ball_2_offset = 49.0
+ball_2_damage = 30
 
 [resource]
 script = ExtResource("6_lcf2g")
-rankings = Array[ExtResource("1_wf2t1")]([SubResource("Resource_gognn"), SubResource("Resource_2se0k"), SubResource("Resource_bhva0"), SubResource("Resource_wf2t1"), SubResource("Resource_0wudk"), SubResource("Resource_0yjo0")])
+rankings = Array[ExtResource("1_wf2t1")]([SubResource("Resource_gognn"), SubResource("Resource_2se0k"), SubResource("Resource_bhva0"), SubResource("Resource_wf2t1"), SubResource("Resource_vhcus"), SubResource("Resource_0wudk"), SubResource("Resource_0yjo0")])
 metadata/_custom_type_script = "uid://bentp5io1j8mf"
