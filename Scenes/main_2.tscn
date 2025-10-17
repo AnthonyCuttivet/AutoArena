@@ -1099,7 +1099,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [node name="Main2" type="Node2D" node_paths=PackedStringArray("patchnote_pages", "new_challenger_ball", "battleblock_controller", "balls", "attraction_point")]
 rotation = 1.5708
 script = ExtResource("1_nmkph")
-record = true
+devmode = true
 patchnote_s_per_page = 42.0
 patchnote_pages = [NodePath("PatchNote/Line"), NodePath("PatchNote/Line2"), NodePath("PatchNote/Line3")]
 new_challenger_ball = NodePath("Balls/Fighters/Reaper")
@@ -1117,7 +1117,7 @@ hypermatch_hp = 500
 hypermatch_scales = Array[int]([500, 50])
 forced_start_dir = Vector2(0, -1)
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Bosses/HYDRA"), NodePath("Balls/Fighters/Unarmed"), NodePath("Balls/Fighters/Sandevistan")]
+balls = [NodePath("Balls/Bosses/HYDRA"), NodePath("Balls/Fighters/BloodBow"), NodePath("Balls/Fighters/BloodSword")]
 all_weapons = Dictionary[int, ExtResource("24_3p5r5")]({
 0: ExtResource("11_per8v"),
 1: ExtResource("40_nsujd"),
@@ -1142,6 +1142,7 @@ all_weapons = Dictionary[int, ExtResource("24_3p5r5")]({
 20: ExtResource("60_ux8nf"),
 21: ExtResource("27_djmp0")
 })
+battle_ball_prefab = ExtResource("4_ya2e4")
 fx_hit_prefab = ExtResource("2_8wnqf")
 fx_death_prefab = ExtResource("3_uot50")
 fx_clash = ExtResource("4_0o7lx")
@@ -1161,7 +1162,7 @@ startup_sfx_volume = -22.0
 obs_delay = 4.0
 dark_mode = true
 _1v1_hp = 100
-_1v2_hp = 100
+_1v2_hp = 3
 attraction_point = NodePath("AttractionPoint")
 use_cheat_hitbox = true
 cheat_hitbox_max_hitbox_bonus = 0.4
@@ -2543,7 +2544,7 @@ stx = ExtResource("51_204xj")
 position = Vector2(2320.01, 1817.99)
 weapon_settings = ExtResource("11_uot50")
 start_dir = Vector2(0, -1)
-health = 180
+health = 999
 team = 1
 clash_invincibility = 0.05
 stop = true

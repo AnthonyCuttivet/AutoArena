@@ -428,7 +428,7 @@ func hitflash(d:float):
 
 func is_in_same_team(other: Node2D) -> bool:
 	if(other == null): return false;
-	
+
 	if(other is MCBattleBlock):
 		return team == other.hurtbox.ball_owner.team;
 
@@ -616,6 +616,8 @@ func set_physics_time_scale(v: float, d:float):
 	physics_time_scale = v;
 
 func update_ui_name(c:Color, t:String = ""):
+	if(name_text == null): return;
+
 	if(t == ""):
 		name_text.format([weapon_settings.name]);
 	else:
@@ -624,10 +626,12 @@ func update_ui_name(c:Color, t:String = ""):
 	name_text.self_modulate = c;
 
 func update_ui_sprite(c:Color = Color.WHITE):
+	if(ui_sprite == null): return;
 	ui_sprite.texture = weapon.sprite_2d.texture;
 	ui_sprite.self_modulate = c;
 
 func update_ui_details(c:Color, raw:bool = false):
+	if(details_text == null): return;
 	if(raw):
 		details_text.text = weapon_settings.details;
 	else:
@@ -636,8 +640,7 @@ func update_ui_details(c:Color, raw:bool = false):
 	details_text.modulate = c;
 
 func update_ui_stat(c:Color):
-	# if(!dead):
-	# 	stat_text.format([weapon_settings.name]);
+	if(stat_text == null): return;
 	stat_text.self_modulate = c;
 
 func nerf_max_speed(v:float):

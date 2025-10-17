@@ -32,6 +32,7 @@ class_name Main extends Node2D
 @export var balls: Array[BattleBall];
 @export var all_weapons:Dictionary[Enums.WEAPONS, WeaponSettings];
 
+@export var battle_ball_prefab:PackedScene;
 
 @export var fx_hit_prefab: PackedScene;
 @export var fx_death_prefab: PackedScene;
@@ -1121,3 +1122,44 @@ func spawn_fx(fx_prefab:PackedScene, pos:Vector2, rot:float) -> GPUParticles2D:
 	just_spawned_fxs[fx] = 0;
 
 	return fx;
+
+func spawn_ball(w:Enums.WEAPONS, pos:Vector2, ui_slot_id:int):
+	var ball:BattleBall = battle_ball_prefab.instantiate();
+	add_child(ball);
+	ball.global_position = pos;
+	ball.weapon_settings = all_weapons[w];
+
+	balls.push_back(ball);
+	balls_ids[ball.get_instance_id()] = balls_ids.size();
+
+	init_spawned_ball(ball, ui_slot_id);
+
+	print(ui_slot_id);
+
+
+func init_spawned_ball(ball:BattleBall, ui_slot_id:int):
+	init_damage_dealt(ball.get_instance_id());
+
+	ball.main = self;
+	ball.ready();
+
+	ball.init_health(_1v2_hp);
+	ball.team = 1;
+	ball.update_health_text();
+
+	ball.set_or_ignore_invincibility(0.2);
+
+	ball.weapon.weapon_is_ready();
+	ball.start(self, Vector2.ZERO);
+
+	if(ui_slot_id == 1):
+		fill_character_ui(balls[1], name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p, combo_counter_R1_2P);
+	elif(ui_slot_id == 2):
+		fill_character_ui(balls[2], name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p, combo_counter_R2_2P);
+
+	teams_alive_members[1] += 1;
+	balls_alive_count += 1;
+
+	ball.max_speed *= 0.8;
+	ball.gravity_strength *= 0.8;
+	ball.root.scale *= 0.9;

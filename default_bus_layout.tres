@@ -1,10 +1,10 @@
-[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://dwj1hdkmqftks"]
+[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://d1rjemjirh11j"]
 
 [sub_resource type="AudioEffectEQ10" id="AudioEffectEQ10_g28q7"]
 resource_name = "EQ10"
 
 [resource]
-bus/0/volume_db = 1.65377
+bus/0/volume_db = -33.989
 bus/0/effect/0/effect = SubResource("AudioEffectEQ10_g28q7")
 bus/0/effect/0/enabled = true
 bus/1/name = &"BGM"
