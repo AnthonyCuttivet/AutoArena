@@ -211,6 +211,8 @@ var bo3_score:Dictionary[int, int];
 var bgm_player:NodePath;
 var startup_player:NodePath;
 
+var aled:int = 0;
+
 func _ready() -> void:
 	if(devmode):
 		obs_delay = 0.0;
@@ -391,6 +393,9 @@ func start_game():
 	if(!no_announcer):
 		if(announcer_delay > 0.0):
 			get_tree().create_timer(announcer_delay).timeout.connect(play_announcer);
+
+			get_tree().create_timer(1.0).timeout.connect(dw_skit);
+
 		else:
 			play_announcer();
 
@@ -1154,3 +1159,77 @@ func spawn_fx(fx_prefab:PackedScene, pos:Vector2, rot:float) -> GPUParticles2D:
 	just_spawned_fxs[fx] = 0;
 
 	return fx;
+
+func dw_skit():
+
+	if(aled >= 20):
+		balls[0].weapons[1].queue_free();
+		balls[0].weapons.pop_back();
+
+		balls[1].weapons[1].queue_free();
+		balls[1].weapons.pop_back();
+
+		balls[0].weapon_settings_dual[1] = all_weapons[Enums.WEAPONS.GEMS];
+		balls[1].weapon_settings_dual[1] = all_weapons[Enums.WEAPONS.TRAPS];
+
+	for ball in balls:
+		ball.prev_linear_velocity = ball.linear_velocity;
+		ball.freeze = true;
+		ball.stop = true;
+
+		ball.use_dual_wield = true;
+		ball.load_dual_wield_weapon_settings();
+
+		ball.weapons[0].init(ball.weapon_settings_dual[0], ball);
+		ball.spawn_weapon(ball.weapon_settings_dual[1], ball.weapon_slots[1], 1);
+		ball.fill_values_from_weapon_settings();
+
+		ball.set_ball_color();
+
+		if(aled < 20):
+			get_tree().create_timer(1.0).timeout.connect(quickswap_weapon.bind(ball));
+
+	container_1v1_left.visible = false;
+	container_2v2_left.visible = true;
+	container_1v1_right.visible = false;
+	container_2v2_right.visible = true;
+
+	stat_left_1p.visible = container_1v1_left.visible;
+	stat_right_1p.visible = container_1v1_right.visible;
+	stat_left_1_2p.visible = container_2v2_left.visible;
+	stat_left_2_2p.visible = container_2v2_left.visible;
+	stat_right_1_2p.visible = container_2v2_right.visible;
+	stat_right_2_2p.visible = container_2v2_right.visible;
+
+	fill_weapon_ui(balls[0], 0, name_left_1_2p, sprite_left_1_2p, details_left_1_2p, stat_left_1_2p, combo_counter_L1_2P);
+	fill_weapon_ui(balls[0], 1, name_left_2_2p, sprite_left_2_2p, details_left_2_2p, stat_left_2_2p, combo_counter_L2_2P);
+	fill_weapon_ui(balls[1], 0, name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p, combo_counter_R1_2P);
+	fill_weapon_ui(balls[1], 1, name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p, combo_counter_R2_2P);
+
+	if(aled >= 20):
+		for ball in balls:
+			ball.freeze = false;
+			ball.stop = false;
+			ball.linear_velocity = ball.prev_linear_velocity;
+
+func quickswap_weapon(ball:BattleBall):
+	if(aled >= 20): return;
+
+	ball.weapons[1].queue_free();
+	ball.weapons.pop_back();
+	var rand:int = randi() % all_weapons.values().size();
+	ball.spawn_weapon(all_weapons.values()[rand], ball.weapon_slots[1], 1);
+	ball.weapon_settings_dual[1] = all_weapons.values()[rand];
+	ball.set_ball_color();
+
+	fill_weapon_ui(balls[0], 0, name_left_1_2p, sprite_left_1_2p, details_left_1_2p, stat_left_1_2p, combo_counter_L1_2P);
+	fill_weapon_ui(balls[0], 1, name_left_2_2p, sprite_left_2_2p, details_left_2_2p, stat_left_2_2p, combo_counter_L2_2P);
+	fill_weapon_ui(balls[1], 0, name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p, combo_counter_R1_2P);
+	fill_weapon_ui(balls[1], 1, name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p, combo_counter_R2_2P);
+
+	aled += 1;
+
+	if(aled < 20):
+		get_tree().create_timer(0.5).timeout.connect(quickswap_weapon.bind(ball));
+	else:
+		dw_skit();

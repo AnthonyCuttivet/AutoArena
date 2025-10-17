@@ -1094,7 +1094,7 @@ hypermatch_hp = 500
 hypermatch_scales = Array[int]([500, 50])
 forced_start_dir = Vector2(0, -1)
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Fighters/DW1"), NodePath("Balls/Training/Dummy")]
+balls = [NodePath("Balls/Fighters/DW1"), NodePath("Balls/Fighters/DW2")]
 all_weapons = Dictionary[int, ExtResource("24_3p5r5")]({
 0: ExtResource("11_per8v"),
 1: ExtResource("40_nsujd"),
@@ -1131,7 +1131,6 @@ sfx_bounce_boss = SubResource("Resource_gaafq")
 sfx_death = SubResource("Resource_go1jf")
 ve_announcer = SubResource("Resource_p1oyv")
 announcer_delay = 1.0
-no_announcer = true
 bgm = ExtResource("14_gcqa4")
 bgm_volume = -28.0
 startup_sfx = ExtResource("15_gcqa4")
@@ -2696,8 +2695,7 @@ stop = true
 [node name="DW1" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2203.01, 1414.99)
 weapon_settings = ExtResource("11_per8v")
-use_dual_wield = true
-dual_wield = Array[int]([7, 4])
+dual_wield = Array[int]([0, 19])
 health = 50
 team = 1
 dead = true
@@ -2705,9 +2703,8 @@ stop = true
 
 [node name="DW2" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2203.01, 1414.99)
-weapon_settings = ExtResource("11_per8v")
-use_dual_wield = true
-dual_wield = Array[int]([13, 12])
+weapon_settings = ExtResource("23_76u2v")
+dual_wield = Array[int]([7, 6])
 health = 50
 team = 1
 dead = true

@@ -125,8 +125,7 @@ var cheat_underdog_clash_mult: float = 0.2;
 # var aled:bool = false;
 
 func ready() -> void:
-
-	if(dual_wield):
+	if(use_dual_wield):
 		load_dual_wield_weapon_settings();
 		spawn_weapon(weapon_settings_dual[0], weapon_slots[0], 0);
 
@@ -602,7 +601,7 @@ func set_hp_lost_per_s(v:int):
 func set_physics_time_scale(v: float, d:float):
 	var t:Timer = Timer.new();
 	t.ignore_time_scale = true;
-	t.one_shot = true;;
+	t.one_shot = true;
 	t.autostart = true;
 	t.wait_time = d;
 	t.timeout.connect(func(): physics_time_scale = 1.0; linear_velocity = linear_velocity.normalized() * max_speed; drag_force = base_drag_force);
@@ -678,13 +677,11 @@ func stop_combo():
 		EventBus.ball_combo_reset.emit(get_instance_id(), weapon.weapon_slot_id);
 
 func set_ball_color():
-	if(dual_wield):
+	if(use_dual_wield):
 		dual_wield_mask.visible = true;
-
 
 		var c1:Color = weapon_settings_dual[0].color.srgb_to_linear();
 		var c2:Color = weapon_settings_dual[1].color.srgb_to_linear();
-
 
 		dual_wield_sprite.material.set("shader_parameter/stripe_color", Vector3(c1.r,c1.g,c1.b));
 		dual_wield_sprite.material.set("shader_parameter/background_color", Vector3(c2.r,c2.g,c2.b));
