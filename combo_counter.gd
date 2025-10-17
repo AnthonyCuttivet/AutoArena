@@ -26,9 +26,12 @@ func _process(_delta: float) -> void:
 func init(o:BattleBall, slot_id:int):
 	set_process(true);
 	reset_ui(false);
-
-	EventBus.ball_combo_up.connect(on_ball_combo_up);
-	EventBus.ball_combo_reset.connect(on_ball_combo_reset);
+	
+	if(!EventBus.ball_combo_up.is_connected(on_ball_combo_up)):
+		EventBus.ball_combo_up.connect(on_ball_combo_up);
+	
+	if(!EventBus.ball_combo_reset.is_connected(on_ball_combo_reset)):
+		EventBus.ball_combo_reset.connect(on_ball_combo_reset);
 
 	ball_owner = o;
 	weapon_slot_id = slot_id;

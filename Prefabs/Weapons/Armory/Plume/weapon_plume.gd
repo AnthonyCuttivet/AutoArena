@@ -62,7 +62,7 @@ func scale_stat(force:bool = false):
 		shoot_speed = current_shoot_speed;
 		add_sub_weapon(max_feathers -1, true);
 
-	if(recall_dmg == dmg_to_feather_conversion + recall_dmg_bonus):
+	if(recall_dmg >= dmg_to_feather_conversion + recall_dmg_bonus):
 		max_feathers += 1;
 		recall_dmg_bonus += 1;
 		recall_dmg = 1 + recall_dmg_bonus;
@@ -77,6 +77,10 @@ func scale_stat(force:bool = false):
 
 func on_listened_event_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
 	if(!is_valid_slot_it(id, slot_id)): return;
+
+	if(slot_id != weapon_slot_id):
+		scale_stat();
+
 	if(recalling):
 		scale_stat();
 	pass;

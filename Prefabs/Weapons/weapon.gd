@@ -380,6 +380,7 @@ func update_bb_mult_text():
 	bb_mult_text.bump(1.08, 0.08);
 
 func update_ui_name(c:Color, t:String = ""):
+	if(name_text == null): return;
 	if(t == ""):
 		name_text.format([settings.name]);
 	else:
