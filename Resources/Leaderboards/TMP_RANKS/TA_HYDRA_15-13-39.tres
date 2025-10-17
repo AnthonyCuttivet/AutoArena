@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="TimeAttackData" load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://Graphics/_Addons/Icons/fc1694.png" id="1_a7s7x"]
+[ext_resource type="Texture2D" path="res://Graphics/_Addons/Icons/fc170401.png" id="2_skf1l"]
+[ext_resource type="Script" path="res://Scripts/time_attack_data.gd" id="3_bawrq"]
+
+[resource]
+script = ExtResource("3_bawrq")
+boss = "HYDRA"
+time = 38.3149
+ball_1_name = "Dagger"
+ball_1_color = Color(0.214005, 0.730469, 0.379434, 1)
+ball_1_sprite = ExtResource("1_a7s7x")
+ball_1_flip_h = false
+ball_1_rot = 0.0
+ball_1_offset = 12.0
+ball_1_damage = 70
+ball_2_name = "Qiang"
+ball_2_color = Color(0.42041, 0.875, 0.70994, 1)
+ball_2_sprite = ExtResource("2_skf1l")
+ball_2_flip_h = false
+ball_2_rot = 0.0
+ball_2_offset = 55.0
+ball_2_damage = 120

@@ -54,8 +54,8 @@
 [ext_resource type="Texture2D" uid="uid://5w30wj6j3tig" path="res://Graphics/_Addons/Icons/fc88888.png" id="35_k7ahf"]
 [ext_resource type="AudioStream" uid="uid://ddx8pstv0i4qf" path="res://Audio/SFX/BattleBalls/se_demon_hit_catchattack.wav" id="35_qtgyu"]
 [ext_resource type="Texture2D" uid="uid://cj3174c1vhaci" path="res://Graphics/_Addons/Icons/fc17040.png" id="36_76u2v"]
-[ext_resource type="AudioStream" uid="uid://ctk16xr480g5d" path="res://Audio/SFX/BattleBalls/Announcer/download1760614423029 (mp3cut.net).mp3" id="36_cr7au"]
 [ext_resource type="PackedScene" uid="uid://dj8vboys4os4r" path="res://Prefabs/Weapons/Armory/Sandevistan/W_SANDEVISTAN.tscn" id="36_d4oku"]
+[ext_resource type="AudioStream" uid="uid://cre3imybijg8u" path="res://Audio/SFX/BattleBalls/Announcer/ElevenLabs_2025-10-17T13_00_00_Callum_pre_sp120_s50_sb75_se100_b_m2.mp3" id="37_cr7au"]
 [ext_resource type="Texture2D" uid="uid://cfwyhor4kqo4c" path="res://Graphics/_Addons/Icons/fc888881.png" id="38_sy8k4"]
 [ext_resource type="Resource" uid="uid://b2572latobo8u" path="res://Resources/Weapons/W_BloodBow.tres" id="40_nsujd"]
 [ext_resource type="Resource" uid="uid://odj7lywcd7tq" path="res://Resources/Weapons/W_PLUME.tres" id="43_qtgyu"]
@@ -168,8 +168,8 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="Resource" id="Resource_p1oyv"]
 script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("36_cr7au")
-volume = -20.0
+audio_stream = ExtResource("37_cr7au")
+volume = -15.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="Resource" id="Resource_wmaqr"]
@@ -1099,7 +1099,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [node name="Main2" type="Node2D" node_paths=PackedStringArray("patchnote_pages", "new_challenger_ball", "battleblock_controller", "balls", "attraction_point")]
 rotation = 1.5708
 script = ExtResource("1_nmkph")
-devmode = true
+record = true
 patchnote_s_per_page = 42.0
 patchnote_pages = [NodePath("PatchNote/Line"), NodePath("PatchNote/Line2"), NodePath("PatchNote/Line3")]
 new_challenger_ball = NodePath("Balls/Fighters/Reaper")
@@ -1109,7 +1109,6 @@ time_attack_leaderboards = Dictionary[String, ExtResource("2_poh84")]({
 "HYDRA": ExtResource("3_cr7au"),
 "WARLOCK": ExtResource("4_g7d4c")
 })
-time_attack_ranking_duration = 10.0
 use_2v2_colors = true
 _2v2_colors = Array[Color]([Color(0.5, 0.666667, 1, 1), Color(0.5, 0.583333, 1, 1), Color(1, 0.5, 0.5, 1), Color(1, 0.583333, 0.5, 1)])
 battleblock_controller = NodePath("BlockBreaker/MinecraftDig")
@@ -1117,7 +1116,7 @@ hypermatch_hp = 500
 hypermatch_scales = Array[int]([500, 50])
 forced_start_dir = Vector2(0, -1)
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Bosses/HYDRA"), NodePath("Balls/Fighters/BloodBow"), NodePath("Balls/Fighters/BloodSword")]
+balls = [NodePath("Balls/Bosses/HYDRA"), NodePath("Balls/Fighters/Dagger"), NodePath("Balls/Fighters/Qiang")]
 all_weapons = Dictionary[int, ExtResource("24_3p5r5")]({
 0: ExtResource("11_per8v"),
 1: ExtResource("40_nsujd"),
@@ -1162,7 +1161,7 @@ startup_sfx_volume = -22.0
 obs_delay = 4.0
 dark_mode = true
 _1v1_hp = 100
-_1v2_hp = 3
+_1v2_hp = 100
 attraction_point = NodePath("AttractionPoint")
 use_cheat_hitbox = true
 cheat_hitbox_max_hitbox_bonus = 0.4
@@ -2544,7 +2543,7 @@ stx = ExtResource("51_204xj")
 position = Vector2(2320.01, 1817.99)
 weapon_settings = ExtResource("11_uot50")
 start_dir = Vector2(0, -1)
-health = 999
+health = 180
 team = 1
 clash_invincibility = 0.05
 stop = true
