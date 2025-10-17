@@ -276,3 +276,30 @@ static func create_reusable_timer(parent:Node2D, duration:float) -> Timer:
 	t.wait_time = duration;
 	parent.add_child(t);
 	return t;
+
+static func typewriter_effect(label: RichTextLabel, text: String, duration: float = 1.0) -> void:
+	if not label:
+		return
+	label.text = ""
+	if text.is_empty():
+		return
+
+	var visible_text := ""
+	var char_delay := duration / float(text.length())
+	var inside_tag := false
+
+	await label.get_tree().process_frame
+
+	for c in text:
+		if c == "[":
+			inside_tag = true
+		if not inside_tag:
+			visible_text += c
+			label.text = visible_text
+			await label.get_tree().create_timer(char_delay).timeout
+		else:
+			# Append tags instantly so formatting stays correct
+			visible_text += c
+		if c == "]":
+			inside_tag = false
+			label.text = visible_text

@@ -212,6 +212,26 @@ var bgm_player:NodePath;
 var startup_player:NodePath;
 
 var aled:int = 0;
+@export var texts:Array[String] = [
+	"STOP THIS MATCH!",
+	"The BOSS is telling",
+	"me that because of",
+	"the recent low views",
+	"we don't have any",
+	"sponsor money left",
+	"to run this league",
+	"anymore.",
+	"So, unless you two",
+	"find a new gimmick",
+	"to entertain our",
+	"viewers, we're",
+	"dooooooooone",
+	"OH F*CK ?!",
+	"YOU COULD DO THIS",
+	"FROM THE START!?"
+];
+@export var texts_delay:Array[float];
+var texts_id:int = 0;
 
 func _ready() -> void:
 	if(devmode):
@@ -1186,8 +1206,8 @@ func dw_skit():
 
 		ball.set_ball_color();
 
-		if(aled < 20):
-			get_tree().create_timer(1.0).timeout.connect(quickswap_weapon.bind(ball));
+		# if(aled < 20):
+		# 	get_tree().create_timer(1.0).timeout.connect(quickswap_weapon.bind(ball));
 
 	container_1v1_left.visible = false;
 	container_2v2_left.visible = true;
@@ -1206,11 +1226,7 @@ func dw_skit():
 	fill_weapon_ui(balls[1], 0, name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p, combo_counter_R1_2P);
 	fill_weapon_ui(balls[1], 1, name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p, combo_counter_R2_2P);
 
-	if(aled >= 20):
-		for ball in balls:
-			ball.freeze = false;
-			ball.stop = false;
-			ball.linear_velocity = ball.prev_linear_velocity;
+	update_skit_text();
 
 func quickswap_weapon(ball:BattleBall):
 	if(aled >= 20): return;
@@ -1233,3 +1249,19 @@ func quickswap_weapon(ball:BattleBall):
 		get_tree().create_timer(0.5).timeout.connect(quickswap_weapon.bind(ball));
 	else:
 		dw_skit();
+
+func update_skit_text():
+	if(texts_id >= texts.size()):
+		for ball in balls:
+			ball.freeze = false;
+			ball.stop = false;
+			ball.linear_velocity = ball.prev_linear_velocity;
+		winner_text.visible = true;
+		return;
+
+	winner_text.visible = true;
+	winner_text.format(["[wave amp=12.0 freq=3]" + texts[texts_id] + "[/wave]"]);
+	Utils.typewriter_effect(winner_text, winner_text.text, texts_delay[texts_id] / 1.5);
+	get_tree().create_timer(texts_delay[texts_id]).timeout.connect(update_skit_text);
+
+	texts_id += 1;
