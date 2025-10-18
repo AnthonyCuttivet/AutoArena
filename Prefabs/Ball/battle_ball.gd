@@ -609,34 +609,6 @@ func set_physics_time_scale(v: float, d:float):
 
 	physics_time_scale = v;
 
-func update_ui_name(c:Color, t:String = ""):
-	if(name_text == null): return;
-
-	if(t == ""):
-		name_text.format([weapon_settings.name]);
-	else:
-		name_text.text = t;
-
-	name_text.self_modulate = c;
-
-func update_ui_sprite(c:Color = Color.WHITE):
-	if(ui_sprite == null): return;
-	ui_sprite.texture = weapon.sprite_2d.texture;
-	ui_sprite.self_modulate = c;
-
-func update_ui_details(c:Color, raw:bool = false):
-	if(details_text == null): return;
-	if(raw):
-		details_text.text = weapon_settings.details;
-	else:
-		details_text.format([weapon_settings.details]);
-
-	details_text.modulate = c;
-
-func update_ui_stat(c:Color):
-	if(stat_text == null): return;
-	stat_text.self_modulate = c;
-
 func nerf_max_speed(v:float):
 	max_speed *= v;
 	nerfed_speed = abs(base_max_speed - max_speed);
