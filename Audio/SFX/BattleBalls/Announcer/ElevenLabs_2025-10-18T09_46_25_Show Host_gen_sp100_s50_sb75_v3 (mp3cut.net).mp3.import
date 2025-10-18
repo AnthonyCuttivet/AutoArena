@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dmgm3xv6a3ipn"
+path="res://.godot/imported/ElevenLabs_2025-10-18T09_46_25_Show Host_gen_sp100_s50_sb75_v3 (mp3cut.net).mp3-96df45652dc0e96ba6bd612c4201871e.mp3str"
+
+[deps]
+
+source_file="res://Audio/SFX/BattleBalls/Announcer/ElevenLabs_2025-10-18T09_46_25_Show Host_gen_sp100_s50_sb75_v3 (mp3cut.net).mp3"
+dest_files=["res://.godot/imported/ElevenLabs_2025-10-18T09_46_25_Show Host_gen_sp100_s50_sb75_v3 (mp3cut.net).mp3-96df45652dc0e96ba6bd612c4201871e.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

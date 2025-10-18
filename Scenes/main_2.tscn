@@ -59,7 +59,7 @@
 [ext_resource type="Texture2D" uid="uid://5w30wj6j3tig" path="res://Graphics/_Addons/Icons/fc88888.png" id="35_k7ahf"]
 [ext_resource type="AudioStream" uid="uid://ddx8pstv0i4qf" path="res://Audio/SFX/BattleBalls/se_demon_hit_catchattack.wav" id="35_qtgyu"]
 [ext_resource type="Texture2D" uid="uid://cj3174c1vhaci" path="res://Graphics/_Addons/Icons/fc17040.png" id="36_76u2v"]
-[ext_resource type="AudioStream" uid="uid://di4diwksadaqx" path="res://Audio/SFX/BattleBalls/Announcer/ElevenLabs_2025-10-17T15_48_21_Callum_pre_sp120_s50_sb75_se100_b_m2.mp3" id="36_312b1"]
+[ext_resource type="AudioStream" uid="uid://dmgm3xv6a3ipn" path="res://Audio/SFX/BattleBalls/Announcer/ElevenLabs_2025-10-18T09_46_25_Show Host_gen_sp100_s50_sb75_v3 (mp3cut.net).mp3" id="36_312b1"]
 [ext_resource type="PackedScene" uid="uid://dj8vboys4os4r" path="res://Prefabs/Weapons/Armory/Sandevistan/W_SANDEVISTAN.tscn" id="36_d4oku"]
 [ext_resource type="Texture2D" uid="uid://cfwyhor4kqo4c" path="res://Graphics/_Addons/Icons/fc888881.png" id="38_sy8k4"]
 [ext_resource type="Resource" uid="uid://b2572latobo8u" path="res://Resources/Weapons/W_BloodBow.tres" id="40_nsujd"]
@@ -157,7 +157,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [sub_resource type="Resource" id="Resource_p1oyv"]
 script = ExtResource("5_1v8r1")
 audio_stream = ExtResource("36_312b1")
-volume = -20.0
+volume = -15.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="Resource" id="Resource_wmaqr"]
@@ -1079,7 +1079,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [node name="Main2" type="Node2D" node_paths=PackedStringArray("new_challenger_ball", "battleblock_controller", "balls", "attraction_point")]
 rotation = 1.5708
 script = ExtResource("1_nmkph")
-devmode = true
+record = true
 patchnote_s_per_page = 23.0
 new_challenger_ball = NodePath("Balls/Fighters/Reaper")
 time_attack_leaderboards = Dictionary[String, ExtResource("2_poh84")]({
@@ -1137,7 +1137,7 @@ startup_sfx = ExtResource("15_gcqa4")
 startup_sfx_volume = -22.0
 obs_delay = 4.0
 dark_mode = true
-_1v1_hp = 999
+_1v1_hp = 100
 _1v2_hp = 50
 attraction_point = NodePath("AttractionPoint")
 use_cheat_hitbox = true
@@ -1146,7 +1146,7 @@ use_cheat_weapon_rotation = true
 cheat_weapon_rotation_angle = 25.0
 use_cheat_underdog_clash = true
 cheat_underdog_clash_mult = 0.8
-texts_delay = Array[float]([0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9, 0.9])
+texts_delay = Array[float]([1.6, 1.0, 0.9, 1.2, 0.7, 1.0, 1.0, 0.7, 0.9, 0.9, 0.9, 0.9, 1.0, 1.6, 0.6, 0.6, 1.0])
 
 [node name="OBS" type="Node" parent="."]
 script = ExtResource("5_l0sm3")

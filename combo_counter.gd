@@ -26,10 +26,10 @@ func _process(_delta: float) -> void:
 func init(o:BattleBall, slot_id:int):
 	set_process(true);
 	reset_ui(false);
-	
+
 	if(!EventBus.ball_combo_up.is_connected(on_ball_combo_up)):
 		EventBus.ball_combo_up.connect(on_ball_combo_up);
-	
+
 	if(!EventBus.ball_combo_reset.is_connected(on_ball_combo_reset)):
 		EventBus.ball_combo_reset.connect(on_ball_combo_reset);
 
@@ -97,3 +97,13 @@ func kill_tween():
 	if ui_tween and ui_tween.is_running():
 		ui_tween.kill()
 	ui_tween = null
+
+func unsubscribe():
+	if(EventBus.ball_combo_up.is_connected(on_ball_combo_up)):
+		EventBus.ball_combo_up.disconnect(on_ball_combo_up);
+
+	if(EventBus.ball_combo_reset.is_connected(on_ball_combo_reset)):
+		EventBus.ball_combo_reset.disconnect(on_ball_combo_reset);
+
+	set_process(false);
+	reset_ui(false);

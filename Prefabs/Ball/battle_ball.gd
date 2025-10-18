@@ -679,6 +679,7 @@ func stop_combo():
 func set_ball_color():
 	if(use_dual_wield):
 		dual_wield_mask.visible = true;
+		circle.visible = false;
 
 		var c1:Color = weapon_settings_dual[0].color.srgb_to_linear();
 		var c2:Color = weapon_settings_dual[1].color.srgb_to_linear();
