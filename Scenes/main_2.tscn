@@ -1094,7 +1094,7 @@ hypermatch_hp = 500
 hypermatch_scales = Array[int]([500, 50])
 forced_start_dir = Vector2(0, -1)
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Fighters/DW1"), NodePath("Balls/Fighters/DW2")]
+balls = [NodePath("Balls/Fighters/Bow"), NodePath("Balls/Fighters/Gems")]
 all_weapons = Dictionary[int, ExtResource("24_3p5r5")]({
 0: ExtResource("11_per8v"),
 1: ExtResource("40_nsujd"),
@@ -1146,7 +1146,6 @@ use_cheat_weapon_rotation = true
 cheat_weapon_rotation_angle = 25.0
 use_cheat_underdog_clash = true
 cheat_underdog_clash_mult = 0.8
-texts_delay = Array[float]([1.6, 1.0, 0.9, 1.2, 0.7, 1.0, 1.0, 0.7, 0.9, 0.9, 0.9, 0.9, 1.0, 1.6, 0.6, 0.6, 1.0])
 
 [node name="OBS" type="Node" parent="."]
 script = ExtResource("5_l0sm3")
