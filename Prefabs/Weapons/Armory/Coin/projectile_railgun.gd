@@ -20,10 +20,10 @@ var has_scaled_stat:bool = false;
 
 var pre_railgun_velocity:Vector2 = Vector2.ZERO;
 
-func init(o:BattleBall, s:float, p:int = -1, b:int = -1):
-	super.init(o,s,p,b);
+func init(o:BattleBall, w:Weapon, s:float, p:int = -1, b:int = -1):
+	super.init(o,w,s,p,b);
 
-	weapon_coin_owner = o.weapon;
+	weapon_coin_owner = w;
 
 	railgun_width *= weapon_coin_owner.railgun_width_modifier;
 

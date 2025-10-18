@@ -18,9 +18,10 @@ var timeout:bool = false;
 var disabled:bool = true;
 var triggered:bool = false;
 
-func init(o:BattleBall, s:float, _p:int = 0, _b:int = 0):
-	super.init(o, s);
+func init(o:BattleBall, w:Weapon, s:float, p:int = -1, b:int = -1):
+	super.init(o,w,s);
 
+	weapon_owner = w;
 	weapon_traps = weapon_owner;
 
 	fixed_dir = weapon_owner.global_transform.x;
@@ -38,8 +39,6 @@ func init(o:BattleBall, s:float, _p:int = 0, _b:int = 0):
 
 
 func _physics_process(delta: float) -> void:
-	weapon_owner = ball_owner.weapon;
-
 	move_elapsed += delta;
 
 	if(!position_fixed):
@@ -73,7 +72,7 @@ func _on_projectile_hitbox_area_entered(other: Area2D) -> void:
 		if(weapon_traps.is_in_combo(other.ball_owner.get_instance_id())): return;
 
 		if(other is Hitbox):
-			other.ball_owner.weapon.on_weapon_clash(weapon_traps.ball_owner, global_position);
+			other.weapon.on_weapon_clash(weapon_traps.ball_owner, global_position);
 		else:
 			other.projectile.on_hurtbox_hit(null);
 

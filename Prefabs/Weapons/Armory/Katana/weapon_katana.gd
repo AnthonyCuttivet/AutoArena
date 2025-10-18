@@ -12,12 +12,12 @@ var tmp_damage:int = 0;
 var bb_damage:int = 0;
 
 func _init() -> void:
-	# EventBus.ball_weapon_clash.connect(on_weapon_clash_received);
+	EventBus.ball_weapon_clash.connect(on_weapon_clash_received);
 	EventBus.ball_weapon_hit.connect(on_weapon_hit_received);
 
 func init_scaling_stat():
 	scaling_stat_value = damage;
-	ball_owner.update_stat_text();
+	update_stat_text();
 	set_charged_sprite_alpha();
 
 func scale_stat_block(force:bool):
@@ -36,8 +36,8 @@ func scale_stat(force:bool = false):
 	damage += stat_scale_value;
 	init_scaling_stat();
 
-func on_weapon_hit_received(id:int, to:int, _is_projectile:bool):
-	if(id != ball_owner.get_instance_id()): return;
+func on_weapon_hit_received(id:int, slot_id:int, to:int, _is_projectile:bool):
+	if(id != ball_owner.get_instance_id() || slot_id != weapon_slot_id): return;
 
 	damage = 1 if !battleblock_mode else 1 + bb_damage;
 	init_scaling_stat();
@@ -54,17 +54,16 @@ func on_weapon_clash(other:Node2D, clash_pos:Vector2, projectile_hit:bool = fals
 		reverse_rotation();
 
 	ball_owner.start_hitstop_clash(0.0, 0.15, kb, other);
-	EventBus.ball_weapon_clash.emit(ball_owner.get_instance_id(), clash_pos, silent);
-	scale_stat();
+	EventBus.ball_weapon_clash.emit(ball_owner.get_instance_id(), weapon_slot_id, clash_pos, silent);
 
 	if(battleblock_mode && ball_owner.main.get_ball_by_id(other.get_instance_id()) != null):
 		scale_stat_block(false);
 	pass;
 
-# func on_weapon_clash_received(id:int, _clash_pos:Vector2):
-# 	if(id != ball_owner.get_instance_id()): return;
-# 	scale_stat();
-# 	pass;
+func on_weapon_clash_received(id:int, slot_id:int, _clash_pos:Vector2, _silent:bool):
+	if(!is_valid_slot_it(id, slot_id)): return;
+	scale_stat();
+	pass;
 
 # func get_custom_stat_format() -> String:
 # 	return str(base_damage + tmp_damage) + " (" + str(base_damage) + ")";

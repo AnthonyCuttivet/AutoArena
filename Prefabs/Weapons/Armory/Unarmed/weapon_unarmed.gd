@@ -26,7 +26,7 @@ func init(s:WeaponSettings, o:BattleBall) -> void:
 
 func init_scaling_stat():
 	scaling_stat_value = fdamage;
-	ball_owner.update_stat_text(true);
+	update_stat_text(true);
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
@@ -44,7 +44,7 @@ func _process(delta: float) -> void:
 
 	current_damage = clamp((ball_owner.linear_velocity.length() - base_max_speed) / speed_scale, 1, floor(fdamage));
 
-	ball_owner.update_stat_text(true);
+	update_stat_text(true);
 
 func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile_hit:Projectile = null) -> void:
 	# if(other.linear_velocity.length() > ball_owner.linear_velocity.length()):
@@ -73,7 +73,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	if(projectile_hit):
 		kb = (hit_pos - ball_owner.global_position).normalized() * kb_dist;
 
-	other.affect_health(-current_damage, ball_owner);
+	other.affect_health(-current_damage, ball_owner, weapon_slot_id);
 
 	if(battleblock_mode):
 		ball_owner.start_hitstop(0.01, h);
@@ -86,13 +86,13 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 
 	ball_owner.linear_velocity = ball_owner.linear_velocity.normalized() * ball_owner.base_max_speed;
 
-	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit != null);
+	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), weapon_slot_id, other.get_instance_id(), projectile_hit != null);
 
 	can_hit_cd_remaining += multi_hit_cd;
 
 	pass;
 
-func on_damaged(id:int, _amount:int, _from:int):
+func on_damaged(id:int, _amount:int, _from:int, _slot_id:int):
 	if(id != ball_owner.get_instance_id()): return;
 	can_hit_cd_remaining += just_hurt_hit_cd;
 	ball_owner.linear_velocity = ball_owner.linear_velocity.normalized() * 100.0;
@@ -120,8 +120,8 @@ func on_ball_bounced_battleblock(id:int, block:MCBattleBlock):
 func can_hit() -> bool:
 	return can_hit_cd_remaining <= 0.0;
 
-func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
-	if(id != ball_owner.get_instance_id()): return;
+func on_weapon_hit_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
+	if(!is_valid_slot_it(id, slot_id)): return;
 	scale_stat();
 	pass;
 

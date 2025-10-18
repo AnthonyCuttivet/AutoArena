@@ -1,28 +1,26 @@
-[gd_resource type="Resource" script_class="WeaponSettings" load_steps=8 format=3 uid="uid://elqmbfmcai5r"]
+[gd_resource type="Resource" script_class="WeaponSettings" load_steps=8 format=3 uid="uid://sh6e4n2uidpg"]
 
-[ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="1_p3qkb"]
-[ext_resource type="AudioStream" uid="uid://ddx8pstv0i4qf" path="res://Audio/SFX/BattleBalls/se_demon_hit_catchattack.wav" id="2_noibu"]
-[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="3_xrixw"]
-[ext_resource type="Texture2D" uid="uid://cfwyhor4kqo4c" path="res://Graphics/_Addons/Icons/fc888881.png" id="4_p3qkb"]
+[ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="1_37iis"]
+[ext_resource type="AudioStream" uid="uid://ddx8pstv0i4qf" path="res://Audio/SFX/BattleBalls/se_demon_hit_catchattack.wav" id="2_s1e1e"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="3_qrvua"]
+[ext_resource type="Texture2D" uid="uid://cfwyhor4kqo4c" path="res://Graphics/_Addons/Icons/fc888881.png" id="4_wxqcn"]
+[ext_resource type="PackedScene" uid="uid://dj8vboys4os4r" path="res://Prefabs/Weapons/Armory/Sandevistan/W_SANDEVISTAN.tscn" id="5_j0lhd"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lt4ae"]
 random_pitch = 1.25
 streams_count = 1
-stream_0/stream = ExtResource("2_noibu")
+stream_0/stream = ExtResource("2_s1e1e")
 
 [sub_resource type="Resource" id="Resource_3duvo"]
-script = ExtResource("3_xrixw")
+script = ExtResource("3_qrvua")
 audio_stream = SubResource("AudioStreamRandomizer_lt4ae")
 volume = -28.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
-[sub_resource type="Resource" id="Resource_0jyys"]
-metadata/__load_path__ = "res://Prefabs/Weapons/Armory/Unarmedd/W_Unarmed.tscn"
-
 [resource]
-script = ExtResource("1_p3qkb")
+script = ExtResource("1_37iis")
 name = "UNARMED?"
-spr = ExtResource("4_p3qkb")
+spr = ExtResource("4_wxqcn")
 melee = true
 ranged = false
 flip = false
@@ -44,29 +42,28 @@ projectile_self_hitstop = false
 lifesteal = false
 lifesteal_tick = 1
 independent_weapon = false
-stat_scale_value = 0.5
+stat_scale_value = 0.3
 stat_scale_name = "DMG / Max Speed"
 scaling_stat_float = false
 no_rotation_change = false
 no_projectile_scale_change = false
-weapon_prefab = SubResource("Resource_0jyys")
+weapon_prefab = ExtResource("5_j0lhd")
 bg_projectile = false
-details = "Triggers at 7/7 Speed"
+details = "Triggers at 6 / 6 Speed"
 white_details = false
 sfx_hit = SubResource("Resource_3duvo")
-leaderboard_offset = 1.0
+leaderboard_offset = 0.0
 leaderboard_rotation = 0.0
-leaderboard_no_spr = false
-scale_stat_multiplier = 1
-base_damage_multiplier = 1
+scale_stat_multiplier = 3
+base_damage_multiplier = 5
 no_clash_on_block = false
-base_weapon_rotation = 0.0
-color = Color(0.315033, 0.336142, 0.363281, 1)
-max_speed = 2200.0
-min_horizontal = 200.0
-gravity_strength = 1400.0
-drag_force = 0.02
-bounce_boost = 250.0
+base_weapon_rotation = 120.0
+color = Color(0.75638, 0.745483, 0.769531, 1)
+max_speed = 1000.0
+min_horizontal = 0.0
+gravity_strength = 3000.0
+drag_force = 0.05
+bounce_boost = 1000.0
 relative_bounce_boost = 0.0
 acceleration = 1.0
 knockback_resistance = 1.0

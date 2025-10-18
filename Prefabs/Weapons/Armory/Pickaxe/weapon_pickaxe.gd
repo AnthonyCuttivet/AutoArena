@@ -44,7 +44,7 @@ func _physics_process(delta: float) -> void:
 
 func init_scaling_stat():
 	scaling_stat_value = damage;
-	ball_owner.update_stat_text();
+	update_stat_text();
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
@@ -59,11 +59,11 @@ func level_up():
 	current_level += 1;
 	AudioManager.play_sfx(sfx_level_up, "SFX");
 	fx_confettis.emit();
-	ball_owner.update_ui_sprite();
+	update_ui_sprite();
 	update_alive_blocks();
 
-func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
-	if(id != ball_owner.get_instance_id()): return;
+func on_weapon_hit_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
+	if(!is_valid_slot_it(id, slot_id)): return;
 	request_spawn_block();
 
 func request_spawn_block():
@@ -80,7 +80,7 @@ func spawn_block():
 			break;
 		pass
 
-	var block:ProjectilePickaxeBlock = Utils.spawn_projectile(block_prefab, ball_owner, pos, PI / 2.0, ball_owner.main);
+	var block:ProjectilePickaxeBlock = Utils.spawn_projectile(block_prefab, ball_owner, self, pos, PI / 2.0, ball_owner.main);
 	block.upgrade.visible = false;
 	block.scale *= block_scale;
 	block.weapon_pickaxe = self;
@@ -121,7 +121,7 @@ func init_physics_params():
 func update_physics_params(pos:Vector2):
 	physics_params.transform = Transform2D(0, pos);
 
-func on_block_destroyed(from:BattleBall, block:ProjectilePickaxeBlock):
+func on_block_destroyed(from:Weapon, block:ProjectilePickaxeBlock):
 	ball_owner.main.global_hitstop(0.0, 0.15);
 	ball_owner.main.spawn_fx_block_destroyed(block.global_position, 1.0, block.sprite_2d.texture);
 	EventBus.camera_trigger_shake.emit(block_death_shake);
@@ -129,7 +129,7 @@ func on_block_destroyed(from:BattleBall, block:ProjectilePickaxeBlock):
 	active_blocks.erase(block);
 	block.destroy();
 
-	if(from == ball_owner && (current_level < block.level || block.level == blocks_textures.size())):
+	if(current_level < block.level || block.level == blocks_textures.size()):
 		scale_stat();
 		AudioManager.play_sfx(sfx_block_pickaxe, "SFX");
 

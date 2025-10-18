@@ -14,7 +14,7 @@ func _init() -> void:
 
 func init_scaling_stat():
 	scaling_stat_value = rotation_speed;
-	ball_owner.update_stat_text();
+	update_stat_text();
 	set_charged_sprite_alpha();
 
 func scale_stat(force:bool = false):
@@ -44,7 +44,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	if(projectile_hit):
 		kb = (hit_pos - ball_owner.global_position).normalized() * kb_dist;
 
-	other.affect_health(-d, ball_owner);
+	other.affect_health(-d, ball_owner, weapon_slot_id);
 
 	if(!projectile_hit && !no_self_hitstop):
 		ball_owner.start_hitstop(0.0, hitstop);
@@ -55,11 +55,11 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	other.hitflash(hitstop);
 	other.hit_pos = hit_pos;
 
-	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit != null);
+	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), weapon_slot_id, other.get_instance_id(), projectile_hit != null);
 	pass;
 
-func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
-	if(id != ball_owner.get_instance_id()): return;
+func on_weapon_hit_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
+	if(!is_valid_slot_it(id, slot_id)): return;
 	scale_stat();
 	pass;
 

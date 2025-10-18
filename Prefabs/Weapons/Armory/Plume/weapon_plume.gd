@@ -46,7 +46,7 @@ func _process(_delta: float) -> void:
 
 func init_scaling_stat():
 	scaling_stat_value = recall_dmg;
-	ball_owner.update_stat_text();
+	update_stat_text();
 
 func shoot_projectile():
 	spawn_feather();
@@ -62,7 +62,7 @@ func scale_stat(force:bool = false):
 		shoot_speed = current_shoot_speed;
 		add_sub_weapon(max_feathers -1, true);
 
-	if(recall_dmg == dmg_to_feather_conversion + recall_dmg_bonus):
+	if(recall_dmg >= dmg_to_feather_conversion + recall_dmg_bonus):
 		max_feathers += 1;
 		recall_dmg_bonus += 1;
 		recall_dmg = 1 + recall_dmg_bonus;
@@ -71,12 +71,16 @@ func scale_stat(force:bool = false):
 		add_sub_weapon(max_feathers -1, true);
 
 		settings.details = plume_details();
-		ball_owner.update_ui_details(ball_owner.color, true);
+		update_ui_details(settings.color, true);
 
 	init_scaling_stat();
 
-func on_listened_event_received(id:int, _to:int, _is_projectile:bool):
-	if(id != ball_owner.get_instance_id()): return;
+func on_listened_event_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
+	if(!is_valid_slot_it(id, slot_id)): return;
+
+	if(slot_id != weapon_slot_id):
+		scale_stat();
+
 	if(recalling):
 		scale_stat();
 	pass;
@@ -100,7 +104,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	if(projectile_hit):
 		kb = (hit_pos - ball_owner.global_position).normalized() * kb_dist;
 
-	other.affect_health(-d, ball_owner);
+	other.affect_health(-d, ball_owner, weapon_slot_id);
 
 	if(!projectile_hit):
 		ball_owner.start_hitstop(0.0, h);
@@ -109,7 +113,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	other.hitflash(hitstop);
 	other.hit_pos = hit_pos;
 
-	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit != null);
+	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), weapon_slot_id, other.get_instance_id(), projectile_hit != null);
 	pass;
 
 func add_sub_weapon(i:int, update_spread:bool = false):
@@ -142,8 +146,8 @@ func spawn_feather():
 		shoot_speed_elapsed = 0.0;
 		shoot_speed = recall_delay;
 
-	var p:ProjectilePlume = Utils.shoot_projectile(settings.projectile_prefab, ball_owner, ball_owner.weapon_slot.global_rotation, self);
-	p.scale *= ball_owner.weapon.projectile_scale;
+	var p:ProjectilePlume = Utils.shoot_projectile(settings.projectile_prefab, ball_owner, self, weapon_slot.global_rotation, self);
+	p.scale *= projectile_scale;
 	p.set_speed(projectile_speed);
 	p.weapon_owner = self;
 	p.move_duration = feather_move_duration;

@@ -25,20 +25,9 @@ var railgun_width_modifier:float = 1.0;
 func _init() -> void:
 	EventBus.ball_weapon_hit.connect(on_listened_event_received);
 
-# func _process(_delta: float) -> void:
-# 	if(active_coin != null):
-# 		var dir_to_center:Vector2 = (ball_owner.main.arena_center.global_position - ball_owner.global_position).normalized();
-# 		var angle_between_deg:float = rad_to_deg(ball_owner.weapon_slot.global_transform.x.angle_to(dir_to_center));
-
-# 		if(abs(angle_between_deg) > 45.0):
-# 			custom_rot_speed_multiplier = 3.0;
-# 		else:
-# 			custom_rot_speed_multiplier = 1.0;
-
-
 func init_scaling_stat():
 	scaling_stat_value = projectiles;
-	ball_owner.update_stat_text();
+	update_stat_text();
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
@@ -55,8 +44,8 @@ func scale_stat(force:bool = false):
 
 	init_scaling_stat();
 
-func on_listened_event_received(id:int, _to:int, _is_projectile:bool):
-	if(id != ball_owner.get_instance_id()): return;
+func on_listened_event_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
+	if(!is_valid_slot_it(id, slot_id)): return;
 	scale_stat();
 	pass;
 
@@ -82,7 +71,7 @@ func on_coin_caught():
 	active_coin = null;
 	ball_owner.start_hitstop(0.0, railgun_duration + 0.5, Vector2.ZERO, true, true);
 
-	var railgun:ProjectileRailgun = Utils.spawn_projectile(railgun_prefab, ball_owner, ball_owner.global_position, ball_owner.weapon_slot.global_rotation, ball_owner.main);
+	var railgun:ProjectileRailgun = Utils.spawn_projectile(railgun_prefab, ball_owner, self, ball_owner.global_position, weapon_slot.global_rotation, ball_owner.main);
 	active_railgun = railgun;
 	railgun.weapon_owner = self;
 	railgun.custom_damage = 1;

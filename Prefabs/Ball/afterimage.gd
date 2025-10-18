@@ -42,6 +42,7 @@ func spawn_afterimage():
 	else:
 		if(use_custom_color):
 			img.modulate = custom_color;
+			img.modulate.a = opacity;
 		else:
 			img.modulate = Color(source_sprite.self_modulate.r, source_sprite.self_modulate.g, source_sprite.self_modulate.b, opacity)
 

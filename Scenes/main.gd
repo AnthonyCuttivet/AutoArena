@@ -265,7 +265,8 @@ func _ready() -> void:
 		teams_alive_members[balls[i].team] += 1;
 
 		init_damage_dealt(balls[i].get_instance_id());
-		balls[i].weapon.weapon_is_ready();
+		for weapon in balls[i].weapons:
+			weapon.weapon_is_ready();
 
 	if(display_damage_dealt):
 		update_damage_dealt_UI();
@@ -495,8 +496,8 @@ func reset_match():
 	balls[0].respawn(_1v1_spots[0], _1v1_hp);
 	balls[1].respawn(_1v1_spots[1], _1v1_hp);
 
-	fill_character_ui(balls[0], name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
-	fill_character_ui(balls[1], name_right_1p, sprite_right_1p, details_right_1p, stat_right_1p, combo_counter_R1_1P);
+	fill_weapon_ui(balls[0], 0, name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
+	fill_weapon_ui(balls[1], 0, name_right_1p, sprite_right_1p, details_right_1p, stat_right_1p, combo_counter_R1_1P);
 
 	balls[0].weapon.reset();
 	balls[1].weapon.reset();
@@ -522,6 +523,14 @@ func init_ui():
 	container_2v2_left.visible = balls.size() == 4;
 	container_2v2_right.visible = balls.size() >= 3;
 
+	if(balls.size() >= 1 && balls[0].use_dual_wield):
+		container_1v1_left.visible = false;
+		container_2v2_left.visible = true;
+
+	if(balls.size() >= 2 && balls[1].use_dual_wield):
+		container_1v1_right.visible = false;
+		container_2v2_right.visible = true;
+
 	stat_left_1p.visible = container_1v1_left.visible;
 	stat_right_1p.visible = container_1v1_right.visible;
 	stat_left_1_2p.visible = container_2v2_left.visible;
@@ -529,20 +538,34 @@ func init_ui():
 	stat_right_1_2p.visible = container_2v2_right.visible;
 	stat_right_2_2p.visible = container_2v2_right.visible;
 
+
 	if(balls.size() == 1):
-		fill_character_ui(balls[0], name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
+		if(balls[0].use_dual_wield):
+			fill_weapon_ui(balls[0], 0, name_left_1_2p, sprite_left_1_2p, details_left_1_2p, stat_left_1_2p, combo_counter_L1_2P);
+			fill_weapon_ui(balls[0], 1, name_left_2_2p, sprite_left_2_2p, details_left_2_2p, stat_left_2_2p, combo_counter_L2_2P);
+		else:
+			fill_weapon_ui(balls[0], 0, name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
 	elif(balls.size() == 2):
-		fill_character_ui(balls[0], name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
-		fill_character_ui(balls[1], name_right_1p, sprite_right_1p, details_right_1p, stat_right_1p, combo_counter_R1_1P);
+		if(balls[0].use_dual_wield):
+			fill_weapon_ui(balls[0], 0, name_left_1_2p, sprite_left_1_2p, details_left_1_2p, stat_left_1_2p, combo_counter_L1_2P);
+			fill_weapon_ui(balls[0], 1, name_left_2_2p, sprite_left_2_2p, details_left_2_2p, stat_left_2_2p, combo_counter_L2_2P);
+		else:
+			fill_weapon_ui(balls[0], 0, name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
+
+		if(balls[1].use_dual_wield):
+			fill_weapon_ui(balls[1], 0, name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p, combo_counter_R1_2P);
+			fill_weapon_ui(balls[1], 1, name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p, combo_counter_R2_2P);
+		else:
+			fill_weapon_ui(balls[1], 0, name_right_1p, sprite_right_1p, details_right_1p, stat_right_1p, combo_counter_R1_1P);
 	elif(balls.size() == 3):
-		fill_character_ui(balls[0], name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
-		fill_character_ui(balls[1], name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p, combo_counter_R1_2P);
-		fill_character_ui(balls[2], name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p, combo_counter_R2_2P);
+		fill_weapon_ui(balls[0], 0, name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
+		fill_weapon_ui(balls[1], 0, name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p, combo_counter_R1_2P);
+		fill_weapon_ui(balls[2], 0, name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p, combo_counter_R2_2P);
 	elif(balls.size() == 4):
-		fill_character_ui(balls[0], name_left_1_2p, sprite_left_1_2p, details_left_1_2p, stat_left_1_2p, combo_counter_L1_2P);
-		fill_character_ui(balls[1], name_left_2_2p, sprite_left_2_2p, details_left_2_2p, stat_left_2_2p, combo_counter_L2_2P);
-		fill_character_ui(balls[2], name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p, combo_counter_R1_2P);
-		fill_character_ui(balls[3], name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p, combo_counter_R2_2P);
+		fill_weapon_ui(balls[0], 0, name_left_1_2p, sprite_left_1_2p, details_left_1_2p, stat_left_1_2p, combo_counter_L1_2P);
+		fill_weapon_ui(balls[1], 0, name_left_2_2p, sprite_left_2_2p, details_left_2_2p, stat_left_2_2p, combo_counter_L2_2P);
+		fill_weapon_ui(balls[2], 0, name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p, combo_counter_R1_2P);
+		fill_weapon_ui(balls[3], 0, name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p, combo_counter_R2_2P);
 
 	if(battleblock_mode):
 		fill_battleblock_ui(balls[0], bb_left, bb_blocks_left);
@@ -559,28 +582,32 @@ func init_ui():
 		else:
 			ta_record.format([Utils.convert_time_to_string(time_attack_leaderboards[balls[0].weapon_settings.name.to_upper()].rankings[0].time)]);
 
-func fill_character_ui(ball:BattleBall, name_text:DynamicText, sprite:TextureRect, details_text:DynamicText, stat_text:DynamicText, combo_counter:ComboCounterUI):
-	name_text.format([ball.weapon_settings.name]);
-	name_text.self_modulate = ball.color;
-	sprite.texture = ball.weapon.sprite_2d.texture;
-	details_text.format([ball.weapon_settings.details]);
-	if(ball.weapon_settings.white_details):
-		details_text.text = "[color=" + ball.color.to_html() + "]" + details_text.text + "[/color]";
+func fill_weapon_ui(ball:BattleBall, weapon_index:int, name_text:DynamicText, sprite:TextureRect, details_text:DynamicText, stat_text:DynamicText, combo_counter:ComboCounterUI):
+	var weapon:Weapon = ball.get_weapon(weapon_index);
+
+	name_text.format([weapon.settings.name]);
+	name_text.self_modulate = weapon.settings.color;
+	sprite.texture = weapon.sprite_2d.texture;
+
+	details_text.format([weapon.settings.details]);
+
+	if(weapon.settings.white_details):
+		details_text.text = "[color=" + weapon.settings.color.to_html() + "]" + details_text.text + "[/color]";
 		details_text.modulate = Color.WHITE;
 	else:
-		details_text.modulate = ball.color;
+		details_text.modulate = weapon.settings.color;
 
 	if(details_text.text == ""):details_text.text = " ";
 
-	ball.name_text = name_text;
-	ball.ui_sprite = sprite;
-	ball.details_text = details_text;
-	ball.stat_text = stat_text;
+	weapon.name_text = name_text;
+	weapon.ui_sprite = sprite;
+	weapon.details_text = details_text;
+	weapon.stat_text = stat_text;
 
-	ball.stat_text.self_modulate = ball.color;
-	ball.update_stat_text();
+	weapon.stat_text.self_modulate = weapon.settings.color;
+	weapon.update_stat_text();
 
-	combo_counter.init(ball);
+	combo_counter.init(ball, weapon_index);
 
 func fill_battleblock_ui(ball:BattleBall, mult_text:DynamicText, bb_blocks:GridContainer):
 	ball.bb_mult_text = mult_text;
@@ -602,7 +629,7 @@ func generate_damage_dealt_string() -> String:
 
 	return "";
 
-func on_ball_damaged(id: int, amount:int, from:int):
+func on_ball_damaged(id: int, amount:int, from:int, slot_id:int):
 	if(!balls_ids.has(id)):
 		return;
 
@@ -612,24 +639,27 @@ func on_ball_damaged(id: int, amount:int, from:int):
 	var ball:BattleBall = get_ball_by_id(id);
 
 	add_damage_dealt(from, abs(amount));
-	get_ball_by_id(from).add_combo(ball);
+	get_ball_by_id(from).add_combo(ball, slot_id);
 	ball.stop_combo();
 
-	var fx: GPUParticles2D = fx_hit_prefab.instantiate();
+	var c:Color = ball.color;
 
-	# EventBus.set_chromatic_aberration.emit(5, 0.2);
+	for i in range(2):
+		if(ball.use_dual_wield):
+			c = ball.weapon_settings_dual[i].color;
 
-	get_tree().current_scene.add_child(fx);
-	fx.position = Vector2.ZERO;
-	fx.global_position = ball.global_position;
-	fx.modulate = ball.color;
-	fx.global_rotation = (ball.global_position - ball.hit_pos).normalized().angle();
-	fx.finished.connect(fx.queue_free);
-	fx.visible = true;
-	fx.emitting = false;
-	if(battleblock_mode):
-		fx.scale = Vector2.ONE * 0.5;
-	just_spawned_fxs[fx] = 0;
+		var fx: GPUParticles2D = fx_hit_prefab.instantiate();
+		get_tree().current_scene.add_child(fx);
+		fx.position = Vector2.ZERO;
+		fx.global_position = ball.global_position;
+		fx.modulate = c;
+		fx.global_rotation = (ball.global_position - ball.hit_pos).normalized().angle();
+		fx.finished.connect(fx.queue_free);
+		fx.visible = true;
+		fx.emitting = false;
+		if(battleblock_mode):
+			fx.scale = Vector2.ONE * 0.5;
+		just_spawned_fxs[fx] = 0;
 
 	EventBus.camera_trigger_shake.emit( max(hit_shake + amount, 0, hit_max_shake));
 
@@ -659,7 +689,7 @@ func on_ball_lifesteal(target:int, origin:int):
 
 	pass ;
 
-func on_ball_clash(id:int, clash_pos:Vector2, silent:bool):
+func on_ball_clash(id:int, weapon_slot_id:int, clash_pos:Vector2, silent:bool):
 	if(!balls_ids.has(id)):
 		return;
 
@@ -668,13 +698,15 @@ func on_ball_clash(id:int, clash_pos:Vector2, silent:bool):
 	ball.set_or_ignore_invincibility(balls[0].clash_invincibility);
 	ball.stop_combo();
 
+	var w:Weapon = ball.get_weapon(weapon_slot_id);
+
 	if(!silent):
 		for i in range(2):
 			var fx: GPUParticles2D = fx_clash.instantiate();
 			add_child(fx);
 			fx.global_position = clash_pos + Vector2.ONE * randf_range(-15.0, 15.0);
-			fx.modulate = ball.color;
-			fx.rotation = ball.weapon_slot.global_rotation;
+			fx.modulate = w.settings.color;
+			fx.rotation = w.weapon_slot.global_rotation;
 			fx.emitting = false;
 			fx.finished.connect(fx.queue_free);
 			if(battleblock_mode):
@@ -995,7 +1027,12 @@ func show_winner_text(winners:Array[BattleBall]):
 		if(hypermatch_mode):
 			s = "[color=#FF9494]✦[/color][color=#FFF094]Ｈ[/color][color=#B3FF94]Ｙ[/color][color=#94FFD1]Ｐ[/color][color=#94D1FF]Ξ[/color][color=#B394FF]Ｒ[/color][color=#FF94F0]✦[/color] "
 
-		s += "[color=" + winners[0].color.to_html() + "]" + winners[0].weapon_settings.name + "[/color] wins!"
+		if(winners[0].use_dual_wield):
+			s += "[color=" + winners[0].weapon_settings_dual[0].color.to_html() + "]" + winners[0].weapon_settings_dual[0].name + "[/color]";
+			s += "[color=" + winners[0].weapon_settings_dual[1].color.to_html() + "] /[/color][color=" + winners[0].weapon_settings_dual[0].color.to_html() + "]/ [/color]";
+			s += "[color=" + winners[0].weapon_settings_dual[1].color.to_html() + "]" + winners[0].weapon_settings_dual[1].name + "[/color] wins!";
+		else:
+			s += "[color=" + winners[0].color.to_html() + "]" + winners[0].weapon_settings.name + "[/color] wins!"
 
 		winner_text.format([s]);
 

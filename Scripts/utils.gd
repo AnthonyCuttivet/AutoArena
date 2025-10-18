@@ -98,23 +98,23 @@ static func get_random_color() -> Color:
 		randf_range(0.0, 1.0), # BRIGHTNESS
 	);
 
-static func shoot_projectile(projectile_prefab:PackedScene, ball_owner:BattleBall, rotation:float, parent:Node2D, speed:float = -1.0, pierce:int = -1, bounces:int = -1) -> Projectile:
+static func shoot_projectile(projectile_prefab:PackedScene, ball_owner:BattleBall, weapon:Weapon, rotation:float, parent:Node2D, speed:float = -1.0, pierce:int = -1, bounces:int = -1) -> Projectile:
 	var p:Projectile = projectile_prefab.instantiate();
 	p.global_position = parent.global_position;
 	p.rotation = rotation;
-	p.scale = ball_owner.weapon_slot.scale * ball_owner.root.scale;
-	p.init(ball_owner, speed, pierce, bounces);
+	p.scale = weapon.weapon_slot.scale * ball_owner.root.scale;
+	p.init(ball_owner, weapon, speed, pierce, bounces);
 	parent.get_tree().root.call_deferred("add_child", p);
 	return p;
 
-static func spawn_projectile(projectile_prefab:PackedScene, ball_owner:BattleBall, position:Vector2, rotation:float, parent:Node2D, speed:float = -1.0, pierce:int = -1, bounces:int = -1) -> Projectile:
+static func spawn_projectile(projectile_prefab:PackedScene, ball_owner:BattleBall, weapon:Weapon, position:Vector2, rotation:float, parent:Node2D, speed:float = -1.0, pierce:int = -1, bounces:int = -1) -> Projectile:
 	var p:Projectile = projectile_prefab.instantiate();
 	p.global_position = position;
 	p.rotation = rotation;
-	p.scale = ball_owner.weapon_slot.scale * ball_owner.root.scale;
-	p.init(ball_owner, speed, pierce, bounces);
+	p.scale = weapon.weapon_slot.scale * ball_owner.root.scale;
+	p.init(ball_owner, weapon, speed, pierce, bounces);
 
-	if(ball_owner.weapon_settings.bg_projectile):
+	if(weapon.settings.bg_projectile):
 		ball_owner.main.projectiles_bg_parent.call_deferred("add_child", p);
 	else:
 		parent.get_tree().root.call_deferred("add_child", p);
@@ -276,3 +276,30 @@ static func create_reusable_timer(parent:Node2D, duration:float) -> Timer:
 	t.wait_time = duration;
 	parent.add_child(t);
 	return t;
+
+static func typewriter_effect(label: RichTextLabel, text: String, duration: float = 1.0) -> void:
+	if not label:
+		return
+	label.text = ""
+	if text.is_empty():
+		return
+
+	var visible_text := ""
+	var char_delay := duration / float(text.length())
+	var inside_tag := false
+
+	await label.get_tree().process_frame
+
+	for c in text:
+		if c == "[":
+			inside_tag = true
+		if not inside_tag:
+			visible_text += c
+			label.text = visible_text
+			await label.get_tree().create_timer(char_delay).timeout
+		else:
+			# Append tags instantly so formatting stays correct
+			visible_text += c
+		if c == "]":
+			inside_tag = false
+			label.text = visible_text

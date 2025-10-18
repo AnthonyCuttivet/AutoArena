@@ -9,7 +9,7 @@ func _init() -> void:
 
 func init_scaling_stat():
 	scaling_stat_value = damage;
-	ball_owner.update_stat_text();
+	update_stat_text();
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
@@ -18,11 +18,11 @@ func scale_stat(force:bool = false):
 	AudioManager.play_sfx(sfx_fingersnap);
 	init_scaling_stat();
 
-func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
-	if(id != ball_owner.get_instance_id()): return;
+func on_weapon_hit_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
+	if(!is_valid_slot_it(id, slot_id)): return;
 	scale_stat();
 
-func on_ball_damaged_received(id:int, _amount:int, _from:int):
+func on_ball_damaged_received(id:int, _amount:int, _from:int, _slot_id:int):
 	if(id != ball_owner.get_instance_id()): return;
 	damage = 1;
 	init_scaling_stat();

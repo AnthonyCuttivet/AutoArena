@@ -9,9 +9,10 @@ var fixed_lifetime_elapsed:float = 0.0;
 var fixed_dir:Vector2 = Vector2.ZERO;
 var position_fixed:bool = false;
 
-func init(o:BattleBall, s:float, _p:int = 0, _b:int = 0):
-	super.init(o, s);
-
+func init(o:BattleBall, w:Weapon, s:float, p:int = -1, b:int = -1):
+	super.init(o,w,s);
+	
+	weapon_owner = w;
 	fixed_dir = transform.x;
 
 	if(acceleration_curve != null):
@@ -24,8 +25,6 @@ func init(o:BattleBall, s:float, _p:int = 0, _b:int = 0):
 	rotation_speed = angle_to_center / move_duration;
 
 func _physics_process(delta: float) -> void:
-	weapon_owner = ball_owner.weapon;
-
 	move_elapsed += delta;
 
 	if(!position_fixed):

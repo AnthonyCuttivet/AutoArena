@@ -16,13 +16,13 @@ func init() -> void:
 	weapon_clash_cd_elapsed = weapon_clash_cd;
 	pass;
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 
 	for ball in target_cd:
 		target_cd[ball] = max(0.0, target_cd[ball] - delta);
 		if(is_overlapping_target(ball) && target_cd[ball] <= 0.0 && !is_clash_on_cd()):
 			refresh_target_cd(ball);
-			weapon.on_weapon_hit(ball, ball_owner.global_position, self.get_instance_id());
+			weapon.on_weapon_hit(ball, collider.global_position, self.get_instance_id());
 
 	if(is_clash_on_cd()):
 		weapon_clash_cd_elapsed += delta;

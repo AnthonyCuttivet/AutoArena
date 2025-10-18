@@ -19,7 +19,7 @@ func _init() -> void:
 
 func init_scaling_stat():
 	scaling_stat_value = thunderstrike_duration;
-	ball_owner.update_stat_text();
+	update_stat_text();
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
@@ -27,8 +27,8 @@ func scale_stat(force:bool = false):
 	shoot_speed += 0.015;
 	init_scaling_stat();
 
-func on_listened_event_received(id:int, _to:int, _is_projectile:bool):
-	if(id != ball_owner.get_instance_id()): return;
+func on_listened_event_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
+	if(!is_valid_slot_it(id, slot_id)): return;
 	scale_stat();
 	pass;
 
@@ -36,10 +36,10 @@ func shoot_projectile():
 	add_thunder();
 
 func add_thunder():
-	var p:Projectile = Utils.shoot_projectile(settings.projectile_prefab, ball_owner, ball_owner.weapon_slot.global_rotation, self);
+	var p:Projectile = Utils.shoot_projectile(settings.projectile_prefab, ball_owner, self, weapon_slot.global_rotation, self);
 	p.set_speed(projectile_speed + scaling_stat_value * 50.0);
 	p.weapon_owner = self;
-	p.scale = ball_owner.weapon_slot.scale * ball_owner.root.scale * projectile_scale;
+	p.scale = weapon_slot.scale * ball_owner.root.scale * projectile_scale;
 	p.global_position = p_spawn.global_position;
 	p.global_rotation = p_spawn.global_rotation;
 	p.sprite_2d.modulate = Color.GRAY;
@@ -79,7 +79,7 @@ func add_thunderstrike(i0:int, i1:int):
 	var pos:Vector2 = p1 + (p0 - p1) * 0.5;
 	var rot:float = (p0 - p1).normalized().angle();
 
-	var strike:ProjectileThunderStrike = Utils.spawn_projectile(thunderstrike_prefab, ball_owner, pos, rot, self);
+	var strike:ProjectileThunderStrike = Utils.spawn_projectile(thunderstrike_prefab, ball_owner, self, pos, rot, self);
 	strike.weapon_owner = self;
 
 	strike.thunderstrike_hitbox.shape.height = (p0.distance_to(p1) / 2.3);

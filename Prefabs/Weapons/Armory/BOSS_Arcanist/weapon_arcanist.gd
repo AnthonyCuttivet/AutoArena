@@ -50,14 +50,14 @@ func init(s:WeaponSettings, o:BattleBall):
 
 func init_scaling_stat():
 	scaling_stat_value = damage;
-	ball_owner.update_stat_text();
+	update_stat_text();
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
 	damage += stat_scale_value;
 	init_scaling_stat();
 
-func on_listened_event_received(id:int, _to:int, _is_projectile:bool):
+func on_listened_event_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	if(scaled_at == next_thunderstrike_at): return;
 	scaled_at = next_thunderstrike_at;
@@ -79,7 +79,7 @@ func add_thunder():
 	if(increase_after_next):
 		increase_thunder_needed();
 
-	var p:Projectile = Utils.shoot_projectile(settings.projectile_prefab, ball_owner, ball_owner.weapon_slot.global_rotation, self);
+	var p:Projectile = Utils.shoot_projectile(settings.projectile_prefab, ball_owner, self, weapon_slot.global_rotation, self);
 	p.set_speed(projectile_speed);
 	p.weapon_owner = self;
 	p.scale *= projectile_scale;
@@ -127,7 +127,7 @@ func add_thunderstrike(i0:int, i1:int):
 	var rot:float = (p1 - p0).angle();
 	var dist:float = p0.distance_to(p1);
 
-	var strike:ProjectileBlackThunderStrike = Utils.spawn_projectile(thunderstrike_prefab, ball_owner, pos, rot, self);
+	var strike:ProjectileBlackThunderStrike = Utils.spawn_projectile(thunderstrike_prefab, ball_owner, self, pos, rot, self);
 	strike.weapon_owner = self;
 
 	strike.thunderstrike_line.set_point_position(0, strike.thunderstrike_line.to_local(p0));

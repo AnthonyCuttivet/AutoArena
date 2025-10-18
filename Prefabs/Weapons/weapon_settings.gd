@@ -55,7 +55,7 @@ class_name WeaponSettings extends Resource
 # Battleball settings
 
 @export var base_weapon_rotation:float = 0.0;
-@export var color:Color;
+@export var color:Color = Color.WHITE;
 
 @export var max_speed: float = 2200.0
 @export var min_horizontal: float = 200.0

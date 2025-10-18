@@ -30,7 +30,7 @@ func init(s:WeaponSettings, o:BattleBall):
 func _process(delta):
 	if(ball_owner.main != null && !level_name_init):
 		level_name_init = true;
-		ball_owner.update_ui_name(Color.WHITE, get_name_and_level_str());
+		update_ui_name(Color.WHITE, get_name_and_level_str());
 
 	if(dice_upgrade_effect_remaining > 0.0):
 		dice_upgrade_effect_remaining -= delta;
@@ -52,14 +52,14 @@ func reset():
 	set_dice(0);
 	damage = 1;
 
-	ball_owner.update_ui_sprite();
-	ball_owner.update_ui_name(Color.WHITE, get_name_and_level_str());
+	update_ui_sprite();
+	update_ui_name(Color.WHITE, get_name_and_level_str());
 
 	init_scaling_stat();
 
 func init_scaling_stat():
 	scaling_stat_value = damage;
-	ball_owner.update_stat_text();
+	update_stat_text();
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
@@ -77,8 +77,8 @@ func scale_stat(force:bool = false):
 	damage = r;
 	init_scaling_stat();
 
-func on_weapon_hit_received(id:int, _to:int, _is_projectile:bool):
-	if(id != ball_owner.get_instance_id()): return;
+func on_weapon_hit_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
+	if(!is_valid_slot_it(id, slot_id)): return;
 	AudioManager.play_sfx(sfx_hit, "SFX", 1.0 + (dice_index * sfxs_hit_pitch));
 	scale_stat();
 	pass;
@@ -96,9 +96,9 @@ func set_dice(i:int):
 func on_dice_upgrade():
 	dice_upgrade_effect_remaining += dice_upgrade_effect_duration;
 	AudioManager.play_sfx(sfx_upgrade, "SFX");
-	ball_owner.update_ui_sprite();
+	update_ui_sprite();
 	fx_confettis.emit();
-	ball_owner.update_ui_name(Color.WHITE, get_name_and_level_str());
+	update_ui_name(Color.WHITE, get_name_and_level_str());
 
 func get_custom_stat_format() -> String:
 	var dmg:String = str(damage);
@@ -117,7 +117,7 @@ func get_roulette_str() -> String:
 func get_name_and_level_str() -> String:
 	var amp:float = dice_index * 10.0;
 	var c:String = levels_colors[dice_index].to_html();
-	return " [color=" + ball_owner.color.to_html() + "]" + ball_owner.weapon_settings.name + "[/color] [wave amp=" + str(amp) + " freq=" + str(amp / 2.0) + "][color=" + c + "]LV." + str(dice_index) + "[/color][/wave] ";
+	return "[color=" + settings.color.to_html() + "]" + settings.name + "[/color] [wave amp=" + str(amp) + " freq=" + str(amp / 2.0) + "][color=" + c + "]LV." + str(dice_index) + "[/color][/wave] ";
 
 func set_battleblock_modifiers():
 	super.set_battleblock_modifiers();

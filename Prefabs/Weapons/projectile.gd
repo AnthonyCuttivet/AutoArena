@@ -27,9 +27,11 @@ var custom_hit_sfx:SFX;
 var accumulated_gravity:float = 0.0;
 var multihit_delay:float = 0.0;
 var destruction_delay:float = 0.05;
+var always_clash:bool = false;
 
-func init(o:BattleBall, s:float, p:int = -1, b:int = -1):
+func init(o:BattleBall, w:Weapon, s:float, p:int = -1, b:int = -1):
 	ball_owner = o;
+	weapon_owner = w;
 
 	if(s != -1.0):
 		speed = s;
@@ -42,6 +44,7 @@ func init(o:BattleBall, s:float, p:int = -1, b:int = -1):
 
 	velocity = transform.x * speed;
 	hitbox.ball_owner = o;
+	hitbox.weapon = w;
 	hitbox.projectile = self;
 
 func _physics_process(delta: float) -> void:
@@ -75,7 +78,7 @@ func _on_projectile_hitbox_area_entered(other: Area2D) -> void:
 				AudioManager.play_sfx(weapon_owner.settings.sfx_hit, "SFX");
 		pass;
 
-	elif(other is Hitbox && other.ball_owner != null && other.ball_owner != ball_owner && other.ball_owner.team != ball_owner.team):
+	elif(other is Hitbox && (always_clash || (other.ball_owner != ball_owner && other.ball_owner.team != ball_owner.team))):
 		if(absolute):
 			if(other.ball_owner.weapon_settings.independent_weapon):
 				other.weapon.on_weapon_clash(ball_owner, other.global_position, true);
@@ -84,7 +87,7 @@ func _on_projectile_hitbox_area_entered(other: Area2D) -> void:
 		if(other.ball_owner.weapon_settings.independent_weapon):
 			other.weapon.on_weapon_clash(ball_owner, other.global_position, true);
 		else:
-			other.ball_owner.weapon.on_weapon_clash(ball_owner, other.global_position, true);
+			other.weapon.on_weapon_clash(ball_owner, other.global_position, true);
 
 		velocity = velocity.rotated(deg_to_rad(randf_range(90,270)));
 		self.rotation = velocity.angle();
@@ -108,7 +111,7 @@ func _on_projectile_hitbox_body_entered(other: Node2D) -> void:
 
 func on_hurtbox_hit(other:BattleBall):
 	if(other != null):
-		ball_owner.weapon.on_weapon_hit(other, self.global_position, hitbox.get_instance_id(), self);
+		weapon_owner.on_weapon_hit(other, self.global_position, hitbox.get_instance_id(), self);
 		on_hit_effect(other);
 
 	pierce_count -= 1;

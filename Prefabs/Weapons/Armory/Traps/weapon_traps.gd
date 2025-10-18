@@ -38,20 +38,20 @@ func _process(delta: float) -> void:
 
 func init_scaling_stat():
 	scaling_stat_value = damage;
-	ball_owner.update_stat_text();
+	update_stat_text();
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
-	damage += stat_scale_value;
+	damage = best_combo;
 	init_scaling_stat();
 
 func on_trap_hit(other:BattleBall, hit_pos:Vector2, kb_dir:Vector2, h:float):
-	other.affect_health(-damage, ball_owner);
+	other.affect_health(-damage, ball_owner, weapon_slot_id);
 	other.start_hitstop(0.0, h, kb_dir * knockback, true, true);
 	other.hitflash(h);
 	other.hit_pos = hit_pos;
 
-	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), false);
+	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), weapon_slot_id, other.get_instance_id(), false);
 	add_combo(other.get_instance_id(), hit_pos);
 
 	other.trail_2d.set_color(ball_owner.color);
@@ -77,7 +77,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	if(!other.silent_on_hit):
 		AudioManager.play_sfx(settings.sfx_hit, "SFX");
 
-	other.affect_health(-damage, ball_owner);
+	other.affect_health(-damage, ball_owner, weapon_slot_id);
 
 	if(!projectile_hit):
 		ball_owner.start_hitstop(0.0, h);
@@ -86,7 +86,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	other.hitflash(hitstop);
 	other.hit_pos = hit_pos;
 
-	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit != null);
+	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), weapon_slot_id, other.get_instance_id(), projectile_hit != null);
 	pass;
 
 func trap_hit_fxs(pos:Vector2):
@@ -100,7 +100,7 @@ func add_combo(ball_id:int, hit_pos:Vector2):
 	combo_remainings[ball_id] = ball_owner.max_combo_duration;
 
 	if(best_combo == 0): # Because the first hit deals no damage, so no event for "damaged"
-		ball_owner.add_combo(ball_owner.main.get_ball_by_id(ball_id));
+		ball_owner.add_combo(ball_owner.main.get_ball_by_id(ball_id), weapon_slot_id);
 
 	# update_details_combo(combo_values[ball_id]);
 
@@ -130,7 +130,7 @@ func update_details_combo(combo:int):
 		var w:String = "[wave amp=" + str(combo * 25.0) + "freq=" + str(combo * 15.0) + "]";
 		settings.details = w + "[color=" + combo_color.to_html() + "][b][i]" + str(combo) + " [/i][/b][/color]" + h + "[/wave]";
 
-	ball_owner.update_ui_details(Color.WHITE, true);
+	update_ui_details(Color.WHITE, true);
 
 func get_combo_text(combo:int) -> String:
 	return "[color=#95DE03]h[/color][color=#85DB19]i[/color][color=#76D82F]t[/color]" + ("[color=#67D545]S[/color]" if combo > 1 else "") + " [color=#48CF72]c[/color][color=#39CC88]o[/color][color=#29C99E]m[/color][color=#26C1A0]b[/color][color=#23B9A2]o[/color] [color=#1CAAA6]![/color][color=#19A2A8]![/color][color=#169AAA]![/color]"

@@ -41,7 +41,7 @@ func _init() -> void:
 
 func init_scaling_stat():
 	scaling_stat_value = dash_damage;
-	ball_owner.update_stat_text();
+	update_stat_text();
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
@@ -77,7 +77,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	if(!other.silent_on_hit):
 		AudioManager.play_sfx(settings.sfx_hit if !weapon_opened else sfx_dash_hit, "SFX");
 
-	other.affect_health(-d, ball_owner);
+	other.affect_health(-d, ball_owner, weapon_slot_id);
 
 	# if(weapon_opened): print(Utils.pf() + " Open Hit");
 	# else: print(Utils.pf() + " Closed hit");
@@ -92,11 +92,12 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	#if(weapon_opened):
 		#scale_stat();
 
-	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), other.get_instance_id(), projectile_hit != null);
+	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), weapon_slot_id, other.get_instance_id(), projectile_hit != null);
 	pass;
 
-func on_listened_event_received(id:int, _to:int, _is_projectile:bool):
-	if(id != ball_owner.get_instance_id()): return;
+func on_listened_event_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
+	if(!is_valid_slot_it(id, slot_id) || slot_id == weapon_slot_id): return;
+	scale_stat();
 	pass;
 
 func on_ball_bounce_other_ball(id:int, other:int):
@@ -130,7 +131,7 @@ func start_dash(dir:Vector2):
 
 	ball_owner.toggle_ball_ball_collision(false);
 	ball_owner.ghost = true;
-	ball_owner.weapon_slot.rotation = dir.angle() - deg_to_rad(90.0);
+	weapon_slot.rotation = dir.angle() - deg_to_rad(90.0);
 	ball_owner.block_weapon_rot = true;
 	ball_owner.linear_velocity = dir * ball_owner.linear_velocity.length();
 	ball_owner.align_weapon_to_velocity = true;
@@ -139,7 +140,7 @@ func start_dash(dir:Vector2):
 
 	ball_owner.start_hitstop(0.0, dash_self_hitstop, dir * ball_owner.max_speed);
 
-	ball_owner.trail_2d.set_color(ball_owner.color);
+	ball_owner.trail_2d.set_color(settings.color);
 	ball_owner.show_trail_for((dash_duration * 2.0) + dash_self_hitstop, additional_trail_length);
 
 	configure_afterimage();
@@ -152,8 +153,10 @@ func start_dash(dir:Vector2):
 func configure_afterimage():
 	ball_owner.afterimage.spawn_interval = (dash_duration + dash_self_hitstop) / 50.0;
 	ball_owner.afterimage.afterimage_lifetime = (dash_duration + dash_self_hitstop) * 2.0;
-	ball_owner.afterimage.opacity = 0.25;
+	ball_owner.afterimage.opacity = 0.1;
 	ball_owner.afterimage.active = true;
+	ball_owner.afterimage.use_custom_color = true;
+	ball_owner.afterimage.custom_color = settings.color;
 
 func kill_dash_timer():
 	if(dash_timer.timeout.is_connected(stop_dash)):
@@ -214,7 +217,7 @@ func toggle_opened(s:bool):
 func dash_hit_snip_2(other:BattleBall, kb:Vector2):
 	AudioManager.play_sfx(sfx_dash_snip, "SFX");
 	opened.texture = hit_attack_texture;
-	other.affect_health(-dash_damage / 2, ball_owner);
+	other.affect_health(-dash_damage / 2, ball_owner, weapon_slot_id);
 	other.hitflash(hitstop);
 	scale_stat();
 

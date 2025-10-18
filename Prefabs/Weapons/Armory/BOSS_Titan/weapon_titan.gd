@@ -21,7 +21,7 @@ func init(s:WeaponSettings, o:BattleBall):
 
 func init_scaling_stat():
 	scaling_stat_value = damage;
-	ball_owner.update_stat_text();
+	update_stat_text();
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
@@ -32,14 +32,14 @@ func shoot_projectile():
 	if(active_rocks.size() >= max_rocks): return;
 
 	# AudioManager.play_sfx(head.sfx_shoot, "SFX");
-	var rock:ProjectileTitanRock = Utils.spawn_projectile(rock_prefab, ball_owner, global_position, ball_owner.global_rotation, self);
+	var rock:ProjectileTitanRock = Utils.spawn_projectile(rock_prefab, ball_owner, self, global_position, ball_owner.global_rotation, self);
 	rock.weapon_owner = self;
 	rock.hitbox.weapon = self;
 	rock.inactive_for = rock_inactive_for;
-	rock.scale = ball_owner.weapon_slot.scale * ball_owner.root.scale * projectile_scale;
+	rock.scale = weapon_slot.scale * ball_owner.root.scale * projectile_scale;
 	active_rocks.push_back(rock);
 
-func on_weapon_hit_received(id:int, _to:int, is_projectile:bool):
+func on_weapon_hit_received(id:int, slot_id:int, _to:int, is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
 	if(is_projectile):
 		scale_stat();
@@ -57,7 +57,7 @@ func on_rock_destroyed(rock:ProjectileTitanRock):
 	get_tree().create_timer(0.1).timeout.connect(rock.destroy);
 
 	for i in shards_per_rock:
-		var s:Projectile = Utils.shoot_projectile(shard_projectile_prefab, ball_owner, i * deg_to_rad(360.0 / shards_per_rock), rock, projectile_speed, 999);
+		var s:Projectile = Utils.shoot_projectile(shard_projectile_prefab, ball_owner, self, i * deg_to_rad(360.0 / shards_per_rock), rock, projectile_speed, 999);
 		s.set_deferred("scale", s.scale * projectile_scale);
 		s.weapon_owner = self;
 		pass
