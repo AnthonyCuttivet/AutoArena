@@ -77,7 +77,7 @@ dual_wield_mask = NodePath("Root/DWCircleMask")
 dual_wield_sprite = NodePath("Root/DWCircleMask/DWCircle")
 
 [node name="Root" type="CollisionShape2D" parent="."]
-scale = Vector2(0.22, 0.22)
+scale = Vector2(0.2, 0.2)
 shape = SubResource("CircleShape2D_j21cw")
 debug_color = Color(0.7, 0, 0, 0)
 

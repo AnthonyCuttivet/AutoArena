@@ -55,7 +55,7 @@
 [ext_resource type="AudioStream" uid="uid://ddx8pstv0i4qf" path="res://Audio/SFX/BattleBalls/se_demon_hit_catchattack.wav" id="35_qtgyu"]
 [ext_resource type="Texture2D" uid="uid://cj3174c1vhaci" path="res://Graphics/_Addons/Icons/fc17040.png" id="36_76u2v"]
 [ext_resource type="PackedScene" uid="uid://dj8vboys4os4r" path="res://Prefabs/Weapons/Armory/Sandevistan/W_SANDEVISTAN.tscn" id="36_d4oku"]
-[ext_resource type="AudioStream" uid="uid://cre3imybijg8u" path="res://Audio/SFX/BattleBalls/Announcer/ElevenLabs_2025-10-17T13_00_00_Callum_pre_sp120_s50_sb75_se100_b_m2.mp3" id="37_cr7au"]
+[ext_resource type="AudioStream" uid="uid://cojdrfwppb2hn" path="res://Audio/SFX/BattleBalls/Announcer/ElevenLabs_2025-10-19T08_36_27_Show Host_gen_sp100_s30_sb75_se51_b_m2.mp3" id="37_cr7au"]
 [ext_resource type="Texture2D" uid="uid://cfwyhor4kqo4c" path="res://Graphics/_Addons/Icons/fc888881.png" id="38_sy8k4"]
 [ext_resource type="Resource" uid="uid://b2572latobo8u" path="res://Resources/Weapons/W_BloodBow.tres" id="40_nsujd"]
 [ext_resource type="Resource" uid="uid://odj7lywcd7tq" path="res://Resources/Weapons/W_PLUME.tres" id="43_qtgyu"]
@@ -1102,6 +1102,7 @@ script = ExtResource("1_nmkph")
 record = true
 patchnote_s_per_page = 42.0
 new_challenger_ball = NodePath("Balls/Fighters/Reaper")
+display_damage_dealt = true
 time_attack_leaderboards = Dictionary[String, ExtResource("2_poh84")]({
 "HYDRA": ExtResource("3_cr7au"),
 "WARLOCK": ExtResource("4_g7d4c")
@@ -1113,7 +1114,7 @@ hypermatch_hp = 500
 hypermatch_scales = Array[int]([500, 50])
 forced_start_dir = Vector2(0, -1)
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Fighters/Bow"), NodePath("Balls/Fighters/Coin")]
+balls = [NodePath("Balls/Fighters/DW1"), NodePath("Balls/Fighters/DW2")]
 all_weapons = Dictionary[int, ExtResource("24_3p5r5")]({
 0: ExtResource("11_per8v"),
 1: ExtResource("40_nsujd"),
@@ -1157,7 +1158,7 @@ startup_sfx = ExtResource("15_gcqa4")
 startup_sfx_volume = -22.0
 obs_delay = 4.0
 dark_mode = true
-_1v1_hp = 100
+_1v1_hp = 150
 _1v2_hp = 100
 attraction_point = NodePath("AttractionPoint")
 use_cheat_hitbox = true
@@ -2718,6 +2719,7 @@ stop = true
 position = Vector2(2203.01, 1414.99)
 weapon_settings = ExtResource("11_per8v")
 use_dual_wield = true
+dual_wield = Array[int]([9, 17])
 health = 50
 team = 1
 dead = true
@@ -2727,6 +2729,7 @@ stop = true
 position = Vector2(2203.01, 1414.99)
 weapon_settings = ExtResource("11_per8v")
 use_dual_wield = true
+dual_wield = Array[int]([1, 21])
 health = 50
 team = 1
 dead = true
@@ -2960,7 +2963,6 @@ offset_top = 665.0
 offset_right = 85.0
 offset_bottom = 705.0
 scale = Vector2(0.8, 0.8)
-script = ExtResource("95_oi3sm")
 
 [node name="RankingLine" type="MarginContainer" parent="PatchNote/Line/Teams/TeamLine"]
 custom_minimum_size = Vector2(1080, 123)

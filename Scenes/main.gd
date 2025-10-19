@@ -264,7 +264,12 @@ func _ready() -> void:
 		balls_ids[balls[i].get_instance_id()] = i;
 		teams_alive_members[balls[i].team] += 1;
 
-		init_damage_dealt(balls[i].get_instance_id());
+		if(balls[i].dual_wield):
+			for weapon in balls[i].weapons:
+				init_damage_dealt(weapon.get_instance_id());
+		else:
+			init_damage_dealt(balls[i].get_instance_id());
+
 		for weapon in balls[i].weapons:
 			weapon.weapon_is_ready();
 
@@ -618,7 +623,10 @@ func fill_battleblock_ui(ball:BattleBall, mult_text:DynamicText, bb_blocks:GridC
 
 func generate_damage_dealt_string() -> String:
 	if(balls.size() == 2):
-		return "[color=%s]%s[/color][color=white]※[color=%s]%s[/color]";
+		if(balls[0].dual_wield && balls[1].dual_wield):
+			return "[color=%s]%s[/color][color=white]•[color=%s]%s[/color] ※ [color=%s]%s[/color]•[color=%s]%s[/color]";
+		else:
+			return "[color=%s]%s[/color][color=white]※[color=%s]%s[/color]";
 	elif(balls.size() == 3):
 		return "[color=%s]%s[/color][color=white]※[color=%s]%s[/color]※[color=%s]%s[/color]";
 	elif(balls.size() == 4):
@@ -637,8 +645,13 @@ func on_ball_damaged(id: int, amount:int, from:int, slot_id:int):
 		return;
 
 	var ball:BattleBall = get_ball_by_id(id);
-
-	add_damage_dealt(from, abs(amount));
+	var from_ball:BattleBall = get_ball_by_id(from);
+	
+	if(from_ball.dual_wield):
+		add_damage_dealt(from_ball.get_weapon(slot_id).get_instance_id(), abs(amount));
+	else:
+		add_damage_dealt(from, abs(amount));
+		
 	get_ball_by_id(from).add_combo(ball, slot_id);
 	ball.stop_combo();
 
@@ -963,12 +976,16 @@ func update_damage_dealt_UI():
 
 	var args:Array[String];
 
-	for ball in balls:
-		args.push_back(ball.color.to_html(false));
-		args.push_back(str(damage_dealt[ball.get_instance_id()]));
+	for ball:BattleBall in balls:
+		if(ball.dual_wield):
+			for weapon in ball.weapons:
+				args.push_back(weapon.settings.color.to_html(false));
+				args.push_back(str(damage_dealt[weapon.get_instance_id()]));
+		else:
+			args.push_back(ball.color.to_html(false));
+			args.push_back(str(damage_dealt[ball.get_instance_id()]));
 
 	damage_dealt_text.format(args);
-
 
 func add_time_attack_result():
 	var boss_name:String = balls[0].weapon_settings.name.to_upper();
