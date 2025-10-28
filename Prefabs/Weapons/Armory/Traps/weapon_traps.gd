@@ -46,10 +46,10 @@ func scale_stat(force:bool = false):
 	init_scaling_stat();
 
 func on_trap_hit(other:BattleBall, hit_pos:Vector2, kb_dir:Vector2, h:float):
+	other.hit_pos = hit_pos;
 	other.affect_health(-damage, ball_owner, weapon_slot_id);
 	other.start_hitstop(0.0, h, kb_dir * knockback, true, true);
 	other.hitflash(h);
-	other.hit_pos = hit_pos;
 
 	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), weapon_slot_id, other.get_instance_id(), false);
 	add_combo(other.get_instance_id(), hit_pos);
@@ -77,6 +77,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	if(!other.silent_on_hit):
 		AudioManager.play_sfx(settings.sfx_hit, "SFX");
 
+	other.hit_pos = hit_pos;
 	other.affect_health(-damage, ball_owner, weapon_slot_id);
 
 	if(!projectile_hit):
@@ -84,7 +85,6 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 
 	other.start_hitstop(0.0, h, kb);
 	other.hitflash(hitstop);
-	other.hit_pos = hit_pos;
 
 	EventBus.ball_weapon_hit.emit(ball_owner.get_instance_id(), weapon_slot_id, other.get_instance_id(), projectile_hit != null);
 	pass;

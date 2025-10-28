@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dudl0e1r8vmnk"
+path="res://.godot/imported/undertale-hits (mp3cut.net).mp3-335d79828282a8224bd8f8f7b9b64cbf.mp3str"
+
+[deps]
+
+source_file="res://Audio/SFX/BattleBalls/undertale-hits (mp3cut.net).mp3"
+dest_files=["res://.godot/imported/undertale-hits (mp3cut.net).mp3-335d79828282a8224bd8f8f7b9b64cbf.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

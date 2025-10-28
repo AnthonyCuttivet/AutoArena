@@ -11,7 +11,7 @@ var position_fixed:bool = false;
 
 func init(o:BattleBall, w:Weapon, s:float, p:int = -1, b:int = -1):
 	super.init(o,w,s);
-	
+
 	weapon_owner = w;
 	fixed_dir = transform.x;
 

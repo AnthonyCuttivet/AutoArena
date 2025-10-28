@@ -37,6 +37,7 @@ class_name Main extends Node2D
 @export var fx_hit_prefab: PackedScene;
 @export var fx_death_prefab: PackedScene;
 @export var fx_clash:PackedScene;
+@export var fx_slash_hit_prefab:PackedScene;
 @export var fx_block_destroyed:PackedScene;
 
 @export var hit_shake:float = 0.1;
@@ -49,7 +50,7 @@ class_name Main extends Node2D
 @export var ve_announcer:SFX;
 @export var announcer_delay:float = 0.0;
 @export var no_announcer:bool = false;
-@export var bgm:AudioStream;
+@export var bgms:Array[AudioStream];
 @export var bgm_volume:float = -40.0;
 @export var no_bgm:bool = false;
 @export var startup_sfx:AudioStream;
@@ -58,7 +59,7 @@ class_name Main extends Node2D
 
 @export var obs_delay: float = 1.5;
 
-@export var earclacks_mode:bool = false;
+@export var white_mode:bool = false;
 @export var dark_mode:bool = false;
 @export var rainbow_borders:bool = false;
 @export var _1v1_hp:int = 50;
@@ -147,7 +148,7 @@ class_name Main extends Node2D
 @onready var obs: OBSWebsocket = $OBS
 @onready var camera: Camera = $Camera
 
-@onready var bg_earclacks: ColorRect = $BG_Earclacks
+@onready var bg_earclacks: ColorRect = $BG_White
 @onready var bg: ColorRect = $BG
 @onready var arena_bg: ColorRect = $Walls/ColorRect
 @onready var author: RichTextLabel = $author
@@ -235,7 +236,7 @@ func _ready() -> void:
 	EventBus.block_destroyed.connect(on_block_destroyed);
 	EventBus.block_hit.connect(on_block_destroyed);
 
-	if(earclacks_mode):
+	if(white_mode):
 		set_earclacks_mode();
 
 	if(dark_mode):
@@ -429,6 +430,9 @@ func play_announcer():
 	if(!no_bgm):
 		get_tree().create_timer(ve_announcer.audio_stream.get_length()).timeout.connect(
 			func():
+				var rand:int = randi_range(0,bgms.size()-1);
+				var bgm:AudioStream = bgms[rand];
+				print(rand);
 				bgm_player = AudioManager.play_sound(bgm, bgm_volume, "BGM");
 		);
 
@@ -646,12 +650,12 @@ func on_ball_damaged(id: int, amount:int, from:int, slot_id:int):
 
 	var ball:BattleBall = get_ball_by_id(id);
 	var from_ball:BattleBall = get_ball_by_id(from);
-	
+
 	if(from_ball.dual_wield):
 		add_damage_dealt(from_ball.get_weapon(slot_id).get_instance_id(), abs(amount));
 	else:
 		add_damage_dealt(from, abs(amount));
-		
+
 	get_ball_by_id(from).add_combo(ball, slot_id);
 	ball.stop_combo();
 
@@ -673,6 +677,26 @@ func on_ball_damaged(id: int, amount:int, from:int, slot_id:int):
 		if(battleblock_mode):
 			fx.scale = Vector2.ONE * 0.5;
 		just_spawned_fxs[fx] = 0;
+
+	for i in range(1):
+		if(from_ball.use_dual_wield):
+			c = from_ball.weapon_settings_dual[i].color;
+		else:
+			c = from_ball.color;
+
+		var fx: GPUParticles2D = fx_slash_hit_prefab.instantiate();
+		get_tree().current_scene.add_child(fx);
+		fx.position = Vector2.ZERO;
+		fx.global_position = ball.global_position;
+		fx.modulate = c;
+		fx.global_rotation = (ball.global_position - ball.hit_pos).normalized().angle();
+		fx.finished.connect(fx.queue_free);
+		fx.visible = true;
+		fx.emitting = false;
+		if(battleblock_mode):
+			fx.scale = Vector2.ONE * 0.5;
+		just_spawned_fxs[fx] = 0;
+
 
 	EventBus.camera_trigger_shake.emit( max(hit_shake + amount, 0, hit_max_shake));
 
@@ -745,9 +769,8 @@ func on_ball_dead(id: int):
 		add_child(fx);
 		fx.emitting = false;
 		fx.global_position = ball.global_position + Vector2.ONE * randf_range(-50.0, 50.0);
-		fx.modulate = ball.color;
+		fx.modulate = ball.get_weapon(randi_range(0,ball.weapons.size() - 1)).settings.color;
 		just_spawned_fxs[fx] = 0;
-
 
 	if(ball.can_respawn):
 		return;
@@ -1176,6 +1199,9 @@ func spawn_fx(fx_prefab:PackedScene, pos:Vector2, rot:float) -> GPUParticles2D:
 	just_spawned_fxs[fx] = 0;
 
 	return fx;
+
+func play_sfx(sfx:SFX, bus: StringName = "SFX", pitch:float = 1.0, offset: float = 0.0, fade_in: float = 0.0, forced:bool = true) -> NodePath:
+	return AudioManager.play_sfx(sfx,bus,pitch,offset,fade_in, forced);
 
 # func spawn_ball(w:Enums.WEAPONS, pos:Vector2, ui_slot_id:int):
 # 	var ball:BattleBall = battle_ball_prefab.instantiate();

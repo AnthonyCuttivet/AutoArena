@@ -82,8 +82,10 @@ func add_thunderstrike(i0:int, i1:int):
 	var strike:ProjectileThunderStrike = Utils.spawn_projectile(thunderstrike_prefab, ball_owner, self, pos, rot, self);
 	strike.weapon_owner = self;
 
-	strike.thunderstrike_hitbox.shape.height = (p0.distance_to(p1) / 2.3);
-	strike.thunderstrike_hitbox.shape.radius = 2.5;
+	var distance:float = p0.distance_to(p1);
+
+	strike.thunderstrike_hitbox.shape.radius = 2.5 / strike.scale.x;
+	strike.thunderstrike_hitbox.shape.height = (distance - (2.0 * 2.5)) / strike.scale.x;
 
 	strike.thunderstrike_line.set_point_position(0, strike.thunderstrike_line.to_local(p0));
 	strike.thunderstrike_line.set_point_position(1, strike.thunderstrike_line.to_local(p1));

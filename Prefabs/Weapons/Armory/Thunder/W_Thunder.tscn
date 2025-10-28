@@ -24,7 +24,7 @@ radius = 15.0
 [node name="WeaponThunder" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]
 script = ExtResource("1_q13ri")
 thunderstrike_prefab = ExtResource("2_ce7qo")
-thunderstrike_duration = 0.3
+thunderstrike_duration = 0.5
 sfx_thunderstrike = SubResource("Resource_qsj5p")
 sprite_2d = NodePath("Sprite2D")
 hitboxes = [NodePath("Sprite2D/WeaponHitbox")]

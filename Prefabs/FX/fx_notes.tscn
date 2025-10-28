@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://cjqctp30jg1sp"]
+
+[ext_resource type="Texture2D" uid="uid://ck4pijtilt0ww" path="res://Graphics/_Addons/Icons/fc94600.png" id="1_p1bv6"]
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_bv3nt"]
+
+[sub_resource type="Curve" id="Curve_723wr"]
+_limits = [-200.0, 1000.0, 0.0, 1.0]
+_data = [Vector2(0, -200), 0.0, 0.0, 0, 0, Vector2(0.48996, 1000), 0.0, 0.0, 0, 0, Vector2(1, 398.071), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_qgwju"]
+curve = SubResource("Curve_723wr")
+
+[sub_resource type="Curve" id="Curve_bv3nt"]
+_limits = [0.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 0.0224719), 0.0, 1.4, 0, 0, Vector2(0.342222, 2), 0.0, 0.0, 0, 0, Vector2(1, 0), -4.91172, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_723wr"]
+curve = SubResource("Curve_bv3nt")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_723wr"]
+particle_flag_rotate_y = true
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 50.0
+flatness = 1.0
+initial_velocity_min = 150.0
+initial_velocity_max = 350.0
+directional_velocity_min = 1.0
+directional_velocity_max = 1.0
+directional_velocity_curve = SubResource("CurveXYZTexture_bv3nt")
+gravity = Vector3(0, 0, 0)
+linear_accel_curve = SubResource("CurveTexture_qgwju")
+scale_curve = SubResource("CurveTexture_723wr")
+
+[node name="FXNotes" type="GPUParticles2D"]
+emitting = false
+amount = 1
+texture = ExtResource("1_p1bv6")
+lifetime = 0.45
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_723wr")

@@ -4,7 +4,7 @@ class_name WeaponVortex extends Weapon
 @export var max_rotating_dist:float = 500.0;
 @export var wave_speed:float = 100.0;
 @export var clashes_dmg_boost:int = 1;
-@export var hits_dmg_boost:int = 2;
+@export var hits_dmg_boost:float = 1.5;
 @export var rotating_bubbles:Array[WeaponVortexBubble];
 @export var bubbles_self_rot:Vector2;
 @export var pop_delay:float = 0.1;
@@ -21,6 +21,8 @@ var popped_bubbles_count:int = 0;
 var popped_bubbles_states:Dictionary[int,int];
 var base_bubble_sprite:Texture = null;
 
+var fdamage:float = 1.0;
+
 func init(s:WeaponSettings, o:BattleBall):
 	super.init(s, o);
 	current_rot_dist = min_rotating_dist;
@@ -35,13 +37,13 @@ func _process(delta: float) -> void:
 		rotating_bubbles[i].set_root_dist(current_rot_dist);
 
 func init_scaling_stat():
-	scaling_stat_value = damage;
+	scaling_stat_value = fdamage;
 	update_stat_text();
 
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
 	if(battleblock_mode):
-		damage = 1 + Utils.get_claimed_blocks_amount(ball_owner);
+		fdamage = 1.0 + Utils.get_claimed_blocks_amount(ball_owner);
 
 	init_scaling_stat();
 
@@ -76,7 +78,7 @@ func on_bubble_popped(is_hit:bool):
 	if(popped_bubbles_count == 3):
 		# print("Popped Hits : " + str(popped_bubbles_states[1]) + " // Clashes : " + str(popped_bubbles_states[0]));
 		if(popped_bubbles_states[1] >= 2 && !battleblock_mode):
-			damage += hits_dmg_boost;
+			fdamage += hits_dmg_boost;
 
 		scale_stat();
 		get_tree().create_timer(repop_delay - (seq_repop_interval * 3)).timeout.connect(restore_bubbles);
@@ -87,13 +89,13 @@ func restore_bubbles():
 		get_tree().create_timer(seq_repop_interval * i).timeout.connect(restore_bubble.bind(i));
 
 func restore_bubble(i:int):
-	rotating_bubbles[i].damage = damage;
+	rotating_bubbles[i].damage = int(fdamage);
 	rotating_bubbles[i].set_bubble_state(true, false);
 	AudioManager.play_sfx(sfx_repop_bubble, "SFX");
 
 func reset():
 	restore_bubbles();
-	damage = 1;
+	fdamage = 1.0;
 	super.reset();
 
 func set_battleblock_modifiers():

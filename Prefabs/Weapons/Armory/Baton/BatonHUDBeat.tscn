@@ -1,0 +1,203 @@
+[gd_scene load_steps=5 format=3 uid="uid://r1cihh4npai7"]
+
+[ext_resource type="Script" uid="uid://c84pyis0d07yl" path="res://Prefabs/Weapons/Armory/Baton/baton_hud_beat.gd" id="1_t03jf"]
+[ext_resource type="Texture2D" uid="uid://ck4pijtilt0ww" path="res://Graphics/_Addons/Icons/fc94600.png" id="2_kjy6h"]
+[ext_resource type="Script" uid="uid://bmm2r1m6bhyje" path="res://Prefabs/Weapons/Armory/Baton/baton_music_note.gd" id="2_qtgks"]
+
+[sub_resource type="Gradient" id="Gradient_kjy6h"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="BatonHUDBeat" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.1, 1.1)
+script = ExtResource("1_t03jf")
+
+[node name="ParentMask" type="ColorRect" parent="."]
+clip_children = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -20.0
+offset_right = 80.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LinesContainer" type="Control" parent="ParentMask"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Line2D" type="Line2D" parent="ParentMask/LinesContainer"]
+position = Vector2(0, 7)
+points = PackedVector2Array(0, 0, 80, 0, 160, 0)
+width = 1.0
+gradient = SubResource("Gradient_kjy6h")
+
+[node name="Line2D2" type="Line2D" parent="ParentMask/LinesContainer"]
+position = Vector2(0, 13)
+points = PackedVector2Array(0, 0, 80, 0, 160, 0)
+width = 1.0
+gradient = SubResource("Gradient_kjy6h")
+
+[node name="Line2D3" type="Line2D" parent="ParentMask/LinesContainer"]
+position = Vector2(0, 19)
+points = PackedVector2Array(0, 0, 80, 0, 160, 0)
+width = 1.0
+gradient = SubResource("Gradient_kjy6h")
+
+[node name="Line2D4" type="Line2D" parent="ParentMask/LinesContainer"]
+position = Vector2(0, 25)
+points = PackedVector2Array(0, 0, 80, 0, 160, 0)
+width = 1.0
+gradient = SubResource("Gradient_kjy6h")
+
+[node name="Line2D5" type="Line2D" parent="ParentMask/LinesContainer"]
+position = Vector2(0, 31)
+points = PackedVector2Array(0, 0, 80, 0, 160, 0)
+width = 1.0
+gradient = SubResource("Gradient_kjy6h")
+
+[node name="LinesContainerShadows" type="Control" parent="ParentMask"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 12.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Line2D" type="Line2D" parent="ParentMask/LinesContainerShadows"]
+position = Vector2(0, 7)
+points = PackedVector2Array(0, 0, 80, 0, 160, 0)
+width = 1.0
+gradient = SubResource("Gradient_kjy6h")
+
+[node name="Line2D2" type="Line2D" parent="ParentMask/LinesContainerShadows"]
+position = Vector2(0, 13)
+points = PackedVector2Array(0, 0, 80, 0, 160, 0)
+width = 1.0
+gradient = SubResource("Gradient_kjy6h")
+
+[node name="Line2D3" type="Line2D" parent="ParentMask/LinesContainerShadows"]
+position = Vector2(0, 19)
+points = PackedVector2Array(0, 0, 80, 0, 160, 0)
+width = 1.0
+gradient = SubResource("Gradient_kjy6h")
+
+[node name="Line2D4" type="Line2D" parent="ParentMask/LinesContainerShadows"]
+position = Vector2(0, 25)
+points = PackedVector2Array(0, 0, 80, 0, 160, 0)
+width = 1.0
+gradient = SubResource("Gradient_kjy6h")
+
+[node name="Line2D5" type="Line2D" parent="ParentMask/LinesContainerShadows"]
+position = Vector2(0, 31)
+points = PackedVector2Array(0, 0, 80, 0, 160, 0)
+width = 1.0
+gradient = SubResource("Gradient_kjy6h")
+
+[node name="BeatLinesParent" type="Control" parent="ParentMask"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Line2D" type="Line2D" parent="ParentMask/BeatLinesParent"]
+position = Vector2(1, 2.90909)
+points = PackedVector2Array(0, 0, 0, 35)
+width = 1.0
+default_color = Color(0, 0, 0, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+round_precision = 32
+antialiased = true
+
+[node name="Line2D3" type="Line2D" parent="ParentMask/BeatLinesParent/Line2D"]
+position = Vector2(-1, -1)
+points = PackedVector2Array(0, 0, 0, 35)
+width = 1.0
+default_color = Color(0.788235, 0.74902, 1, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+round_precision = 32
+antialiased = true
+
+[node name="Line2D2" type="Line2D" parent="ParentMask/BeatLinesParent"]
+position = Vector2(80, 2.90909)
+points = PackedVector2Array(0, 0, 0, 35)
+width = 1.0
+default_color = Color(0, 0, 0, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+round_precision = 32
+antialiased = true
+
+[node name="Line2D3" type="Line2D" parent="ParentMask/BeatLinesParent/Line2D2"]
+position = Vector2(-1, -1)
+points = PackedVector2Array(0, 0, 0, 35)
+width = 1.0
+default_color = Color(0.788235, 0.74902, 1, 1)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+round_precision = 32
+antialiased = true
+
+[node name="MusicNote" type="Control" parent="ParentMask"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_qtgks")
+
+[node name="Note" type="TextureRect" parent="ParentMask/MusicNote"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(12, 12)
+texture = ExtResource("2_kjy6h")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NotesPool" type="Control" parent="ParentMask"]
+anchors_preset = 0
+offset_left = 150.0
+offset_right = 190.0
+offset_bottom = 40.0

@@ -17,6 +17,7 @@ class_name WeaponSettings extends Resource
 @export var base_shoot_speed:float = 1.0;
 @export var base_size:float = 1.0;
 @export var base_hitstop:float = 0.2;
+@export var base_hitstop_slow:float = 0.0;
 @export var base_projectiles: int = 0;
 @export var base_projectile_speed:float = 1000.0;
 @export var base_projectile_scale:float = 0.75;

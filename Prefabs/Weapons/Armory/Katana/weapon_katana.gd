@@ -34,12 +34,14 @@ func scale_stat(force:bool = false):
 
 	if(no_stat_scale && !force): return;
 	damage += stat_scale_value;
+	hitstop += 0.08;
 	init_scaling_stat();
 
 func on_weapon_hit_received(id:int, slot_id:int, to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id() || slot_id != weapon_slot_id): return;
 
 	damage = 1 if !battleblock_mode else 1 + bb_damage;
+	hitstop = settings.base_hitstop;
 	init_scaling_stat();
 	pass;
 

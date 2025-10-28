@@ -23,7 +23,6 @@ class_name BattleBall extends RigidBody2D
 @export var knockback_immune:bool = false;
 @export var hp_immunity:bool = false;
 
-@export var align_weapon_to_velocity:bool = false;
 @export var lose_hp_per_s:int = 0;
 
 @export var max_combo_duration:float = 1.0;
@@ -59,6 +58,7 @@ class_name BattleBall extends RigidBody2D
 @onready var hyper: Sprite2D = $Root/Hyper
 @onready var hurtbox: Hurtbox = $Root/Hurtbox
 @onready var additional_element: Node2D = $Root/AdditionalElement
+@onready var bg_parent: Node2D = $Root/BGParent
 
 var main:Main = null;
 var is_init:bool = false;
@@ -122,9 +122,10 @@ var cheat_weapon_rotation_angle: float = 20.0;
 var use_cheat_underdog_clash:bool = false;
 var cheat_underdog_clash_mult: float = 0.2;
 
-# var aled:bool = false;
-
 func ready() -> void:
+
+	fill_values_from_weapon_settings();
+
 	if(use_dual_wield):
 		load_dual_wield_weapon_settings();
 		spawn_weapon(weapon_settings_dual[0], weapon_slots[0], 0);
@@ -136,7 +137,6 @@ func ready() -> void:
 	else:
 		spawn_weapon(weapon_settings, weapon_slots[0], 0);
 
-	fill_values_from_weapon_settings();
 
 	set_ball_color();
 
@@ -214,13 +214,13 @@ func _physics_process(delta: float) -> void:
 
 	if(!debug_no_rot):
 		for weapon in weapons:
-			if(align_weapon_to_velocity):
+			if(weapon.align_weapon_to_velocity):
 				# DebugDraw2D.arrow_vector(global_position, linear_velocity.normalized() * 50, Color.RED, 1.0, 1.0);
 				weapon.weapon_slot.rotation = linear_velocity.normalized().angle() - deg_to_rad(90.0);
 			elif(!block_weapon_rot):
 				weapon.weapon_slot.rotate(deg_to_rad(360.0 * weapon.rotation_speed * weapon.rotation_direction * weapon.rot_speed_multiplier * weapon.custom_rot_speed_multiplier * time_scale) * delta);
 
-			if(use_cheat_weapon_rotation && !align_weapon_to_velocity):
+			if(use_cheat_weapon_rotation && !weapon.align_weapon_to_velocity):
 				adjust_weapon_rotation(delta, weapon);
 
 	# max_speed += 2 * delta;
@@ -268,6 +268,8 @@ func start(m:Main, dir:Vector2):
 	if(lose_hp_per_s > 0):
 		set_hp_lost_per_s(lose_hp_per_s);
 
+	EventBus.ball_started.emit(self.get_instance_id());
+
 func start_duel():
 	if(debug_mode):return;
 	stop = false;
@@ -305,8 +307,8 @@ func update_health_text():
 	if(hp_text == null): return;
 	hp_text.text = str(health);
 
-func affect_health(v:int, from:BattleBall, weapon_slot_id:int, silent:bool = false):
-	if(is_invincible()):
+func affect_health(v:int, from:BattleBall, weapon_slot_id:int, silent:bool = false, force:bool = false):
+	if(is_invincible() && !force):
 		# print(Utils.pf() + " Prevented " + str(v) + " thanks to INVINCIBILITY");
 		return;
 
@@ -705,7 +707,6 @@ func get_weapon(id:int):
 
 func get_weapon_settings(w:Enums.WEAPONS) -> WeaponSettings:
 	return main.all_weapons[w];
-
 
 # ------- Cheats ---------
 

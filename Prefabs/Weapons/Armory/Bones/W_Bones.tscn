@@ -1,0 +1,96 @@
+[gd_scene load_steps=21 format=3 uid="uid://ceoicwbykfq82"]
+
+[ext_resource type="Script" uid="uid://bvtlb322y5xwm" path="res://Prefabs/Weapons/Armory/Bones/weapon_bones.gd" id="1_b13ef"]
+[ext_resource type="PackedScene" uid="uid://dnotmxd8pleg4" path="res://Prefabs/Weapons/Armory/Bones/BonesEye.tscn" id="2_ghypk"]
+[ext_resource type="PackedScene" uid="uid://1ceby3k2t3ri" path="res://Prefabs/Weapons/Armory/Projectiles/P_SansLaser.tscn" id="2_pv2vo"]
+[ext_resource type="Texture2D" uid="uid://m6b5w5hp23f1" path="res://Graphics/_Addons/Icons/fc666660png.png" id="2_ytyj0"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="3_2xkal"]
+[ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="3_a5hn2"]
+[ext_resource type="Texture2D" uid="uid://dnvcwqgwy7r2k" path="res://Graphics/_Addons/Icons/fc666661png.png" id="3_pv2vo"]
+[ext_resource type="AudioStream" uid="uid://dudl0e1r8vmnk" path="res://Audio/SFX/BattleBalls/undertale-hits (mp3cut.net).mp3" id="6_fckdd"]
+[ext_resource type="AudioStream" uid="uid://b26giywtgs3et" path="res://Audio/SFX/BattleBalls/undertale-sound-effect-battle-encounter (mp3cut.net).mp3" id="6_kmbqq"]
+[ext_resource type="AudioStream" uid="uid://bl3c26i3xfh8j" path="res://Audio/SFX/BattleBalls/megalovania-first-four-notes (mp3cut.net).mp3" id="8_5v1ec"]
+[ext_resource type="AudioStream" uid="uid://bkqbfp7vffwkf" path="res://Audio/SFX/BattleBalls/gaster_blaster_sound_effect_1 (mp3cut.net).mp3" id="8_kmbqq"]
+[ext_resource type="AudioStream" uid="uid://bcseunrtpl50u" path="res://Audio/SFX/BattleBalls/snd_txtsans.wav" id="10_kmbqq"]
+[ext_resource type="AudioStream" uid="uid://bfjvhi5l4pi2f" path="res://Audio/SFX/BattleBalls/undertale-soul-shatter (mp3cut.net).mp3" id="11_kmbqq"]
+
+[sub_resource type="Resource" id="Resource_5v1ec"]
+script = ExtResource("3_2xkal")
+audio_stream = ExtResource("6_kmbqq")
+volume = -8.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="Resource" id="Resource_pqy1c"]
+script = ExtResource("3_2xkal")
+audio_stream = ExtResource("6_fckdd")
+volume = -20.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="Resource" id="Resource_kmbqq"]
+script = ExtResource("3_2xkal")
+audio_stream = ExtResource("8_kmbqq")
+volume = -20.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="Resource" id="Resource_1g2xm"]
+script = ExtResource("3_2xkal")
+audio_stream = ExtResource("8_5v1ec")
+volume = -10.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="Resource" id="Resource_1lqoh"]
+script = ExtResource("3_2xkal")
+audio_stream = ExtResource("10_kmbqq")
+volume = -20.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="Resource" id="Resource_ilkfm"]
+script = ExtResource("3_2xkal")
+audio_stream = ExtResource("11_kmbqq")
+volume = -8.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
+radius = 29.0
+height = 84.0
+
+[node name="WeaponBones" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]
+script = ExtResource("1_b13ef")
+bounces = 1.0
+bad_time_bounces = 20
+bad_time_duration = 10.0
+laser_hits = 4
+laser_prefab = ExtResource("2_pv2vo")
+bones_sprites = Array[Texture2D]([ExtResource("2_ytyj0"), ExtResource("3_pv2vo")])
+phantom_bone_opacity = 0.35
+eye_prefab = ExtResource("2_ghypk")
+eye_scale = 5.0
+accent_color = Color(0.382813, 1, 0.971069, 1)
+quotes = Array[String](["Here we [color=red]go[/color]", "[color=red]hell[/color] if i know.", "GEEEEEEET [color=red]DUNKED ON!!![/color]", "[color=red]Determined[/color], huh?", "Just [color=red]stronger than you[/color]", "eeee e [color=red]eee ee[/color] eeee ee", "Try to [color=red]hit me[/color] if you're able", "You're not gonna [color=red]win[/color]"])
+sfx_battle_start = SubResource("Resource_5v1ec")
+sfx_bad_time = SubResource("Resource_pqy1c")
+sfx_laser = SubResource("Resource_kmbqq")
+sfx_megalovania = SubResource("Resource_1g2xm")
+sfx_sans = SubResource("Resource_1lqoh")
+sfx_death = SubResource("Resource_ilkfm")
+sprite_2d = NodePath("Sprite2D")
+hitboxes = [NodePath("Sprite2D/WeaponHitbox")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(33, 0)
+rotation = 0.785398
+texture = ExtResource("2_ytyj0")
+
+[node name="WeaponHitbox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("weapon", "collider")]
+script = ExtResource("3_a5hn2")
+weapon = NodePath("../..")
+collider = NodePath("CollisionShape2D")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
+rotation = 0.785398
+shape = SubResource("CapsuleShape2D_1fhci")
+
+[connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_entered"]
+[connection signal="area_exited" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_exited"]

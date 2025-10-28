@@ -29,6 +29,7 @@ bounce = 1.0
 size = Vector2(32, 32)
 
 [node name="ProjectilePickaxeBlock" type="Node2D" node_paths=PackedStringArray("wall", "upgrade", "hitbox", "sprite_2d")]
+scale = Vector2(0.75, 0.75)
 script = ExtResource("1_6p5cq")
 wall = NodePath("Sprite2D/Wall")
 upgrade = NodePath("Upgrade")

@@ -18,11 +18,11 @@ volume = -28.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
-radius = 10.9802
-height = 68.2373
+radius = 7.98563
+height = 72.1103
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yo00f"]
-radius = 5.65685
+radius = 3.53553
 height = 20.0
 
 [node name="WeaponQiang" type="Node2D" node_paths=PackedStringArray("hitbox_low", "hitbox_high", "sprite_2d", "hitboxes")]
@@ -50,7 +50,7 @@ collider = NodePath("CollisionShape2D")
 metadata/owner = NodePath("../../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitboxLow"]
-position = Vector2(2, 8)
+position = Vector2(2, 6)
 rotation = 0.0599477
 shape = SubResource("CapsuleShape2D_1fhci")
 debug_color = Color(1, 0.65, 0, 0.105882)

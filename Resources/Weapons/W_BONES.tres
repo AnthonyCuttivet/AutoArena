@@ -1,0 +1,95 @@
+[gd_resource type="Resource" script_class="WeaponSettings" load_steps=14 format=3 uid="uid://b4rj4gsxvsgjg"]
+
+[ext_resource type="PackedScene" uid="uid://guc6hujf2jb8" path="res://Prefabs/Weapons/Armory/Projectiles/P_Bone.tscn" id="1_iqbhk"]
+[ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="2_334qi"]
+[ext_resource type="AudioStream" uid="uid://bcseunrtpl50u" path="res://Audio/SFX/BattleBalls/snd_txtsans.wav" id="3_iqbhk"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="4_g8uqw"]
+[ext_resource type="AudioStream" uid="uid://dw5tm8b3c54o" path="res://Audio/SFX/BattleBalls/snd_grab.wav" id="5_iqbhk"]
+[ext_resource type="AudioStream" uid="uid://bruqea27y7fhs" path="res://Audio/SFX/BattleBalls/snd_chug.wav" id="6_iqbhk"]
+[ext_resource type="Texture2D" uid="uid://m6b5w5hp23f1" path="res://Graphics/_Addons/Icons/fc666660png.png" id="7_iqbhk"]
+[ext_resource type="PackedScene" uid="uid://ceoicwbykfq82" path="res://Prefabs/Weapons/Armory/Bones/W_Bones.tscn" id="8_iqbhk"]
+
+[sub_resource type="Resource" id="Resource_8dpo0"]
+script = ExtResource("4_g8uqw")
+audio_stream = ExtResource("3_iqbhk")
+volume = -20.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1vor1"]
+random_pitch = 1.02
+streams_count = 1
+stream_0/stream = ExtResource("5_iqbhk")
+
+[sub_resource type="Resource" id="Resource_i3erk"]
+script = ExtResource("4_g8uqw")
+audio_stream = SubResource("AudioStreamRandomizer_1vor1")
+volume = -28.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hsrsl"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("6_iqbhk")
+
+[sub_resource type="Resource" id="Resource_bsb56"]
+script = ExtResource("4_g8uqw")
+audio_stream = SubResource("AudioStreamRandomizer_hsrsl")
+volume = -30.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[resource]
+script = ExtResource("2_334qi")
+name = "BONES"
+spr = ExtResource("7_iqbhk")
+melee = false
+ranged = true
+flip = false
+offset = 30.0
+y_offset = false
+base_rotation_direction = 1
+base_rotation_speed = 0.75
+base_damage = 1
+base_knockback = 20.0
+base_attack_speed = 1.0
+base_shoot_speed = 2.0
+base_size = 10.0
+base_hitstop = 0.02
+base_hitstop_slow = 0.0
+base_projectiles = 1
+base_projectile_speed = 1000.0
+base_projectile_scale = 0.5
+base_shoot_duration = 0.2
+projectile_self_hitstop = false
+lifesteal = false
+lifesteal_tick = 1
+independent_weapon = false
+stat_scale_value = 0.5
+stat_scale_name = "Bounces"
+scaling_stat_float = true
+no_rotation_change = false
+no_projectile_scale_change = false
+weapon_prefab = ExtResource("8_iqbhk")
+projectile_prefab = ExtResource("1_iqbhk")
+bg_projectile = true
+details = ""
+white_details = false
+sfx_clash = SubResource("Resource_8dpo0")
+sfx_hit = SubResource("Resource_i3erk")
+sfx_shoot = SubResource("Resource_bsb56")
+leaderboard_offset = -5.0
+leaderboard_rotation = 0.0
+leaderboard_no_spr = false
+scale_stat_multiplier = 1
+base_damage_multiplier = 3
+no_clash_on_block = false
+base_weapon_rotation = 230.0
+color = Color(1, 1, 1, 1)
+max_speed = 1500.0
+min_horizontal = 50.0
+gravity_strength = 1400.0
+drag_force = 0.02
+bounce_boost = 150.0
+relative_bounce_boost = 0.0
+acceleration = 1.0
+knockback_resistance = 1.0
+metadata/_custom_type_script = "uid://c1biydo2yju8x"

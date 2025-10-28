@@ -18,7 +18,6 @@ func init(o:BattleBall, w:Weapon, s:float, p:int = -1, b:int = -1):
 
 	on_spawn_tween();
 
-
 func _on_weapon_hitbox_area_entered(other: Area2D) -> void:
 	if(!other is Hurtbox && !other is Hitbox && !other is ProjectileHitbox): return;
 
@@ -26,10 +25,9 @@ func _on_weapon_hitbox_area_entered(other: Area2D) -> void:
 		on_block_hit(other.weapon);
 
 func on_block_hit(from:Weapon):
-	if(from.ball_owner != ball_owner && from.ball_owner.team == ball_owner.team): return;
-	hit_health();
-	weapon_pickaxe.on_block_destroyed(from, self);
 	from.on_weapon_clash(self, self.global_position, false, false, true);
+	hit_health();
+	weapon_pickaxe.on_block_destroyed(from.ball_owner == ball_owner, self);
 
 func set_state(s:bool):
 	wall.collision_layer = 1 if s else 16;

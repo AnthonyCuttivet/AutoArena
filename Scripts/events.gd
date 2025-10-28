@@ -20,6 +20,7 @@ signal start_audio_fade_in(instance_id: int, fade_in: float);
 
 signal stop_record();
 
+signal ball_started(id:int);
 signal ball_damaged(id:int, amount:int, from:int, slot_id:int);
 signal ball_lifesteal(from:int, to:int);
 signal ball_weapon_hit(id:int, slot_id:int, to:int, is_projectile:bool);
@@ -29,6 +30,8 @@ signal ball_bounce(id:int);
 signal ball_bounce_other_ball(id:int, other:int);
 signal ball_bounce_battleblock(id:int, block:MCBattleBlock);
 signal ball_shoot(id:int, projectile: Projectile);
+
+signal projectile_bounced(id:int, weapon_id:int);
 
 signal ball_combo_up(id:int, slot_id:int, target:BattleBall);
 signal ball_combo_reset(id:int, slot_id:int);

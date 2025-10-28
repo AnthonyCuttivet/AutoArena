@@ -99,10 +99,11 @@ func _on_projectile_hitbox_body_entered(other: Node2D) -> void:
 		bounce_count -= 1;
 		if(bounce_count >= 0):
 			accumulated_gravity = 0.0;
-			if(raycast.get_collision_normal() != Vector2.ZERO):
+			if(raycast.is_colliding() && raycast.get_collision_normal() != Vector2.ZERO):
 				velocity = velocity.bounce(raycast.get_collision_normal()) * bounciness;
 				if(velocity == Vector2.ZERO):
 					destroy(1);
+				EventBus.projectile_bounced.emit(get_instance_id(), weapon_owner.get_instance_id());
 				self.rotation = velocity.angle();
 
 	if(other.is_in_group("DEADZONE")):

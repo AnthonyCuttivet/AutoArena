@@ -24,6 +24,8 @@ var requested_block_spawn:bool = false;
 var active_blocks: Array[ProjectilePickaxeBlock];
 var physics_params:PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new();
 
+var local_block_spawn_positions:Array[Vector2];
+
 func _init() -> void:
 	EventBus.ball_weapon_hit.connect(on_weapon_hit_received);
 
@@ -31,7 +33,11 @@ func init(s:WeaponSettings, o:BattleBall) -> void:
 	super.init(s,o);
 
 	for i in block_spawn_positions.size():
-		block_spawn_positions[i] = ball_owner.main.to_global(block_spawn_positions[i]);
+		# print(block_spawn_positions[i]);
+		local_block_spawn_positions.push_back(ball_owner.main.to_global(block_spawn_positions[i]));
+		# print(local_block_spawn_positions[i]);
+
+	# print("---------------")
 
 	init_physics_params();
 
@@ -72,9 +78,9 @@ func request_spawn_block():
 func spawn_block():
 	if(active_blocks.size() == max_blocks): return;
 
-	block_spawn_positions.shuffle();
-	var pos:Vector2 = block_spawn_positions[0];
-	for p in block_spawn_positions:
+	local_block_spawn_positions.shuffle();
+	var pos:Vector2 = local_block_spawn_positions[0];
+	for p in local_block_spawn_positions:
 		if(is_free(p)):
 			pos = p;
 			break;
@@ -121,7 +127,7 @@ func init_physics_params():
 func update_physics_params(pos:Vector2):
 	physics_params.transform = Transform2D(0, pos);
 
-func on_block_destroyed(from:Weapon, block:ProjectilePickaxeBlock):
+func on_block_destroyed(destroyed_by_self:bool, block:ProjectilePickaxeBlock):
 	ball_owner.main.global_hitstop(0.0, 0.15);
 	ball_owner.main.spawn_fx_block_destroyed(block.global_position, 1.0, block.sprite_2d.texture);
 	EventBus.camera_trigger_shake.emit(block_death_shake);
@@ -129,7 +135,7 @@ func on_block_destroyed(from:Weapon, block:ProjectilePickaxeBlock):
 	active_blocks.erase(block);
 	block.destroy();
 
-	if(current_level < block.level || block.level == blocks_textures.size()):
+	if(destroyed_by_self && (current_level < block.level || block.level == blocks_textures.size())):
 		scale_stat();
 		AudioManager.play_sfx(sfx_block_pickaxe, "SFX");
 

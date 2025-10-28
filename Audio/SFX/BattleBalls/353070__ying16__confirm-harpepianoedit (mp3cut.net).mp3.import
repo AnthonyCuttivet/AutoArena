@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://l75fkbj4iyfb"
+path="res://.godot/imported/353070__ying16__confirm-harpepianoedit (mp3cut.net).mp3-51dc0240ea48b99aaeda633e8b4674b7.mp3str"
+
+[deps]
+
+source_file="res://Audio/SFX/BattleBalls/353070__ying16__confirm-harpepianoedit (mp3cut.net).mp3"
+dest_files=["res://.godot/imported/353070__ying16__confirm-harpepianoedit (mp3cut.net).mp3-51dc0240ea48b99aaeda633e8b4674b7.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

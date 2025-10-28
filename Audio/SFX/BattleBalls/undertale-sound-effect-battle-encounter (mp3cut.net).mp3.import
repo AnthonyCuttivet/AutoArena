@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b26giywtgs3et"
+path="res://.godot/imported/undertale-sound-effect-battle-encounter (mp3cut.net).mp3-11764058a20a1328e5d89019dea273f5.mp3str"
+
+[deps]
+
+source_file="res://Audio/SFX/BattleBalls/undertale-sound-effect-battle-encounter (mp3cut.net).mp3"
+dest_files=["res://.godot/imported/undertale-sound-effect-battle-encounter (mp3cut.net).mp3-11764058a20a1328e5d89019dea273f5.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

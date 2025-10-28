@@ -54,7 +54,7 @@ height = 24.0
 [node name="WeaponScissors" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]
 script = ExtResource("1_1hprj")
 invincibility = 0.0
-speed_boost = 4.0
+speed_boost = 3.0
 dash_duration = 0.25
 dash_self_hitstop = 0.1
 additional_trail_length = 50

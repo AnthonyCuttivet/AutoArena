@@ -77,6 +77,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	if(!other.silent_on_hit):
 		AudioManager.play_sfx(settings.sfx_hit if !weapon_opened else sfx_dash_hit, "SFX");
 
+	other.hit_pos = hit_pos;
 	other.affect_health(-d, ball_owner, weapon_slot_id);
 
 	# if(weapon_opened): print(Utils.pf() + " Open Hit");
@@ -87,7 +88,6 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 
 	other.start_hitstop(0.0, h, kb);
 	other.hitflash(hitstop);
-	other.hit_pos = hit_pos;
 
 	#if(weapon_opened):
 		#scale_stat();
@@ -124,26 +124,28 @@ func start_dash(dir:Vector2):
 	#ball_owner.add_invincibility(invincibility + dash_self_hitstop);
 	dashing = true;
 
-	AudioManager.play_sfx(sfx_dash, "SFX");
+	if(!ball_owner.ghost):
+		AudioManager.play_sfx(sfx_dash, "SFX");
 
-	pre_dash_max_speed = ball_owner.max_speed;
-	pre_dash_drag_force = ball_owner.drag_force;
+		pre_dash_max_speed = ball_owner.max_speed;
+		pre_dash_drag_force = ball_owner.drag_force;
 
-	ball_owner.toggle_ball_ball_collision(false);
-	ball_owner.ghost = true;
-	weapon_slot.rotation = dir.angle() - deg_to_rad(90.0);
-	ball_owner.block_weapon_rot = true;
-	ball_owner.linear_velocity = dir * ball_owner.linear_velocity.length();
-	ball_owner.align_weapon_to_velocity = true;
-	ball_owner.max_speed *= speed_boost;
-	ball_owner.drag_force = 0.2;
+		ball_owner.toggle_ball_ball_collision(false);
+		ball_owner.ghost = true;
+		weapon_slot.rotation = dir.angle() - deg_to_rad(90.0);
+		ball_owner.block_weapon_rot = true;
+		ball_owner.linear_velocity = dir * ball_owner.linear_velocity.length();
+		align_weapon_to_velocity = true;
+		ball_owner.max_speed *= speed_boost;
+		ball_owner.drag_force = 0.2;
 
-	ball_owner.start_hitstop(0.0, dash_self_hitstop, dir * ball_owner.max_speed);
+		ball_owner.start_hitstop(0.0, dash_self_hitstop, dir * ball_owner.max_speed);
 
-	ball_owner.trail_2d.set_color(settings.color);
-	ball_owner.show_trail_for((dash_duration * 2.0) + dash_self_hitstop, additional_trail_length);
+		ball_owner.trail_2d.set_color(settings.color);
+		ball_owner.show_trail_for((dash_duration * 2.0) + dash_self_hitstop, additional_trail_length);
 
-	configure_afterimage();
+		configure_afterimage();
+
 	toggle_opened(true);
 
 	dash_timer = get_tree().create_timer(dash_duration + dash_self_hitstop);
@@ -167,7 +169,7 @@ func dash_hit():
 	kill_dash_timer();
 	dashing = false;
 	dash_hit_registered = true;
-	ball_owner.align_weapon_to_velocity = false;
+	align_weapon_to_velocity = false;
 	ball_owner.afterimage.active = false;
 	ball_owner.max_speed = pre_dash_max_speed;
 	ball_owner.drag_force = pre_dash_drag_force;
@@ -186,7 +188,7 @@ func stop_dash():
 	dash_hit_registered = false;
 	ball_owner.toggle_ball_ball_collision(true);
 	ball_owner.ghost = false;
-	ball_owner.align_weapon_to_velocity = false;
+	align_weapon_to_velocity = false;
 	ball_owner.afterimage.active = false;
 	ball_owner.max_speed = pre_dash_max_speed;
 	ball_owner.drag_force = pre_dash_drag_force;

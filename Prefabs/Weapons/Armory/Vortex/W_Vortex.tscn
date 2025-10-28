@@ -38,7 +38,7 @@ height = 0.01
 [node name="WeaponVortex" type="Node2D" node_paths=PackedStringArray("rotating_bubbles", "sprite_2d", "hitboxes")]
 script = ExtResource("1_uuugu")
 wave_speed = 0.35
-hits_dmg_boost = 1
+hits_dmg_boost = 1.25
 rotating_bubbles = [NodePath("RotatingBubbles/Bubble"), NodePath("RotatingBubbles/Bubble2"), NodePath("RotatingBubbles/Bubble3")]
 pop_delay = 0.2
 repop_delay = 1.0

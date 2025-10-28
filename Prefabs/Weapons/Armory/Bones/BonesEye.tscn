@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dnotmxd8pleg4"]
+
+[ext_resource type="Texture2D" uid="uid://b2ajjlc4kixo0" path="res://Graphics/_Addons/Icons/fc666666png.png" id="1_c7lgu"]
+[ext_resource type="Script" uid="uid://d4f52ojt5in8l" path="res://Prefabs/Weapons/Armory/Bones/bones_eye.gd" id="1_udr1e"]
+
+[node name="BonesEye" type="Node2D" node_paths=PackedStringArray("sprite")]
+script = ExtResource("1_udr1e")
+eye_yellow = Color(1, 0.958038, 0.511719, 1)
+sprite = NodePath("Sprite2D")
+blink_duration = 0.05
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(2, 2)
+texture = ExtResource("1_c7lgu")

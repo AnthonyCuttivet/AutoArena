@@ -27,6 +27,7 @@ base_attack_speed = 1.0
 base_shoot_speed = 100.0
 base_size = 10.0
 base_hitstop = 0.15
+base_hitstop_slow = 0.0
 base_projectiles = 1
 base_projectile_speed = 1000.0
 base_projectile_scale = 0.75

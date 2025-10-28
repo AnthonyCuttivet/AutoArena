@@ -73,6 +73,7 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	if(projectile_hit):
 		kb = (hit_pos - ball_owner.global_position).normalized() * kb_dist;
 
+	other.hit_pos = hit_pos;
 	other.affect_health(-current_damage, ball_owner, weapon_slot_id);
 
 	if(battleblock_mode):
@@ -82,7 +83,6 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 
 	other.start_hitstop(0.0, h, kb);
 	other.hitflash(hitstop);
-	other.hit_pos = hit_pos;
 
 	ball_owner.linear_velocity = ball_owner.linear_velocity.normalized() * ball_owner.base_max_speed;
 

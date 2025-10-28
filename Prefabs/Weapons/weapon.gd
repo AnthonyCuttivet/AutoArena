@@ -26,6 +26,7 @@ var projectile_speed:float = 0.0;
 var projectile_scale:float = 0.75;
 var shoot_duration:float = 1.0;
 var hitstop:float = 0.0;
+var hitstop_slow:float = 0.0;
 var projectile_self_hitstop:bool = false;
 var lifesteal:bool = false;
 var lifesteal_tick:int = 0;
@@ -43,6 +44,7 @@ var ball_owner:BattleBall;
 var attack_speed_elapsed:float = 0.0;
 var shoot_speed_elapsed:float = 0.0;
 var shoots_remaining:int = 0;
+var align_weapon_to_velocity:bool = false;
 
 var no_shoot:bool = false;
 var owned_projectiles:Array[Projectile] = [];
@@ -95,6 +97,7 @@ func init(s:WeaponSettings, o:BattleBall) -> void:
 	projectile_scale = settings.base_projectile_scale;
 	shoot_duration = settings.base_shoot_duration;
 	hitstop = settings.base_hitstop;
+	hitstop_slow = settings.base_hitstop_slow;
 	shoots_remaining = projectiles;
 	projectile_self_hitstop = settings.projectile_self_hitstop;
 
@@ -174,13 +177,13 @@ func on_weapon_hit(other:BattleBall, hit_pos:Vector2, _hitbox_id:int, projectile
 	other.affect_health(-d, ball_owner, weapon_slot_id);
 
 	if(!projectile_hit):
-		ball_owner.start_hitstop(0.0, h);
+		ball_owner.start_hitstop(hitstop_slow, h);
 	else:
 		if(projectile_self_hitstop):
-			ball_owner.start_hitstop(0.0, h);
+			ball_owner.start_hitstop(hitstop_slow, h);
 
 	other.hitflash(h);
-	other.start_hitstop(0.0, h, kb);
+	other.start_hitstop(hitstop_slow, h, kb);
 
 	# print(Utils.pf() + " Emit BALL_WEAPON_HIT - " + str(ball_owner.get_instance_id()) + " // " + str(weapon_slot_id));
 
@@ -265,7 +268,7 @@ func shoot_projectile() -> Projectile:
 		p.hitbox.scale *= 1.0 + cheat_hitbox_scale_bonus;
 
 	p.weapon_owner = self;
-	p.init(ball_owner, self, projectile_speed, 0, 0);
+	p.init(ball_owner, self, projectile_speed);
 
 	if(settings.bg_projectile):
 		ball_owner.main.projectiles_bg_parent.add_child(p);
