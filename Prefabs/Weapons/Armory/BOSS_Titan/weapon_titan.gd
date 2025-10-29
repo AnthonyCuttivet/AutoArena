@@ -45,7 +45,7 @@ func on_weapon_hit_received(id:int, slot_id:int, _to:int, is_projectile:bool):
 		scale_stat();
 	pass;
 
-func on_ball_damaged_received(id:int, _amount:int, _from:int):
+func on_ball_damaged_received(id:int, _amount:int, _from:int, _slot_id:int):
 	if(id != ball_owner.get_instance_id()): return;
 
 	if(ball_owner.health <= next_bonus_rock_at_hp):

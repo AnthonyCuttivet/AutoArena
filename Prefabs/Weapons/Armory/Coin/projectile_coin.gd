@@ -15,7 +15,6 @@ func init(o:BattleBall, w:Weapon, s:float, p:int = -1, b:int = -1):
 			always_clash = true;
 	);
 
-
 func _on_projectile_hitbox_area_entered(other: Area2D) -> void:
 	super._on_projectile_hitbox_area_entered(other);
 

@@ -38,5 +38,6 @@ enum WEAPONS
     THUNDER,
     PLUME,
     TRAPS,
-    REAPER
+    REAPER,
+    BATON,
 }

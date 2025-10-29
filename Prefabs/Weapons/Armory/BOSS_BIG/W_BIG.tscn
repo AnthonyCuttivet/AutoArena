@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bdabdi0d05sya"]
+
+[ext_resource type="Script" uid="uid://cdo3uohwl523g" path="res://Prefabs/Weapons/Armory/BOSS_BIG/weapon_big.gd" id="1_oq73o"]
+
+[node name="WeaponBIG" type="Node2D" node_paths=PackedStringArray("sprite_2d")]
+script = ExtResource("1_oq73o")
+double_scale_each_hp_lost = 50
+sprite_2d = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
