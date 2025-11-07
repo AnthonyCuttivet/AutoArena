@@ -5,8 +5,8 @@
 [ext_resource type="Script" uid="uid://d27ne0poeo6c7" path="res://Prefabs/Ball/projectile_hitbox.gd" id="3_xvwe6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
-radius = 32.0
-height = 92.0
+radius = 20.0
+height = 82.0
 
 [node name="ProjectileBone" type="Node2D" node_paths=PackedStringArray("hitbox", "sprite_2d")]
 script = ExtResource("1_sqem0")

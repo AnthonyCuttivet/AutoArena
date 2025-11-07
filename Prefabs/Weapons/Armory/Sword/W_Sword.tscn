@@ -6,7 +6,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
 radius = 9.0
-height = 76.0
+height = 68.0
 
 [node name="WeaponSword" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]
 script = ExtResource("1_u1t5o")
@@ -27,7 +27,7 @@ collider = NodePath("CollisionShape2D")
 metadata/owner = NodePath("../../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
-position = Vector2(-2.03878e-06, -5)
+position = Vector2(-6.08268e-07, -9)
 shape = SubResource("CapsuleShape2D_1fhci")
 
 [connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_entered"]

@@ -138,7 +138,7 @@ func on_weapon_clash(other:Node2D, clash_pos:Vector2, projectile_hit:bool = fals
 
 	if(check_valid_beat() && other.team != ball_owner.team):
 		scale_stat();
-		other.affect_health(-int(beat_damage), ball_owner, weapon_slot_id, false, true);
+		other.affect_health(-int(beat_damage / 2.0), ball_owner, weapon_slot_id, false, true);
 
 	ball_owner.start_hitstop_clash(0.0, 0.15, kb, other);
 	EventBus.ball_weapon_clash.emit(ball_owner.get_instance_id(), weapon_slot_id, clash_pos, silent);

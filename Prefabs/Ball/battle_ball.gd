@@ -123,8 +123,9 @@ var use_cheat_underdog_clash:bool = false;
 var cheat_underdog_clash_mult: float = 0.2;
 
 func ready() -> void:
-
-	fill_values_from_weapon_settings();
+	
+	if(!use_dual_wield):
+		fill_values_from_weapon_settings();
 
 	if(use_dual_wield):
 		load_dual_wield_weapon_settings();
@@ -134,6 +135,8 @@ func ready() -> void:
 			weapon_settings_dual[1].base_rotation_direction = -weapon_settings_dual[0].base_rotation_direction;
 
 		spawn_weapon(weapon_settings_dual[1], weapon_slots[1], 1);
+		
+		fill_values_from_weapon_settings();
 	else:
 		spawn_weapon(weapon_settings, weapon_slots[0], 0);
 

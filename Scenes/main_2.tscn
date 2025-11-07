@@ -1,4 +1,4 @@
-[gd_scene load_steps=225 format=4 uid="uid://cmsck3y43hvak"]
+[gd_scene load_steps=227 format=4 uid="uid://cmsck3y43hvak"]
 
 [ext_resource type="Script" uid="uid://llbx2bxdfjwy" path="res://Scenes/main.gd" id="1_nmkph"]
 [ext_resource type="Shader" uid="uid://m275kdb8v68b" path="res://Graphics/Shaders/balatro.gdshader" id="1_y2yxb"]
@@ -57,10 +57,10 @@
 [ext_resource type="AudioStream" uid="uid://ddx8pstv0i4qf" path="res://Audio/SFX/BattleBalls/se_demon_hit_catchattack.wav" id="35_qtgyu"]
 [ext_resource type="Texture2D" uid="uid://cj3174c1vhaci" path="res://Graphics/_Addons/Icons/fc17040.png" id="36_76u2v"]
 [ext_resource type="PackedScene" uid="uid://dj8vboys4os4r" path="res://Prefabs/Weapons/Armory/Sandevistan/W_SANDEVISTAN.tscn" id="36_d4oku"]
-[ext_resource type="AudioStream" uid="uid://dhgy73v12yrxb" path="res://Audio/SFX/BattleBalls/Announcer/download1761765812840 (mp3cut.net).mp3" id="38_c8dqd"]
 [ext_resource type="AudioStream" uid="uid://du4qckfsk3nej" path="res://Audio/BGM/ChillScape.mp3" id="38_p180d"]
 [ext_resource type="Texture2D" uid="uid://cfwyhor4kqo4c" path="res://Graphics/_Addons/Icons/fc888881.png" id="38_sy8k4"]
 [ext_resource type="AudioStream" uid="uid://caw7bi3nugjua" path="res://Audio/BGM/Relaxed_Horizons.mp3" id="39_573uv"]
+[ext_resource type="AudioStream" uid="uid://ckwkwi72yp48v" path="res://Audio/SFX/BattleBalls/Announcer/download1762504939764 (mp3cut.net).mp3" id="39_c8dqd"]
 [ext_resource type="Resource" uid="uid://b2572latobo8u" path="res://Resources/Weapons/W_BloodBow.tres" id="40_nsujd"]
 [ext_resource type="AudioStream" uid="uid://c46prarxsnasr" path="res://Audio/BGM/Tropical_Sanctuary.mp3" id="40_y8j1h"]
 [ext_resource type="AudioStream" uid="uid://cc6p4vmjm2sx8" path="res://Audio/BGM/Under_Quiet_Lights.mp3" id="41_u1in0"]
@@ -156,14 +156,14 @@ volume = -29.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_o08cq"]
-random_pitch = 1.1
+random_pitch = 1.05
 streams_count = 1
 stream_0/stream = ExtResource("7_k7rf6")
 
 [sub_resource type="Resource" id="Resource_gaafq"]
 script = ExtResource("5_1v8r1")
 audio_stream = SubResource("AudioStreamRandomizer_o08cq")
-volume = -35.0
+volume = -30.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1v8r1"]
@@ -178,7 +178,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="Resource" id="Resource_p1oyv"]
 script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("38_c8dqd")
+audio_stream = ExtResource("39_c8dqd")
 volume = -20.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
@@ -746,7 +746,7 @@ projectile_self_hitstop = false
 lifesteal = false
 lifesteal_tick = 1
 independent_weapon = false
-stat_scale_value = 0.4
+stat_scale_value = 0.5
 stat_scale_name = "DMG / Max Speed"
 scaling_stat_float = false
 no_rotation_change = false
@@ -765,11 +765,11 @@ no_clash_on_block = false
 base_weapon_rotation = 120.0
 color = Color(0.75638, 0.745483, 0.769531, 1)
 max_speed = 400.0
-min_horizontal = 100.0
+min_horizontal = 200.0
 gravity_strength = 3000.0
 drag_force = 0.05
-bounce_boost = 0.0
-relative_bounce_boost = 0.75
+bounce_boost = 400.0
+relative_bounce_boost = 0.0
 acceleration = 1.0
 knockback_resistance = 1.0
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
@@ -828,14 +828,14 @@ _bundled = {
 
 [sub_resource type="Resource" id="Resource_yashm"]
 script = ExtResource("24_3p5r5")
-name = "DAGGER"
+name = "CHARA"
 spr = SubResource("CompressedTexture2D_6f254")
 melee = true
 ranged = false
 flip = true
 offset = 30.0
 y_offset = false
-base_rotation_direction = -1
+base_rotation_direction = 1
 base_rotation_speed = 2.0
 base_damage = 1
 base_knockback = 3000.0
@@ -870,7 +870,7 @@ scale_stat_multiplier = 1
 base_damage_multiplier = 1
 no_clash_on_block = false
 base_weapon_rotation = 120.0
-color = Color(0.729412, 0.215686, 0.564706, 1)
+color = Color(0.214005, 0.730469, 0.379434, 1)
 max_speed = 2000.0
 min_horizontal = 0.0
 gravity_strength = 1500.0
@@ -880,6 +880,29 @@ relative_bounce_boost = 0.0
 acceleration = 1.0
 knockback_resistance = 1.0
 metadata/_custom_type_script = "uid://c1biydo2yju8x"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u1in0"]
+resource_local_to_scene = true
+shader = ExtResource("14_vvmd2")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_intensity = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_makhe"]
+resource_local_to_scene = true
+shader = ExtResource("61_312b1")
+shader_parameter/stripes = 1.33
+shader_parameter/stripe_thickness = 1.0
+shader_parameter/stripe_color = Color(0.112793, 0.65625, 0, 1)
+shader_parameter/background_color = Color(0.98056, 1, 0.644531, 1)
+shader_parameter/uv_offset = -0.255
+shader_parameter/warp_strength = 2.13
+shader_parameter/warp_uv_mult = 0.47
+shader_parameter/wave_strength = 1.0
+shader_parameter/oscillation_mult = 0.515
+shader_parameter/rotation = -0.485
+shader_parameter/rot_time = 3.41
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_intensity = 0.0
 
 [sub_resource type="Environment" id="Environment_p1oyv"]
 background_mode = 3
@@ -1225,6 +1248,7 @@ script = ExtResource("1_nmkph")
 record = true
 patchnote_s_per_page = 42.0
 new_challenger_ball = NodePath("Balls/Fighters/Reaper")
+display_damage_dealt = true
 time_attack_leaderboards = Dictionary[String, ExtResource("2_poh84")]({
 "HYDRA": ExtResource("3_cr7au"),
 "WARLOCK": ExtResource("4_g7d4c")
@@ -1232,13 +1256,14 @@ time_attack_leaderboards = Dictionary[String, ExtResource("2_poh84")]({
 use_2v2_colors = true
 _2v2_colors = Array[Color]([Color(0.5, 0.666667, 1, 1), Color(0.5, 0.583333, 1, 1), Color(1, 0.5, 0.5, 1), Color(1, 0.583333, 0.5, 1)])
 battleblock_controller = NodePath("BlockBreaker/MinecraftDig")
-hypermatch_hp = 500
-hypermatch_scales = Array[int]([500, 50])
+hypermatch_mode = true
+hypermatch_hp = 555
+hypermatch_scales = Array[int]([0, 20])
 forced_start_dir = Vector2(0, -1)
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Fighters/Dagger"), NodePath("Balls/Fighters/Dagger2")]
+balls = [NodePath("Balls/Fighters/Revolver"), NodePath("Balls/Fighters/Gems")]
 all_weapons = Dictionary[int, ExtResource("24_3p5r5")]({
-0: ExtResource("6_p180d"),
+0: ExtResource("11_per8v"),
 1: ExtResource("40_nsujd"),
 2: ExtResource("28_djmp0"),
 3: ExtResource("44_vebv7"),
@@ -1259,7 +1284,8 @@ all_weapons = Dictionary[int, ExtResource("24_3p5r5")]({
 18: ExtResource("23_n5n48"),
 19: ExtResource("43_qtgyu"),
 20: ExtResource("60_ux8nf"),
-21: ExtResource("27_djmp0")
+21: ExtResource("27_djmp0"),
+22: ExtResource("13_cr7au")
 })
 battle_ball_prefab = ExtResource("4_ya2e4")
 fx_hit_prefab = ExtResource("2_8wnqf")
@@ -1282,6 +1308,7 @@ startup_sfx_volume = -22.0
 obs_delay = 4.0
 white_mode = true
 dark_mode = true
+rainbow_borders = true
 _1v1_hp = 100
 _1v2_hp = 150
 attraction_point = NodePath("AttractionPoint")
@@ -1294,7 +1321,7 @@ cheat_underdog_clash_mult = 0.8
 
 [node name="OBS" type="Node" parent="."]
 script = ExtResource("5_l0sm3")
-host = "192.168.1.241"
+host = "192.168.1.24"
 password = "YsYGIZeQLS1bRuOj"
 
 [node name="Camera" type="Camera2D" parent="."]
@@ -2715,10 +2742,11 @@ gradient = SubResource("Gradient_wkwug")
 [node name="BIG" parent="Balls/Bosses" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2320.01, 1817.99)
 weapon_settings = ExtResource("90_u1in0")
-dual_wield = Array[int]([7])
+dual_wield = Array[int]([0])
 start_dir = Vector2(0, -1)
 health = 300
 team = 1
+clash_invincibility = 0.05
 stop = true
 is_boss = true
 
@@ -2863,9 +2891,9 @@ stop = true
 
 [node name="DW1" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2203.01, 1414.99)
-weapon_settings = ExtResource("6_p180d")
+weapon_settings = ExtResource("11_per8v")
 use_dual_wield = true
-dual_wield = Array[int]([21, 21])
+dual_wield = Array[int]([16, 16])
 health = 50
 team = 1
 dead = true
@@ -2873,9 +2901,9 @@ stop = true
 
 [node name="DW2" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2203.01, 1414.99)
-weapon_settings = ExtResource("6_p180d")
+weapon_settings = ExtResource("11_per8v")
 use_dual_wield = true
-dual_wield = Array[int]([19, 19])
+dual_wield = Array[int]([13, 13])
 health = 50
 team = 1
 dead = true
@@ -3005,13 +3033,23 @@ team = 1
 dead = true
 stop = true
 
-[node name="Dagger2" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
-position = Vector2(2355, 666.991)
+[node name="DaggerChara" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2305, -306.008)
 weapon_settings = SubResource("Resource_yashm")
 health = 50
 team = 1
 dead = true
 stop = true
+
+[node name="Circle" parent="Balls/Fighters/DaggerChara/Root" index="5"]
+visible = false
+material = SubResource("ShaderMaterial_u1in0")
+
+[node name="DWCircleMask" parent="Balls/Fighters/DaggerChara/Root" index="6"]
+visible = true
+
+[node name="DWCircle" parent="Balls/Fighters/DaggerChara/Root/DWCircleMask" index="0"]
+material = SubResource("ShaderMaterial_makhe")
 
 [node name="Kicks" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2355, 666.991)
@@ -4602,11 +4640,12 @@ offset_right = 40.0
 offset_bottom = 779.0
 
 [node name="Request" type="TextureRect" parent="."]
+visible = false
 material = SubResource("ShaderMaterial_nfmlc")
-offset_left = 163.003
-offset_top = 854.999
-offset_right = 1713.0
-offset_bottom = 1595.0
+offset_left = 147.003
+offset_top = 662.999
+offset_right = 1697.0
+offset_bottom = 1813.0
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("120_cr7au")
 
@@ -5116,3 +5155,4 @@ justification_flags = 0
 [editable path="Balls/Bosses/WARLOCK"]
 [editable path="Balls/Bosses/HYDRA_Void"]
 [editable path="Balls/Bosses/HYDRA_Acid"]
+[editable path="Balls/Fighters/DaggerChara"]

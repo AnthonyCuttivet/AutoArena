@@ -10,6 +10,7 @@ class_name Main extends Node2D
 @export var new_challenger_ball:BattleBall;
 @export var time_attack_mode:bool = false;
 @export var display_damage_dealt:bool = false;
+@export var _1v1_scale_up:bool = false;
 @export var time_attack_leaderboards:Dictionary[String, TimeAttackLeaderboard];
 @export var time_attack_endgame_delay:float = 2.0;
 @export var time_attack_ranking_duration:float = 15.0;
@@ -421,6 +422,8 @@ func start_game():
 
 	started = true;
 
+	init_fight_text();
+
 	if(time_attack_mode):
 		process_timer = true;
 
@@ -450,6 +453,14 @@ func start_balls():
 		var t:Tween = create_tween();
 		t.tween_property(hook, "self_modulate:a", 0.0, battleblock_start_delay * 4.0);
 		t.finished.connect(func(): hook.visible = false);
+
+func init_fight_text():
+	winner_text.text = "[wave amp=25.0 freq=8 connected=1][color=#F995FE]Ξ[/color] [color=#FA95CF]I[/color] [color=#FC96A1]G[/color] [color=#FE9773]H[/color] [color=#FF9F55]T[/color] [color=#FFAD47]![/color] [color=#FFBB39]![/color] [color=#FFC92C]![/color][/wave]";
+	winner_text.visible = true;
+	get_tree().create_timer(3.0).timeout.connect(func():winner_text.visible = false);
+
+	for confetti:MultiFX in confettis.get_children():
+		confetti.emit();
 
 func end_game():
 	var record_elapsed:float = (Time.get_ticks_msec() + (obs_delay * 1000.0)) / 1000.0;
@@ -786,7 +797,7 @@ func on_ball_dead(id: int):
 		end_game();
 		return;
 
-	if(balls_alive_count == 2 && !time_attack_mode):
+	if(balls_alive_count == 2 && !time_attack_mode && _1v1_scale_up):
 		for b in balls:
 			if(!b.dead):
 				create_tween().tween_property(b.root, "scale", Vector2.ONE * b.base_root_scale * 0.9, 2.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT);
@@ -1182,7 +1193,8 @@ func init_hypermatch():
 		balls[i].init_health(hypermatch_hp);
 		balls[i].update_health_text();
 		for j in hypermatch_scales[i]:
-			balls[i].weapon.scale_stat(true);
+			for w in balls[i].weapons:
+				w.scale_stat(true);
 
 func spawn_fx(fx_prefab:PackedScene, pos:Vector2, rot:float) -> GPUParticles2D:
 	var fx: GPUParticles2D = fx_prefab.instantiate();

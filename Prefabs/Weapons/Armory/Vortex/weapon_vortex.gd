@@ -26,6 +26,7 @@ var fdamage:float = 1.0;
 func init(s:WeaponSettings, o:BattleBall):
 	super.init(s, o);
 	current_rot_dist = min_rotating_dist;
+	wave_speed = randf_range(0.3,0.5);
 	base_bubble_sprite = sprite_2d.texture;
 	setup_bubbles();
 

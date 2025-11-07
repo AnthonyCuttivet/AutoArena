@@ -1,11 +1,13 @@
 class_name WeaponBIG extends Weapon
 
 @export var double_scale_each_hp_lost:int;
+@export var bounce_shake:float = 20.0;
 
 var next_scale_at_hp:int = 0;
 var weapon:Weapon = null;
 
 func _init() -> void:
+	EventBus.ball_bounce.connect(on_bounce);
 	EventBus.ball_weapon_hit.connect(on_weapon_hit_received);
 	EventBus.ball_damaged.connect(on_ball_damaged_received);
 
@@ -14,13 +16,14 @@ func init(s:WeaponSettings, o:BattleBall):
 	settings.name = "B.I.G";
 	settings.details = s.details;
 
-	settings.base_rotation_speed *= 0.75;
-	settings.base_attack_speed *= 0.65;
-	settings.base_shoot_speed *= 0.65;
-	settings.max_speed *= 0.75;
+	settings.base_rotation_speed *= 0.65;
+	settings.base_attack_speed *= 0.5;
+	#settings.base_shoot_speed *= 0.6;
+	settings.max_speed *= 0.4;
+	settings.gravity_strength *= 0.4;
 	settings.min_horizontal = 50.0;
 	settings.bounce_boost = 0.0;
-	settings.relative_bounce_boost = 0.25;
+	settings.relative_bounce_boost = 0.35;
 
 	weapon = o.spawn_weapon(settings, o.weapon_slots[0], 0);
 	o.weapons.pop_front();
@@ -63,3 +66,7 @@ func grow_gamefeel() -> void:
 	# Tween back smoothly
 	clash_tween = create_tween();
 	clash_tween.tween_property(ball_owner.weapon_slots[0], "scale", ball_owner.weapon_slots[0].scale * 1.15, 0.15).set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_IN);
+
+func on_bounce(id:int):
+	if(id != ball_owner.get_instance_id()): return;
+	EventBus.camera_trigger_shake.emit(bounce_shake, Vector2(1.0,0.2));

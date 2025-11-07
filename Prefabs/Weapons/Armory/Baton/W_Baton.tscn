@@ -39,7 +39,7 @@ height = 78.0
 
 [node name="WeaponBaton" type="Node2D" node_paths=PackedStringArray("fx_confettis", "sprite_2d", "hitboxes")]
 script = ExtResource("1_daoqc")
-bpm = 85
+bpm = 70
 beat_damage = 1.0
 beat_damage_scale = 1.0
 hud_prefab = ExtResource("2_ukqx0")

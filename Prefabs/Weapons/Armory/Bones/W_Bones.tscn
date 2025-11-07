@@ -35,7 +35,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 [sub_resource type="Resource" id="Resource_1g2xm"]
 script = ExtResource("3_2xkal")
 audio_stream = ExtResource("8_5v1ec")
-volume = -10.0
+volume = -20.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="Resource" id="Resource_1lqoh"]
@@ -51,10 +51,10 @@ volume = -8.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
-radius = 29.0
+radius = 32.0
 height = 84.0
 
-[node name="WeaponBones" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]
+[node name="WeaponBones" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes", "projectile_spawn")]
 script = ExtResource("1_b13ef")
 bounces = 1.0
 bad_time_bounces = 20
@@ -66,7 +66,7 @@ phantom_bone_opacity = 0.35
 eye_prefab = ExtResource("2_ghypk")
 eye_scale = 5.0
 accent_color = Color(0.382813, 1, 0.971069, 1)
-quotes = Array[String](["Here we [color=red]go[/color]", "[color=red]hell[/color] if i know.", "GEEEEEEET [color=red]DUNKED ON!!![/color]", "[color=red]Determined[/color], huh?", "Just [color=red]stronger than you[/color]", "eeee e [color=red]eee ee[/color] eeee ee", "Try to [color=red]hit me[/color] if you're able", "You're not gonna [color=red]win[/color]"])
+quotes = Array[String](["Here we [color=red]go[/color]", "[color=red]hell[/color] if i know.", "GEEEEEEET [color=red]DUNKED ON!!![/color]", "[color=red]Determined[/color], huh?", "Just [color=red]stronger than you[/color]", "eeee e [color=red]eee ee[/color] eeee ee", "Try to [color=red]hit me[/color] if you're able", "What does [color=red]67[/color] even mean?", "You're not gonna [color=red]win[/color]"])
 sfx_battle_start = SubResource("Resource_5v1ec")
 sfx_bad_time = SubResource("Resource_pqy1c")
 sfx_laser = SubResource("Resource_kmbqq")
@@ -75,6 +75,7 @@ sfx_sans = SubResource("Resource_1lqoh")
 sfx_death = SubResource("Resource_ilkfm")
 sprite_2d = NodePath("Sprite2D")
 hitboxes = [NodePath("Sprite2D/WeaponHitbox")]
+projectile_spawn = NodePath("BonesSpawn")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -91,6 +92,9 @@ metadata/owner = NodePath("../../..")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
 rotation = 0.785398
 shape = SubResource("CapsuleShape2D_1fhci")
+
+[node name="BonesSpawn" type="Node2D" parent="."]
+position = Vector2(-30, 0)
 
 [connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_entered"]
 [connection signal="area_exited" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_exited"]

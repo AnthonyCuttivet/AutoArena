@@ -62,7 +62,7 @@ no_rotation_change = false
 no_projectile_scale_change = false
 weapon_prefab = ExtResource("4_gj2xt")
 bg_projectile = false
-details = "[color=gold]2~3 hits[/color] = +1.25 DMG"
+details = "[color=gold]2~3 hits[/color] = +1.5 DMG"
 white_details = true
 sfx_clash = SubResource("Resource_gj2xt")
 sfx_hit = SubResource("Resource_ocopu")
