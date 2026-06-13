@@ -25,7 +25,7 @@ func scale_stat(force:bool = false):
 
 func on_weapon_hit_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
-	AudioManager.play_sfx(ball_owner.weapon.settings.sfx_hit, "SFX");
+	AudioManager.play_sfx(ball_owner.get_weapon(0).settings.sfx_hit, "SFX");
 	pass;
 
 func on_ball_damaged_received(id:int, _amount:int, _from:int, _slot_id:int):
@@ -41,4 +41,4 @@ func can_shoot(dt:float) -> bool:
 	return false;
 
 func get_custom_damage_value() -> int:
-	return ball_owner.weapon.heads.size();
+	return ball_owner.get_weapon(0).damage / ball_owner.get_weapon(0).heads.size();

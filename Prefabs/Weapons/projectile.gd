@@ -69,6 +69,8 @@ func set_speed(s:float):
 	velocity = transform.x * speed;
 
 func _on_projectile_hitbox_area_entered(other: Area2D) -> void:
+	if(other.ball_owner == null): return;
+	
 	if(other is Hurtbox && other.ball_owner != ball_owner && other.ball_owner.team != ball_owner.team):
 		on_hurtbox_hit(other.ball_owner);
 		if(weapon_owner.custom_sfx):

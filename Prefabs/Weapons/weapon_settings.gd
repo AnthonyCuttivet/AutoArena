@@ -2,6 +2,7 @@ class_name WeaponSettings extends Resource
 
 @export var name = "UNKNOWN";
 @export var spr:Texture;
+@export var use_settings_spr:bool = false;
 
 @export var melee:bool = true;
 @export var ranged:bool = false;
@@ -40,6 +41,7 @@ class_name WeaponSettings extends Resource
 @export var bg_projectile:bool = false;
 @export var details:String;
 @export var white_details:bool = false;
+@export var custom_name_size_scale:float = 1.0;
 
 @export var sfx_clash:SFX;
 @export var sfx_hit:SFX;

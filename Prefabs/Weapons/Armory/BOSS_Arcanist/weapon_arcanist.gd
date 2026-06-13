@@ -25,6 +25,7 @@ var increase_after_next:bool = false;
 var scaled_at:int = 0;
 
 func _init() -> void:
+	EventBus.ball_bounce.connect(on_bounce);
 	EventBus.ball_weapon_hit.connect(on_listened_event_received);
 	EventBus.ball_damaged.connect(on_ball_damaged_received);
 
@@ -80,6 +81,7 @@ func add_thunder():
 		increase_thunder_needed();
 
 	var p:Projectile = Utils.shoot_projectile(settings.projectile_prefab, ball_owner, self, weapon_slot.global_rotation, self);
+	p.ball_owner = ball_owner;
 	p.set_speed(projectile_speed);
 	p.weapon_owner = self;
 	p.scale *= projectile_scale;
@@ -148,7 +150,9 @@ func register_thundertrike(p:Projectile):
 	next_thunderstrike_at += 1;
 
 func clear_thunderstrike(t, s):
-
+	
+	if(thunders.size() == 0): return;
+	
 	for i in t:
 		thunders[i].destroy(0);
 		thunders.erase(i);
@@ -182,3 +186,7 @@ func add_rotating_spark():
 	rotating_sparks_parent.add_child(spark);
 	rotating_sparks.push_back(spark);
 	arrange_rotating_sparks();
+
+func on_bounce(id:int):
+	if(id != ball_owner.get_instance_id()): return;
+	EventBus.camera_trigger_shake.emit(4.0, Vector2(1.0,0.2));

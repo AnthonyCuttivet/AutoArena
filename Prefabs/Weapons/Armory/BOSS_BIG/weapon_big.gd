@@ -2,6 +2,7 @@ class_name WeaponBIG extends Weapon
 
 @export var double_scale_each_hp_lost:int;
 @export var bounce_shake:float = 20.0;
+@export var base_weapon_scale:float = 20.0;
 
 var next_scale_at_hp:int = 0;
 var weapon:Weapon = null;
@@ -16,7 +17,7 @@ func init(s:WeaponSettings, o:BattleBall):
 	settings.name = "B.I.G";
 	settings.details = s.details;
 
-	settings.base_rotation_speed *= 0.65;
+	settings.base_rotation_speed *= 0.25;
 	settings.base_attack_speed *= 0.5;
 	#settings.base_shoot_speed *= 0.6;
 	settings.max_speed *= 0.4;
@@ -25,7 +26,12 @@ func init(s:WeaponSettings, o:BattleBall):
 	settings.bounce_boost = 0.0;
 	settings.relative_bounce_boost = 0.35;
 
+	o.use_cheat_underdog_clash = false;
+	o.use_cheat_weapon_rotation = false;
+	o.no_clash_gamefeel = true;
+
 	weapon = o.spawn_weapon(settings, o.weapon_slots[0], 0);
+	weapon.scale = Vector2.ONE * base_weapon_scale * 0.1;
 	o.weapons.pop_front();
 
 	sprite_2d.texture = weapon.sprite_2d.texture;
@@ -43,6 +49,7 @@ func init_scaling_stat():
 	scaling_stat_value = damage;
 	update_stat_text();
 
+
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
 	# damage += stat_scale_value;
@@ -50,8 +57,7 @@ func scale_stat(force:bool = false):
 
 func on_weapon_hit_received(id:int, _slot_id:int, _to:int, is_projectile:bool):
 	if(id != ball_owner.get_instance_id()): return;
-	if(is_projectile):
-		scale_stat();
+	scale_stat();
 	pass;
 
 func on_ball_damaged_received(id:int, _amount:int, _from:int, _slot_id:int):
@@ -61,6 +67,13 @@ func on_ball_damaged_received(id:int, _amount:int, _from:int, _slot_id:int):
 		next_scale_at_hp -= double_scale_each_hp_lost;
 		ball_owner.weapon_slots[0].position.x = 0.0;
 		grow_gamefeel();
+
+	if(ball_owner.random_glitch):
+		ball_owner.before_glitch_remaining -= randf_range(ball_owner.random_glitch_reduction.x, ball_owner.random_glitch_reduction.y);
+		if(ball_owner.before_glitch_remaining <= 0.0):
+			ball_owner.before_glitch_remaining = 999;
+			ball_owner.trigger_glitch();
+			ball_owner.toggle_fake_infinite_health_mode(false);
 
 func grow_gamefeel() -> void:
 	# Tween back smoothly

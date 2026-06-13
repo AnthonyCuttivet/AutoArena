@@ -11,7 +11,6 @@ height = 62.0
 [node name="ProjectileVoid" type="Node2D" node_paths=PackedStringArray("hitbox", "sprite_2d")]
 script = ExtResource("1_pncrf")
 speed = 25.0
-bounce_count = 1
 rotation_speed = 0.05
 hitbox = NodePath("Sprite2D/ProjectileHitbox")
 sprite_2d = NodePath("Sprite2D")

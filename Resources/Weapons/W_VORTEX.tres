@@ -33,6 +33,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 script = ExtResource("1_ocopu")
 name = "VORTEX"
 spr = ExtResource("3_iw8on")
+use_settings_spr = false
 melee = true
 ranged = false
 flip = true
@@ -57,13 +58,14 @@ lifesteal_tick = 1
 independent_weapon = true
 stat_scale_value = 0.02
 stat_scale_name = "DMG"
-scaling_stat_float = true
+scaling_stat_float = false
 no_rotation_change = false
 no_projectile_scale_change = false
 weapon_prefab = ExtResource("4_gj2xt")
 bg_projectile = false
-details = "[color=gold]2~3 hits[/color] = +1.5 DMG"
+details = "[color=gold]2+ hits[/color] = +1.5 DMG"
 white_details = true
+custom_name_size_scale = 1.0
 sfx_clash = SubResource("Resource_gj2xt")
 sfx_hit = SubResource("Resource_ocopu")
 leaderboard_offset = 1.0

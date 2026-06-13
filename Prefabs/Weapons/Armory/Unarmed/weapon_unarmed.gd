@@ -128,8 +128,8 @@ func on_weapon_hit_received(id:int, slot_id:int, _to:int, _is_projectile:bool):
 func get_custom_stat_format() -> String:
 	return str(current_damage) + " / " + Utils.format_float(fdamage,1);
 
-func set_battleblock_modifiers():
-	super.set_battleblock_modifiers();
+func set_battleblock_modifiers(weapon_index:int):
+	super.set_battleblock_modifiers(weapon_index);
 
-	ball_owner.gravity_strength /= 3.5;
+	#ball_owner.gravity_strength /= 3.5;
 	ball_owner.relative_bounce_boost = 0.3;

@@ -1,0 +1,74 @@
+[gd_resource type="Resource" script_class="WeaponSettings" load_steps=8 format=3 uid="uid://byrtow40mri7l"]
+
+[ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="1_tbkpm"]
+[ext_resource type="AudioStream" uid="uid://cui62p62ka010" path="res://Audio/SFX/BattleBalls/se_jack_smash_S01.wav" id="2_vf0p6"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="3_jfovf"]
+[ext_resource type="Texture2D" uid="uid://csg4nlo1x6o4u" path="res://Graphics/_Addons/Icons/fc7000.png" id="5_tbkpm"]
+[ext_resource type="PackedScene" uid="uid://dad3dmsxcnkl8" path="res://Prefabs/Weapons/Armory/GlitchKnife/W_GlitchKnife.tscn" id="6_tbkpm"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_tbkpm"]
+random_pitch = 1.05
+streams_count = 1
+stream_0/stream = ExtResource("2_vf0p6")
+
+[sub_resource type="Resource" id="Resource_0knw6"]
+script = ExtResource("3_jfovf")
+audio_stream = SubResource("AudioStreamRandomizer_tbkpm")
+volume = -27.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[resource]
+script = ExtResource("1_tbkpm")
+name = "GLITCH KNIFE"
+spr = ExtResource("5_tbkpm")
+use_settings_spr = true
+melee = true
+ranged = false
+flip = true
+offset = 40.0
+y_offset = false
+base_rotation_direction = 1
+base_rotation_speed = 1.3
+base_damage = 1
+base_knockback = 3000.0
+base_attack_speed = 1.0
+base_shoot_speed = 1.0
+base_size = 10.0
+base_hitstop = 0.22
+base_hitstop_slow = 0.0
+base_projectiles = 0
+base_projectile_speed = 1000.0
+base_projectile_scale = 0.75
+base_shoot_duration = 0.35
+projectile_self_hitstop = false
+lifesteal = false
+lifesteal_tick = 1
+independent_weapon = false
+stat_scale_value = -0.08
+stat_scale_name = "Nullslash DMG"
+scaling_stat_float = false
+no_rotation_change = false
+no_projectile_scale_change = false
+weapon_prefab = ExtResource("6_tbkpm")
+bg_projectile = false
+details = "Glitches in & out"
+white_details = false
+custom_name_size_scale = 0.9
+sfx_clash = SubResource("Resource_0knw6")
+leaderboard_offset = 1.0
+leaderboard_rotation = 0.0
+leaderboard_no_spr = false
+scale_stat_multiplier = 1
+base_damage_multiplier = 1
+no_clash_on_block = false
+base_weapon_rotation = 120.0
+color = Color(0.332642, 0.851563, 0.783703, 1)
+max_speed = 2000.0
+min_horizontal = 0.0
+gravity_strength = 1500.0
+drag_force = 0.02
+bounce_boost = 250.0
+relative_bounce_boost = 0.0
+acceleration = 1.0
+knockback_resistance = 1.0
+metadata/_custom_type_script = "uid://c1biydo2yju8x"

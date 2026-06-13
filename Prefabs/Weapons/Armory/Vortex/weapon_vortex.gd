@@ -95,13 +95,14 @@ func restore_bubble(i:int):
 	AudioManager.play_sfx(sfx_repop_bubble, "SFX");
 
 func reset():
-	restore_bubbles();
-	fdamage = 1.0;
-	super.reset();
+	if(!ball_owner.main.no_reset_mode):
+		restore_bubbles();
+		fdamage = 1.0;
+		super.reset();
 
-func set_battleblock_modifiers():
-	super.set_battleblock_modifiers();
-	ball_owner.gravity_strength /= 3.5;
+func set_battleblock_modifiers(weapon_index:int):
+	super.set_battleblock_modifiers(weapon_index);
+	#ball_owner.gravity_strength /= 3.5;
 	ball_owner.relative_bounce_boost = 0.3;
 	max_rotating_dist *= 2;
 

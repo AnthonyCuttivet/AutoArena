@@ -76,10 +76,10 @@ func _process(delta: float) -> void:
 	update_stat_text();
 
 	# print("Limiter : " + str(limiter_remaining));
-	# print(current_damage >= sandevistan_damage_threshold, current_damage == floor(fdamage), current_damage >= next_sandevistan_trigger);
+	# print(current_damage >= sandevistan_damage_threshold, current_damage >= floor(fdamage), current_damage >= next_sandevistan_trigger);
 	# print(str(current_damage) + " - "  + str(sandevistan_damage_threshold) + " - " + str(floor(fdamage)) + " - " + str(next_sandevistan_trigger));
 
-	if(current_damage >= sandevistan_damage_threshold && current_damage == floor(fdamage) && current_damage >= next_sandevistan_trigger):
+	if(current_damage >= sandevistan_damage_threshold && current_damage >= floor(fdamage) && current_damage >= next_sandevistan_trigger):
 		sandevistan_mode(true);
 
 func sandevistan_mode(s:bool):
@@ -192,8 +192,18 @@ func sandevistan_details() -> String:
 func cyberpsychosis_details() -> String:
 	return "CYBERPSYCHOSIS: -" + str(sandevistan_hp_lost_per_s) + "hp/s";
 
-func set_battleblock_modifiers():
-	super.set_battleblock_modifiers();
+func set_battleblock_modifiers(weapon_index:int):
+	super.set_battleblock_modifiers(weapon_index);
 
-	ball_owner.gravity_strength /= 3.5;
+	#ball_owner.gravity_strength /= 3.5;
 	ball_owner.relative_bounce_boost = 0.3;
+
+func reset():
+	super.reset();
+
+	current_damage = 1;
+	fdamage = 1.0;
+	base_max_speed = ball_owner.max_speed;
+	ball_owner.afterimage.active = true;
+	next_sandevistan_trigger = sandevistan_damage_threshold;
+	ball_owner.hurtbox.hurtbox_is_hitbox = true;

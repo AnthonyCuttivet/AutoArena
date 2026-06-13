@@ -73,7 +73,7 @@ func on_weapon_clash_received(id:int, slot_id:int, _clash_pos:Vector2, _silent:b
 func set_charged_sprite_alpha():
 	sprite_charged.self_modulate.a = clamp(((damage - 1) / 10.0), 0,1);
 
-func set_battleblock_modifiers():
-	super.set_battleblock_modifiers();
-	ball_owner.gravity_strength /= 3.5;
+func set_battleblock_modifiers(weapon_index:int):
+	super.set_battleblock_modifiers(weapon_index);
+	#ball_owner.gravity_strength /= 3.5;
 	ball_owner.relative_bounce_boost = 0.3;

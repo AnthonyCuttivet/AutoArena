@@ -9,6 +9,7 @@ class_name Main extends Node2D
 @export var new_challenger_camera_fade:float = 15.0;
 @export var new_challenger_ball:BattleBall;
 @export var time_attack_mode:bool = false;
+@export var use_leaderboard:bool = false;
 @export var display_damage_dealt:bool = false;
 @export var _1v1_scale_up:bool = false;
 @export var time_attack_leaderboards:Dictionary[String, TimeAttackLeaderboard];
@@ -19,6 +20,8 @@ class_name Main extends Node2D
 @export var _2v2_colors:Array[Color];
 @export var tournament_mode:bool = false;
 @export var bo3_mode:bool = false;
+@export var ordeal_mode:bool = false;
+@export var no_reset_mode:bool = false;
 @export var preset_score:Vector2i;
 @export var battleblock_mode:bool = false;
 @export var battleblock_controller:BlockModeMCDig;
@@ -26,6 +29,11 @@ class_name Main extends Node2D
 @export var hypermatch_mode:bool = false;
 @export var hypermatch_hp:int = 250;
 @export var hypermatch_scales:Array[int];
+
+@export var survive_mode:bool = false;
+@export var survive_time_sec:float = 60.0;
+
+@export var use_physicky_physics: bool = false;
 
 @export var forced_start_dir:Vector2 = Vector2.ZERO;
 @export var dead_ui_color:Color;
@@ -48,6 +56,7 @@ class_name Main extends Node2D
 @export var sfx_bounce:SFX;
 @export var sfx_bounce_boss:SFX;
 @export var sfx_death:SFX;
+@export var sfx_faaaah:SFX;
 @export var ve_announcer:SFX;
 @export var announcer_delay:float = 0.0;
 @export var no_announcer:bool = false;
@@ -68,6 +77,8 @@ class_name Main extends Node2D
 @export var _2v2_hp:int = 75;
 @export var ffa_hp:int = 125;
 @export var attraction_point:Node2D;
+
+@export var global_knockback_boost:float = 2.0;
 
 @export var use_cheat_hitbox:bool = false;
 @export var cheat_hitbox_max_hitbox_bonus: float = 0.2;
@@ -112,6 +123,8 @@ class_name Main extends Node2D
 @onready var details_right_2_2p: DynamicText = $UI/Top/CharactersRight_2p/Details2
 @onready var stat_right_2_2p: DynamicText = $UI/Bottom/StatRight2_2p
 
+@onready var mode_details: RichTextLabel = $UI/ModeDetails
+
 # -------------- Containers ----------------
 
 @onready var container_1v1_left: VBoxContainer = $UI/Top/CharacterLeft_1p
@@ -141,7 +154,7 @@ class_name Main extends Node2D
 
 # ------ #
 
-@onready var request: TextureRect = $Request
+@onready var requests: Control = $Requests
 
 @onready var vs: RichTextLabel = $UI/Top/VS
 @onready var winner_text: DynamicText = $UI/Winner
@@ -150,7 +163,7 @@ class_name Main extends Node2D
 @onready var camera: Camera = $Camera
 
 @onready var bg_earclacks: ColorRect = $BG_White
-@onready var bg: ColorRect = $BG
+@onready var balatro_effect: ColorRect = $BG_White/BalatroEffect
 @onready var arena_bg: ColorRect = $Walls/ColorRect
 @onready var author: RichTextLabel = $author
 @onready var version: RichTextLabel = $Version
@@ -170,8 +183,10 @@ class_name Main extends Node2D
 @onready var time_attack: RichTextLabel = $UI/Top/TimeAttackContainer/TimeAttack
 @onready var ta_timer: RichTextLabel = $UI/Top/TimeAttackContainer/TATimer
 @onready var ta_record: DynamicText = $UI/Top/TARecord
+@onready var ta_progress_bar: ProgressBar = $UI/Top/TAProgressBar
 
 @onready var damage_dealt_container: VBoxContainer = $UI/Bottom/DamageDoneContainer
+@onready var damage_done_header: DynamicText = $UI/Bottom/DamageDoneContainer/DamageDoneHeader
 @onready var damage_dealt_text: DynamicText = $UI/Bottom/DamageDoneContainer/Damage_Done
 @onready var time_attack_leaderboard_ui: TimeAttackLeaderboardUI = $TimeAttackLeaderboard
 @onready var bo3_score_ui: DynamicText = $UI/Top/BO3Score
@@ -215,6 +230,8 @@ var bo3_score:Dictionary[int, int];
 var bgm_player:NodePath;
 var startup_player:NodePath;
 
+var progress_bar_tween:Tween;
+
 func _ready() -> void:
 	if(devmode):
 		obs_delay = 0.0;
@@ -237,6 +254,11 @@ func _ready() -> void:
 	EventBus.block_destroyed.connect(on_block_destroyed);
 	EventBus.block_hit.connect(on_block_destroyed);
 
+	set_mode_details();
+
+	if(hypermatch_mode):
+		rainbow_borders = true;
+
 	if(white_mode):
 		set_earclacks_mode();
 
@@ -248,7 +270,18 @@ func _ready() -> void:
 	if(time_attack_mode || balls.size() == 4):
 		display_damage_dealt = true;
 
+	if(ordeal_mode):
+		bo3_mode = true;
+		no_reset_mode = true;
+		rainbow_borders = false;
+		_1v1_hp = 66;
+
 	setup_fight();
+
+	if(survive_mode):
+		time_attack_mode = true;
+		rainbow_borders = true;
+		init_survive_mode();
 
 	init_ui();
 
@@ -318,7 +351,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if(process_timer && time_attack_mode):
 		time_attack_elapsed += (delta + (delta * (1.0 - Engine.time_scale)));
-		update_time_attack_timer();
+		update_time_attack_timer(delta);
 
 	for fx in just_spawned_fxs.keys():
 		if just_spawned_fxs[fx] >= 1:
@@ -332,8 +365,24 @@ func _process(delta: float) -> void:
 		just_spawned_fxs.erase(fx)
 		fxs_to_remove.erase(fx);
 
+func set_mode_details():
+	mode_details.visible = true;
+
+	if(ordeal_mode):
+		mode_details.text = "[wave amp=25.0 freq=1 connected=1][color=#FF9155]O[/color][color=#FF8A57]r[/color][color=#FF8258]d[/color][color=#FF7B59]e[/color][color=#FF735A]a[/color][color=#FF6C5C]l[/color] [/wave]\n[color=gold]BO3 - No resets[/color]"
+		return;
+
+	if(battleblock_mode):
+		mode_details.text = "[wave amp=25.0 freq=1 connected=1][color=#3895FF]B[/color][color=#32A6ED]a[/color][color=#2DB8DB]t[/color][color=#28C9C9]t[/color][color=#23DBB7]l[/color][color=#1EEDA5]e[/color] [color=#1CF2A5]B[/color][color=#20E5B7]l[/color][color=#23D8C9]o[/color][color=#27CBDB]c[/color][color=#2ABEED]k[/color][color=#2EB1FF]s[/color] [/wave]\n[color=lime_green]First to break the last layer[/color]"
+		return;
+
+	if(hypermatch_mode):
+		mode_details.text = "[wave amp=25.0 freq=1 connected=1][color=#FF9494]✦[/color] [color=#FFF094]H[/color][color=#B3FF94]Y[/color][color=#94FFD1]P[/color][color=#94D1FF]E[/color][color=#B394FF]R[/color] [color=#B394FF]M[/color][color=#94D1FF]A[/color][color=#94FFD1]T[/color][color=#94FFD1]C[/color][color=#FFF094]H[/color] [color=#FF94F0]✦[/color][/wave]\n[color=lavender_blush]Bonus Starting Stats[/color]"
+		return;
+
+	mode_details.visible = false;
+
 func set_earclacks_mode():
-	bg.visible = false;
 	crt.visible = false;
 	author.self_modulate = Color.WEB_GRAY;
 	version.self_modulate = Color.WEB_GRAY;
@@ -353,10 +402,11 @@ func set_earclacks_mode():
 		wallright.color = Color.BLACK;
 
 func set_dark_mode():
-	bg.visible = false;
 	crt.visible = false;
 	author.self_modulate = Color.WHITE;
+	damage_done_header.self_modulate = Color.WHITE;
 	bg_earclacks.self_modulate = Color("#333333");
+	balatro_effect.color.a = 0.02;
 
 	if(!rainbow_borders):
 		walltop.material = null;
@@ -372,7 +422,6 @@ func set_dark_mode():
 		wallright.color = Color.WHITE;
 
 func set_balatro_mode():
-	bg.visible = true;
 	author.self_modulate = Color.GHOST_WHITE;
 	version.self_modulate = Color.GHOST_WHITE;
 
@@ -411,10 +460,13 @@ func start_game():
 	else:
 		start_balls();
 
-	if(request.visible):
-		var t:Tween = create_tween();
-		t.tween_property(request, "position:y", 120.0, 1.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK);
-		t.tween_property(request, "modulate:a", 0.0, 0.1).set_delay(4.0);
+	if(requests.visible):
+		for request in requests.get_children():
+			var t:Tween = create_tween();
+			var d:float = randf_range(2.5, 3.5);
+
+			t.tween_property(request, "position:y", randf_range(100.0, 120.0), randf_range(0.8, 1.2)).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK);
+			t.tween_property(request, "position:y", -500.0, randf_range(0.6, 0.8)).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_BACK).set_delay(d);
 
 	if(new_challenger_mode):
 		balls[1].stop = true;
@@ -447,15 +499,19 @@ func start_balls():
 
 	for ball in balls:
 		d = d.bounce(Vector2.UP);
+
+		if(battleblock_mode):
+			d = Vector2.ONE.rotated(deg_to_rad(randf_range(0.0, 360.0)) * ball.max_speed * 0.5);
+
 		ball.start(self, d);
 
 	if(battleblock_mode):
 		var t:Tween = create_tween();
-		t.tween_property(hook, "self_modulate:a", 0.0, battleblock_start_delay * 4.0);
+		t.tween_property(hook, "self_modulate:a", 0.0, 2.0);
 		t.finished.connect(func(): hook.visible = false);
 
 func init_fight_text():
-	winner_text.text = "[wave amp=25.0 freq=8 connected=1][color=#F995FE]Ξ[/color] [color=#FA95CF]I[/color] [color=#FC96A1]G[/color] [color=#FE9773]H[/color] [color=#FF9F55]T[/color] [color=#FFAD47]![/color] [color=#FFBB39]![/color] [color=#FFC92C]![/color][/wave]";
+	winner_text.text = "[wave amp=25.0 freq=8 connected=1][color=#F995FE]F[/color] [color=#FA95CF]I[/color] [color=#FC96A1]G[/color] [color=#FE9773]H[/color] [color=#FF9F55]T[/color] [color=#FFAD47]![/color] [color=#FFBB39]![/color] [color=#FFC92C]![/color][/wave]";
 	winner_text.visible = true;
 	get_tree().create_timer(3.0).timeout.connect(func():winner_text.visible = false);
 
@@ -493,11 +549,12 @@ func end_game():
 
 	show_winner_text(winners);
 
-	if(process_timer):
+	if(process_timer && !survive_mode):
 		process_timer = false;
 		if(balls[0].health > 0): return;
 		balls[1].end_game = true;
 		balls[2].end_game = true;
+
 		add_time_attack_result();
 
 		print("aled");
@@ -519,8 +576,11 @@ func reset_match():
 	fill_weapon_ui(balls[0], 0, name_left_1p, sprite_left_1p, details_left_1p, stat_left_1p, combo_counter_L1_1P);
 	fill_weapon_ui(balls[1], 0, name_right_1p, sprite_right_1p, details_right_1p, stat_right_1p, combo_counter_R1_1P);
 
-	balls[0].weapon.reset();
-	balls[1].weapon.reset();
+	for w in balls[0].weapons:
+		w.reset();
+
+	for w in balls[1].weapons:
+		w.reset();
 
 	if(hypermatch_mode):
 		init_hypermatch();
@@ -594,9 +654,10 @@ func init_ui():
 		battleblock_controller.init_bb_blocks_ui(balls[1]);
 
 	time_attack_container.visible = time_attack_mode;
-	ta_record.visible = time_attack_mode;
+	ta_progress_bar.visible = time_attack_mode && survive_mode;
+	ta_record.visible = time_attack_mode && !survive_mode;
 	damage_dealt_container.visible = display_damage_dealt;
-	if(time_attack_mode):
+	if(time_attack_mode && use_leaderboard):
 		if(time_attack_leaderboards[balls[0].weapon_settings.name.to_upper()].rankings.size() == 0):
 			ta_record.visible = false;
 		else:
@@ -607,7 +668,9 @@ func fill_weapon_ui(ball:BattleBall, weapon_index:int, name_text:DynamicText, sp
 
 	name_text.format([weapon.settings.name]);
 	name_text.self_modulate = weapon.settings.color;
-	sprite.texture = weapon.sprite_2d.texture;
+	name_text.add_theme_font_size_override("normal_font_size", name_text.get_theme_font_size("normal_font_size") * weapon.settings.custom_name_size_scale);
+
+	sprite.texture = weapon.settings.spr if weapon.settings.use_settings_spr else weapon.sprite_2d.texture;
 
 	details_text.format([weapon.settings.details]);
 
@@ -624,15 +687,15 @@ func fill_weapon_ui(ball:BattleBall, weapon_index:int, name_text:DynamicText, sp
 	weapon.details_text = details_text;
 	weapon.stat_text = stat_text;
 
-	weapon.stat_text.self_modulate = weapon.settings.color;
+	weapon.stat_text.self_modulate = weapon.settings.color if !weapon.settings.white_details else Color.WHITE;
 	weapon.update_stat_text();
 
 	combo_counter.init(ball, weapon_index);
 
 func fill_battleblock_ui(ball:BattleBall, mult_text:DynamicText, bb_blocks:GridContainer):
-	ball.bb_mult_text = mult_text;
-	ball.bb_mult_text.self_modulate = ball.color;
-	ball.update_bb_mult_text();
+	ball.weapons[0].bb_mult_text = mult_text;
+	ball.weapons[0].bb_mult_text.self_modulate = ball.color;
+	ball.weapons[0].update_bb_mult_text();
 
 	ball.bb_blocks_ui = bb_blocks;
 
@@ -770,6 +833,7 @@ func on_ball_dead(id: int):
 	global_hitstop(0.01,0.6);
 
 	AudioManager.play_sfx(sfx_death, "SFX", 1.0, 0.0, 0.0, true);
+	if(!battleblock_mode): AudioManager.play_sfx(sfx_faaaah, "SFX", 1.0, 0.0, 0.0, true);
 	EventBus.camera_trigger_shake.emit(death_shake if !battleblock_mode else death_shake / 2.0);
 	EventBus.set_chromatic_aberration.emit(15, 0.3);
 
@@ -867,8 +931,8 @@ func setup_fight():
 	];
 
 	_2v_minecraft_spots = [
-		arena_center.global_position + Vector2(400.0, -150),
-		arena_center.global_position + Vector2(400.0, 100),
+		arena_center.global_position + Vector2(370, -150),
+		arena_center.global_position + Vector2(370.0, 100),
 	];
 
 	balls_alive_count = balls.size();
@@ -877,10 +941,15 @@ func setup_fight():
 		block_breaker.queue_free();
 	else:
 		block_breaker.visible = true;
-		for block in block_breaker.get_child(0).get_children():
+		for block in block_breaker.get_child(1).get_children():
 			block.main = self;
 
 	if(use_2v2_colors && balls.size() == 4 && !free_for_all):
+		balls[0].custom_color = true;
+		balls[1].custom_color = true;
+		balls[2].custom_color = true;
+		balls[3].custom_color = true;
+
 		balls[0].color = _2v2_colors[0];
 		balls[1].color = _2v2_colors[1];
 		balls[2].color = _2v2_colors[2];
@@ -988,15 +1057,28 @@ func place_fighting_balls():
 		for i in balls.size():
 			balls[i].global_position = _2v_minecraft_spots[i];
 			balls[i].respawn_pos = _2v_minecraft_spots[i];
-			balls[i].weapon.set_battleblock_modifiers();
+			balls[i].weapons[0].set_battleblock_modifiers(0);
 
 	for ball in balls:
 		ball.dead = false;
 		ball.visible = true;
 		ball.update_health_text();
 
-func update_time_attack_timer():
-	ta_timer.text = " " + Utils.convert_time_to_string(time_attack_elapsed) + " ";
+func update_time_attack_timer(dt:float):
+	if(survive_mode):
+		var v:float = 1.0 - (time_attack_elapsed / survive_time_sec);
+		ta_timer.text = "Survive " + Utils.convert_time_to_string_short(survive_time_sec - time_attack_elapsed) + "s";
+		ta_progress_bar.value = lerpf(ta_progress_bar.value, v * 100.0, dt * 30.0);
+
+		if(v <= 0.0 && process_timer):
+			process_timer = false;
+			ta_progress_bar.visible = false;
+			balls[0].death();
+			ta_timer.text = "[wave amp=25.0 freq=1 connected=1]Survived![/wave]";
+			ta_timer.self_modulate = Color.GOLD;
+			end_game();
+	else:
+		ta_timer.text = " " + Utils.convert_time_to_string(time_attack_elapsed) + " ";
 
 func init_damage_dealt(id:int):
 	damage_dealt[id] = 0;
@@ -1196,6 +1278,28 @@ func init_hypermatch():
 			for w in balls[i].weapons:
 				w.scale_stat(true);
 
+func init_survive_mode():
+	update_time_attack_timer(0.0);
+	ta_record.visible = false;
+	ta_progress_bar.value = ta_progress_bar.max_value;
+
+	balls[0].weapon_settings.name = "HUNTER";
+	balls[0].weapon_settings.details = "Infinite health ???";
+
+	balls[0].init_fake_infinite_health_mode(456);
+
+	balls[1].init_health(50);
+	balls[1].update_health_text();
+
+	balls[2].init_health(50);
+	balls[2].update_health_text();
+
+	for i in 2:
+		balls[0].weapons[0].scale_stat(true);
+
+	pass;
+
+
 func spawn_fx(fx_prefab:PackedScene, pos:Vector2, rot:float) -> GPUParticles2D:
 	var fx: GPUParticles2D = fx_prefab.instantiate();
 
@@ -1214,44 +1318,3 @@ func spawn_fx(fx_prefab:PackedScene, pos:Vector2, rot:float) -> GPUParticles2D:
 
 func play_sfx(sfx:SFX, bus: StringName = "SFX", pitch:float = 1.0, offset: float = 0.0, fade_in: float = 0.0, forced:bool = true) -> NodePath:
 	return AudioManager.play_sfx(sfx,bus,pitch,offset,fade_in, forced);
-
-# func spawn_ball(w:Enums.WEAPONS, pos:Vector2, ui_slot_id:int):
-# 	var ball:BattleBall = battle_ball_prefab.instantiate();
-# 	add_child(ball);
-# 	ball.global_position = pos;
-# 	ball.weapon_settings = all_weapons[w];
-
-# 	balls.push_back(ball);
-# 	balls_ids[ball.get_instance_id()] = balls_ids.size();
-
-# 	init_spawned_ball(ball, ui_slot_id);
-
-# 	print(ui_slot_id);
-
-
-# func init_spawned_ball(ball:BattleBall, ui_slot_id:int):
-# 	init_damage_dealt(ball.get_instance_id());
-
-# 	ball.main = self;
-# 	ball.ready();
-
-# 	ball.init_health(_1v2_hp);
-# 	ball.team = 1;
-# 	ball.update_health_text();
-
-# 	ball.set_or_ignore_invincibility(0.2);
-
-# 	ball.weapon.weapon_is_ready();
-# 	ball.start(self, Vector2.ZERO);
-
-# 	if(ui_slot_id == 1):
-# 		fill_character_ui(balls[1], name_right_1_2p, sprite_right_1_2p, details_right_1_2p, stat_right_1_2p, combo_counter_R1_2P);
-# 	elif(ui_slot_id == 2):
-# 		fill_character_ui(balls[2], name_right_2_2p, sprite_right_2_2p, details_right_2_2p, stat_right_2_2p, combo_counter_R2_2P);
-
-# 	teams_alive_members[1] += 1;
-# 	balls_alive_count += 1;
-
-# 	ball.max_speed *= 0.8;
-# 	ball.gravity_strength *= 0.8;
-# 	ball.root.scale *= 0.9;

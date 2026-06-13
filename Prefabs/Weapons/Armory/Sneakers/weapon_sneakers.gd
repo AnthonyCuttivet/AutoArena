@@ -71,8 +71,12 @@ func on_clash_animation():
 	t.tween_property(sprite_parent, "scale", Vector2.ONE * 1.5, 0.1).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT);
 	t.tween_property(sprite_parent, "scale", Vector2.ONE, 0.1).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT);
 
+func reset():
+	if(!ball_owner.main.no_reset_mode):
+		super.reset();
+		dmg = 1;
 
-func set_battleblock_modifiers():
-	super.set_battleblock_modifiers();
-	ball_owner.gravity_strength /= 5.0;
+func set_battleblock_modifiers(weapon_index:int):
+	super.set_battleblock_modifiers(weapon_index);
+	#ball_owner.gravity_strength /= 5.0;
 	ball_owner.relative_bounce_boost = 0.5;

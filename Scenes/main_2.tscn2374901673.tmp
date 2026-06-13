@@ -1,0 +1,5020 @@
+[gd_scene load_steps=212 format=4 uid="uid://cmsck3y43hvak"]
+
+[ext_resource type="Script" uid="uid://llbx2bxdfjwy" path="res://Scenes/main.gd" id="1_nmkph"]
+[ext_resource type="Shader" uid="uid://m275kdb8v68b" path="res://Graphics/Shaders/balatro.gdshader" id="1_y2yxb"]
+[ext_resource type="PackedScene" uid="uid://0r37n5w5ilfl" path="res://Prefabs/FX/fx_hit.tscn" id="2_8wnqf"]
+[ext_resource type="Script" uid="uid://bentp5io1j8mf" path="res://Scripts/time_attack_leaderboard.gd" id="2_poh84"]
+[ext_resource type="Resource" uid="uid://cc1iycaa3m5bu" path="res://Resources/Leaderboards/LDB_HYDRA_25K.tres" id="3_cr7au"]
+[ext_resource type="PackedScene" uid="uid://cqqg6uhjxrrtk" path="res://Prefabs/FX/fx_death_neutral.tscn" id="3_uot50"]
+[ext_resource type="PackedScene" uid="uid://fxlqqsregrlu" path="res://Prefabs/FX/fx_clash.tscn" id="4_0o7lx"]
+[ext_resource type="Resource" uid="uid://d08dgi8n4wq5c" path="res://Resources/Leaderboards/LDB_WARLOCK.tres" id="4_g7d4c"]
+[ext_resource type="AudioStream" uid="uid://c30nnu4532vrt" path="res://Audio/SFX/SatisfyingSounds/Thock/Thock3.wav" id="4_qyfoh"]
+[ext_resource type="PackedScene" uid="uid://dq1w5q1d2hbls" path="res://Prefabs/Ball/battle_ball.tscn" id="4_ya2e4"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="5_1v8r1"]
+[ext_resource type="Script" uid="uid://bokmjtf16keio" path="res://addons/obs-websocket-gd/obs_websocket.gd" id="5_l0sm3"]
+[ext_resource type="AudioStream" uid="uid://6lrnayhpvcap" path="res://Audio/SFX/BattleBalls/meteor-smash.mp3" id="6_go1jf"]
+[ext_resource type="Resource" uid="uid://b4rj4gsxvsgjg" path="res://Resources/Weapons/W_BONES.tres" id="6_p180d"]
+[ext_resource type="Shader" uid="uid://b7sq5hxxopetp" path="res://addons/PaletteTools/Shaders/rainbow_shader.gdshader" id="6_uot50"]
+[ext_resource type="AudioStream" uid="uid://ct1bgwpmoyswh" path="res://Audio/SFX/SatisfyingSounds/Thock/Thock8.wav" id="7_k7rf6"]
+[ext_resource type="PackedScene" uid="uid://d1vt2ka0mwmvo" path="res://Prefabs/FX/fx_block_destroyed.tscn" id="8_2p8oi"]
+[ext_resource type="Script" uid="uid://0fuba61sagm3" path="res://Scripts/camera.gd" id="11_87gun"]
+[ext_resource type="Resource" uid="uid://vf0ik06r5ypg" path="res://Resources/Weapons/W_BOW.tres" id="11_per8v"]
+[ext_resource type="Resource" uid="uid://dvig1hbsj8myn" path="res://Resources/Weapons/W_HYDRA.tres" id="11_uot50"]
+[ext_resource type="Texture2D" uid="uid://crarm12ndl2en" path="res://Graphics/_Addons/Icons/fc7.png" id="12_hvjex"]
+[ext_resource type="FontFile" uid="uid://bt2qq5v7nibma" path="res://Graphics/Fonts/PPFraktionMono-Bold.otf" id="12_p1oyv"]
+[ext_resource type="FontFile" uid="uid://bglbd1ylrt02k" path="res://Graphics/Fonts/big_noodle_titling.ttf" id="12_per8v"]
+[ext_resource type="Resource" uid="uid://bpfnb7ayxmeh" path="res://Resources/Weapons/W_Baton.tres" id="13_cr7au"]
+[ext_resource type="Script" uid="uid://dtqgj8e3uki5c" path="res://Scenes/dynamic_text.gd" id="13_vvmd2"]
+[ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="14_0krxf"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="14_cticm"]
+[ext_resource type="Shader" uid="uid://dtyu4fqs87aw3" path="res://Graphics/Shaders/hitflash.gdshader" id="14_vvmd2"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="15_cticm"]
+[ext_resource type="AudioStream" uid="uid://82kd7gfw2rff" path="res://Audio/BGM/ps2.mp3" id="15_gcqa4"]
+[ext_resource type="Resource" uid="uid://0a13l22dndfo" path="res://Resources/Weapons/W_BlackMage.tres" id="21_gaafq"]
+[ext_resource type="Resource" uid="uid://cxyuv6drjbc2a" path="res://Resources/Weapons/W_HYDRA_Void.tres" id="21_wy0uv"]
+[ext_resource type="Resource" uid="uid://c8c8mil8uy7d0" path="res://Resources/Weapons/W_HYDRA_Acid.tres" id="22_630qq"]
+[ext_resource type="Resource" uid="uid://dngq5if36y8sd" path="res://Resources/Weapons/W_Qiang.tres" id="22_ee1k8"]
+[ext_resource type="Resource" uid="uid://dkrtkq686k0h1" path="res://Resources/Weapons/W_KATANA.tres" id="22_rcyw2"]
+[ext_resource type="Resource" uid="uid://b3s7seotwqvlb" path="res://Resources/Weapons/W_Sword.tres" id="23_76u2v"]
+[ext_resource type="Resource" uid="uid://c5eexc502l0ip" path="res://Resources/Weapons/W_Thunder.tres" id="23_n5n48"]
+[ext_resource type="Texture2D" uid="uid://coxlviwvbybmd" path="res://Graphics/_Addons/Icons/fc1960.png" id="23_o08cq"]
+[ext_resource type="Script" uid="uid://c1biydo2yju8x" path="res://Prefabs/Weapons/weapon_settings.gd" id="24_3p5r5"]
+[ext_resource type="PackedScene" uid="uid://bn0dqaj5jmw3f" path="res://Prefabs/Weapons/Armory/_NONE/W_NONE.tscn" id="25_uhddi"]
+[ext_resource type="Resource" uid="uid://eb05goe3vru8" path="res://Resources/Weapons/W_TITAN.tres" id="26_gbt1t"]
+[ext_resource type="Texture2D" uid="uid://bfvdgok43dr2p" path="res://Graphics/Images/circle-svgrepo-com.svg" id="26_habdg"]
+[ext_resource type="Resource" uid="uid://byiqiqh47bey5" path="res://Resources/Weapons/W_Scissors.tres" id="27_djmp0"]
+[ext_resource type="Resource" uid="uid://dqi1plxun8om5" path="res://Resources/Weapons/W_MACE.tres" id="28_djmp0"]
+[ext_resource type="PackedScene" uid="uid://cu5pn4twmfncq" path="res://combo_counter_Left.tscn" id="30_jdg1x"]
+[ext_resource type="PackedScene" uid="uid://dro0ydtil3s2c" path="res://combo_counter_Right.tscn" id="31_dpnnm"]
+[ext_resource type="Script" uid="uid://ckxf1aiw26v1v" path="res://Scenes/cameo.gd" id="31_qas6s"]
+[ext_resource type="PackedScene" uid="uid://be5dku11qttc4" path="res://Prefabs/FX/fx_slash_hit.tscn" id="32_y8j1h"]
+[ext_resource type="Script" uid="uid://c50pcpoy1hh6r" path="res://Scenes/animfuncs.gd" id="34_ee1k8"]
+[ext_resource type="Resource" uid="uid://dckqlakpbmee2" path="res://Resources/Weapons/W_GEMS.tres" id="34_g7d4c"]
+[ext_resource type="PackedScene" uid="uid://cusidgv7v4vpc" path="res://Prefabs/Weapons/Armory/Unarmed/W_Unarmed.tscn" id="34_pegen"]
+[ext_resource type="Texture2D" uid="uid://5w30wj6j3tig" path="res://Graphics/_Addons/Icons/fc88888.png" id="35_k7ahf"]
+[ext_resource type="AudioStream" uid="uid://ddx8pstv0i4qf" path="res://Audio/SFX/BattleBalls/se_demon_hit_catchattack.wav" id="35_qtgyu"]
+[ext_resource type="Texture2D" uid="uid://cj3174c1vhaci" path="res://Graphics/_Addons/Icons/fc17040.png" id="36_76u2v"]
+[ext_resource type="PackedScene" uid="uid://dj8vboys4os4r" path="res://Prefabs/Weapons/Armory/Sandevistan/W_SANDEVISTAN.tscn" id="36_d4oku"]
+[ext_resource type="Texture2D" uid="uid://cfwyhor4kqo4c" path="res://Graphics/_Addons/Icons/fc888881.png" id="38_sy8k4"]
+[ext_resource type="AudioStream" uid="uid://dvwha33q6lueh" path="res://Audio/SFX/BattleBalls/fahhhhh.mp3" id="39_573uv"]
+[ext_resource type="AudioStream" uid="uid://nktouqb7ofsx" path="res://Audio/SFX/BattleBalls/Announcer/download1780143369143 (mp3cut.net).mp3" id="40_573uv"]
+[ext_resource type="Resource" uid="uid://b2572latobo8u" path="res://Resources/Weapons/W_BloodBow.tres" id="40_nsujd"]
+[ext_resource type="AudioStream" uid="uid://cc6p4vmjm2sx8" path="res://Audio/BGM/Under_Quiet_Lights.mp3" id="41_573uv"]
+[ext_resource type="Resource" uid="uid://odj7lywcd7tq" path="res://Resources/Weapons/W_PLUME.tres" id="43_qtgyu"]
+[ext_resource type="Script" uid="uid://bv40hjciy84bb" path="res://Scenes/mover.gd" id="43_shkiq"]
+[ext_resource type="Resource" uid="uid://uipnvvfsno8" path="res://Resources/Weapons/W_Pipe.tres" id="44_vebv7"]
+[ext_resource type="Resource" uid="uid://l78au6pri21q" path="res://Resources/Weapons/W_VORTEX.tres" id="45_k7ahf"]
+[ext_resource type="PackedScene" uid="uid://co37vbnh5d0l7" path="res://Prefabs/HUD/podium_slot.tscn" id="46_w5ut2"]
+[ext_resource type="Texture2D" uid="uid://d24rekvi3bj41" path="res://Graphics/_Addons/Icons/fc15.png" id="47_7gphk"]
+[ext_resource type="PackedScene" uid="uid://bxajeluf8set7" path="res://Prefabs/HUD/ranking_line.tscn" id="47_d4iat"]
+[ext_resource type="Texture2D" uid="uid://b1ru8jv7lpu68" path="res://Graphics/_Addons/Icons/fc52.png" id="48_poh84"]
+[ext_resource type="Script" uid="uid://bcqswpyfo4fff" path="res://Scripts/time_attack_leaderboard_ui.gd" id="49_0qwvu"]
+[ext_resource type="Resource" uid="uid://cb5viiys6pnd4" path="res://Resources/Weapons/W_Perfect.tres" id="49_1t3vj"]
+[ext_resource type="Script" uid="uid://cfse0m61mp3dr" path="res://Scenes/mode_block_mc_dig.gd" id="49_k7ahf"]
+[ext_resource type="Texture2D" uid="uid://diyiof7v8elk2" path="res://Graphics/_Addons/Icons/fc54.png" id="49_vp72v"]
+[ext_resource type="Resource" uid="uid://chbo481r6wayq" path="res://Resources/Weapons/W_BloodSword.tres" id="50_1t3vj"]
+[ext_resource type="PackedScene" uid="uid://cgnmti0sy4hgx" path="res://MC_battle_block.tscn" id="50_sy8k4"]
+[ext_resource type="Script" uid="uid://cvee5qqhsgik5" path="res://Scenes/mc_cluster_settings.gd" id="51_2p8oi"]
+[ext_resource type="Texture2D" uid="uid://dbok1rthdpctc" path="res://Graphics/_Addons/Icons/fcb_1.png" id="51_4qbj2"]
+[ext_resource type="Texture2D" uid="uid://b7rgejgu1o0yp" path="res://Graphics/_Addons/Icons/fcb_0.png" id="51_204xj"]
+[ext_resource type="Texture2D" uid="uid://defb7rn8kxlg6" path="res://Graphics/_Addons/Icons/fcb_2.png" id="52_2lkqs"]
+[ext_resource type="Texture2D" uid="uid://p8je28aijnxu" path="res://Graphics/_Addons/Icons/fcb_4.png" id="53_4qbj2"]
+[ext_resource type="Texture2D" uid="uid://c1l1o15utsga5" path="res://Graphics/_Addons/Icons/fcb_3.png" id="53_204xj"]
+[ext_resource type="Texture2D" uid="uid://beeis177bhwud" path="res://Graphics/_Addons/Icons/fcb_5.png" id="54_0krxf"]
+[ext_resource type="Texture2D" uid="uid://gpvk0iv2vacx" path="res://Graphics/_Addons/Icons/fcb_6.png" id="55_cticm"]
+[ext_resource type="Texture2D" uid="uid://udle51b6b48y" path="res://Graphics/_Addons/Icons/fcb_7.png" id="56_3gj21"]
+[ext_resource type="Resource" uid="uid://bf8pi3p1oxsvc" path="res://Resources/Weapons/W_SNEAKERS.tres" id="56_nfmlc"]
+[ext_resource type="PackedScene" uid="uid://c3asfx7u2p3x8" path="res://Prefabs/FX/fx_confettis.tscn" id="57_70hv1"]
+[ext_resource type="Resource" uid="uid://dgbpfdn8qku06" path="res://Resources/Weapons/W_DAGGER.tres" id="58_870hc"]
+[ext_resource type="Shader" uid="uid://byxemq4tgaq5f" path="res://Graphics/Shaders/chromatic_aberration.gdshader" id="59_hdidk"]
+[ext_resource type="Resource" uid="uid://do40m4wrgehk5" path="res://Resources/Weapons/W_Traps.tres" id="60_ux8nf"]
+[ext_resource type="Shader" uid="uid://4vcrogcalxqx" path="res://Graphics/Shaders/warped_stripes.gdshader" id="61_312b1"]
+[ext_resource type="Script" uid="uid://bc4psjkpwis32" path="res://Scenes/mc_layer_settings.gd" id="62_3gj21"]
+[ext_resource type="Script" uid="uid://bxdnuwaammth0" path="res://Scenes/mc_block_settings.gd" id="63_2p8oi"]
+[ext_resource type="Script" uid="uid://c51lyrulb6e1q" path="res://Scripts/Tournament/tournament_bracket.gd" id="64_cfp74"]
+[ext_resource type="Texture2D" uid="uid://sexfycwkhuxs" path="res://Graphics/_Addons/Icons/fcb_8.png" id="64_wmaqr"]
+[ext_resource type="Texture2D" uid="uid://dtn0yyo10rojr" path="res://Graphics/_Addons/Icons/fcb_9.png" id="65_vanr6"]
+[ext_resource type="Texture2D" uid="uid://keiqqa4o4670" path="res://Graphics/_Addons/Icons/fcb_10.png" id="66_wptt7"]
+[ext_resource type="Resource" uid="uid://ciwcnl4te0yej" path="res://Resources/Weapons/W_UNARMED.tres" id="67_5aelx"]
+[ext_resource type="Resource" uid="uid://sh6e4n2uidpg" path="res://Resources/Weapons/W_SANDEVISTAN.tres" id="68_t5fc8"]
+[ext_resource type="Resource" uid="uid://jkcb5410rk54" path="res://Resources/Weapons/W_REVOLVER.tres" id="68_xxfh1"]
+[ext_resource type="AudioStream" uid="uid://bq5jij2vxeg7v" path="res://Audio/SFX/BattleBalls/woosh.wav" id="69_a0vpb"]
+[ext_resource type="Resource" uid="uid://bjdnog3mj0quk" path="res://Resources/Tournaments/Tournament_D_08-46-59.tres" id="69_k7ahf"]
+[ext_resource type="AudioStream" uid="uid://mhwjhrlnb5ve" path="res://Audio/SFX/BattleBalls/Duel_Win.wav" id="70_08cjx"]
+[ext_resource type="Resource" uid="uid://bn65u78hd5e6j" path="res://Resources/Weapons/W_COIN.tres" id="70_c0wg0"]
+[ext_resource type="AudioStream" uid="uid://bta1c1lgrdgqe" path="res://Audio/SFX/BattleBalls/BattleBlocks/tear4.ogg" id="70_ucewg"]
+[ext_resource type="AudioStream" uid="uid://b565y3fh2kkqc" path="res://Audio/SFX/BattleBalls/BattleBlocks/wood2.ogg" id="71_qktne"]
+[ext_resource type="AudioStream" uid="uid://byvkk7nhmne68" path="res://Audio/SFX/BattleBalls/BattleBlocks/wood1.ogg" id="72_rcmr4"]
+[ext_resource type="Texture2D" uid="uid://cju35wtqmbnmq" path="res://Graphics/_Addons/Icons/fc1588.png" id="73_k7ahf"]
+[ext_resource type="AudioStream" uid="uid://1ca17lm0857k" path="res://Audio/SFX/BattleBalls/BattleBlocks/grass1.ogg" id="73_uhxsn"]
+[ext_resource type="AudioStream" uid="uid://bwkdhg7t104lo" path="res://Audio/SFX/BattleBalls/BattleBlocks/gravel4.ogg" id="74_ax4pp"]
+[ext_resource type="Texture2D" uid="uid://su5ntojg64j2" path="res://Graphics/_Addons/Icons/fc953000.png" id="74_k7ahf"]
+[ext_resource type="AudioStream" uid="uid://bubl3vtfs7avo" path="res://Audio/SFX/BattleBalls/BattleBlocks/stone2.ogg" id="75_nsujd"]
+[ext_resource type="AudioStream" uid="uid://duxlj25wj17c2" path="res://Audio/SFX/BattleBalls/BattleBlocks/stone3.ogg" id="76_1t3vj"]
+[ext_resource type="Texture2D" uid="uid://cdwt4moo3pkn6" path="res://Graphics/_Addons/Icons/fc669.png" id="76_sy8k4"]
+[ext_resource type="AudioStream" uid="uid://bics4c3rx0cfy" path="res://Audio/SFX/BattleBalls/BattleBlocks/stone8.ogg" id="77_pl8or"]
+[ext_resource type="AudioStream" uid="uid://bs064x7ls2nkq" path="res://Audio/SFX/BattleBalls/BattleBlocks/stone7.ogg" id="78_gcqa4"]
+[ext_resource type="AudioStream" uid="uid://cxrs3hwx2t827" path="res://Audio/SFX/BattleBalls/BattleBlocks/stone4.ogg" id="79_vebv7"]
+[ext_resource type="AudioStream" uid="uid://cdb311h237hpn" path="res://Audio/SFX/BattleBalls/BattleBlocks/stone5.ogg" id="80_ux8nf"]
+[ext_resource type="Resource" uid="uid://cv1of44l4du1b" path="res://Resources/Weapons/W_Pickaxe.tres" id="80_xxfh1"]
+[ext_resource type="Texture2D" uid="uid://cfdltyx8y6d03" path="res://Graphics/_Addons/Icons/fc364.png" id="90_tifgg"]
+[ext_resource type="Resource" uid="uid://dkl57ctlt5quj" path="res://Resources/Weapons/W_BIG.tres" id="90_u1in0"]
+[ext_resource type="Resource" uid="uid://byrtow40mri7l" path="res://Resources/Weapons/W_GLITCHKNIFE.tres" id="94_p180d"]
+[ext_resource type="Script" uid="uid://hfqf6sfh86m4" path="res://Scenes/hydra_tournament_teamline.gd" id="95_oi3sm"]
+[ext_resource type="Texture2D" uid="uid://d4l1y4s7l5txd" path="res://Graphics/_Addons/Icons/fc226.png" id="98_oi3sm"]
+[ext_resource type="Texture2D" uid="uid://ds0kc2fydlqpc" path="res://Graphics/_Addons/Icons/fc131.png" id="99_c0wg0"]
+[ext_resource type="Texture2D" uid="uid://b6mqwj6vvm3q4" path="res://Graphics/_Addons/Icons/fc1789.png" id="100_kek2w"]
+[ext_resource type="Texture2D" uid="uid://b6w1xcngywbfd" path="res://Graphics/_Addons/Icons/fc1506.png" id="101_bnc2j"]
+[ext_resource type="Texture2D" uid="uid://d1hxmwy404ahx" path="res://Graphics/_Addons/Icons/fc14900.png" id="102_3w0lg"]
+[ext_resource type="Texture2D" uid="uid://b6evq06wve5y3" path="res://Graphics/_Addons/Icons/fc169.png" id="103_qctyh"]
+[ext_resource type="Texture2D" uid="uid://ct0dd3ycrrp8w" path="res://Graphics/_Addons/Icons/fc1713.png" id="105_42wbm"]
+[ext_resource type="Texture2D" uid="uid://fgimaxc7bt2j" path="res://Graphics/_Addons/Icons/fc6660.png" id="107_jhnfg"]
+[ext_resource type="Texture2D" uid="uid://dk67ayj7q31q1" path="res://Graphics/_Addons/Icons/fc1726.png" id="108_os224"]
+[ext_resource type="Texture2D" uid="uid://y6121dnrlsoe" path="res://Graphics/_Addons/Icons/fc170401.png" id="109_vs7vu"]
+[ext_resource type="Texture2D" uid="uid://cwf4at5rm7o78" path="res://Graphics/_Addons/Icons/fc1453.png" id="110_cr7au"]
+[ext_resource type="Texture2D" uid="uid://2lhd2x1lrlww" path="res://Graphics/_Addons/Icons/fc1694.png" id="111_ajexl"]
+[ext_resource type="Texture2D" uid="uid://b3raxmeyc3cxi" path="res://Graphics/_Addons/Icons/fc8888.png" id="112_tifgg"]
+[ext_resource type="Texture2D" uid="uid://lbtcr3rw5sw6" path="res://Graphics/_Addons/Icons/fc77777.png" id="114_a4n88"]
+[ext_resource type="Texture2D" uid="uid://bt3ogvpb85cbm" path="res://Graphics/_Addons/Icons/fc9999.png" id="115_7ndj3"]
+[ext_resource type="Texture2D" uid="uid://cglwc37jcx1vg" path="res://Graphics/_Addons/Icons/fc127.png" id="116_p180d"]
+[ext_resource type="Texture2D" uid="uid://4hkgqu44gv3h" path="res://Graphics/social-proof-tiktok-dark-1780068327534.png" id="126_y8j1h"]
+[ext_resource type="Texture2D" uid="uid://dkdujpw4v2clh" path="res://Graphics/social-proof-tiktok-dark-1780068405928.png" id="127_u1in0"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_go1jf"]
+random_pitch = 1.1
+streams_count = 1
+stream_0/stream = ExtResource("4_qyfoh")
+
+[sub_resource type="Resource" id="Resource_7mvmt"]
+script = ExtResource("5_1v8r1")
+audio_stream = SubResource("AudioStreamRandomizer_go1jf")
+volume = -26.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_o08cq"]
+random_pitch = 1.05
+streams_count = 1
+stream_0/stream = ExtResource("7_k7rf6")
+
+[sub_resource type="Resource" id="Resource_gaafq"]
+script = ExtResource("5_1v8r1")
+audio_stream = SubResource("AudioStreamRandomizer_o08cq")
+volume = -30.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1v8r1"]
+streams_count = 1
+stream_0/stream = ExtResource("6_go1jf")
+
+[sub_resource type="Resource" id="Resource_go1jf"]
+script = ExtResource("5_1v8r1")
+audio_stream = SubResource("AudioStreamRandomizer_1v8r1")
+volume = -20.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_y8j1h"]
+random_pitch = 1.05
+streams_count = 1
+stream_0/stream = ExtResource("39_573uv")
+
+[sub_resource type="Resource" id="Resource_u1in0"]
+script = ExtResource("5_1v8r1")
+audio_stream = SubResource("AudioStreamRandomizer_y8j1h")
+volume = -10.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="Resource" id="Resource_p1oyv"]
+script = ExtResource("5_1v8r1")
+audio_stream = ExtResource("40_573uv")
+volume = -17.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="Resource" id="Resource_wmaqr"]
+script = ExtResource("15_cticm")
+duration = 0.1
+transition = 5
+ease = 1
+metadata/_custom_type_script = "uid://8umksf8e80fw"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vijbk"]
+resource_local_to_scene = true
+shader = ExtResource("1_y2yxb")
+shader_parameter/spin_rotation_speed = 1.0
+shader_parameter/move_speed = 1.0
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/colour_1 = Color(1, 1, 1, 1)
+shader_parameter/colour_2 = Color(1, 1, 1, 1)
+shader_parameter/colour_3 = Color(0.086, 0.137, 0.145, 1)
+shader_parameter/contrast = 3.5
+shader_parameter/lighting = 0.1
+shader_parameter/spin_amount = 0.1
+shader_parameter/pixel_filter = 99999.0
+shader_parameter/is_rotating = false
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_shkiq"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0qwvu"]
+size = Vector2(1500, 300)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uot50"]
+shader = ExtResource("6_uot50")
+shader_parameter/alpha = 0.0
+shader_parameter/strength = 0.45
+shader_parameter/speed = 0.3
+shader_parameter/angle = 45.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g7d4c"]
+size = Vector2(1000, 300)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ya2e4"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6sl1r"]
+size = Vector2(1000, 20)
+
+[sub_resource type="Resource" id="Resource_ucewg"]
+script = ExtResource("51_2p8oi")
+depth = 10
+size = Vector2i(2, 5)
+tx = ExtResource("53_204xj")
+metadata/_custom_type_script = "uid://cvee5qqhsgik5"
+
+[sub_resource type="Resource" id="Resource_ux8nf"]
+script = ExtResource("51_2p8oi")
+depth = 12
+size = Vector2i(3, 4)
+tx = ExtResource("53_204xj")
+metadata/_custom_type_script = "uid://cvee5qqhsgik5"
+
+[sub_resource type="Resource" id="Resource_2p8oi"]
+script = ExtResource("51_2p8oi")
+depth = 13
+size = Vector2i(9, 3)
+tx = ExtResource("53_4qbj2")
+metadata/_custom_type_script = "uid://cvee5qqhsgik5"
+
+[sub_resource type="Resource" id="Resource_nfmlc"]
+script = ExtResource("51_2p8oi")
+depth = 14
+size = Vector2i(2, 5)
+tx = ExtResource("53_4qbj2")
+metadata/_custom_type_script = "uid://cvee5qqhsgik5"
+
+[sub_resource type="Resource" id="Resource_c5ovv"]
+script = ExtResource("51_2p8oi")
+depth = 16
+size = Vector2i(2, 3)
+tx = ExtResource("54_0krxf")
+metadata/_custom_type_script = "uid://cvee5qqhsgik5"
+
+[sub_resource type="Resource" id="Resource_b0hoc"]
+script = ExtResource("63_2p8oi")
+tx = ExtResource("51_204xj")
+weight = 100.0
+metadata/_custom_type_script = "uid://bxdnuwaammth0"
+
+[sub_resource type="Resource" id="Resource_nrq88"]
+script = ExtResource("62_3gj21")
+layer_name = "surface"
+size = 1
+layer_blocks = Array[ExtResource("63_2p8oi")]([SubResource("Resource_b0hoc")])
+metadata/_custom_type_script = "uid://bc4psjkpwis32"
+
+[sub_resource type="Resource" id="Resource_irpft"]
+script = ExtResource("63_2p8oi")
+tx = ExtResource("51_4qbj2")
+weight = 50.0
+metadata/_custom_type_script = "uid://bxdnuwaammth0"
+
+[sub_resource type="Resource" id="Resource_es7pt"]
+script = ExtResource("62_3gj21")
+layer_name = "dirt"
+size = 3
+layer_blocks = Array[ExtResource("63_2p8oi")]([SubResource("Resource_irpft")])
+metadata/_custom_type_script = "uid://bc4psjkpwis32"
+
+[sub_resource type="Resource" id="Resource_vrs3e"]
+script = ExtResource("63_2p8oi")
+tx = ExtResource("52_2lkqs")
+weight = 100.0
+metadata/_custom_type_script = "uid://bxdnuwaammth0"
+
+[sub_resource type="Resource" id="Resource_jw8b7"]
+script = ExtResource("62_3gj21")
+layer_name = "dirt-stone-tr"
+size = 1
+layer_blocks = Array[ExtResource("63_2p8oi")]([SubResource("Resource_irpft"), SubResource("Resource_vrs3e")])
+metadata/_custom_type_script = "uid://bc4psjkpwis32"
+
+[sub_resource type="Resource" id="Resource_4qbj2"]
+script = ExtResource("63_2p8oi")
+tx = ExtResource("52_2lkqs")
+weight = 100.0
+metadata/_custom_type_script = "uid://bxdnuwaammth0"
+
+[sub_resource type="Resource" id="Resource_2lkqs"]
+script = ExtResource("62_3gj21")
+layer_name = "pure_stone"
+size = 14
+layer_blocks = Array[ExtResource("63_2p8oi")]([SubResource("Resource_4qbj2")])
+metadata/_custom_type_script = "uid://bc4psjkpwis32"
+
+[sub_resource type="Resource" id="Resource_wptt7"]
+script = ExtResource("63_2p8oi")
+tx = ExtResource("52_2lkqs")
+weight = 100.0
+metadata/_custom_type_script = "uid://bxdnuwaammth0"
+
+[sub_resource type="Resource" id="Resource_204xj"]
+script = ExtResource("63_2p8oi")
+tx = ExtResource("55_cticm")
+weight = 200.0
+metadata/_custom_type_script = "uid://bxdnuwaammth0"
+
+[sub_resource type="Resource" id="Resource_xisi7"]
+script = ExtResource("62_3gj21")
+layer_name = "stone_obsi"
+size = 1
+layer_blocks = Array[ExtResource("63_2p8oi")]([SubResource("Resource_wptt7"), SubResource("Resource_204xj")])
+metadata/_custom_type_script = "uid://bc4psjkpwis32"
+
+[sub_resource type="Resource" id="Resource_vanr6"]
+script = ExtResource("62_3gj21")
+layer_name = "obsidian"
+size = 2
+layer_blocks = Array[ExtResource("63_2p8oi")]([SubResource("Resource_204xj")])
+metadata/_custom_type_script = "uid://bc4psjkpwis32"
+
+[sub_resource type="Resource" id="Resource_0krxf"]
+script = ExtResource("63_2p8oi")
+tx = ExtResource("56_3gj21")
+weight = 100.0
+metadata/_custom_type_script = "uid://bxdnuwaammth0"
+
+[sub_resource type="Resource" id="Resource_3gj21"]
+script = ExtResource("62_3gj21")
+layer_name = "pure_bedrock"
+size = 1
+layer_blocks = Array[ExtResource("63_2p8oi")]([SubResource("Resource_0krxf")])
+metadata/_custom_type_script = "uid://bc4psjkpwis32"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g7d4c"]
+resource_local_to_scene = true
+shader = ExtResource("14_vvmd2")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_intensity = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u6wsj"]
+resource_local_to_scene = true
+shader = ExtResource("61_312b1")
+shader_parameter/stripes = 4.82
+shader_parameter/stripe_thickness = 1.33
+shader_parameter/stripe_color = Color(0.59, 0.98, 0.69, 1)
+shader_parameter/background_color = Color(0, 0, 0, 1)
+shader_parameter/uv_offset = 0.5
+shader_parameter/warp_strength = 50.0
+shader_parameter/warp_uv_mult = 2.0
+shader_parameter/wave_strength = 1.0
+shader_parameter/oscillation_mult = 0.2
+shader_parameter/rotation = 0.05
+shader_parameter/rot_time = 10.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_intensity = 0.0
+
+[sub_resource type="Gradient" id="Gradient_wkwug"]
+resource_local_to_scene = true
+colors = PackedColorArray(0.727539, 1, 0.71875, 0.4, 0.367, 0.367, 0.367, 0.15)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5o85w"]
+resource_local_to_scene = true
+shader = ExtResource("61_312b1")
+shader_parameter/stripes = 4.82
+shader_parameter/stripe_thickness = 1.33
+shader_parameter/stripe_color = Color(0.59, 0.98, 0.69, 1)
+shader_parameter/background_color = Color(0, 0, 0, 1)
+shader_parameter/uv_offset = 0.5
+shader_parameter/warp_strength = 50.0
+shader_parameter/warp_uv_mult = 2.0
+shader_parameter/wave_strength = 1.0
+shader_parameter/oscillation_mult = 0.2
+shader_parameter/rotation = 0.05
+shader_parameter/rot_time = 10.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_intensity = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0qwvu"]
+resource_local_to_scene = true
+shader = ExtResource("14_vvmd2")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_intensity = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oi3sm"]
+resource_local_to_scene = true
+shader = ExtResource("61_312b1")
+shader_parameter/stripes = 4.82
+shader_parameter/stripe_thickness = 1.33
+shader_parameter/stripe_color = Color(0.59, 0.98, 0.69, 1)
+shader_parameter/background_color = Color(0, 0, 0, 1)
+shader_parameter/uv_offset = 0.5
+shader_parameter/warp_strength = 50.0
+shader_parameter/warp_uv_mult = 2.0
+shader_parameter/wave_strength = 1.0
+shader_parameter/oscillation_mult = 0.2
+shader_parameter/rotation = 0.05
+shader_parameter/rot_time = 10.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_intensity = 0.0
+
+[sub_resource type="Gradient" id="Gradient_w5ut2"]
+resource_local_to_scene = true
+colors = PackedColorArray(0.727539, 1, 0.71875, 0.4, 0.367, 0.367, 0.367, 0.15)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qyfoh"]
+resource_local_to_scene = true
+shader = ExtResource("14_vvmd2")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_intensity = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kek2w"]
+resource_local_to_scene = true
+shader = ExtResource("61_312b1")
+shader_parameter/stripes = 4.82
+shader_parameter/stripe_thickness = 1.33
+shader_parameter/stripe_color = Color(0.59, 0.98, 0.69, 1)
+shader_parameter/background_color = Color(0, 0, 0, 1)
+shader_parameter/uv_offset = 0.5
+shader_parameter/warp_strength = 50.0
+shader_parameter/warp_uv_mult = 2.0
+shader_parameter/wave_strength = 1.0
+shader_parameter/oscillation_mult = 0.2
+shader_parameter/rotation = 0.05
+shader_parameter/rot_time = 10.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_intensity = 0.0
+
+[sub_resource type="Gradient" id="Gradient_d4iat"]
+resource_local_to_scene = true
+colors = PackedColorArray(0.727539, 1, 0.71875, 0.4, 0.367, 0.367, 0.367, 0.15)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bnc2j"]
+resource_local_to_scene = true
+shader = ExtResource("61_312b1")
+shader_parameter/stripes = 4.82
+shader_parameter/stripe_thickness = 1.33
+shader_parameter/stripe_color = Color(0.59, 0.98, 0.69, 1)
+shader_parameter/background_color = Color(0, 0, 0, 1)
+shader_parameter/uv_offset = 0.5
+shader_parameter/warp_strength = 50.0
+shader_parameter/warp_uv_mult = 2.0
+shader_parameter/wave_strength = 1.0
+shader_parameter/oscillation_mult = 0.2
+shader_parameter/rotation = 0.05
+shader_parameter/rot_time = 10.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_intensity = 0.0
+
+[sub_resource type="Gradient" id="Gradient_y7asl"]
+resource_local_to_scene = true
+colors = PackedColorArray(0.727539, 1, 0.71875, 0.4, 0.367, 0.367, 0.367, 0.15)
+
+[sub_resource type="Resource" id="Resource_uhddi"]
+script = ExtResource("24_3p5r5")
+name = "DUMMY"
+spr = ExtResource("90_tifgg")
+use_settings_spr = false
+melee = true
+ranged = false
+flip = false
+offset = 0.0
+y_offset = false
+base_rotation_direction = 1
+base_rotation_speed = 0.5
+base_damage = 0
+base_knockback = 3000.0
+base_attack_speed = 0.0
+base_shoot_speed = 0.0
+base_size = 11.0
+base_hitstop = 0.0
+base_hitstop_slow = 0.0
+base_projectiles = 0
+base_projectile_speed = 1000.0
+base_projectile_scale = 0.75
+base_shoot_duration = 0.35
+projectile_self_hitstop = false
+lifesteal = false
+lifesteal_tick = 1
+independent_weapon = false
+stat_scale_value = 0.0
+stat_scale_name = "FISH"
+scaling_stat_float = false
+no_rotation_change = true
+no_projectile_scale_change = false
+weapon_prefab = ExtResource("25_uhddi")
+bg_projectile = false
+details = ""
+white_details = false
+custom_name_size_scale = 1.0
+leaderboard_offset = 1.0
+leaderboard_rotation = 0.0
+leaderboard_no_spr = false
+scale_stat_multiplier = 1
+base_damage_multiplier = 1
+no_clash_on_block = false
+base_weapon_rotation = 0.0
+color = Color(0.699219, 0.636825, 0.581772, 1)
+max_speed = 2200.0
+min_horizontal = 200.0
+gravity_strength = 1400.0
+drag_force = 0.02
+bounce_boost = 250.0
+relative_bounce_boost = 0.0
+acceleration = 1.0
+knockback_resistance = 1.0
+metadata/_custom_type_script = "uid://c1biydo2yju8x"
+
+[sub_resource type="Resource" id="Resource_ee1k8"]
+script = ExtResource("24_3p5r5")
+name = "DUMMY B"
+use_settings_spr = false
+melee = true
+ranged = false
+flip = false
+offset = 0.0
+y_offset = false
+base_rotation_direction = -1
+base_rotation_speed = 0.6
+base_damage = 0
+base_knockback = 3000.0
+base_attack_speed = 0.0
+base_shoot_speed = 0.0
+base_size = 11.0
+base_hitstop = 0.0
+base_hitstop_slow = 0.0
+base_projectiles = 0
+base_projectile_speed = 1000.0
+base_projectile_scale = 0.75
+base_shoot_duration = 0.35
+projectile_self_hitstop = false
+lifesteal = false
+lifesteal_tick = 1
+independent_weapon = false
+stat_scale_value = 0.0
+stat_scale_name = "FISH"
+scaling_stat_float = false
+no_rotation_change = true
+no_projectile_scale_change = false
+weapon_prefab = ExtResource("25_uhddi")
+bg_projectile = false
+details = ""
+white_details = false
+custom_name_size_scale = 1.0
+leaderboard_offset = 1.0
+leaderboard_rotation = 0.0
+leaderboard_no_spr = false
+scale_stat_multiplier = 1
+base_damage_multiplier = 1
+no_clash_on_block = false
+base_weapon_rotation = 0.0
+color = Color(0, 0, 0, 1)
+max_speed = 2200.0
+min_horizontal = 200.0
+gravity_strength = 1400.0
+drag_force = 0.02
+bounce_boost = 250.0
+relative_bounce_boost = 0.0
+acceleration = 1.0
+knockback_resistance = 1.0
+metadata/_custom_type_script = "uid://c1biydo2yju8x"
+
+[sub_resource type="Resource" id="Resource_76u2v"]
+script = ExtResource("24_3p5r5")
+name = "IMMOBILE"
+use_settings_spr = false
+melee = true
+ranged = false
+flip = false
+offset = 0.0
+y_offset = false
+base_rotation_direction = 1
+base_rotation_speed = 0.5
+base_damage = 0
+base_knockback = 3000.0
+base_attack_speed = 0.0
+base_shoot_speed = 0.0
+base_size = 11.0
+base_hitstop = 0.0
+base_hitstop_slow = 0.0
+base_projectiles = 0
+base_projectile_speed = 1000.0
+base_projectile_scale = 0.75
+base_shoot_duration = 0.35
+projectile_self_hitstop = false
+lifesteal = false
+lifesteal_tick = 1
+independent_weapon = false
+stat_scale_value = 0.0
+stat_scale_name = "FISH"
+scaling_stat_float = false
+no_rotation_change = true
+no_projectile_scale_change = false
+weapon_prefab = ExtResource("25_uhddi")
+bg_projectile = false
+details = ""
+white_details = false
+custom_name_size_scale = 1.0
+leaderboard_offset = 1.0
+leaderboard_rotation = 0.0
+leaderboard_no_spr = false
+scale_stat_multiplier = 1
+base_damage_multiplier = 1
+no_clash_on_block = false
+base_weapon_rotation = 0.0
+color = Color(0, 0, 0, 1)
+max_speed = 2200.0
+min_horizontal = 200.0
+gravity_strength = 1400.0
+drag_force = 0.02
+bounce_boost = 250.0
+relative_bounce_boost = 0.0
+acceleration = 1.0
+knockback_resistance = 1.0
+metadata/_custom_type_script = "uid://c1biydo2yju8x"
+
+[sub_resource type="AudioStreamWAV" id="AudioStreamWAV_pegen"]
+data = PackedByteArray("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EkklDAEEMAgEMABTBAgippkhghgGGGnLKGCSHAsoYJIIaaqoAghphohhggEAw0QS000w0wBDVVlTDTAaBhhNMpyxpooCCCQQUYQAAABQQAKaDjjTCWOOOPNAApwAUEI8UginjAAAQBTRRTVVCONOApwopy4DAkAgEEAkgACSACBQEccBCFAgEAEBgNMJU05dYUEEYwjgQRgQAQQSAIx65opxoooHLGnLGg440QAaaIDDTTDRAEFWNNNNFAAAVY40CnGiigAATRTjjhKcBoFONAopxwoE4QAU44U44wQBThjQDjThAAhoNNNEkNMFQQ1UwU00wAaITzgAa67pCmmk0ssEEOMMUYBBAkkgggDjiCKccKBjCOWByqiqiigGKKrLGmiAiAAARhj1iKAKAhOPfBwogAoAQQ0wwSCHPAIABABTTRTTBOVNNMEByxoGiAQQU001UwAFlDVjRAAKBgFONEBGVMAA00w0400QAQAKKcsKKaARBBAAIoAIoFAEA8c40EUCAwTVVVTDAaqaCyxogFAAxoAEY4UUEUEUCgKKMaqaIIaaCppoECyokNMEwSVZY0wQQQBBDljQcaDjBFEApohz6poHGinHHHHCngsKKAAKKccIABFEAAJxxooHHCinCAAigAAKIAAKcIADBEAEAFNAgpwGnCggC00AAAQBTQAQQABQAIoAAAGPOGMEAgigEEUAEwjQBQATjQBRAAopxoogpoEACA5U0Q5UQAKcaDlTTRAKBogAppyoggAE40U4UUUCgQRRTjQAKccIAAoFAoONEAgA00QGmimiCADjljRAKaaaBohypgghppoGnLGnLCAHLgsaccacusacBxpxxogAAogAU44044040AKcaBRAKIAKAopxwhFFOOMI0AU40HHHHAaBTl1QccccBogAEAAgAFMEQAAAU440CgccaBRAATjQAoopooFAogACAUQCAU040AKcaBTjQKIAApxxopxpy54AWCjHGiAEAQAADQQBBQKsAoNONByxpogAU40GiiAV0QicpqCDVRRDBWNEMEAAhpoCA1Y01UU00wTQIDVjjTTRAAggFEAAgFMI40QCnGiCAQRAKaIBAcaIAFONEFNEFXUEQCnGiCACCAAIIIBTjRADCWNEAgONBywLGnHGmg5ZZQjTjQAKcaBTCNApxoOWOWMEQCmg5Y0QCgcaBTjQKccaAFOONAFOONACnGgCnGgU5QjjRTjQKcscBoFONAgApxoAU40CmiAU4wQKcaBTjQKcBoFONApxoFMI0CnGgU40CgcaBTjQKcaBBONAFONApxwGg4040CnGgQTjQKcaBRAKBxoFONAONOMECnGgU0CnGgEAu4ABgAC4AAIABAADAAP36hZm1sA4sABTjQKcaBTjBApxoFONBxwGgU40HLGiAQABTjQKcaBTCNApxoFONAoHGgU40CnGgQTjQKcaBTjQApxoFONApxoAU40CnGgU0QAKcaIBTjRAApxogFONEAoHGiAU40QCiABTjQKcaBTjBApxoFONApwGgU40CnGgUwjQKcaBTjQKBxoFONApxoEE40CnGgU40AKcaBTjQKcaAFMAAAAAAAA=")
+format = 3
+mix_rate = 48000
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_d4oku"]
+random_pitch = 1.25
+streams_count = 1
+stream_0/stream = SubResource("AudioStreamWAV_pegen")
+
+[sub_resource type="Resource" id="Resource_qtgyu"]
+script = ExtResource("5_1v8r1")
+audio_stream = SubResource("AudioStreamRandomizer_d4oku")
+volume = -28.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="Resource" id="Resource_hdidk"]
+script = ExtResource("24_3p5r5")
+name = "UNARMED"
+spr = ExtResource("35_k7ahf")
+use_settings_spr = false
+melee = true
+ranged = false
+flip = false
+offset = 0.0
+y_offset = false
+base_rotation_direction = 0
+base_rotation_speed = 0.0
+base_damage = 1
+base_knockback = 0.0
+base_attack_speed = 0.0
+base_shoot_speed = 0.0
+base_size = 25.0
+base_hitstop = 0.05
+base_hitstop_slow = 0.0
+base_projectiles = 0
+base_projectile_speed = 0.0
+base_projectile_scale = 0.0
+base_shoot_duration = 0.0
+projectile_self_hitstop = false
+lifesteal = false
+lifesteal_tick = 1
+independent_weapon = false
+stat_scale_value = 0.6
+stat_scale_name = "DMG / Speed"
+scaling_stat_float = false
+no_rotation_change = false
+no_projectile_scale_change = false
+weapon_prefab = ExtResource("34_pegen")
+bg_projectile = false
+details = ""
+white_details = false
+custom_name_size_scale = 1.0
+sfx_hit = SubResource("Resource_qtgyu")
+leaderboard_offset = 1.0
+leaderboard_rotation = 0.0
+leaderboard_no_spr = true
+scale_stat_multiplier = 3
+base_damage_multiplier = 5
+no_clash_on_block = false
+base_weapon_rotation = 120.0
+color = Color(0.77, 0.77, 0.77, 1)
+max_speed = 500.0
+min_horizontal = 100.0
+gravity_strength = 3000.0
+drag_force = 0.05
+bounce_boost = 0.0
+relative_bounce_boost = 0.75
+acceleration = 1.0
+knockback_resistance = 1.0
+metadata/_custom_type_script = "uid://c1biydo2yju8x"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lt4ae"]
+random_pitch = 1.25
+streams_count = 1
+stream_0/stream = ExtResource("35_qtgyu")
+
+[sub_resource type="Resource" id="Resource_3duvo"]
+script = ExtResource("5_1v8r1")
+audio_stream = SubResource("AudioStreamRandomizer_lt4ae")
+volume = -28.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="Resource" id="Resource_pegen"]
+script = ExtResource("24_3p5r5")
+name = "UNARMED?"
+spr = ExtResource("38_sy8k4")
+use_settings_spr = false
+melee = true
+ranged = false
+flip = false
+offset = 0.0
+y_offset = false
+base_rotation_direction = 0
+base_rotation_speed = 0.0
+base_damage = 1
+base_knockback = 1500.0
+base_attack_speed = 0.0
+base_shoot_speed = 0.0
+base_size = 25.0
+base_hitstop = 0.05
+base_hitstop_slow = 0.0
+base_projectiles = 0
+base_projectile_speed = 0.0
+base_projectile_scale = 0.0
+base_shoot_duration = 0.0
+projectile_self_hitstop = false
+lifesteal = false
+lifesteal_tick = 1
+independent_weapon = false
+stat_scale_value = 0.5
+stat_scale_name = "DMG / Max Speed"
+scaling_stat_float = false
+no_rotation_change = false
+no_projectile_scale_change = false
+weapon_prefab = ExtResource("36_d4oku")
+bg_projectile = false
+details = "Triggers at 7 / 7 Speed"
+white_details = false
+custom_name_size_scale = 1.0
+sfx_hit = SubResource("Resource_3duvo")
+leaderboard_offset = 0.0
+leaderboard_rotation = 0.0
+leaderboard_no_spr = true
+scale_stat_multiplier = 3
+base_damage_multiplier = 5
+no_clash_on_block = false
+base_weapon_rotation = 120.0
+color = Color(0.75638, 0.745483, 0.769531, 1)
+max_speed = 500.0
+min_horizontal = 200.0
+gravity_strength = 3000.0
+drag_force = 0.05
+bounce_boost = 400.0
+relative_bounce_boost = 0.0
+acceleration = 1.0
+knockback_resistance = 1.0
+metadata/_custom_type_script = "uid://c1biydo2yju8x"
+
+[sub_resource type="Environment" id="Environment_p1oyv"]
+background_mode = 3
+adjustment_enabled = true
+adjustment_brightness = 0.9
+adjustment_saturation = 1.5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j21cw"]
+radius = 370.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_habdg"]
+resource_local_to_scene = true
+shader = ExtResource("14_vvmd2")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_intensity = 0.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_u6wsj"]
+load_path = "res://.godot/imported/fc1705.png-bba6a8b380b0e8bffb2cf1a9cfab5360.ctex"
+
+[sub_resource type="Animation" id="Animation_6y6hv"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Banner/Top:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Banner/Bot:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Banner/Middle:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Banner:position:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BattleBall:modulate:a")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_0o7lx"]
+resource_name = "new_challenger"
+length = 3.0
+step = 0.0166667
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Banner/Top:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-1100, 0, 0, 0, 0, 0, -0.05, -1151.83, 0, 0),
+"times": PackedFloat32Array(0, 0.1)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Banner/Bot:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1100, 0, 0, 0, 0, 1100, 0, 0, 0.0833333, 239.03, 0, 0, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.1, 0.2)
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Banner/Middle:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BattleBall:modulate:r")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0),
+"times": PackedFloat32Array(0, 1.499, 1.5)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BattleBall:modulate:g")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0),
+"times": PackedFloat32Array(0, 1.499, 1.5)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("BattleBall:modulate:b")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0),
+"times": PackedFloat32Array(0, 1.499, 1.5)
+}
+tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("BattleBall:modulate:a")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.3, 1.5)
+}
+tracks/7/type = "bezier"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Banner:position:y")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"handle_modes": PackedInt32Array(1, 0, 0, 0, 0),
+"points": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -480, -0.185383, 84.7258, 0, 0, -480, -0.185383, 84.7258, 0, 0, -1200, -0.35, 867.431, 0, 0),
+"times": PackedFloat32Array(0, 0.8, 1, 2, 2.4)
+}
+tracks/8/type = "bezier"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Text:position:y")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0),
+"points": PackedFloat32Array(2000, 0, 0, 0, 0, 2000, 0, 0, 0.00537026, -853.375, 1200, 0, 0, 0, 0, 1200, 0, 0, 0, 0, 2300, -0.333845, -1524.68, 0, 0),
+"times": PackedFloat32Array(0, 1.2, 1.36667, 2, 2.40366)
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Text:self_modulate")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 1.499, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+tracks/10/type = "bezier"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("BattleBall/Root/WeaponSlot:rotation_degrees")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"handle_modes": PackedInt32Array(0, 0, 1, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.866667, 107.426, 360, 0, 0, 0, 0, 380, -0.166667, -136.118, 0.25, 0),
+"times": PackedFloat32Array(0, 0.3, 1.5, 2.00493)
+}
+tracks/11/type = "method"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("AnimationPlayer")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0.1, 0.2, 0.3, 0.95, 1.46667, 1.95, 2.39961),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"values": [{
+"args": [20.0],
+"method": &"shake"
+}, {
+"args": [20.0],
+"method": &"shake"
+}, {
+"args": [20.0],
+"method": &"shake"
+}, {
+"args": [50.0],
+"method": &"shake"
+}, {
+"args": [90.0],
+"method": &"shake"
+}, {
+"args": [95.0],
+"method": &"shake"
+}, {
+"args": [100.0],
+"method": &"shake"
+}]
+}
+tracks/12/type = "bezier"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("BG/BGTop:position:y")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-960, -0.25, 0, 0.245619, -199.32, -2300, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(2, 2.3999)
+}
+tracks/13/type = "bezier"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("BG/BGBot:position:y")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(960, -0.25, 0, 0.25, 0, 2060, -0.252622, -323.09, 0.25, 0),
+"times": PackedFloat32Array(2.02, 2.40249)
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("BattleBall:scale")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(2, 2.39961),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(2.5, 2.5), Vector2(1.1, 1.1)]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath(".:modulate")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 2.40395, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6y6hv"]
+_data = {
+&"RESET": SubResource("Animation_6y6hv"),
+&"new_challenger": SubResource("Animation_0o7lx")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nfmlc"]
+shader = ExtResource("6_uot50")
+shader_parameter/alpha = 1.0
+shader_parameter/strength = 1.0
+shader_parameter/speed = 0.2
+shader_parameter/angle = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_poh84"]
+resource_local_to_scene = true
+shader = ExtResource("1_y2yxb")
+shader_parameter/spin_rotation_speed = 1.0
+shader_parameter/move_speed = 1.0
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/colour_1 = Color(1, 1, 1, 1)
+shader_parameter/colour_2 = Color(1, 1, 1, 1)
+shader_parameter/colour_3 = Color(0.086, 0.137, 0.145, 1)
+shader_parameter/contrast = 3.5
+shader_parameter/lighting = 0.4
+shader_parameter/spin_amount = 0.25
+shader_parameter/pixel_filter = 740.0
+shader_parameter/is_rotating = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pegen"]
+shader = ExtResource("59_hdidk")
+shader_parameter/r_displacement = Vector2(0, 0)
+shader_parameter/g_displacement = Vector2(0, 0)
+shader_parameter/b_displacement = Vector2(0, 0)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_08cjx"]
+random_pitch = 1.03
+streams_count = 1
+stream_0/stream = ExtResource("69_a0vpb")
+
+[sub_resource type="Resource" id="Resource_k7ahf"]
+script = ExtResource("5_1v8r1")
+audio_stream = SubResource("AudioStreamRandomizer_08cjx")
+volume = -20.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_k7ahf"]
+random_pitch = 1.05
+streams_count = 1
+stream_0/stream = ExtResource("70_08cjx")
+
+[sub_resource type="Resource" id="Resource_sy8k4"]
+script = ExtResource("5_1v8r1")
+audio_stream = SubResource("AudioStreamRandomizer_k7ahf")
+volume = -10.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[node name="Main2" type="Node2D" node_paths=PackedStringArray("new_challenger_ball", "battleblock_controller", "balls", "attraction_point")]
+rotation = 1.5708
+script = ExtResource("1_nmkph")
+record = true
+patchnote_s_per_page = 42.0
+new_challenger_ball = NodePath("Balls/Fighters/Reaper")
+display_damage_dealt = true
+time_attack_leaderboards = Dictionary[String, ExtResource("2_poh84")]({
+"HYDRA": ExtResource("3_cr7au"),
+"WARLOCK": ExtResource("4_g7d4c")
+})
+use_2v2_colors = true
+_2v2_colors = Array[Color]([Color(0.5, 0.666667, 1, 1), Color(0.5, 0.583333, 1, 1), Color(1, 0.5, 0.5, 1), Color(1, 0.583333, 0.5, 1)])
+ordeal_mode = true
+battleblock_mode = true
+battleblock_controller = NodePath("BlockBreaker/MinecraftDig")
+hypermatch_hp = 555
+hypermatch_scales = Array[int]([20, 20])
+use_physicky_physics = true
+forced_start_dir = Vector2(0, -1)
+dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
+balls = [NodePath("Balls/Fighters/Thunder"), NodePath("Balls/Fighters/GlitchKnife")]
+all_weapons = Dictionary[int, ExtResource("24_3p5r5")]({
+0: ExtResource("11_per8v"),
+1: ExtResource("40_nsujd"),
+2: ExtResource("28_djmp0"),
+3: ExtResource("44_vebv7"),
+4: ExtResource("67_5aelx"),
+5: ExtResource("68_t5fc8"),
+6: ExtResource("34_g7d4c"),
+7: ExtResource("23_76u2v"),
+8: ExtResource("50_1t3vj"),
+9: ExtResource("70_c0wg0"),
+10: ExtResource("80_xxfh1"),
+11: ExtResource("49_1t3vj"),
+12: ExtResource("22_ee1k8"),
+13: ExtResource("22_rcyw2"),
+14: ExtResource("58_870hc"),
+15: ExtResource("56_nfmlc"),
+16: ExtResource("45_k7ahf"),
+17: ExtResource("68_xxfh1"),
+18: ExtResource("23_n5n48"),
+19: ExtResource("43_qtgyu"),
+20: ExtResource("60_ux8nf"),
+21: ExtResource("27_djmp0"),
+22: ExtResource("13_cr7au")
+})
+battle_ball_prefab = ExtResource("4_ya2e4")
+fx_hit_prefab = ExtResource("2_8wnqf")
+fx_death_prefab = ExtResource("3_uot50")
+fx_clash = ExtResource("4_0o7lx")
+fx_slash_hit_prefab = ExtResource("32_y8j1h")
+fx_block_destroyed = ExtResource("8_2p8oi")
+hit_shake = 1.0
+hit_max_shake = 10.0
+death_shake = 30.0
+sfx_bounce = SubResource("Resource_7mvmt")
+sfx_bounce_boss = SubResource("Resource_gaafq")
+sfx_death = SubResource("Resource_go1jf")
+sfx_faaaah = SubResource("Resource_u1in0")
+ve_announcer = SubResource("Resource_p1oyv")
+announcer_delay = 0.6
+bgms = Array[AudioStream]([ExtResource("41_573uv")])
+bgm_volume = -27.0
+startup_sfx = ExtResource("15_gcqa4")
+startup_sfx_volume = -22.0
+obs_delay = 4.0
+white_mode = true
+_1v1_hp = 100
+_1v2_hp = 60
+attraction_point = NodePath("AttractionPoint")
+use_cheat_hitbox = true
+cheat_hitbox_max_hitbox_bonus = 0.4
+use_cheat_weapon_rotation = true
+cheat_weapon_rotation_angle = 25.0
+use_cheat_underdog_clash = true
+cheat_underdog_clash_mult = 0.8
+
+[node name="OBS" type="Node" parent="."]
+script = ExtResource("5_l0sm3")
+host = "192.168.1.24"
+password = "YsYGIZeQLS1bRuOj"
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(540, 960)
+editor_draw_limits = true
+script = ExtResource("11_87gun")
+
+[node name="PhantomCameraHost" type="Node" parent="Camera"]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("14_cticm")
+metadata/_custom_type_script = "uid://bd046eokvcnu2"
+
+[node name="PhantomCamera2D" type="Node2D" parent="."]
+position = Vector2(540, 960)
+script = ExtResource("14_0krxf")
+priority = 10
+tween_resource = SubResource("Resource_wmaqr")
+tween_on_load = false
+draw_limits = true
+_preview_noise = false
+metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
+
+[node name="BG_White" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(1664, 2756)
+offset_left = -288.001
+offset_top = -337.999
+offset_right = 1376.0
+offset_bottom = 2418.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(1, 0.980392, 0.980392, 1)
+
+[node name="BalatroEffect" type="ColorRect" parent="BG_White"]
+material = SubResource("ShaderMaterial_vijbk")
+custom_minimum_size = Vector2(1280, 2120)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(1, 1, 1, 0.0784314)
+
+[node name="CRT" type="ColorRect" parent="."]
+visible = false
+custom_minimum_size = Vector2(1080, 1920)
+offset_right = 1080.0
+offset_bottom = 1920.0
+color = Color(1, 1, 1, 0)
+
+[node name="Walls" type="Node2D" parent="."]
+position = Vector2(540, 978)
+scale = Vector2(0.95, 0.95)
+
+[node name="WallBot" type="StaticBody2D" parent="Walls" groups=["WALL"]]
+position = Vector2(0, 640)
+collision_mask = 2
+physics_material_override = SubResource("PhysicsMaterial_shkiq")
+
+[node name="WallBotCollisionShape2D" type="CollisionShape2D" parent="Walls/WallBot"]
+shape = SubResource("RectangleShape2D_0qwvu")
+
+[node name="Polygon2D" type="Polygon2D" parent="Walls/WallBot/WallBotCollisionShape2D"]
+material = SubResource("ShaderMaterial_uot50")
+position = Vector2(0, -150)
+antialiased = true
+polygon = PackedVector2Array(-490, 0, -490, 5, 495, 5, 495, 0)
+
+[node name="WallTop" type="StaticBody2D" parent="Walls" groups=["WALL"]]
+position = Vector2(0, -640)
+rotation = 3.14159
+collision_mask = 2
+physics_material_override = SubResource("PhysicsMaterial_shkiq")
+
+[node name="WallTopCollisionShape2D" type="CollisionShape2D" parent="Walls/WallTop"]
+shape = SubResource("RectangleShape2D_g7d4c")
+
+[node name="Polygon2D" type="Polygon2D" parent="Walls/WallTop/WallTopCollisionShape2D"]
+material = SubResource("ShaderMaterial_uot50")
+position = Vector2(0, -150)
+color = Color(1, 1, 1, 0)
+antialiased = true
+polygon = PackedVector2Array(-495, 0, -495, 5, 495, 5, 495, 0)
+
+[node name="WallLeft" type="StaticBody2D" parent="Walls" groups=["WALL"]]
+position = Vector2(-640, 0)
+rotation = 1.5708
+collision_mask = 2
+physics_material_override = SubResource("PhysicsMaterial_shkiq")
+
+[node name="WallLeftCollisionShape2D" type="CollisionShape2D" parent="Walls/WallLeft"]
+shape = SubResource("RectangleShape2D_g7d4c")
+
+[node name="Polygon2D" type="Polygon2D" parent="Walls/WallLeft/WallLeftCollisionShape2D"]
+material = SubResource("ShaderMaterial_uot50")
+position = Vector2(0, -150)
+color = Color(1, 1, 1, 0)
+antialiased = true
+polygon = PackedVector2Array(-495, 0, -495, 5, 495, 5, 495, 0)
+
+[node name="WallRight" type="StaticBody2D" parent="Walls" groups=["WALL"]]
+position = Vector2(640, 0)
+rotation = -1.5708
+collision_mask = 2
+physics_material_override = SubResource("PhysicsMaterial_shkiq")
+
+[node name="WallRightCollisionShape2D" type="CollisionShape2D" parent="Walls/WallRight"]
+shape = SubResource("RectangleShape2D_g7d4c")
+
+[node name="Polygon2D" type="Polygon2D" parent="Walls/WallRight/WallRightCollisionShape2D"]
+material = SubResource("ShaderMaterial_uot50")
+position = Vector2(0, -150)
+color = Color(1, 1, 1, 0)
+antialiased = true
+polygon = PackedVector2Array(-495, 0, -495, 5, 495, 5, 495, 0)
+
+[node name="ColorRect" type="ColorRect" parent="Walls"]
+offset_left = -490.0
+offset_top = -490.0
+offset_right = 490.0
+offset_bottom = 490.0
+color = Color(0.61, 0.61, 0.61, 0.0784314)
+
+[node name="DeadZone" type="Node2D" parent="."]
+position = Vector2(540, 1082)
+scale = Vector2(2.765, 2.765)
+
+[node name="WallBot" type="StaticBody2D" parent="DeadZone" groups=["DEADZONE"]]
+position = Vector2(0.000467952, 494.032)
+physics_material_override = SubResource("PhysicsMaterial_ya2e4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeadZone/WallBot"]
+shape = SubResource("RectangleShape2D_6sl1r")
+
+[node name="WallTop" type="StaticBody2D" parent="DeadZone" groups=["DEADZONE"]]
+position = Vector2(-0.000288268, -525.86)
+rotation = 3.14159
+physics_material_override = SubResource("PhysicsMaterial_ya2e4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeadZone/WallTop"]
+shape = SubResource("RectangleShape2D_6sl1r")
+
+[node name="WallLeft" type="StaticBody2D" parent="DeadZone" groups=["DEADZONE"]]
+position = Vector2(-512.114, -14.8271)
+rotation = 1.5708
+physics_material_override = SubResource("PhysicsMaterial_ya2e4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeadZone/WallLeft"]
+shape = SubResource("RectangleShape2D_6sl1r")
+
+[node name="WallRight" type="StaticBody2D" parent="DeadZone" groups=["DEADZONE"]]
+position = Vector2(491.502, -13.7457)
+rotation = -1.5708
+physics_material_override = SubResource("PhysicsMaterial_ya2e4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeadZone/WallRight"]
+shape = SubResource("RectangleShape2D_6sl1r")
+
+[node name="author" type="RichTextLabel" parent="."]
+self_modulate = Color(0, 0, 0, 1)
+offset_left = 404.0
+offset_top = 1350.0
+offset_right = 692.0
+offset_bottom = 1390.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "@heaven.metronom"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+
+[node name="Version" type="RichTextLabel" parent="."]
+visible = false
+offset_left = 404.0
+offset_top = 1393.0
+offset_right = 692.0
+offset_bottom = 1467.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center]v1.01[/center]"
+fit_content = true
+autowrap_mode = 0
+
+[node name="BlockBreaker" type="Control" parent="."]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = 74.0
+offset_top = 514.0
+offset_right = 1006.0
+offset_bottom = 1444.0
+
+[node name="MinecraftDig" type="Node2D" parent="BlockBreaker" node_paths=PackedStringArray("scene_root")]
+position = Vector2(-13, 2)
+script = ExtResource("49_k7ahf")
+scene_root = NodePath("../..")
+block_prefab = ExtResource("50_sy8k4")
+dimensions = Vector2i(30, 29)
+ground_depth = 6
+clusters = Array[ExtResource("51_2p8oi")]([SubResource("Resource_ucewg"), SubResource("Resource_ux8nf"), SubResource("Resource_2p8oi"), SubResource("Resource_nfmlc"), SubResource("Resource_c5ovv"), SubResource("Resource_c5ovv"), SubResource("Resource_c5ovv")])
+block_value_registry = Dictionary[Texture, int]({
+ExtResource("66_wptt7"): 1,
+ExtResource("65_vanr6"): 2,
+ExtResource("64_wmaqr"): 2,
+ExtResource("51_204xj"): 1,
+ExtResource("51_4qbj2"): 5,
+ExtResource("52_2lkqs"): 7,
+ExtResource("53_204xj"): 8,
+ExtResource("53_4qbj2"): 9,
+ExtResource("54_0krxf"): 10,
+ExtResource("55_cticm"): 12,
+ExtResource("56_3gj21"): 15
+})
+block_sfx = Dictionary[Texture, AudioStream]({
+ExtResource("66_wptt7"): ExtResource("70_ucewg"),
+ExtResource("65_vanr6"): ExtResource("71_qktne"),
+ExtResource("64_wmaqr"): ExtResource("72_rcmr4"),
+ExtResource("51_204xj"): ExtResource("73_uhxsn"),
+ExtResource("51_4qbj2"): ExtResource("74_ax4pp"),
+ExtResource("52_2lkqs"): ExtResource("75_nsujd"),
+ExtResource("53_204xj"): ExtResource("76_1t3vj"),
+ExtResource("53_4qbj2"): ExtResource("77_pl8or"),
+ExtResource("54_0krxf"): ExtResource("78_gcqa4"),
+ExtResource("55_cticm"): ExtResource("79_vebv7"),
+ExtResource("56_3gj21"): ExtResource("80_ux8nf")
+})
+distribution = Array[ExtResource("62_3gj21")]([SubResource("Resource_nrq88"), SubResource("Resource_es7pt"), SubResource("Resource_jw8b7"), SubResource("Resource_2lkqs"), SubResource("Resource_xisi7"), SubResource("Resource_vanr6"), SubResource("Resource_3gj21")])
+
+[node name="UI" type="Control" parent="."]
+custom_minimum_size = Vector2(1080, 1920)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -104.0
+offset_right = 1080.0
+offset_bottom = 1816.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Top" type="Control" parent="UI"]
+custom_minimum_size = Vector2(1000, 140)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -548.0
+offset_top = -550.0
+offset_right = 548.0
+offset_bottom = -410.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CharacterLeft_1p" type="VBoxContainer" parent="UI/Top"]
+custom_minimum_size = Vector2(410, 0)
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -487.0
+offset_top = -95.0
+offset_right = -56.0
+offset_bottom = 158.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="Character" type="HBoxContainer" parent="UI/Top/CharacterLeft_1p"]
+layout_direction = 2
+layout_mode = 2
+alignment = 1
+
+[node name="Name" type="RichTextLabel" parent="UI/Top/CharacterLeft_1p/Character"]
+clip_contents = false
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 30
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 100
+bbcode_enabled = true
+text = "%s"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+script = ExtResource("13_vvmd2")
+
+[node name="Sprite" type="TextureRect" parent="UI/Top/CharacterLeft_1p/Character"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("12_hvjex")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Details" type="RichTextLabel" parent="UI/Top/CharacterLeft_1p"]
+clip_contents = false
+custom_minimum_size = Vector2(0, 140.535)
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_fonts/bold_italics_font = ExtResource("12_per8v")
+theme_override_font_sizes/bold_italics_font_size = 100
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "%s"
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+justification_flags = 0
+script = ExtResource("13_vvmd2")
+
+[node name="CharacterRight_1p" type="VBoxContainer" parent="UI/Top"]
+clip_contents = true
+custom_minimum_size = Vector2(410, 0)
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 32.0
+offset_top = -93.0
+offset_right = 482.0
+offset_bottom = 160.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="Character" type="HBoxContainer" parent="UI/Top/CharacterRight_1p"]
+layout_direction = 2
+layout_mode = 2
+alignment = 1
+
+[node name="Sprite" type="TextureRect" parent="UI/Top/CharacterRight_1p/Character"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("12_hvjex")
+expand_mode = 2
+flip_h = true
+
+[node name="Name" type="RichTextLabel" parent="UI/Top/CharacterRight_1p/Character"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 30
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 100
+bbcode_enabled = true
+text = " %s "
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+script = ExtResource("13_vvmd2")
+
+[node name="Details" type="RichTextLabel" parent="UI/Top/CharacterRight_1p"]
+clip_contents = false
+custom_minimum_size = Vector2(0, 140.535)
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_fonts/bold_italics_font = ExtResource("12_per8v")
+theme_override_font_sizes/bold_italics_font_size = 100
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = " %s "
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+justification_flags = 0
+script = ExtResource("13_vvmd2")
+
+[node name="VS" type="RichTextLabel" parent="UI/Top"]
+layout_mode = 2
+offset_left = 432.001
+offset_top = -103.002
+offset_right = 642.001
+offset_bottom = 113.998
+theme_override_constants/outline_size = 30
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 100
+text = " VS "
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+justification_flags = 0
+
+[node name="CharactersLeft_2p" type="VBoxContainer" parent="UI/Top"]
+custom_minimum_size = Vector2(450, 0)
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -475.0
+offset_top = -166.998
+offset_right = -24.999
+offset_bottom = 184.002
+grow_horizontal = 2
+theme_override_constants/separation = 15
+
+[node name="Details1" type="RichTextLabel" parent="UI/Top/CharactersLeft_2p"]
+clip_contents = false
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = " %s "
+fit_content = true
+scroll_active = false
+autowrap_mode = 1
+shortcut_keys_enabled = false
+justification_flags = 0
+script = ExtResource("13_vvmd2")
+
+[node name="Character1" type="HBoxContainer" parent="UI/Top/CharactersLeft_2p"]
+layout_direction = 2
+layout_mode = 2
+
+[node name="Name" type="RichTextLabel" parent="UI/Top/CharactersLeft_2p/Character1"]
+clip_contents = false
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 30
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 100
+bbcode_enabled = true
+text = "%s "
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 2
+justification_flags = 0
+script = ExtResource("13_vvmd2")
+
+[node name="Sprite" type="TextureRect" parent="UI/Top/CharactersLeft_2p/Character1"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+expand_mode = 2
+flip_h = true
+
+[node name="Character2" type="HBoxContainer" parent="UI/Top/CharactersLeft_2p"]
+layout_direction = 2
+layout_mode = 2
+
+[node name="Name" type="RichTextLabel" parent="UI/Top/CharactersLeft_2p/Character2"]
+clip_contents = false
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 30
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 100
+bbcode_enabled = true
+text = "%s "
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 2
+justification_flags = 0
+script = ExtResource("13_vvmd2")
+
+[node name="Sprite" type="TextureRect" parent="UI/Top/CharactersLeft_2p/Character2"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+expand_mode = 2
+flip_h = true
+
+[node name="Details2" type="RichTextLabel" parent="UI/Top/CharactersLeft_2p"]
+clip_contents = false
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = " %s "
+fit_content = true
+scroll_active = false
+autowrap_mode = 1
+shortcut_keys_enabled = false
+justification_flags = 0
+script = ExtResource("13_vvmd2")
+
+[node name="CharactersRight_2p" type="VBoxContainer" parent="UI/Top"]
+custom_minimum_size = Vector2(450, 0)
+layout_direction = 3
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -476.001
+offset_top = -167.002
+offset_right = -26.0005
+offset_bottom = 183.998
+grow_horizontal = 2
+theme_override_constants/separation = 15
+
+[node name="Details1" type="RichTextLabel" parent="UI/Top/CharactersRight_2p"]
+clip_contents = false
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = " %s "
+fit_content = true
+scroll_active = false
+autowrap_mode = 1
+shortcut_keys_enabled = false
+horizontal_alignment = 2
+justification_flags = 0
+script = ExtResource("13_vvmd2")
+
+[node name="Character1" type="HBoxContainer" parent="UI/Top/CharactersRight_2p"]
+layout_direction = 3
+layout_mode = 2
+
+[node name="Name" type="RichTextLabel" parent="UI/Top/CharactersRight_2p/Character1"]
+clip_contents = false
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 30
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 100
+bbcode_enabled = true
+text = "%s "
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 2
+justification_flags = 0
+script = ExtResource("13_vvmd2")
+
+[node name="Sprite" type="TextureRect" parent="UI/Top/CharactersRight_2p/Character1"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+expand_mode = 3
+stretch_mode = 4
+flip_h = true
+
+[node name="Character2" type="HBoxContainer" parent="UI/Top/CharactersRight_2p"]
+layout_direction = 3
+layout_mode = 2
+
+[node name="Name" type="RichTextLabel" parent="UI/Top/CharactersRight_2p/Character2"]
+clip_contents = false
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 30
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 100
+bbcode_enabled = true
+text = "%s "
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 2
+justification_flags = 0
+script = ExtResource("13_vvmd2")
+
+[node name="Sprite" type="TextureRect" parent="UI/Top/CharactersRight_2p/Character2"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+expand_mode = 3
+stretch_mode = 4
+flip_h = true
+
+[node name="Details2" type="RichTextLabel" parent="UI/Top/CharactersRight_2p"]
+clip_contents = false
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = " %s "
+fit_content = true
+scroll_active = false
+autowrap_mode = 1
+shortcut_keys_enabled = false
+horizontal_alignment = 2
+justification_flags = 0
+script = ExtResource("13_vvmd2")
+
+[node name="TimeAttackContainer" type="VBoxContainer" parent="UI/Top"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -193.001
+offset_top = -180.0
+offset_right = 192.999
+offset_bottom = 269.0
+grow_horizontal = 2
+theme_override_constants/separation = 300
+
+[node name="TimeAttack" type="RichTextLabel" parent="UI/Top/TimeAttackContainer"]
+self_modulate = Color(1, 0.421875, 0.421875, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/outline_size = 30
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 80
+text = " "
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+justification_flags = 0
+
+[node name="TATimer" type="RichTextLabel" parent="UI/Top/TimeAttackContainer"]
+self_modulate = Color(0.8, 0.258824, 0.368627, 1)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 50
+text = " 00:00:000 "
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+justification_flags = 0
+
+[node name="TARecord" type="RichTextLabel" parent="UI/Top"]
+layout_mode = 2
+offset_left = 382.998
+offset_top = 263.999
+offset_right = 712.998
+offset_bottom = 325.999
+size_flags_horizontal = 4
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 30
+text = " Record %s "
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+justification_flags = 0
+script = ExtResource("13_vvmd2")
+
+[node name="BO3Score" type="RichTextLabel" parent="UI/Top"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -164.999
+offset_top = 138.999
+offset_right = 165.001
+offset_bottom = 249.999
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 80
+bbcode_enabled = true
+text = "[color=%s]%s[/color] - [color=%s]%s[/color]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+justification_flags = 0
+script = ExtResource("13_vvmd2")
+
+[node name="Bottom" type="Control" parent="UI"]
+custom_minimum_size = Vector2(1000, 140)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -548.0
+offset_top = -313.0
+offset_right = 548.0
+offset_bottom = -173.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="StatLeft_1p" type="RichTextLabel" parent="UI/Bottom"]
+clip_contents = false
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+offset_left = 77.0
+offset_top = -27.0
+offset_right = 427.0
+offset_bottom = 113.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 55
+bbcode_enabled = true
+text = "%s : %s"
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+script = ExtResource("13_vvmd2")
+
+[node name="StatLeft1_2p" type="RichTextLabel" parent="UI/Bottom"]
+clip_contents = false
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+offset_left = 70.0057
+offset_top = -46.0
+offset_right = 70.0057
+offset_bottom = -5.99995
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = " %s : %s "
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+justification_flags = 160
+script = ExtResource("13_vvmd2")
+
+[node name="StatLeft2_2p" type="RichTextLabel" parent="UI/Bottom"]
+clip_contents = false
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+offset_left = 70.0057
+offset_top = 26.0
+offset_right = 70.0057
+offset_bottom = 66.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = " %s : %s "
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+justification_flags = 160
+script = ExtResource("13_vvmd2")
+
+[node name="StatRight_1p" type="RichTextLabel" parent="UI/Bottom"]
+clip_contents = false
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+offset_left = 1018.01
+offset_top = -27.0037
+offset_right = 1018.01
+offset_bottom = 12.9963
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 55
+bbcode_enabled = true
+text = "%s : %s"
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 2
+justification_flags = 160
+script = ExtResource("13_vvmd2")
+
+[node name="StatRight1_2p" type="RichTextLabel" parent="UI/Bottom"]
+clip_contents = false
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+offset_left = 1025.01
+offset_top = -46.0035
+offset_right = 1025.01
+offset_bottom = -6.00346
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = " %s : %s "
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 2
+justification_flags = 160
+script = ExtResource("13_vvmd2")
+
+[node name="StatRight2_2p" type="RichTextLabel" parent="UI/Bottom"]
+clip_contents = false
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+offset_left = 1025.01
+offset_top = 25.9965
+offset_right = 1025.01
+offset_bottom = 65.9965
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = " %s : %s "
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 2
+justification_flags = 160
+script = ExtResource("13_vvmd2")
+
+[node name="DamageDoneContainer" type="VBoxContainer" parent="UI/Bottom"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -209.999
+offset_top = -60.0012
+offset_right = 210.001
+offset_bottom = 73.999
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="DamageDoneHeader" type="RichTextLabel" parent="UI/Bottom/DamageDoneContainer"]
+self_modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "Damage dealt"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("13_vvmd2")
+
+[node name="Damage_Done" type="RichTextLabel" parent="UI/Bottom/DamageDoneContainer"]
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[color=%s]%s[/color][color=white]※[color=%s]%s[/color]※[color=%s]%s[/color]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("13_vvmd2")
+
+[node name="ArenaContainer" type="VBoxContainer" parent="UI/Bottom"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -209.999
+offset_top = -17.0012
+offset_right = 210.001
+offset_bottom = 116.999
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ArenaTitle" type="RichTextLabel" parent="UI/Bottom/ArenaContainer"]
+self_modulate = Color(0.517647, 0.396078, 0.92549, 1)
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 75
+bbcode_enabled = true
+text = "[wave amp=25.0 freq=6 connected=1]CraftMine Arena [/wave]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("13_vvmd2")
+
+[node name="ArenaRule" type="RichTextLabel" parent="UI/Bottom/ArenaContainer"]
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[color=gray]Destroying a [color=peru]block[/color] 
+counts as a [color=firebrick]valid hit[/color]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("13_vvmd2")
+
+[node name="BlockBreaker" type="Control" parent="UI/Bottom"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BB_Left" type="RichTextLabel" parent="UI/Bottom/BlockBreaker"]
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+offset_left = 70.0002
+offset_top = 66.9998
+offset_right = 420.0
+offset_bottom = 207.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 35
+bbcode_enabled = true
+text = "%s : %s"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+script = ExtResource("13_vvmd2")
+
+[node name="BB_Blocks_Left" type="GridContainer" parent="UI/Bottom/BlockBreaker"]
+layout_mode = 0
+offset_left = 73.0056
+offset_top = 36.9997
+offset_right = 250.006
+offset_bottom = 105.0
+columns = 5
+
+[node name="TextureRect" type="TextureRect" parent="UI/Bottom/BlockBreaker/BB_Blocks_Left"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("51_204xj")
+
+[node name="TextureRect2" type="TextureRect" parent="UI/Bottom/BlockBreaker/BB_Blocks_Left"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("51_204xj")
+
+[node name="TextureRect3" type="TextureRect" parent="UI/Bottom/BlockBreaker/BB_Blocks_Left"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("51_204xj")
+
+[node name="TextureRect4" type="TextureRect" parent="UI/Bottom/BlockBreaker/BB_Blocks_Left"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("51_204xj")
+
+[node name="TextureRect5" type="TextureRect" parent="UI/Bottom/BlockBreaker/BB_Blocks_Left"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("51_204xj")
+
+[node name="TextureRect6" type="TextureRect" parent="UI/Bottom/BlockBreaker/BB_Blocks_Left"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("51_204xj")
+
+[node name="TextureRect7" type="TextureRect" parent="UI/Bottom/BlockBreaker/BB_Blocks_Left"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("51_204xj")
+
+[node name="TextureRect8" type="TextureRect" parent="UI/Bottom/BlockBreaker/BB_Blocks_Left"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("51_204xj")
+
+[node name="TextureRect9" type="TextureRect" parent="UI/Bottom/BlockBreaker/BB_Blocks_Left"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("51_204xj")
+
+[node name="TextureRect10" type="TextureRect" parent="UI/Bottom/BlockBreaker/BB_Blocks_Left"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("51_204xj")
+
+[node name="BB_Right" type="RichTextLabel" parent="UI/Bottom/BlockBreaker"]
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+offset_left = 673.006
+offset_top = 66.9976
+offset_right = 1023.01
+offset_bottom = 206.998
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 35
+bbcode_enabled = true
+text = "%s : %s"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 2
+script = ExtResource("13_vvmd2")
+
+[node name="BB_Blocks_Right" type="GridContainer" parent="UI/Bottom/BlockBreaker"]
+layout_direction = 2
+layout_mode = 0
+offset_left = 847.006
+offset_top = 36.9969
+offset_right = 1023.01
+offset_bottom = 104.997
+columns = 5
+
+[node name="TextureRect" type="TextureRect" parent="UI/Bottom/BlockBreaker/BB_Blocks_Right"]
+texture_filter = 2
+layout_mode = 2
+texture = ExtResource("51_204xj")
+
+[node name="TextureRect2" type="TextureRect" parent="UI/Bottom/BlockBreaker/BB_Blocks_Right"]
+texture_filter = 2
+layout_mode = 2
+texture = ExtResource("51_204xj")
+
+[node name="TextureRect3" type="TextureRect" parent="UI/Bottom/BlockBreaker/BB_Blocks_Right"]
+texture_filter = 2
+layout_mode = 2
+texture = ExtResource("51_204xj")
+
+[node name="TextureRect4" type="TextureRect" parent="UI/Bottom/BlockBreaker/BB_Blocks_Right"]
+texture_filter = 2
+layout_mode = 2
+texture = ExtResource("51_204xj")
+
+[node name="TextureRect5" type="TextureRect" parent="UI/Bottom/BlockBreaker/BB_Blocks_Right"]
+texture_filter = 2
+layout_mode = 2
+texture = ExtResource("51_204xj")
+
+[node name="TextureRect6" type="TextureRect" parent="UI/Bottom/BlockBreaker/BB_Blocks_Right"]
+texture_filter = 2
+layout_mode = 2
+texture = ExtResource("51_204xj")
+
+[node name="TextureRect7" type="TextureRect" parent="UI/Bottom/BlockBreaker/BB_Blocks_Right"]
+texture_filter = 2
+layout_mode = 2
+texture = ExtResource("51_204xj")
+
+[node name="TextureRect8" type="TextureRect" parent="UI/Bottom/BlockBreaker/BB_Blocks_Right"]
+texture_filter = 2
+layout_mode = 2
+texture = ExtResource("51_204xj")
+
+[node name="TextureRect9" type="TextureRect" parent="UI/Bottom/BlockBreaker/BB_Blocks_Right"]
+texture_filter = 2
+layout_mode = 2
+texture = ExtResource("51_204xj")
+
+[node name="TextureRect10" type="TextureRect" parent="UI/Bottom/BlockBreaker/BB_Blocks_Right"]
+texture_filter = 2
+layout_mode = 2
+texture = ExtResource("51_204xj")
+
+[node name="Updated" type="RichTextLabel" parent="UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 193.0
+offset_top = -754.003
+offset_right = 503.0
+offset_bottom = -680.003
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.0692165
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.760784)
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[wave amp=25.0 freq=8 connected=1]
+[color=#75FFDF]@[/color][color=#6FFBE3]m[/color][color=#6AF8E8]a[/color][color=#64F5EC]g[/color][color=#5FF1F1]i[/color][color=#59EEF5]c[/color][color=#54EBFA]c[/color][color=#4EE8FF]i[/color][color=#68DEFE]r[/color][color=#81D5FE]c[/color][color=#9ACBFD]u[/color][color=#B3C2FD]i[/color][color=#CCB8FC]t[/color][color=#E5AFFC]5[/color]
+[/wave]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+justification_flags = 0
+
+[node name="OrdealDetails" type="RichTextLabel" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -274.999
+offset_top = -491.001
+offset_right = 229.001
+offset_bottom = -380.001
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.854902)
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[wave amp=25.0 freq=1 connected=1]
+[color=#FF9155]O[/color][color=#FF8A57]r[/color][color=#FF8258]d[/color][color=#FF7B59]e[/color][color=#FF735A]a[/color][color=#FF6C5C]l[/color] [color=#FF9155]6[/color][color=#FF9155]6[/color] [color=#FF735A]H[/color][color=#FF6C5C]P[/color] 
+[/wave][color=gold]No reset between rounds[/color]
+"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+justification_flags = 0
+
+[node name="Winner" type="RichTextLabel" parent="UI"]
+clip_contents = false
+custom_minimum_size = Vector2(920, 0)
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -461.0
+offset_top = 88.0
+offset_right = 459.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 60
+bbcode_enabled = true
+text = "[wave amp=20.0 freq=5]%s[/wave]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("13_vvmd2")
+
+[node name="Combos" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ComboCounterL1_1P" parent="UI/Combos" instance=ExtResource("30_jdg1x")]
+offset_left = 100.0
+offset_top = 650.0
+offset_right = 100.0
+offset_bottom = 650.0
+scale = Vector2(0.9, 0.9)
+
+[node name="ComboCounterL1_2P" parent="UI/Combos" instance=ExtResource("30_jdg1x")]
+offset_left = 100.0
+offset_top = 650.0
+offset_right = 100.0
+offset_bottom = 650.0
+scale = Vector2(0.75, 0.75)
+
+[node name="ComboCounterL2_2P" parent="UI/Combos" instance=ExtResource("30_jdg1x")]
+offset_left = 100.0
+offset_top = 850.0
+offset_right = 100.0
+offset_bottom = 850.0
+scale = Vector2(0.75, 0.75)
+
+[node name="ComboCounterR1_1P" parent="UI/Combos" instance=ExtResource("31_dpnnm")]
+offset_left = 884.0
+offset_top = 650.0
+offset_right = 884.0
+offset_bottom = 650.0
+scale = Vector2(0.9, 0.9)
+
+[node name="ComboCounterR1_2P" parent="UI/Combos" instance=ExtResource("31_dpnnm")]
+offset_left = 894.0
+offset_top = 650.0
+offset_right = 894.0
+offset_bottom = 650.0
+scale = Vector2(0.75, 0.75)
+
+[node name="ComboCounterR2_2P" parent="UI/Combos" instance=ExtResource("31_dpnnm")]
+offset_left = 894.0
+offset_top = 850.0
+offset_right = 894.0
+offset_bottom = 850.0
+scale = Vector2(0.75, 0.75)
+
+[node name="SpecialEffectsParent" type="Node2D" parent="."]
+rotation = -1.5708
+
+[node name="ProjectilesBGParent" type="Node2D" parent="."]
+rotation = -1.5708
+
+[node name="ArenaMinecraft" type="Node2D" parent="."]
+process_mode = 4
+visible = false
+
+[node name="BattleBlock" parent="ArenaMinecraft" node_paths=PackedStringArray("main") instance=ExtResource("50_sy8k4")]
+position = Vector2(122.002, 560)
+scale = Vector2(3, 3)
+main = NodePath("../..")
+stx = ExtResource("51_204xj")
+
+[node name="BattleBlock2" parent="ArenaMinecraft" node_paths=PackedStringArray("main") instance=ExtResource("50_sy8k4")]
+position = Vector2(218.002, 559.999)
+scale = Vector2(3, 3)
+main = NodePath("../..")
+stx = ExtResource("51_204xj")
+
+[node name="BattleBlock3" parent="ArenaMinecraft" node_paths=PackedStringArray("main") instance=ExtResource("50_sy8k4")]
+position = Vector2(122.002, 656)
+scale = Vector2(3, 3)
+main = NodePath("../..")
+stx = ExtResource("51_204xj")
+
+[node name="BattleBlock4" parent="ArenaMinecraft" node_paths=PackedStringArray("main") instance=ExtResource("50_sy8k4")]
+position = Vector2(862.002, 559.997)
+scale = Vector2(3, 3)
+main = NodePath("../..")
+stx = ExtResource("51_204xj")
+
+[node name="BattleBlock5" parent="ArenaMinecraft" node_paths=PackedStringArray("main") instance=ExtResource("50_sy8k4")]
+position = Vector2(958.002, 559.997)
+scale = Vector2(3, 3)
+main = NodePath("../..")
+stx = ExtResource("51_204xj")
+
+[node name="BattleBlock6" parent="ArenaMinecraft" node_paths=PackedStringArray("main") instance=ExtResource("50_sy8k4")]
+position = Vector2(958.003, 655.996)
+scale = Vector2(3, 3)
+main = NodePath("../..")
+stx = ExtResource("51_204xj")
+
+[node name="BattleBlock7" parent="ArenaMinecraft" node_paths=PackedStringArray("main") instance=ExtResource("50_sy8k4")]
+position = Vector2(862.005, 1396)
+scale = Vector2(3, 3)
+main = NodePath("../..")
+stx = ExtResource("51_204xj")
+
+[node name="BattleBlock8" parent="ArenaMinecraft" node_paths=PackedStringArray("main") instance=ExtResource("50_sy8k4")]
+position = Vector2(958.005, 1300)
+scale = Vector2(3, 3)
+main = NodePath("../..")
+stx = ExtResource("51_204xj")
+
+[node name="BattleBlock9" parent="ArenaMinecraft" node_paths=PackedStringArray("main") instance=ExtResource("50_sy8k4")]
+position = Vector2(958.005, 1396)
+scale = Vector2(3, 3)
+main = NodePath("../..")
+stx = ExtResource("51_204xj")
+
+[node name="BattleBlock10" parent="ArenaMinecraft" node_paths=PackedStringArray("main") instance=ExtResource("50_sy8k4")]
+position = Vector2(122.005, 1396)
+scale = Vector2(3, 3)
+main = NodePath("../..")
+stx = ExtResource("51_204xj")
+
+[node name="BattleBlock11" parent="ArenaMinecraft" node_paths=PackedStringArray("main") instance=ExtResource("50_sy8k4")]
+position = Vector2(122.005, 1300)
+scale = Vector2(3, 3)
+main = NodePath("../..")
+stx = ExtResource("51_204xj")
+
+[node name="BattleBlock12" parent="ArenaMinecraft" node_paths=PackedStringArray("main") instance=ExtResource("50_sy8k4")]
+position = Vector2(218.005, 1396)
+scale = Vector2(3, 3)
+main = NodePath("../..")
+stx = ExtResource("51_204xj")
+
+[node name="BattleBlock14" parent="ArenaMinecraft" node_paths=PackedStringArray("main") instance=ExtResource("50_sy8k4")]
+position = Vector2(540.005, 1396)
+scale = Vector2(3, 3)
+main = NodePath("../..")
+stx = ExtResource("51_204xj")
+
+[node name="Balls" type="Node2D" parent="."]
+
+[node name="Bosses" type="Node2D" parent="Balls"]
+
+[node name="HYDRA" parent="Balls/Bosses" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2320.01, 1817.99)
+weapon_settings = ExtResource("11_uot50")
+start_dir = Vector2(0, -1)
+health = 180
+team = 1
+clash_invincibility = 0.05
+stop = true
+is_boss = true
+knockback_immune = true
+
+[node name="Root" parent="Balls/Bosses/HYDRA" index="0"]
+scale = Vector2(0.3, 0.3)
+
+[node name="WeaponSlot" parent="Balls/Bosses/HYDRA/Root" index="1"]
+scale = Vector2(10, 10)
+
+[node name="Circle" parent="Balls/Bosses/HYDRA/Root" index="5"]
+material = SubResource("ShaderMaterial_g7d4c")
+
+[node name="DWCircleMask" parent="Balls/Bosses/HYDRA/Root" index="6"]
+material = SubResource("ShaderMaterial_u6wsj")
+
+[node name="DWCircle" parent="Balls/Bosses/HYDRA/Root/DWCircleMask" index="0"]
+material = SubResource("ShaderMaterial_u6wsj")
+
+[node name="Trail" parent="Balls/Bosses/HYDRA/Root" index="9"]
+gradient = SubResource("Gradient_wkwug")
+
+[node name="TITAN" parent="Balls/Bosses" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2320.01, 1817.99)
+weapon_settings = ExtResource("26_gbt1t")
+start_dir = Vector2(0, -1)
+health = 150
+team = 1
+stop = true
+is_boss = true
+
+[node name="WeaponSlot" parent="Balls/Bosses/TITAN/Root" index="1"]
+scale = Vector2(10, 10)
+
+[node name="Circle" parent="Balls/Bosses/TITAN/Root" index="5"]
+material = SubResource("ShaderMaterial_g7d4c")
+
+[node name="DWCircleMask" parent="Balls/Bosses/TITAN/Root" index="6"]
+material = SubResource("ShaderMaterial_5o85w")
+
+[node name="DWCircle" parent="Balls/Bosses/TITAN/Root/DWCircleMask" index="0"]
+material = SubResource("ShaderMaterial_5o85w")
+
+[node name="Trail" parent="Balls/Bosses/TITAN/Root" index="9"]
+gradient = SubResource("Gradient_wkwug")
+
+[node name="BIG" parent="Balls/Bosses" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2320.01, 1817.99)
+weapon_settings = ExtResource("90_u1in0")
+dual_wield = Array[int]([7])
+start_dir = Vector2(0, -1)
+health = 200
+team = 1
+clash_invincibility = 0.05
+stop = true
+is_boss = true
+
+[node name="Root" parent="Balls/Bosses/BIG" index="0"]
+scale = Vector2(0.27, 0.27)
+
+[node name="WeaponSlot" parent="Balls/Bosses/BIG/Root" index="1"]
+scale = Vector2(10, 10)
+
+[node name="Circle" parent="Balls/Bosses/BIG/Root" index="5"]
+material = SubResource("ShaderMaterial_g7d4c")
+
+[node name="DWCircleMask" parent="Balls/Bosses/BIG/Root" index="6"]
+material = SubResource("ShaderMaterial_5o85w")
+
+[node name="DWCircle" parent="Balls/Bosses/BIG/Root/DWCircleMask" index="0"]
+material = SubResource("ShaderMaterial_5o85w")
+
+[node name="Trail" parent="Balls/Bosses/BIG/Root" index="9"]
+gradient = SubResource("Gradient_wkwug")
+
+[node name="WARLOCK" parent="Balls/Bosses" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2566, 1339.99)
+weapon_settings = ExtResource("21_gaafq")
+start_dir = Vector2(0, -1)
+health = 200
+team = 1
+stop = true
+is_boss = true
+knockback_immune = true
+
+[node name="Root" parent="Balls/Bosses/WARLOCK" index="0"]
+scale = Vector2(0.3, 0.3)
+
+[node name="WeaponSlot" parent="Balls/Bosses/WARLOCK/Root" index="1"]
+scale = Vector2(10, 10)
+
+[node name="Circle" parent="Balls/Bosses/WARLOCK/Root" index="5"]
+material = SubResource("ShaderMaterial_0qwvu")
+
+[node name="DWCircleMask" parent="Balls/Bosses/WARLOCK/Root" index="6"]
+material = SubResource("ShaderMaterial_oi3sm")
+
+[node name="DWCircle" parent="Balls/Bosses/WARLOCK/Root/DWCircleMask" index="0"]
+material = SubResource("ShaderMaterial_oi3sm")
+
+[node name="Hat" type="Sprite2D" parent="Balls/Bosses/WARLOCK/Root" index="7"]
+texture_filter = 1
+position = Vector2(-16.6681, -466.664)
+scale = Vector2(10, 10)
+texture = ExtResource("23_o08cq")
+
+[node name="Trail" parent="Balls/Bosses/WARLOCK/Root" index="10"]
+gradient = SubResource("Gradient_w5ut2")
+
+[node name="HYDRA_Void" parent="Balls/Bosses" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2320.01, 1817.99)
+mass = 10.0
+weapon_settings = ExtResource("21_wy0uv")
+start_dir = Vector2(0, -1)
+team = 1
+stop = true
+is_boss = true
+knockback_immune = true
+
+[node name="Root" parent="Balls/Bosses/HYDRA_Void" index="0"]
+scale = Vector2(0.24, 0.24)
+
+[node name="WeaponSlot" parent="Balls/Bosses/HYDRA_Void/Root" index="1"]
+scale = Vector2(10, 10)
+
+[node name="Circle" parent="Balls/Bosses/HYDRA_Void/Root" index="5"]
+material = SubResource("ShaderMaterial_qyfoh")
+
+[node name="DWCircleMask" parent="Balls/Bosses/HYDRA_Void/Root" index="6"]
+material = SubResource("ShaderMaterial_kek2w")
+
+[node name="DWCircle" parent="Balls/Bosses/HYDRA_Void/Root/DWCircleMask" index="0"]
+material = SubResource("ShaderMaterial_kek2w")
+
+[node name="Trail" parent="Balls/Bosses/HYDRA_Void/Root" index="9"]
+gradient = SubResource("Gradient_d4iat")
+
+[node name="HYDRA_Acid" parent="Balls/Bosses" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2320.01, 1817.99)
+mass = 10.0
+weapon_settings = ExtResource("22_630qq")
+start_dir = Vector2(0, -1)
+team = 1
+stop = true
+is_boss = true
+knockback_immune = true
+
+[node name="Root" parent="Balls/Bosses/HYDRA_Acid" index="0"]
+scale = Vector2(0.24, 0.24)
+
+[node name="WeaponSlot" parent="Balls/Bosses/HYDRA_Acid/Root" index="1"]
+scale = Vector2(10, 10)
+
+[node name="Circle" parent="Balls/Bosses/HYDRA_Acid/Root" index="5"]
+material = SubResource("ShaderMaterial_qyfoh")
+
+[node name="DWCircleMask" parent="Balls/Bosses/HYDRA_Acid/Root" index="6"]
+material = SubResource("ShaderMaterial_bnc2j")
+
+[node name="DWCircle" parent="Balls/Bosses/HYDRA_Acid/Root/DWCircleMask" index="0"]
+material = SubResource("ShaderMaterial_bnc2j")
+
+[node name="Trail" parent="Balls/Bosses/HYDRA_Acid/Root" index="9"]
+gradient = SubResource("Gradient_y7asl")
+
+[node name="Training" type="Node2D" parent="Balls"]
+
+[node name="Dummy" parent="Balls/Training" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2025.01, 1735.99)
+weapon_settings = SubResource("Resource_uhddi")
+start_dir = Vector2(-1, -0.5)
+health = 4
+no_weapon = true
+team = 1
+stop = true
+
+[node name="Dummy2" parent="Balls/Training" node_paths=PackedStringArray("weapon_slots") groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(3022.81, 1705.99)
+weapon_settings = SubResource("Resource_ee1k8")
+weapon_slots = []
+start_dir = Vector2(-1, -0.5)
+health = 50
+no_weapon = true
+team = 1
+stop = true
+
+[node name="Immobile" parent="Balls/Training" node_paths=PackedStringArray("weapon_slots") groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2610, 925.99)
+sleeping = true
+freeze = true
+weapon_settings = SubResource("Resource_76u2v")
+weapon_slots = []
+start_dir = Vector2(-1, -0.5)
+health = 50
+no_weapon = true
+stop = true
+
+[node name="Fighters" type="Node2D" parent="Balls"]
+
+[node name="DW1" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2203.01, 1414.99)
+weapon_settings = ExtResource("11_per8v")
+use_dual_wield = true
+dual_wield = Array[int]([16, 16])
+health = 50
+team = 1
+dead = true
+stop = true
+
+[node name="DW2" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2203.01, 1414.99)
+weapon_settings = ExtResource("11_per8v")
+use_dual_wield = true
+dual_wield = Array[int]([13, 13])
+health = 50
+team = 1
+dead = true
+stop = true
+
+[node name="Bones" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2203.01, 1414.99)
+weapon_settings = ExtResource("6_p180d")
+health = 50
+team = 1
+dead = true
+stop = true
+
+[node name="Bow" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2203.01, 1414.99)
+weapon_settings = ExtResource("11_per8v")
+health = 50
+team = 1
+dead = true
+stop = true
+
+[node name="BloodBow" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2203.01, 1414.99)
+weapon_settings = ExtResource("40_nsujd")
+health = 50
+team = 1
+dead = true
+stop = true
+
+[node name="Mace" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2246, 1022.99)
+weapon_settings = ExtResource("28_djmp0")
+health = 50
+dead = true
+stop = true
+
+[node name="Pipe" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2246, 1022.99)
+weapon_settings = ExtResource("44_vebv7")
+health = 50
+dead = true
+stop = true
+
+[node name="Unarmed" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2246, 1022.99)
+weapon_settings = SubResource("Resource_hdidk")
+health = 50
+dead = true
+stop = true
+
+[node name="Sandevistan" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2246, 1022.99)
+weapon_settings = SubResource("Resource_pegen")
+health = 50
+dead = true
+stop = true
+
+[node name="Gems" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2246, 1022.99)
+weapon_settings = ExtResource("34_g7d4c")
+health = 50
+dead = true
+stop = true
+
+[node name="Sword" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2370.47, 297.991)
+weapon_settings = ExtResource("23_76u2v")
+health = 50
+dead = true
+stop = true
+
+[node name="BloodSword" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2370.47, 297.991)
+weapon_settings = ExtResource("50_1t3vj")
+health = 50
+dead = true
+stop = true
+
+[node name="Coin" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2203.01, 1414.99)
+weapon_settings = ExtResource("70_c0wg0")
+health = 50
+team = 1
+dead = true
+stop = true
+
+[node name="Pickaxe" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2370.47, 297.991)
+weapon_settings = ExtResource("80_xxfh1")
+health = 50
+dead = true
+stop = true
+
+[node name="Perfect" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2370.47, 297.991)
+weapon_settings = ExtResource("49_1t3vj")
+health = 50
+dead = true
+stop = true
+
+[node name="Qiang" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2669, 374.99)
+weapon_settings = ExtResource("22_ee1k8")
+health = 75
+stop = true
+
+[node name="Baton" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2370.47, 297.991)
+weapon_settings = ExtResource("13_cr7au")
+health = 50
+dead = true
+stop = true
+
+[node name="Katana" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2355, 666.991)
+weapon_settings = ExtResource("22_rcyw2")
+health = 50
+team = 1
+dead = true
+stop = true
+
+[node name="Dagger" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2355, 666.991)
+weapon_settings = ExtResource("58_870hc")
+health = 50
+team = 1
+dead = true
+stop = true
+
+[node name="Kicks" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2355, 666.991)
+weapon_settings = ExtResource("56_nfmlc")
+health = 50
+team = 1
+dead = true
+stop = true
+
+[node name="Vortex" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2355, 666.991)
+weapon_settings = ExtResource("45_k7ahf")
+health = 50
+team = 1
+dead = true
+stop = true
+
+[node name="Revolver" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2203.01, 1414.99)
+weapon_settings = ExtResource("68_xxfh1")
+team = 1
+dead = true
+stop = true
+
+[node name="Thunder" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2953, 826.989)
+weapon_settings = ExtResource("23_n5n48")
+health = 75
+stop = true
+
+[node name="GlitchKnife" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2355, 666.991)
+weapon_settings = ExtResource("94_p180d")
+health = 50
+team = 1
+dead = true
+stop = true
+
+[node name="Plume" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2034, 710.993)
+weapon_settings = ExtResource("43_qtgyu")
+health = 50
+team = 1
+dead = true
+stop = true
+
+[node name="Traps" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(1991, 1197.99)
+weapon_settings = ExtResource("60_ux8nf")
+stop = true
+
+[node name="Reaper" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(1991, 1197.99)
+weapon_settings = ExtResource("27_djmp0")
+stop = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_p1oyv")
+
+[node name="PatchNote" type="Control" parent="."]
+process_mode = 4
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.000383719
+offset_top = 51.0
+offset_right = 0.000383719
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="RichTextLabel" parent="PatchNote"]
+custom_minimum_size = Vector2(1080, 0)
+layout_mode = 1
+offset_left = 0.00031662
+offset_top = 119.0
+offset_right = 1080.0
+offset_bottom = 336.0
+theme_override_constants/outline_size = 40
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 150
+bbcode_enabled = true
+text = "[wave amp=40.0 freq=2.0 connected=1][color=red]Hydra[/color] [color=Azure]Time Attack[/color][/wave] "
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+justification_flags = 0
+
+[node name="Line" type="RichTextLabel" parent="PatchNote"]
+clip_contents = false
+custom_minimum_size = Vector2(980, 100)
+layout_mode = 2
+offset_left = 47.0042
+offset_top = 1194.0
+offset_right = 1027.0
+offset_bottom = 2347.0
+size_flags_horizontal = 4
+theme_override_constants/outline_size = 40
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 80
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+autowrap_mode = 2
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+justification_flags = 0
+
+[node name="Teams" type="Control" parent="PatchNote/Line"]
+anchors_preset = 0
+offset_left = 45.9955
+offset_top = -1195.0
+offset_right = 85.9955
+offset_bottom = -1155.0
+
+[node name="TeamLine" type="Control" parent="PatchNote/Line/Teams"]
+anchors_preset = 0
+offset_left = 45.0
+offset_top = 665.0
+offset_right = 85.0
+offset_bottom = 705.0
+scale = Vector2(0.8, 0.8)
+
+[node name="RankingLine" type="MarginContainer" parent="PatchNote/Line/Teams/TeamLine"]
+custom_minimum_size = Vector2(1080, 123)
+layout_mode = 0
+offset_left = -46.0
+offset_top = 0.00012207
+offset_right = 1174.0
+offset_bottom = 123.0
+theme_override_constants/margin_left = 55
+theme_override_constants/margin_right = 40
+
+[node name="MainContainer" type="HBoxContainer" parent="PatchNote/Line/Teams/TeamLine/RankingLine"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TeamName" type="RichTextLabel" parent="PatchNote/Line/Teams/TeamLine/RankingLine/MainContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_offset_x = 5
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[wave amp=40.0 freq=2.0 connected=1][color=%s]TEAM[/color] [color=%s]%s[/color] [/wave]"
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+script = ExtResource("13_vvmd2")
+
+[node name="TeamMembers" type="RichTextLabel" parent="PatchNote/Line/Teams/TeamLine/RankingLine/MainContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(550, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_offset_x = 5
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[color=%s]%s[/color] ❖ [color=%s]%s[/color]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("13_vvmd2")
+
+[node name="TeamSprites" type="HBoxContainer" parent="PatchNote/Line/Teams/TeamLine/RankingLine/MainContainer"]
+layout_mode = 2
+
+[node name="Sprite1" type="TextureRect" parent="PatchNote/Line/Teams/TeamLine/RankingLine/MainContainer/TeamSprites"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+stretch_mode = 5
+
+[node name="Sprite2" type="TextureRect" parent="PatchNote/Line/Teams/TeamLine/RankingLine/MainContainer/TeamSprites"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+stretch_mode = 5
+
+[node name="TeamLine2" type="Control" parent="PatchNote/Line/Teams"]
+anchors_preset = 0
+offset_left = 45.0
+offset_top = 745.0
+offset_right = 85.0
+offset_bottom = 785.0
+scale = Vector2(0.8, 0.8)
+script = ExtResource("95_oi3sm")
+
+[node name="RankingLine" type="MarginContainer" parent="PatchNote/Line/Teams/TeamLine2"]
+custom_minimum_size = Vector2(1080, 123)
+layout_mode = 0
+offset_left = -46.0
+offset_top = 0.00012207
+offset_right = 1174.0
+offset_bottom = 123.0
+theme_override_constants/margin_left = 55
+theme_override_constants/margin_right = 40
+
+[node name="MainContainer" type="HBoxContainer" parent="PatchNote/Line/Teams/TeamLine2/RankingLine"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TeamName" type="RichTextLabel" parent="PatchNote/Line/Teams/TeamLine2/RankingLine/MainContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_offset_x = 5
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[wave amp=40.0 freq=2.0 connected=1][color=%s]TEAM[/color] [color=%s]%s[/color] [/wave]"
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+script = ExtResource("13_vvmd2")
+
+[node name="TeamMembers" type="RichTextLabel" parent="PatchNote/Line/Teams/TeamLine2/RankingLine/MainContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(550, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_offset_x = 5
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[color=%s]%s[/color] ❖ [color=%s]%s[/color]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("13_vvmd2")
+
+[node name="TeamSprites" type="HBoxContainer" parent="PatchNote/Line/Teams/TeamLine2/RankingLine/MainContainer"]
+layout_mode = 2
+
+[node name="Sprite1" type="TextureRect" parent="PatchNote/Line/Teams/TeamLine2/RankingLine/MainContainer/TeamSprites"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+stretch_mode = 5
+
+[node name="Sprite2" type="TextureRect" parent="PatchNote/Line/Teams/TeamLine2/RankingLine/MainContainer/TeamSprites"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+stretch_mode = 5
+
+[node name="TeamLine3" type="Control" parent="PatchNote/Line/Teams"]
+anchors_preset = 0
+offset_left = 45.0
+offset_top = 825.0
+offset_right = 85.0
+offset_bottom = 865.0
+scale = Vector2(0.8, 0.8)
+script = ExtResource("95_oi3sm")
+
+[node name="RankingLine" type="MarginContainer" parent="PatchNote/Line/Teams/TeamLine3"]
+custom_minimum_size = Vector2(1080, 123)
+layout_mode = 0
+offset_left = -46.0
+offset_top = 0.00012207
+offset_right = 1174.0
+offset_bottom = 123.0
+theme_override_constants/margin_left = 55
+theme_override_constants/margin_right = 40
+
+[node name="MainContainer" type="HBoxContainer" parent="PatchNote/Line/Teams/TeamLine3/RankingLine"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TeamName" type="RichTextLabel" parent="PatchNote/Line/Teams/TeamLine3/RankingLine/MainContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_offset_x = 5
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[wave amp=40.0 freq=2.0 connected=1][color=%s]TEAM[/color] [color=%s]%s[/color] [/wave]"
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+script = ExtResource("13_vvmd2")
+
+[node name="TeamMembers" type="RichTextLabel" parent="PatchNote/Line/Teams/TeamLine3/RankingLine/MainContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(550, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_offset_x = 5
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[color=%s]%s[/color] ❖ [color=%s]%s[/color]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("13_vvmd2")
+
+[node name="TeamSprites" type="HBoxContainer" parent="PatchNote/Line/Teams/TeamLine3/RankingLine/MainContainer"]
+layout_mode = 2
+
+[node name="Sprite1" type="TextureRect" parent="PatchNote/Line/Teams/TeamLine3/RankingLine/MainContainer/TeamSprites"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+stretch_mode = 5
+
+[node name="Sprite2" type="TextureRect" parent="PatchNote/Line/Teams/TeamLine3/RankingLine/MainContainer/TeamSprites"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+stretch_mode = 5
+
+[node name="TeamLine4" type="Control" parent="PatchNote/Line/Teams"]
+anchors_preset = 0
+offset_left = 45.0
+offset_top = 905.0
+offset_right = 85.0
+offset_bottom = 945.0
+scale = Vector2(0.8, 0.8)
+script = ExtResource("95_oi3sm")
+
+[node name="RankingLine" type="MarginContainer" parent="PatchNote/Line/Teams/TeamLine4"]
+custom_minimum_size = Vector2(1080, 123)
+layout_mode = 0
+offset_left = -46.0
+offset_top = 0.00012207
+offset_right = 1174.0
+offset_bottom = 123.0
+theme_override_constants/margin_left = 55
+theme_override_constants/margin_right = 40
+
+[node name="MainContainer" type="HBoxContainer" parent="PatchNote/Line/Teams/TeamLine4/RankingLine"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TeamName" type="RichTextLabel" parent="PatchNote/Line/Teams/TeamLine4/RankingLine/MainContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_offset_x = 5
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[wave amp=40.0 freq=2.0 connected=1][color=%s]TEAM[/color] [color=%s]%s[/color] [/wave]"
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+script = ExtResource("13_vvmd2")
+
+[node name="TeamMembers" type="RichTextLabel" parent="PatchNote/Line/Teams/TeamLine4/RankingLine/MainContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(550, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_offset_x = 5
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[color=%s]%s[/color] ❖ [color=%s]%s[/color]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("13_vvmd2")
+
+[node name="TeamSprites" type="HBoxContainer" parent="PatchNote/Line/Teams/TeamLine4/RankingLine/MainContainer"]
+layout_mode = 2
+
+[node name="Sprite1" type="TextureRect" parent="PatchNote/Line/Teams/TeamLine4/RankingLine/MainContainer/TeamSprites"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+stretch_mode = 5
+
+[node name="Sprite2" type="TextureRect" parent="PatchNote/Line/Teams/TeamLine4/RankingLine/MainContainer/TeamSprites"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+stretch_mode = 5
+
+[node name="TeamLine5" type="Control" parent="PatchNote/Line/Teams"]
+anchors_preset = 0
+offset_left = 45.0
+offset_top = 985.0
+offset_right = 85.0
+offset_bottom = 1025.0
+scale = Vector2(0.8, 0.8)
+script = ExtResource("95_oi3sm")
+
+[node name="RankingLine" type="MarginContainer" parent="PatchNote/Line/Teams/TeamLine5"]
+custom_minimum_size = Vector2(1080, 123)
+layout_mode = 0
+offset_left = -46.0
+offset_top = 0.00012207
+offset_right = 1174.0
+offset_bottom = 123.0
+theme_override_constants/margin_left = 55
+theme_override_constants/margin_right = 40
+
+[node name="MainContainer" type="HBoxContainer" parent="PatchNote/Line/Teams/TeamLine5/RankingLine"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TeamName" type="RichTextLabel" parent="PatchNote/Line/Teams/TeamLine5/RankingLine/MainContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_offset_x = 5
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[wave amp=40.0 freq=2.0 connected=1][color=%s]TEAM[/color] [color=%s]%s[/color] [/wave]"
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+script = ExtResource("13_vvmd2")
+
+[node name="TeamMembers" type="RichTextLabel" parent="PatchNote/Line/Teams/TeamLine5/RankingLine/MainContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(550, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_offset_x = 5
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[color=%s]%s[/color] ❖ [color=%s]%s[/color]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("13_vvmd2")
+
+[node name="TeamSprites" type="HBoxContainer" parent="PatchNote/Line/Teams/TeamLine5/RankingLine/MainContainer"]
+layout_mode = 2
+
+[node name="Sprite1" type="TextureRect" parent="PatchNote/Line/Teams/TeamLine5/RankingLine/MainContainer/TeamSprites"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+stretch_mode = 5
+
+[node name="Sprite2" type="TextureRect" parent="PatchNote/Line/Teams/TeamLine5/RankingLine/MainContainer/TeamSprites"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+stretch_mode = 5
+
+[node name="TeamLine6" type="Control" parent="PatchNote/Line/Teams"]
+anchors_preset = 0
+offset_left = 45.0
+offset_top = 1065.0
+offset_right = 85.0
+offset_bottom = 1105.0
+scale = Vector2(0.8, 0.8)
+script = ExtResource("95_oi3sm")
+
+[node name="RankingLine" type="MarginContainer" parent="PatchNote/Line/Teams/TeamLine6"]
+custom_minimum_size = Vector2(1080, 123)
+layout_mode = 0
+offset_left = -46.0
+offset_top = 0.00012207
+offset_right = 1174.0
+offset_bottom = 123.0
+theme_override_constants/margin_left = 55
+theme_override_constants/margin_right = 40
+
+[node name="MainContainer" type="HBoxContainer" parent="PatchNote/Line/Teams/TeamLine6/RankingLine"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TeamName" type="RichTextLabel" parent="PatchNote/Line/Teams/TeamLine6/RankingLine/MainContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_offset_x = 5
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[wave amp=40.0 freq=2.0 connected=1][color=%s]TEAM[/color] [color=%s]%s[/color] [/wave]"
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+script = ExtResource("13_vvmd2")
+
+[node name="TeamMembers" type="RichTextLabel" parent="PatchNote/Line/Teams/TeamLine6/RankingLine/MainContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(550, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_offset_x = 5
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[color=%s]%s[/color] ❖ [color=%s]%s[/color]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("13_vvmd2")
+
+[node name="TeamSprites" type="HBoxContainer" parent="PatchNote/Line/Teams/TeamLine6/RankingLine/MainContainer"]
+layout_mode = 2
+
+[node name="Sprite1" type="TextureRect" parent="PatchNote/Line/Teams/TeamLine6/RankingLine/MainContainer/TeamSprites"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+stretch_mode = 5
+
+[node name="Sprite2" type="TextureRect" parent="PatchNote/Line/Teams/TeamLine6/RankingLine/MainContainer/TeamSprites"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+stretch_mode = 5
+
+[node name="TeamLine7" type="Control" parent="PatchNote/Line/Teams"]
+anchors_preset = 0
+offset_left = 45.0
+offset_top = 1145.0
+offset_right = 85.0
+offset_bottom = 1185.0
+scale = Vector2(0.8, 0.8)
+script = ExtResource("95_oi3sm")
+
+[node name="RankingLine" type="MarginContainer" parent="PatchNote/Line/Teams/TeamLine7"]
+custom_minimum_size = Vector2(1080, 123)
+layout_mode = 0
+offset_left = -46.0
+offset_top = 0.00012207
+offset_right = 1174.0
+offset_bottom = 123.0
+theme_override_constants/margin_left = 55
+theme_override_constants/margin_right = 40
+
+[node name="MainContainer" type="HBoxContainer" parent="PatchNote/Line/Teams/TeamLine7/RankingLine"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TeamName" type="RichTextLabel" parent="PatchNote/Line/Teams/TeamLine7/RankingLine/MainContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_offset_x = 5
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[wave amp=40.0 freq=2.0 connected=1][color=%s]TEAM[/color] [color=%s]%s[/color] [/wave]"
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+script = ExtResource("13_vvmd2")
+
+[node name="TeamMembers" type="RichTextLabel" parent="PatchNote/Line/Teams/TeamLine7/RankingLine/MainContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(550, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_offset_x = 5
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[color=%s]%s[/color] ❖ [color=%s]%s[/color]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("13_vvmd2")
+
+[node name="TeamSprites" type="HBoxContainer" parent="PatchNote/Line/Teams/TeamLine7/RankingLine/MainContainer"]
+layout_mode = 2
+
+[node name="Sprite1" type="TextureRect" parent="PatchNote/Line/Teams/TeamLine7/RankingLine/MainContainer/TeamSprites"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+stretch_mode = 5
+
+[node name="Sprite2" type="TextureRect" parent="PatchNote/Line/Teams/TeamLine7/RankingLine/MainContainer/TeamSprites"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+stretch_mode = 5
+
+[node name="TeamLine8" type="Control" parent="PatchNote/Line/Teams"]
+anchors_preset = 0
+offset_left = 45.0
+offset_top = 1225.0
+offset_right = 85.0
+offset_bottom = 1265.0
+scale = Vector2(0.8, 0.8)
+script = ExtResource("95_oi3sm")
+
+[node name="RankingLine" type="MarginContainer" parent="PatchNote/Line/Teams/TeamLine8"]
+custom_minimum_size = Vector2(1080, 123)
+layout_mode = 0
+offset_left = -46.0
+offset_top = 0.00012207
+offset_right = 1174.0
+offset_bottom = 123.0
+theme_override_constants/margin_left = 55
+theme_override_constants/margin_right = 40
+
+[node name="MainContainer" type="HBoxContainer" parent="PatchNote/Line/Teams/TeamLine8/RankingLine"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TeamName" type="RichTextLabel" parent="PatchNote/Line/Teams/TeamLine8/RankingLine/MainContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_offset_x = 5
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[wave amp=40.0 freq=2.0 connected=1][color=%s]TEAM[/color] [color=%s]%s[/color] [/wave]"
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+script = ExtResource("13_vvmd2")
+
+[node name="TeamMembers" type="RichTextLabel" parent="PatchNote/Line/Teams/TeamLine8/RankingLine/MainContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(550, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_offset_x = 5
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[color=%s]%s[/color] ❖ [color=%s]%s[/color]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("13_vvmd2")
+
+[node name="TeamSprites" type="HBoxContainer" parent="PatchNote/Line/Teams/TeamLine8/RankingLine/MainContainer"]
+layout_mode = 2
+
+[node name="Sprite1" type="TextureRect" parent="PatchNote/Line/Teams/TeamLine8/RankingLine/MainContainer/TeamSprites"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+stretch_mode = 5
+
+[node name="Sprite2" type="TextureRect" parent="PatchNote/Line/Teams/TeamLine8/RankingLine/MainContainer/TeamSprites"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+stretch_mode = 5
+
+[node name="TeamLine9" type="Control" parent="PatchNote/Line/Teams"]
+anchors_preset = 0
+offset_left = 45.0
+offset_top = 1305.0
+offset_right = 85.0
+offset_bottom = 1345.0
+scale = Vector2(0.8, 0.8)
+script = ExtResource("95_oi3sm")
+
+[node name="RankingLine" type="MarginContainer" parent="PatchNote/Line/Teams/TeamLine9"]
+custom_minimum_size = Vector2(1080, 123)
+layout_mode = 0
+offset_left = -46.0
+offset_top = 0.00012207
+offset_right = 1174.0
+offset_bottom = 123.0
+theme_override_constants/margin_left = 55
+theme_override_constants/margin_right = 40
+
+[node name="MainContainer" type="HBoxContainer" parent="PatchNote/Line/Teams/TeamLine9/RankingLine"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TeamName" type="RichTextLabel" parent="PatchNote/Line/Teams/TeamLine9/RankingLine/MainContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_offset_x = 5
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[wave amp=40.0 freq=2.0 connected=1][color=%s]TEAM[/color] [color=%s]%s[/color] [/wave]"
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+script = ExtResource("13_vvmd2")
+
+[node name="TeamMembers" type="RichTextLabel" parent="PatchNote/Line/Teams/TeamLine9/RankingLine/MainContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(550, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_offset_x = 5
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[color=%s]%s[/color] ❖ [color=%s]%s[/color]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("13_vvmd2")
+
+[node name="TeamSprites" type="HBoxContainer" parent="PatchNote/Line/Teams/TeamLine9/RankingLine/MainContainer"]
+layout_mode = 2
+
+[node name="Sprite1" type="TextureRect" parent="PatchNote/Line/Teams/TeamLine9/RankingLine/MainContainer/TeamSprites"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+stretch_mode = 5
+
+[node name="Sprite2" type="TextureRect" parent="PatchNote/Line/Teams/TeamLine9/RankingLine/MainContainer/TeamSprites"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+stretch_mode = 5
+
+[node name="TeamLine10" type="Control" parent="PatchNote/Line/Teams"]
+anchors_preset = 0
+offset_left = 45.0
+offset_top = 1385.0
+offset_right = 85.0
+offset_bottom = 1425.0
+scale = Vector2(0.8, 0.8)
+script = ExtResource("95_oi3sm")
+
+[node name="RankingLine" type="MarginContainer" parent="PatchNote/Line/Teams/TeamLine10"]
+custom_minimum_size = Vector2(1080, 123)
+layout_mode = 0
+offset_left = -46.0
+offset_top = 0.00012207
+offset_right = 1174.0
+offset_bottom = 123.0
+theme_override_constants/margin_left = 55
+theme_override_constants/margin_right = 40
+
+[node name="MainContainer" type="HBoxContainer" parent="PatchNote/Line/Teams/TeamLine10/RankingLine"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TeamName" type="RichTextLabel" parent="PatchNote/Line/Teams/TeamLine10/RankingLine/MainContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_offset_x = 5
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[wave amp=40.0 freq=2.0 connected=1][color=%s]TEAM[/color] [color=%s]%s[/color] [/wave]"
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+script = ExtResource("13_vvmd2")
+
+[node name="TeamMembers" type="RichTextLabel" parent="PatchNote/Line/Teams/TeamLine10/RankingLine/MainContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(550, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_offset_x = 5
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[color=%s]%s[/color] ❖ [color=%s]%s[/color]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("13_vvmd2")
+
+[node name="TeamSprites" type="HBoxContainer" parent="PatchNote/Line/Teams/TeamLine10/RankingLine/MainContainer"]
+layout_mode = 2
+
+[node name="Sprite1" type="TextureRect" parent="PatchNote/Line/Teams/TeamLine10/RankingLine/MainContainer/TeamSprites"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+stretch_mode = 5
+
+[node name="Sprite2" type="TextureRect" parent="PatchNote/Line/Teams/TeamLine10/RankingLine/MainContainer/TeamSprites"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+stretch_mode = 5
+
+[node name="TeamLine11" type="Control" parent="PatchNote/Line/Teams"]
+anchors_preset = 0
+offset_left = 45.0
+offset_top = 1465.0
+offset_right = 85.0
+offset_bottom = 1505.0
+scale = Vector2(0.8, 0.8)
+script = ExtResource("95_oi3sm")
+
+[node name="RankingLine" type="MarginContainer" parent="PatchNote/Line/Teams/TeamLine11"]
+custom_minimum_size = Vector2(1080, 123)
+layout_mode = 0
+offset_left = -46.0
+offset_top = 0.00012207
+offset_right = 1174.0
+offset_bottom = 123.0
+theme_override_constants/margin_left = 55
+theme_override_constants/margin_right = 40
+
+[node name="MainContainer" type="HBoxContainer" parent="PatchNote/Line/Teams/TeamLine11/RankingLine"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TeamName" type="RichTextLabel" parent="PatchNote/Line/Teams/TeamLine11/RankingLine/MainContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_offset_x = 5
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[wave amp=40.0 freq=2.0 connected=1][color=%s]TEAM[/color] [color=%s]%s[/color] [/wave]"
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+script = ExtResource("13_vvmd2")
+
+[node name="TeamMembers" type="RichTextLabel" parent="PatchNote/Line/Teams/TeamLine11/RankingLine/MainContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(550, 0)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 5
+theme_override_constants/shadow_offset_x = 5
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[color=%s]%s[/color] ❖ [color=%s]%s[/color]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("13_vvmd2")
+
+[node name="TeamSprites" type="HBoxContainer" parent="PatchNote/Line/Teams/TeamLine11/RankingLine/MainContainer"]
+layout_mode = 2
+
+[node name="Sprite1" type="TextureRect" parent="PatchNote/Line/Teams/TeamLine11/RankingLine/MainContainer/TeamSprites"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+stretch_mode = 5
+
+[node name="Sprite2" type="TextureRect" parent="PatchNote/Line/Teams/TeamLine11/RankingLine/MainContainer/TeamSprites"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+stretch_mode = 5
+
+[node name="Hydra" type="Control" parent="PatchNote/Line"]
+anchors_preset = 0
+offset_left = -0.000175476
+offset_top = -49.0
+offset_right = 39.9998
+offset_bottom = -9.0
+
+[node name="BattleBall" type="Node2D" parent="PatchNote/Line/Hydra"]
+modulate = Color(0.981928, 0.981928, 0.981928, 1)
+position = Vector2(487.997, -707.002)
+
+[node name="Root" type="CollisionShape2D" parent="PatchNote/Line/Hydra/BattleBall"]
+scale = Vector2(0.15, 0.15)
+shape = SubResource("CircleShape2D_j21cw")
+debug_color = Color(0.7, 0, 0, 0)
+
+[node name="WeaponSlot" type="Node2D" parent="PatchNote/Line/Hydra/BattleBall/Root"]
+scale = Vector2(12, 12)
+
+[node name="Sprite2D" type="Sprite2D" parent="PatchNote/Line/Hydra/BattleBall/Root/WeaponSlot"]
+self_modulate = Color(0.820313, 0.483856, 0.483856, 1)
+texture_filter = 1
+position = Vector2(1.66685, 46.1111)
+texture = ExtResource("98_oi3sm")
+
+[node name="Sprite2D2" type="Sprite2D" parent="PatchNote/Line/Hydra/BattleBall/Root/WeaponSlot"]
+self_modulate = Color(0.350708, 0.863281, 0.528401, 1)
+texture_filter = 1
+position = Vector2(42.7779, 24.9999)
+rotation = -0.785398
+texture = ExtResource("98_oi3sm")
+
+[node name="Sprite2D3" type="Sprite2D" parent="PatchNote/Line/Hydra/BattleBall/Root/WeaponSlot"]
+self_modulate = Color(0.69375, 0.422073, 0.777344, 1)
+texture_filter = 1
+position = Vector2(-37.2221, 25.0001)
+rotation = 0.785398
+texture = ExtResource("98_oi3sm")
+
+[node name="CircleBG" type="Sprite2D" parent="PatchNote/Line/Hydra/BattleBall/Root"]
+modulate = Color(0, 0, 0, 1)
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("26_habdg")
+
+[node name="Circle" type="Sprite2D" parent="PatchNote/Line/Hydra/BattleBall/Root"]
+self_modulate = Color(0.8, 0.258824, 0.368627, 1)
+material = SubResource("ShaderMaterial_habdg")
+texture = ExtResource("26_habdg")
+
+[node name="HP_Text" type="RichTextLabel" parent="PatchNote/Line/Hydra/BattleBall/Root"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -190.0
+offset_right = 350.0
+offset_bottom = 190.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 450
+text = "999"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Sprites" type="Control" parent="PatchNote/Line"]
+anchors_preset = 0
+offset_left = 65.9963
+offset_top = -1007.0
+offset_right = 105.996
+offset_bottom = -967.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PatchNote/Line/Sprites"]
+layout_mode = 0
+offset_left = 37.0007
+offset_top = 207.0
+offset_right = 305.001
+offset_bottom = 407.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PatchNote/Line/Sprites/VBoxContainer"]
+layout_mode = 2
+
+[node name="Sprite1" type="TextureRect" parent="PatchNote/Line/Sprites/VBoxContainer/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("100_kek2w")
+stretch_mode = 5
+
+[node name="Sprite2" type="TextureRect" parent="PatchNote/Line/Sprites/VBoxContainer/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = SubResource("CompressedTexture2D_u6wsj")
+stretch_mode = 5
+
+[node name="Sprite3" type="TextureRect" parent="PatchNote/Line/Sprites/VBoxContainer/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("101_bnc2j")
+stretch_mode = 5
+flip_h = true
+
+[node name="Sprite4" type="TextureRect" parent="PatchNote/Line/Sprites/VBoxContainer/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("102_3w0lg")
+stretch_mode = 5
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PatchNote/Line/Sprites/VBoxContainer"]
+layout_mode = 2
+
+[node name="Sprite1" type="TextureRect" parent="PatchNote/Line/Sprites/VBoxContainer/HBoxContainer2"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("35_k7ahf")
+stretch_mode = 5
+
+[node name="Sprite2" type="TextureRect" parent="PatchNote/Line/Sprites/VBoxContainer/HBoxContainer2"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("38_sy8k4")
+stretch_mode = 5
+
+[node name="Sprite3" type="TextureRect" parent="PatchNote/Line/Sprites/VBoxContainer/HBoxContainer2"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("103_qctyh")
+stretch_mode = 5
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="PatchNote/Line/Sprites/VBoxContainer"]
+layout_mode = 2
+
+[node name="Sprite1" type="TextureRect" parent="PatchNote/Line/Sprites/VBoxContainer/HBoxContainer3"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("73_k7ahf")
+stretch_mode = 5
+
+[node name="Sprite2" type="TextureRect" parent="PatchNote/Line/Sprites/VBoxContainer/HBoxContainer3"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("105_42wbm")
+stretch_mode = 5
+
+[node name="Sprite3" type="TextureRect" parent="PatchNote/Line/Sprites/VBoxContainer/HBoxContainer3"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("99_c0wg0")
+stretch_mode = 5
+
+[node name="Sprite4" type="TextureRect" parent="PatchNote/Line/Sprites/VBoxContainer/HBoxContainer3"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("107_jhnfg")
+stretch_mode = 5
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PatchNote/Line/Sprites"]
+layout_mode = 0
+offset_left = 808.001
+offset_top = 206.997
+offset_right = 1076.0
+offset_bottom = 406.997
+scale = Vector2(-1, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PatchNote/Line/Sprites/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Sprite1" type="TextureRect" parent="PatchNote/Line/Sprites/VBoxContainer2/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("108_os224")
+stretch_mode = 5
+
+[node name="Sprite2" type="TextureRect" parent="PatchNote/Line/Sprites/VBoxContainer2/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("109_vs7vu")
+stretch_mode = 5
+
+[node name="Sprite3" type="TextureRect" parent="PatchNote/Line/Sprites/VBoxContainer2/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("110_cr7au")
+stretch_mode = 5
+
+[node name="Sprite4" type="TextureRect" parent="PatchNote/Line/Sprites/VBoxContainer2/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("111_ajexl")
+stretch_mode = 5
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PatchNote/Line/Sprites/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Sprite1" type="TextureRect" parent="PatchNote/Line/Sprites/VBoxContainer2/HBoxContainer2"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("112_tifgg")
+stretch_mode = 5
+flip_h = true
+
+[node name="Sprite2" type="TextureRect" parent="PatchNote/Line/Sprites/VBoxContainer2/HBoxContainer2"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("76_sy8k4")
+stretch_mode = 5
+
+[node name="Sprite3" type="TextureRect" parent="PatchNote/Line/Sprites/VBoxContainer2/HBoxContainer2"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("114_a4n88")
+stretch_mode = 5
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="PatchNote/Line/Sprites/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Sprite1" type="TextureRect" parent="PatchNote/Line/Sprites/VBoxContainer2/HBoxContainer3"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("115_7ndj3")
+stretch_mode = 5
+
+[node name="Sprite2" type="TextureRect" parent="PatchNote/Line/Sprites/VBoxContainer2/HBoxContainer3"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("12_hvjex")
+stretch_mode = 5
+
+[node name="Sprite3" type="TextureRect" parent="PatchNote/Line/Sprites/VBoxContainer2/HBoxContainer3"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("116_p180d")
+stretch_mode = 5
+flip_h = true
+
+[node name="Sprite4" type="TextureRect" parent="PatchNote/Line/Sprites/VBoxContainer2/HBoxContainer3"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("74_k7ahf")
+stretch_mode = 5
+
+[node name="Line2" type="RichTextLabel" parent="PatchNote"]
+modulate = Color(1, 1, 1, 0)
+clip_contents = false
+custom_minimum_size = Vector2(980, 100)
+layout_mode = 2
+offset_left = 55.9998
+offset_top = 252.0
+offset_right = 1036.0
+offset_bottom = 1536.0
+size_flags_horizontal = 4
+theme_override_constants/outline_size = 20
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 80
+bbcode_enabled = true
+text = "[color=GOLD] ❖  RULES  ❖ [/color]
+
+- Only the [color=light_salmon]7 fastest Teams[/color]
+will be on the leaderboard
+
+- No lose : Every Team will
+[color=firebrick]beat[/color] the Hydra"
+fit_content = true
+scroll_active = false
+autowrap_mode = 2
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+justification_flags = 0
+
+[node name="Line3" type="RichTextLabel" parent="PatchNote"]
+modulate = Color(1, 1, 1, 0)
+clip_contents = false
+custom_minimum_size = Vector2(980, 100)
+layout_mode = 2
+offset_left = 49.9998
+offset_top = 79.9998
+offset_right = 1030.0
+offset_bottom = 1646.0
+size_flags_horizontal = 4
+theme_override_constants/outline_size = 20
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 80
+bbcode_enabled = true
+text = "[color=GOLD] ❖  [/color]
+
+WHICH TEAM DO YOU PUT 
+YOUR MONEY ON ?  
+
+[color=GOLD] ❖  [/color]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 2
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+justification_flags = 0
+
+[node name="Cameo" type="Node2D" parent="." node_paths=PackedStringArray("ball", "weapon_root")]
+process_mode = 4
+visible = false
+position = Vector2(-337.994, 1667)
+scale = Vector2(0.7, 0.7)
+script = ExtResource("31_qas6s")
+speed = 50.0
+rot_speed = 0.4
+ball = NodePath("BattleBall")
+weapon_root = NodePath("BattleBall/Root/WeaponSlot")
+
+[node name="BattleBall" type="Node2D" parent="Cameo"]
+modulate = Color(0.981928, 0.981928, 0.981928, 1)
+
+[node name="Text" type="RichTextLabel" parent="Cameo/BattleBall"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -984.286
+offset_top = -108.498
+offset_right = -104.286
+offset_bottom = 108.502
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/outline_size = 40
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 80
+bbcode_enabled = true
+text = "[wave amp=20.0 freq=3 connected=1] New ball coming soon 『[color=#ff7f00] Coin [/color][/wave]』"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+justification_flags = 0
+
+[node name="Root" type="CollisionShape2D" parent="Cameo/BattleBall"]
+scale = Vector2(0.15, 0.15)
+shape = SubResource("CircleShape2D_j21cw")
+debug_color = Color(0.7, 0, 0, 0)
+
+[node name="WeaponSlot" type="Node2D" parent="Cameo/BattleBall/Root"]
+scale = Vector2(12, 12)
+
+[node name="Sprite2D" type="Sprite2D" parent="Cameo/BattleBall/Root/WeaponSlot"]
+texture_filter = 1
+position = Vector2(40.4762, -0.792809)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("99_c0wg0")
+
+[node name="CircleBG" type="Sprite2D" parent="Cameo/BattleBall/Root"]
+modulate = Color(0, 0, 0, 1)
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("26_habdg")
+
+[node name="Circle" type="Sprite2D" parent="Cameo/BattleBall/Root"]
+self_modulate = Color(1, 0.498039, 0, 1)
+material = SubResource("ShaderMaterial_habdg")
+texture = ExtResource("26_habdg")
+
+[node name="HP_Text" type="RichTextLabel" parent="Cameo/BattleBall/Root"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -190.0
+offset_right = 350.0
+offset_bottom = 190.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 450
+text = "100"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="NewChallenger" type="Control" parent="."]
+process_mode = 4
+visible = false
+custom_minimum_size = Vector2(1080, 1920)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1080.0
+offset_bottom = 1920.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="NewChallenger"]
+libraries = {
+&"": SubResource("AnimationLibrary_6y6hv")
+}
+script = ExtResource("34_ee1k8")
+
+[node name="BG" type="Control" parent="NewChallenger"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BGTop" type="ColorRect" parent="NewChallenger/BG"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -540.0
+offset_top = -960.0
+offset_right = 540.0
+offset_bottom = -960.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0709534, 0.726563, 0.488514, 1)
+
+[node name="BGBot" type="ColorRect" parent="NewChallenger/BG"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -539.993
+offset_top = 960.0
+offset_right = 540.007
+offset_bottom = 960.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0709534, 0.726563, 0.488514, 1)
+
+[node name="BattleBall" type="Node2D" parent="NewChallenger"]
+modulate = Color(0, 0, 0, 0)
+position = Vector2(540, 960)
+scale = Vector2(2.5, 2.5)
+
+[node name="Root" type="CollisionShape2D" parent="NewChallenger/BattleBall"]
+scale = Vector2(0.15, 0.15)
+shape = SubResource("CircleShape2D_j21cw")
+debug_color = Color(0.7, 0, 0, 0)
+
+[node name="WeaponSlot" type="Node2D" parent="NewChallenger/BattleBall/Root"]
+scale = Vector2(12, 12)
+
+[node name="Sprite2D" type="Sprite2D" parent="NewChallenger/BattleBall/Root/WeaponSlot"]
+texture_filter = 1
+position = Vector2(46.0319, -45.2373)
+texture = ExtResource("36_76u2v")
+
+[node name="CircleBG" type="Sprite2D" parent="NewChallenger/BattleBall/Root"]
+modulate = Color(0, 0, 0, 1)
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("26_habdg")
+
+[node name="Circle" type="Sprite2D" parent="NewChallenger/BattleBall/Root"]
+self_modulate = Color(0.0709534, 0.726563, 0.488514, 1)
+material = SubResource("ShaderMaterial_habdg")
+texture = ExtResource("26_habdg")
+
+[node name="HP_Text" type="RichTextLabel" parent="NewChallenger/BattleBall/Root"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -190.0
+offset_right = 350.0
+offset_bottom = 190.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 450
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Banner" type="Control" parent="NewChallenger"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Top" type="ColorRect" parent="NewChallenger/Banner"]
+custom_minimum_size = Vector2(1080, 10)
+layout_mode = 2
+offset_top = 872.5
+offset_right = 1080.0
+offset_bottom = 882.5
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.976471, 0.248713, 0.105882, 1)
+
+[node name="Middle" type="ColorRect" parent="NewChallenger/Banner"]
+custom_minimum_size = Vector2(1080, 150)
+layout_mode = 2
+offset_top = 887.5
+offset_right = 1080.0
+offset_bottom = 1037.5
+color = Color(0.976471, 0.248713, 0.105882, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="NewChallenger/Banner/Middle"]
+custom_minimum_size = Vector2(1080, 50.53)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Control" type="Control" parent="NewChallenger/Banner/Middle/HBoxContainer"]
+custom_minimum_size = Vector2(450, 0)
+layout_mode = 2
+
+[node name="Text" type="RichTextLabel" parent="NewChallenger/Banner/Middle/HBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -34.5
+offset_bottom = -34.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "NEW CHALLENGER"
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+
+[node name="Text2" type="RichTextLabel" parent="NewChallenger/Banner/Middle/HBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 17.5
+offset_bottom = 17.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 64
+bbcode_enabled = true
+text = "APPROACHING"
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="NewChallenger/Banner/Middle/HBoxContainer"]
+custom_minimum_size = Vector2(110, 110)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Text2" type="RichTextLabel" parent="NewChallenger/Banner/Middle/HBoxContainer/ColorRect"]
+modulate = Color(1, 0.403922, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -11.5
+offset_bottom = 1.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 100
+bbcode_enabled = true
+text = "!"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+
+[node name="Bot" type="ColorRect" parent="NewChallenger/Banner"]
+custom_minimum_size = Vector2(1080, 10)
+layout_mode = 2
+offset_top = 1047.5
+offset_right = 1080.0
+offset_bottom = 1057.5
+color = Color(0.976471, 0.248713, 0.105882, 1)
+
+[node name="Text" type="RichTextLabel" parent="NewChallenger"]
+modulate = Color(0.0709534, 0.726563, 0.488514, 1)
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 1040.0
+offset_bottom = 1244.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/outline_size = 40
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 150
+bbcode_enabled = true
+text = "[wave amp=100.0 freq=3 connected=1] 『 QIANG 』[/wave]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+justification_flags = 0
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 739.0
+offset_right = 40.0
+offset_bottom = 779.0
+
+[node name="Requests" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Request" type="TextureRect" parent="Requests"]
+material = SubResource("ShaderMaterial_nfmlc")
+layout_mode = 0
+offset_left = 115.003
+offset_top = 734.0
+offset_right = 3895.0
+offset_bottom = 2408.0
+rotation = 0.191584
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("126_y8j1h")
+
+[node name="RealRequest" type="TextureRect" parent="Requests/Request"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.00104
+offset_top = -36.335
+offset_right = -2.00073
+offset_bottom = -36.335
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.99, 0.99)
+texture = ExtResource("126_y8j1h")
+
+[node name="Request2" type="TextureRect" parent="Requests"]
+material = SubResource("ShaderMaterial_nfmlc")
+layout_mode = 0
+offset_left = 396.004
+offset_top = 1198.0
+offset_right = 4176.0
+offset_bottom = 2872.0
+rotation = -0.24241
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("127_u1in0")
+
+[node name="RealRequest" type="TextureRect" parent="Requests/Request2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.00104
+offset_top = -36.335
+offset_right = -2.00073
+offset_bottom = -36.335
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.99, 0.99)
+texture = ExtResource("127_u1in0")
+
+[node name="Center" type="Node2D" parent="."]
+position = Vector2(540, 977)
+
+[node name="AttractionPoint" type="Node2D" parent="."]
+position = Vector2(539.004, 984.998)
+script = ExtResource("43_shkiq")
+speed = 25.0
+
+[node name="TimeAttackLeaderboard" type="Control" parent="."]
+visible = false
+z_index = 10
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1080.0
+offset_bottom = 1920.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("49_0qwvu")
+crowns = Array[Texture]([ExtResource("47_7gphk"), ExtResource("48_poh84"), ExtResource("49_vp72v")])
+podium_colors = Array[Color]([Color(0.988281, 0.807231, 0.189163, 1), Color(0.875, 0.875, 0.875, 1), Color(0.917969, 0.652711, 0.390854, 1)])
+podium_freqs = Array[int]([8, 6, 4])
+
+[node name="BG_Flat" type="ColorRect" parent="TimeAttackLeaderboard"]
+custom_minimum_size = Vector2(1280, 2120)
+layout_mode = 0
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 1180.0
+offset_bottom = 2020.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0.0102539, 0.0680745, 0.109375, 1)
+
+[node name="BG_Balatro" type="ColorRect" parent="TimeAttackLeaderboard/BG_Flat"]
+material = SubResource("ShaderMaterial_poh84")
+custom_minimum_size = Vector2(1080, 1920)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -540.0
+offset_top = -960.0
+offset_right = 540.0
+offset_bottom = 960.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(1, 1, 1, 0.0392157)
+
+[node name="TitleContainer" type="VBoxContainer" parent="TimeAttackLeaderboard"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 150.0
+offset_bottom = 394.0
+grow_horizontal = 2
+theme_override_constants/separation = 20
+
+[node name="RankingsText" type="RichTextLabel" parent="TimeAttackLeaderboard/TitleContainer"]
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 80
+bbcode_enabled = true
+text = "※ [wave amp=30.0 freq=2 connected=1]R A N K I N G S[/wave] ※"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("13_vvmd2")
+
+[node name="BossNameText" type="RichTextLabel" parent="TimeAttackLeaderboard/TitleContainer"]
+custom_minimum_size = Vector2(350, 0)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 70
+bbcode_enabled = true
+text = "[color=%s]%s[/color]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("13_vvmd2")
+
+[node name="Podium3" parent="TimeAttackLeaderboard" instance=ExtResource("46_w5ut2")]
+layout_mode = 2
+offset_left = 604.0
+offset_top = 818.0
+offset_right = 904.0
+offset_bottom = 1118.0
+scale = Vector2(1.1, 1.1)
+
+[node name="Podium2" parent="TimeAttackLeaderboard" instance=ExtResource("46_w5ut2")]
+layout_mode = 2
+offset_left = 121.0
+offset_top = 727.0
+offset_right = 421.0
+offset_bottom = 1027.0
+scale = Vector2(1.25, 1.25)
+
+[node name="Podium1" parent="TimeAttackLeaderboard" instance=ExtResource("46_w5ut2")]
+layout_mode = 2
+offset_left = 390.0
+offset_top = 411.0
+offset_right = 690.0
+offset_bottom = 711.0
+scale = Vector2(1.4, 1.4)
+
+[node name="Ranks" type="VBoxContainer" parent="TimeAttackLeaderboard"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -697.0
+offset_right = 52.0
+offset_bottom = 188.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="RankingLine" parent="TimeAttackLeaderboard/Ranks" instance=ExtResource("47_d4iat")]
+layout_mode = 2
+
+[node name="RankingLine2" parent="TimeAttackLeaderboard/Ranks" instance=ExtResource("47_d4iat")]
+layout_mode = 2
+
+[node name="RankingLine3" parent="TimeAttackLeaderboard/Ranks" instance=ExtResource("47_d4iat")]
+layout_mode = 2
+
+[node name="RankingLine4" parent="TimeAttackLeaderboard/Ranks" instance=ExtResource("47_d4iat")]
+layout_mode = 2
+
+[node name="Confettis" type="Node2D" parent="."]
+
+[node name="FxConfettis" parent="Confettis" instance=ExtResource("57_70hv1")]
+position = Vector2(75.0006, 1122)
+rotation = 0.261799
+scale = Vector2(12, 12)
+
+[node name="FxConfettis2" parent="Confettis" instance=ExtResource("57_70hv1")]
+position = Vector2(1005, 1122)
+rotation = -0.261799
+scale = Vector2(12, 12)
+
+[node name="ChromaticAberration" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_pegen")
+offset_right = 1080.0
+offset_bottom = 1920.0
+
+[node name="Tournament" type="Control" parent="."]
+visible = false
+z_index = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1080.0
+offset_bottom = 1920.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG_Earclacks" type="ColorRect" parent="Tournament"]
+custom_minimum_size = Vector2(1280, 2120)
+layout_mode = 0
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 1180.0
+offset_bottom = 2020.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="BG" type="ColorRect" parent="Tournament/BG_Earclacks"]
+material = SubResource("ShaderMaterial_vijbk")
+custom_minimum_size = Vector2(1280, 2120)
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 2120.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(1, 1, 1, 0.0392157)
+
+[node name="Title" type="RichTextLabel" parent="Tournament"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -371.0
+offset_top = 360.0
+offset_right = 371.0
+offset_bottom = 469.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 30
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 100
+bbcode_enabled = true
+text = "[wave amp=25.0 freq=5]  HEAVEN LEAGUE Season 1[/wave]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("13_vvmd2")
+
+[node name="Title2" type="RichTextLabel" parent="Tournament"]
+self_modulate = Color(0.8, 0.258824, 0.368627, 1)
+clip_contents = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -355.0
+offset_top = 485.0
+offset_right = 355.0
+offset_bottom = 594.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 30
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 100
+bbcode_enabled = true
+text = "TOURNAMENT"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("13_vvmd2")
+
+[node name="BracketName" type="RichTextLabel" parent="Tournament"]
+self_modulate = Color(0.419608, 0.788235, 0.423529, 1)
+clip_contents = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -355.0
+offset_top = 750.0
+offset_right = 355.0
+offset_bottom = 859.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 30
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 60
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("13_vvmd2")
+
+[node name="Title3" type="RichTextLabel" parent="Tournament"]
+self_modulate = Color(1, 0.721569, 0.47451, 1)
+clip_contents = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -371.0
+offset_top = 1392.0
+offset_right = 371.0
+offset_bottom = 1610.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 30
+theme_override_fonts/normal_font = ExtResource("12_per8v")
+theme_override_font_sizes/normal_font_size = 80
+bbcode_enabled = true
+text = "[wave amp=25.0 freq=8]CHAMPIONSHIP GRAND FINALS[/wave]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+script = ExtResource("13_vvmd2")
+
+[node name="Bracket" type="Node2D" parent="Tournament" node_paths=PackedStringArray("scene_root")]
+position = Vector2(142, 808)
+script = ExtResource("64_cfp74")
+scene_root = NodePath("../..")
+tournament_data = ExtResource("69_k7ahf")
+balls = Dictionary[String, ExtResource("24_3p5r5")]({
+"BOW": ExtResource("68_xxfh1"),
+"DAGGER": ExtResource("56_nfmlc"),
+"GEMS": ExtResource("34_g7d4c"),
+"KATANA": ExtResource("22_rcyw2"),
+"MACE": ExtResource("44_vebv7"),
+"PLUME": ExtResource("43_qtgyu"),
+"QIANG": ExtResource("22_ee1k8"),
+"REAPER": ExtResource("60_ux8nf"),
+"SANDEVISTAN": ExtResource("68_t5fc8"),
+"SWORD": ExtResource("49_1t3vj"),
+"THUNDER": ExtResource("23_n5n48"),
+"UNARMED": ExtResource("67_5aelx"),
+"VORTEX": ExtResource("45_k7ahf")
+})
+setup_slide_sfx = SubResource("Resource_k7ahf")
+win_sfx = SubResource("Resource_sy8k4")
+line_width = 6
+match_length = 200.0
+match_height = 350.0
+trophy_sprite = ExtResource("47_7gphk")
+sprite_scale = 2.0
+tween_duration = 0.75
+
+[node name="Match3" type="Node2D" parent="Tournament/Bracket"]
+
+[node name="Line" type="Line2D" parent="Tournament/Bracket/Match3"]
+points = PackedVector2Array(0, 0, 200, 0)
+width = 6.0
+default_color = Color(0, 0, 0, 1)
+begin_cap_mode = 1
+end_cap_mode = 1
+
+[node name="Line2" type="Line2D" parent="Tournament/Bracket/Match3"]
+position = Vector2(0, 350)
+points = PackedVector2Array(0, 0, 200, 0)
+width = 6.0
+default_color = Color(0.745098, 0.745098, 0.745098, 1)
+begin_cap_mode = 1
+end_cap_mode = 1
+
+[node name="Line3" type="Line2D" parent="Tournament/Bracket/Match3"]
+position = Vector2(200, 0)
+points = PackedVector2Array(0, 0, 0, 175)
+width = 6.0
+default_color = Color(0, 0, 0, 1)
+begin_cap_mode = 1
+end_cap_mode = 1
+
+[node name="Line4" type="Line2D" parent="Tournament/Bracket/Match3"]
+position = Vector2(200, 350)
+points = PackedVector2Array(0, 0, 0, -175)
+width = 6.0
+default_color = Color(0.745098, 0.745098, 0.745098, 1)
+begin_cap_mode = 1
+end_cap_mode = 1
+
+[node name="Match4" type="Node2D" parent="Tournament/Bracket"]
+position = Vector2(800, 0)
+
+[node name="Line" type="Line2D" parent="Tournament/Bracket/Match4"]
+points = PackedVector2Array(0, 0, -200, 0)
+width = 6.0
+default_color = Color(0.745098, 0.745098, 0.745098, 1)
+begin_cap_mode = 1
+end_cap_mode = 1
+
+[node name="Line2" type="Line2D" parent="Tournament/Bracket/Match4"]
+position = Vector2(0, 350)
+points = PackedVector2Array(0, 0, -200, 0)
+width = 6.0
+default_color = Color(0, 0, 0, 1)
+begin_cap_mode = 1
+end_cap_mode = 1
+
+[node name="Line3" type="Line2D" parent="Tournament/Bracket/Match4"]
+position = Vector2(-200, 0)
+points = PackedVector2Array(0, 0, 0, 175)
+width = 6.0
+default_color = Color(0.745098, 0.745098, 0.745098, 1)
+begin_cap_mode = 1
+end_cap_mode = 1
+
+[node name="Line4" type="Line2D" parent="Tournament/Bracket/Match4"]
+position = Vector2(-200, 350)
+points = PackedVector2Array(0, 0, 0, -175)
+width = 6.0
+default_color = Color(0, 0, 0, 1)
+begin_cap_mode = 1
+end_cap_mode = 1
+
+[node name="Finals2" type="Node2D" parent="Tournament/Bracket"]
+position = Vector2(200, 175)
+
+[node name="Line" type="Line2D" parent="Tournament/Bracket/Finals2"]
+points = PackedVector2Array(0, 0, 100, 0)
+width = 6.0
+default_color = Color(0, 0, 0, 1)
+begin_cap_mode = 1
+end_cap_mode = 1
+
+[node name="Line2" type="Line2D" parent="Tournament/Bracket/Finals2"]
+position = Vector2(400, 0)
+points = PackedVector2Array(0, 0, -100, 0)
+width = 6.0
+default_color = Color(0, 0, 0, 1)
+begin_cap_mode = 1
+end_cap_mode = 1
+
+[node name="Line3" type="Line2D" parent="Tournament/Bracket/Finals2"]
+position = Vector2(100, 0)
+points = PackedVector2Array(0, 0, 100, 0)
+width = 6.0
+default_color = Color(0, 0, 0, 1)
+begin_cap_mode = 1
+end_cap_mode = 1
+
+[node name="Line4" type="Line2D" parent="Tournament/Bracket/Finals2"]
+position = Vector2(300, 0)
+points = PackedVector2Array(0, 0, -100, 0)
+width = 6.0
+default_color = Color(0, 0, 0, 1)
+begin_cap_mode = 1
+end_cap_mode = 1
+
+[node name="Player5" type="Sprite2D" parent="Tournament/Bracket"]
+texture_filter = 1
+position = Vector2(200, 175)
+scale = Vector2(2, 2)
+texture = ExtResource("74_k7ahf")
+
+[node name="Player6" type="Sprite2D" parent="Tournament/Bracket"]
+texture_filter = 1
+position = Vector2(0, 350)
+texture = ExtResource("73_k7ahf")
+
+[node name="Player7" type="Sprite2D" parent="Tournament/Bracket"]
+texture_filter = 1
+position = Vector2(800, -6.10352e-05)
+texture = ExtResource("35_k7ahf")
+
+[node name="Player8" type="Sprite2D" parent="Tournament/Bracket"]
+texture_filter = 1
+position = Vector2(600, 175)
+scale = Vector2(2, 2)
+texture = ExtResource("76_sy8k4")
+
+[node name="SpriteTrophy2" type="Sprite2D" parent="Tournament/Bracket"]
+texture_filter = 1
+position = Vector2(400, 175)
+scale = Vector2(2, 2)
+texture = ExtResource("47_7gphk")
+
+[node name="Hook" type="RichTextLabel" parent="."]
+visible = false
+clip_contents = false
+custom_minimum_size = Vector2(1080, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = 739.0
+offset_right = 1080.0
+offset_bottom = 913.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 50
+theme_override_constants/shadow_offset_y = 10
+theme_override_constants/shadow_offset_x = 10
+theme_override_constants/shadow_outline_size = 50
+theme_override_fonts/normal_font = ExtResource("12_p1oyv")
+theme_override_font_sizes/normal_font_size = 70
+bbcode_enabled = true
+text = "[wave amp=25.0 freq=8 connected=1]WHO WILL [color=red]BREAK[/color] THE 
+[color=lightslategray]BEDROCK[/color] FIRST ?[/wave]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+horizontal_alignment = 1
+justification_flags = 0
+
+[editable path="Balls/Bosses/HYDRA"]
+[editable path="Balls/Bosses/TITAN"]
+[editable path="Balls/Bosses/BIG"]
+[editable path="Balls/Bosses/WARLOCK"]
+[editable path="Balls/Bosses/HYDRA_Void"]
+[editable path="Balls/Bosses/HYDRA_Acid"]

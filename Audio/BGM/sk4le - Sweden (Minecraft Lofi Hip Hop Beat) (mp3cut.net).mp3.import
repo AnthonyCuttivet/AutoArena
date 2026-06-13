@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cux873ouyqovq"
+path="res://.godot/imported/sk4le - Sweden (Minecraft Lofi Hip Hop Beat) (mp3cut.net).mp3-5884fd8c39cca00485c1b66b5e6c99c7.mp3str"
+
+[deps]
+
+source_file="res://Audio/BGM/sk4le - Sweden (Minecraft Lofi Hip Hop Beat) (mp3cut.net).mp3"
+dest_files=["res://.godot/imported/sk4le - Sweden (Minecraft Lofi Hip Hop Beat) (mp3cut.net).mp3-5884fd8c39cca00485c1b66b5e6c99c7.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

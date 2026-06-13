@@ -133,6 +133,11 @@ static func convert_time_to_string(time: float) -> String:
 		string = string.insert(0, "%d:" % hours)
 	return string
 
+static func convert_time_to_string_short(time: float) -> String:
+	var seconds: int = int(time)
+	var tenths: int = int(time * 10.0) % 10
+	return "%d.%d" % [seconds, tenths]
+
 static func format_number_with_dots(number: int) -> String:
 	var num_str: String = str(abs(number))
 	var result: String = ""

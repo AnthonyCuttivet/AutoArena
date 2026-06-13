@@ -203,9 +203,9 @@ func on_bb_death():
 	reloading = false;
 	shoot_speed_elapsed = 0.0;
 
-func set_battleblock_modifiers():
-	super.set_battleblock_modifiers();
+func set_battleblock_modifiers(weapon_index:int):
+	super.set_battleblock_modifiers(weapon_index);
 
 	bullets_damages = [1,2,3,4];
-	ball_owner.gravity_strength /= 3.5;
+	#ball_owner.gravity_strength /= 3.5;
 	ball_owner.relative_bounce_boost = 0.3;

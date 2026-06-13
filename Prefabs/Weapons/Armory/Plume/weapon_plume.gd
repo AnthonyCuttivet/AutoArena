@@ -209,18 +209,28 @@ func plume_details() -> String:
 	return str(dmg_to_feather_conversion + recall_dmg_bonus) + " DMG ⬗ +1 Feather";
 
 func reset():
-	max_feathers = base_feathers;
+	if(!ball_owner.main.no_reset_mode):
+		max_feathers = base_feathers;
+		recall_dmg = 1;
+		recall_dmg_bonus = 0;
+
+	for f in feathers:
+		if(f != null):
+			f.queue_free();
+
 	sub_weapons.clear();
 	feathers.clear();
-	recall_dmg = 1;
-	recall_dmg_bonus = 0;
 
 	for w in feathers_parent.get_children():
 		w.queue_free();
 
 	for i in range(max_feathers):
 		add_sub_weapon(i, i == max_feathers -1);
-	super.reset();
+
+	if(!ball_owner.main.no_reset_mode):
+		super.reset();
+	else:
+		clear_owner_projectile();
 
 func on_bb_death():
 	for f in feathers:
@@ -229,7 +239,9 @@ func on_bb_death():
 	for w in feathers_parent.get_children():
 		w.queue_free();
 
-	shoot_speed_elapsed = 0.0;
+	if(!ball_owner.main.no_reset_mode):
+		shoot_speed_elapsed = 0.0;
+
 	shoot_speed = current_shoot_speed;
 
 	sub_weapons.clear();
@@ -238,11 +250,11 @@ func on_bb_death():
 	for i in range(max_feathers):
 		add_sub_weapon(i, i == max_feathers -1);
 
-func set_battleblock_modifiers():
-	super.set_battleblock_modifiers();
+func set_battleblock_modifiers(weapon_index:int):
+	super.set_battleblock_modifiers(weapon_index);
 
 	recall_hitstop = 0.0;
-	ball_owner.gravity_strength /= 3.5;
+	#ball_owner.gravity_strength /= 3.5;
 	ball_owner.relative_bounce_boost = 0.3;
 
 	settings.details = "+1 Feather per block";

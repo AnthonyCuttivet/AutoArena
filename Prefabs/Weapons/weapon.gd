@@ -66,6 +66,8 @@ var details_text:DynamicText = null;
 var stat_text:DynamicText = null;
 var bb_mult_text:DynamicText = null;
 
+var neutral_sprite_rotation:float = 45.0;
+
 func init(s:WeaponSettings, o:BattleBall) -> void:
 
 	ball_owner = o;
@@ -229,7 +231,8 @@ func reverse_rotation():
 	if(settings.no_rotation_change):
 		return;
 
-	clash_gamefeel();
+	if(!ball_owner.no_clash_gamefeel):
+		clash_gamefeel();
 
 	rotation_direction *= -1;
 
@@ -237,7 +240,9 @@ func reverse_rotation():
 		flip_sprite();
 
 func flip_sprite():
+	sprite_2d.rotation_degrees = 45.0 if sign(sprite_2d.scale.x) > 0 else 135.0;
 	sprite_2d.rotation_degrees += (90.0 * sprite_2d.scale.x);
+	neutral_sprite_rotation = sprite_2d.rotation_degrees;
 	sprite_2d.scale.x *= -1.0;
 
 func init_scaling_stat():
@@ -322,23 +327,28 @@ func toggle_lifesteal_state(s:bool):
 	update_ui_stat(settings.color if !s else Color.DARK_RED);
 	update_stat_text();
 
-func set_battleblock_modifiers():
+func set_battleblock_modifiers(weapon_index:int):
+	if(weapon_index > ball_owner.weapons.size() - 1): return;
+
+	var w:Weapon = ball_owner.weapons[weapon_index];
+
 	ball_owner.can_respawn = true;
-	ball_owner.root.scale *= 0.45;
+	ball_owner.root.scale *= 0.3;
 	ball_owner.nerf_max_speed(0.3);
-	ball_owner.gravity_strength *= 3.5;
-	ball_owner.weapon.hitstop *= 0.2;
+	ball_owner.gravity_strength = 1000.0 + (w.settings.gravity_strength * 0.25);
 	ball_owner.drag_force *= 2.0;
-	ball_owner.weapon.no_stat_scale = true;
 	ball_owner.health = 1;
-	ball_owner.weapon.damage = 1 * ball_owner.weapon_settings.base_damage_multiplier;
 	ball_owner.min_horizontal = 0;
 	ball_owner.clash_invincibility *= 0.1;
 	ball_owner.bounce_boost = 0.0;
-	ball_owner.relative_bounce_boost = 0.0;
-	ball_owner.weapon.battleblock_mode = true;
+	ball_owner.relative_bounce_boost = 0.2;
 
-	for h in ball_owner.weapon.hitboxes:
+	w.hitstop *= 0.2;
+	w.no_stat_scale = true;
+	w.damage = 1 * w.settings.base_damage_multiplier;
+	w.battleblock_mode = true;
+
+	for h in w.hitboxes:
 		h.weapon_clash_cd = 0.0;
 
 func on_bb_death():

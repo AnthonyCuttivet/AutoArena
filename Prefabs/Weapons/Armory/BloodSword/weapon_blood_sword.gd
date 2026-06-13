@@ -42,7 +42,7 @@ func update_details():
 	settings.details = s;
 	update_ui_details(ball_owner.color if lifesteal_ticked > 0 else Color.DARK_RED, true);
 
-func set_battleblock_modifiers():
-	super.set_battleblock_modifiers();
+func set_battleblock_modifiers(weapon_index:int):
+	super.set_battleblock_modifiers(weapon_index);
 
 	lifesteal = false;

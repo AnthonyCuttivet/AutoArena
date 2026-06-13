@@ -1,0 +1,57 @@
+[gd_scene load_steps=9 format=3 uid="uid://kk1qvjtw7wrj"]
+
+[ext_resource type="Shader" uid="uid://boiajwi6ij0g1" path="res://Graphics/Shaders/glitch_slash.gdshader" id="1_mci7k"]
+[ext_resource type="Texture2D" uid="uid://cr0gp2u8da7u8" path="res://Graphics/slash.png" id="1_x1db4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c8yeo"]
+resource_local_to_scene = true
+shader = ExtResource("1_mci7k")
+shader_parameter/texture_offset = Vector2(0, 0)
+shader_parameter/tint = Color(1, 1, 1, 1)
+shader_parameter/progress = 0.0
+shader_parameter/aberration = 0.05
+shader_parameter/aberration_bands = 20.0
+shader_parameter/facet_count = 32.0
+shader_parameter/facet_power = 0.072
+shader_parameter/facet_angle = 0.0
+shader_parameter/flicker_speed = 13.572
+shader_parameter/flicker_intensity = 0.032
+shader_parameter/dissolve_sharpness = 20.0
+
+[sub_resource type="Curve" id="Curve_hs4i3"]
+_data = [Vector2(0, 1), 0.0, 0.0378346, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ds5mw"]
+curve = SubResource("Curve_hs4i3")
+
+[sub_resource type="Curve" id="Curve_76fge"]
+_limits = [0.0, 0.685393, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 0.308042), 0.0, 0.0, 0, 0, Vector2(1, 0.308042), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_20gdv"]
+curve = SubResource("Curve_76fge")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lyhv5"]
+lifetime_randomness = 0.2
+particle_flag_align_y = true
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_20gdv")
+alpha_curve = SubResource("CurveTexture_ds5mw")
+turbulence_noise_strength = 8.86
+
+[node name="FXNullslash" type="GPUParticles2D"]
+material = SubResource("ShaderMaterial_c8yeo")
+emitting = false
+amount = 1
+texture = ExtResource("1_x1db4")
+lifetime = 0.2
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 60
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_lyhv5")

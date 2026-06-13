@@ -12,13 +12,14 @@ class_name BlockModeMCDig extends Node2D
 @export var block_value_registry:Dictionary[Texture, int];
 @export var block_sfx:Dictionary[Texture, AudioStream];
 @export var distribution:Array[MCLayerSettings];
+@export var clouds:Array[Texture2D] = [];
+@export var blocks:Dictionary[Vector2i, MCBattleBlock] = {};
 
 var p_cache:Vector2;
 var layer:int;
 var current_depth:int = 0;
 var block_height:int = 64;
 var cumulative_layers:Array[int] = [];
-var blocks:Dictionary[Vector2i, MCBattleBlock] = {};
 var active_tween:Tween = null;
 
 func _ready() -> void:
@@ -33,6 +34,7 @@ func compute_cumulative_layers():
 		cumulative_layers.push_back(sum);
 
 func generate():
+	blocks.clear();
 	current_depth = 0;
 	layer = 0;
 	p_cache = Vector2i.ZERO;
@@ -53,9 +55,6 @@ func generate():
 
 	spawn_clusters();
 	build_house();
-
-	blocks.clear();
-
 	pass;
 
 func spawn_block(pos:Vector2i, forced_block:Texture = null):
@@ -75,10 +74,14 @@ func spawn_block(pos:Vector2i, forced_block:Texture = null):
 
 	block.name = "Block";
 	block.owner = scene_root;
+	block.main = scene_root;
+	block.parent_block_key = pos;
 
 func clear_blocks():
 	for b in self.get_children():
 		b.queue_free();
+
+	blocks.clear();
 
 func spawn_clusters():
 	for c in clusters:
@@ -148,6 +151,9 @@ func build_house():
 	spawn_block(Vector2(27,1), wood);
 	spawn_block(Vector2(28,1), wood);
 
+	spawn_block(Vector2(24,4), wood);
+	spawn_block(Vector2(24,5), wood);
+
 	spawn_block(Vector2(23,2), planks);
 	spawn_block(Vector2(23,3), planks);
 	spawn_block(Vector2(23,4), planks);
@@ -175,10 +181,26 @@ func set_block_values(b:MCBattleBlock, tx:Texture):
 	b.sfx_hit.audio_stream.remove_stream(0);
 	b.sfx_hit.audio_stream.add_stream(0, block_sfx[tx]);
 
+func aoe_damage(from: BattleBall, pos:Vector2i, dmg:int):
+	damage_block(from, pos + Vector2i.UP, dmg);
+	damage_block(from, pos + Vector2i.DOWN, dmg);
+	damage_block(from, pos + Vector2i.LEFT, dmg);
+	damage_block(from, pos + Vector2i.RIGHT, dmg);
+	damage_block(from, pos + Vector2i.UP + Vector2i.LEFT, dmg / 2);
+	damage_block(from, pos + Vector2i.UP + Vector2i.RIGHT, dmg / 2);
+	damage_block(from, pos + Vector2i.DOWN + Vector2i.LEFT, dmg / 2);
+	damage_block(from, pos + Vector2i.DOWN + Vector2i.RIGHT, dmg / 2);
+
+func damage_block(from: BattleBall, pos:Vector2i, dmg:int):
+	if(!blocks.has(pos)): return;
+	if(blocks[pos] == null): return;
+	blocks[pos].on_impact(from, dmg, true);
+
 func on_block_destroyed(by:BattleBall, block:MCBattleBlock):
 	if(block.depth == dimensions.y - 1):
 		var opponent:BattleBall = scene_root.get_opponent(by.get_instance_id());
 		opponent.can_respawn = false;
+		AudioManager.play_sfx(scene_root.sfx_faaaah, "SFX", 1.0, 0.0, 0.0, true);
 		opponent.death();
 		scene_root.end_game();
 		return;
@@ -187,8 +209,8 @@ func on_block_destroyed(by:BattleBall, block:MCBattleBlock):
 		by.claimed_blocks[block.sprite.texture] = true;
 		update_bb_blocks_ui(by);
 
-		for i in by.weapon.scale_stat_multiplier:
-			by.weapon.scale_stat(true);
+		for i in by.weapons[0].scale_stat_multiplier:
+			by.weapons[0].scale_stat(true);
 
 		# print(Utils.pf() + " " + by.weapon_settings.name + " Claimed block " + block.sprite.texture.resource_path);
 

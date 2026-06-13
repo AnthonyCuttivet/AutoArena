@@ -63,3 +63,7 @@ static func factorial(current_index: int) -> int:
 
 static func log_(current_index: int, base_value: float = 10.0) -> float:
 	return log(current_index + 1) / log(base_value)
+
+static func ease_out_expo(v:float) -> float:
+	v = pow(v, 2);
+	return 0.0 if v == 0.0 else pow(2, 10.0 * v - 10.0);

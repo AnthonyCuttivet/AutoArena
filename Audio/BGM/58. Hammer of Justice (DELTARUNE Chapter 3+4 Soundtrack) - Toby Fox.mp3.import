@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://04ja3fccq70d"
+path="res://.godot/imported/58. Hammer of Justice (DELTARUNE Chapter 3+4 Soundtrack) - Toby Fox.mp3-5b23ac5b1dd5975ff2b048107e304ef8.mp3str"
+
+[deps]
+
+source_file="res://Audio/BGM/58. Hammer of Justice (DELTARUNE Chapter 3+4 Soundtrack) - Toby Fox.mp3"
+dest_files=["res://.godot/imported/58. Hammer of Justice (DELTARUNE Chapter 3+4 Soundtrack) - Toby Fox.mp3-5b23ac5b1dd5975ff2b048107e304ef8.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

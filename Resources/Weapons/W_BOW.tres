@@ -21,14 +21,14 @@ volume = -29.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_1vor1"]
-random_pitch = 1.02
+random_pitch = 1.01
 streams_count = 1
 stream_0/stream = ExtResource("5_8dpo0")
 
 [sub_resource type="Resource" id="Resource_i3erk"]
 script = ExtResource("4_dk7v7")
 audio_stream = SubResource("AudioStreamRandomizer_1vor1")
-volume = -28.0
+volume = -27.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hsrsl"]
@@ -39,13 +39,14 @@ stream_0/stream = ExtResource("6_dk7v7")
 [sub_resource type="Resource" id="Resource_bsb56"]
 script = ExtResource("4_dk7v7")
 audio_stream = SubResource("AudioStreamRandomizer_hsrsl")
-volume = -30.0
+volume = -33.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [resource]
 script = ExtResource("2_1gh3n")
 name = "BOW"
 spr = ExtResource("7_1vor1")
+use_settings_spr = false
 melee = false
 ranged = true
 flip = false
@@ -58,7 +59,7 @@ base_knockback = 20.0
 base_attack_speed = 1.0
 base_shoot_speed = 1.5
 base_size = 14.0
-base_hitstop = 0.2
+base_hitstop = 0.12
 base_hitstop_slow = 0.0
 base_projectiles = 1
 base_projectile_speed = 1900.0
@@ -78,6 +79,7 @@ projectile_prefab = ExtResource("1_odt31")
 bg_projectile = false
 details = ""
 white_details = false
+custom_name_size_scale = 1.0
 sfx_clash = SubResource("Resource_8dpo0")
 sfx_hit = SubResource("Resource_i3erk")
 sfx_shoot = SubResource("Resource_bsb56")
@@ -87,7 +89,7 @@ leaderboard_no_spr = false
 scale_stat_multiplier = 1
 base_damage_multiplier = 3
 no_clash_on_block = false
-base_weapon_rotation = 0.0
+base_weapon_rotation = 230.0
 color = Color(0.682353, 0.886275, 1, 1)
 max_speed = 1500.0
 min_horizontal = 50.0

@@ -28,6 +28,7 @@ var block_closing:bool = false;
 
 func _init() -> void:
 	EventBus.ball_weapon_hit.connect(on_listened_event_received);
+	damage = 1;
 
 func _process(delta: float) -> void:
 	for ball_id in combo_remainings:
@@ -136,10 +137,14 @@ func get_combo_text(combo:int) -> String:
 	return "[color=#95DE03]h[/color][color=#85DB19]i[/color][color=#76D82F]t[/color]" + ("[color=#67D545]S[/color]" if combo > 1 else "") + " [color=#48CF72]c[/color][color=#39CC88]o[/color][color=#29C99E]m[/color][color=#26C1A0]b[/color][color=#23B9A2]o[/color] [color=#1CAAA6]![/color][color=#19A2A8]![/color][color=#169AAA]![/color]"
 
 func reset():
-	super.reset();
+	if(!ball_owner.main.no_reset_mode):
+		super.reset();
+		best_combo = 0;
+		damage = 1;
+		combo_remainings.clear();
 
-func set_battleblock_modifiers():
-	super.set_battleblock_modifiers();
+func set_battleblock_modifiers(weapon_index:int):
+	super.set_battleblock_modifiers(weapon_index);
 
-	ball_owner.gravity_strength /= 3.5;
+	#ball_owner.gravity_strength /= 3.5;
 	ball_owner.relative_bounce_boost = 0.3;

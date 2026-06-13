@@ -45,17 +45,18 @@ func _process(delta):
 	pass
 
 func reset():
-	dice_index = 0;
-	dice_upgrade_effect_remaining = 0.0;
-	dice_roll_remaining = 0.0;
-	level_name_init = false;
-	set_dice(0);
-	damage = 1;
+	if(!ball_owner.main.no_reset_mode):
+		dice_index = 0;
+		dice_upgrade_effect_remaining = 0.0;
+		dice_roll_remaining = 0.0;
+		level_name_init = false;
+		set_dice(0);
+		damage = 1;
+
+		init_scaling_stat();
 
 	update_ui_sprite();
 	update_ui_name(Color.WHITE, get_name_and_level_str());
-
-	init_scaling_stat();
 
 func init_scaling_stat():
 	scaling_stat_value = damage;
@@ -119,9 +120,9 @@ func get_name_and_level_str() -> String:
 	var c:String = levels_colors[dice_index].to_html();
 	return "[color=" + settings.color.to_html() + "]" + settings.name + "[/color] [wave amp=" + str(amp) + " freq=" + str(amp / 2.0) + "][color=" + c + "]LV." + str(dice_index) + "[/color][/wave] ";
 
-func set_battleblock_modifiers():
-	super.set_battleblock_modifiers();
+func set_battleblock_modifiers(weapon_index:int):
+	super.set_battleblock_modifiers(weapon_index);
 
-	ball_owner.gravity_strength /= 3.5;
+	#ball_owner.gravity_strength /= 3.5;
 	ball_owner.relative_bounce_boost = 0.3;
 	attack_speed /= 10.0;

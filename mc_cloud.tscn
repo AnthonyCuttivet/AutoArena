@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://cahd1swp0ynbs"]
+
+[ext_resource type="Script" uid="uid://bfg0dsq8m63k5" path="res://mccloud.gd" id="1_i7m23"]
+[ext_resource type="Texture2D" uid="uid://dqpt26n3do78l" path="res://Graphics/_Addons/Icons/cloud_4.png" id="2_7ai3b"]
+
+[node name="McCloud" type="Control" node_paths=PackedStringArray("sprite")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1920.0
+offset_bottom = -1080.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_i7m23")
+sprite = NodePath("Sprite")
+
+[node name="Sprite" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_7ai3b")

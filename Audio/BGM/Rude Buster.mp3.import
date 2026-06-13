@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://capx0wx7p8h1p"
+path="res://.godot/imported/Rude Buster.mp3-1c761293715e472c37a5dc77f9cda6e4.mp3str"
+
+[deps]
+
+source_file="res://Audio/BGM/Rude Buster.mp3"
+dest_files=["res://.godot/imported/Rude Buster.mp3-1c761293715e472c37a5dc77f9cda6e4.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

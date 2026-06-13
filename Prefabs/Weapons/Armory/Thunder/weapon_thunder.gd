@@ -43,7 +43,7 @@ func add_thunder():
 	p.global_position = p_spawn.global_position;
 	p.global_rotation = p_spawn.global_rotation;
 	p.sprite_2d.modulate = Color.GRAY;
-	p.sprite_2d.modulate.a = 0.7;
+	p.sprite_2d.modulate.a = 0.95;
 	register_thunder(p);
 
 	AudioManager.play_sfx(settings.sfx_shoot, "SFX");
@@ -81,6 +81,8 @@ func add_thunderstrike(i0:int, i1:int):
 
 	var strike:ProjectileThunderStrike = Utils.spawn_projectile(thunderstrike_prefab, ball_owner, self, pos, rot, self);
 	strike.weapon_owner = self;
+	strike.parents.push_back(thunders[i0]);
+	strike.parents.push_back(thunders[i1]);
 
 	var distance:float = p0.distance_to(p1);
 
@@ -116,11 +118,11 @@ func clear_thunderstrike(t, s):
 			thunderstrikes[i].destroy(0);
 		thunderstrikes.erase(i);
 
-func set_battleblock_modifiers():
-	super.set_battleblock_modifiers();
+func set_battleblock_modifiers(weapon_index:int):
+	super.set_battleblock_modifiers(weapon_index);
 
 	projectile_speed = 300.0;
 	damage = 7;
 	rotation_speed *= 1.5;
-	ball_owner.gravity_strength /= 3.5;
+	#ball_owner.gravity_strength /= 3.5;
 	ball_owner.relative_bounce_boost = 0.3;

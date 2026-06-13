@@ -11,6 +11,7 @@ class_name MCBattleBlock extends RigidBody2D
 @export var stx:CompressedTexture2D;
 @export var depth:int = 0;
 @export var parent:BlockModeMCDig = null;
+@export var parent_block_key:Vector2i = Vector2i.ZERO;
 
 @onready var hurtbox: BattleBlockHurtbox = $Hurtbox
 @onready var value_ui: DynamicText = $Value
@@ -36,12 +37,19 @@ func _ready() -> void:
 
 	sprite.texture = stx;
 
-func on_impact(ball:BattleBall, amount:int):
+func on_impact(ball:BattleBall, amount:int, forced:bool = false):
 	if(dead): return;
-	current_value -= amount;
+
+	var dmg:int = int(amount * ball.bb_damage_multiplier);
+	if(dmg <= 0): dmg = 1;
+
+	current_value -= dmg;
+
+	if(!forced && ball.name == "Unarmed"):
+		parent.aoe_damage(ball, parent_block_key, dmg / 2);
 
 	if(!ball.weapon_settings.no_clash_on_block):
-		ball.weapon.on_weapon_clash(self, self.global_position, false, true);
+		ball.weapons[0].on_weapon_clash(self, self.global_position, false, true);
 
 	if(current_value <= 0):
 		block_death(ball);

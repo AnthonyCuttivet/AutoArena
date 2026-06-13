@@ -12,6 +12,7 @@ class_name WeaponHydra extends Weapon
 @export var heads_angle:float = 60.0;
 @export var sfxs_shoot:Array[SFX];
 @export var sfxs_hit:Array[SFX];
+@export var bounce_shake:float = 20.0;
 
 var next_head_at_hp:int = 0;
 var next_head_side:int = 1;
@@ -19,6 +20,7 @@ var next_head_side:int = 1;
 var shooted_projectile:Projectile = null;
 
 func _init() -> void:
+	EventBus.ball_bounce.connect(on_bounce);
 	EventBus.ball_weapon_hit.connect(on_weapon_hit_received);
 	EventBus.ball_damaged.connect(on_ball_damaged_received);
 
@@ -101,3 +103,7 @@ func set_head_posrot(i:int):
 	next_head_side *= -1;
 
 	head.position = head.transform.x * head_offset;
+
+func on_bounce(id:int):
+	if(id != ball_owner.get_instance_id()): return;
+	EventBus.camera_trigger_shake.emit(bounce_shake, Vector2(1.0,0.2));

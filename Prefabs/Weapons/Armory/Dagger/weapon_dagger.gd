@@ -69,9 +69,9 @@ func get_custom_stat_format() -> String:
 func set_charged_sprite_alpha():
 	sprite_charged.self_modulate.a = clamp(((rotation_speed - 3.0)), 0,1);
 
-func set_battleblock_modifiers():
-	super.set_battleblock_modifiers();
-	ball_owner.gravity_strength /= 3.5;
+func set_battleblock_modifiers(weapon_index:int):
+	super.set_battleblock_modifiers(weapon_index);
+	#ball_owner.gravity_strength /= 3.5;
 	ball_owner.relative_bounce_boost = 0.3;
-	ball_owner.weapon.hitstop /= 0.2;
+	ball_owner.weapons[0].hitstop /= 0.2;
 	attack_speed = 2.0;

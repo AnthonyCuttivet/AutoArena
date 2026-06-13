@@ -18,6 +18,10 @@ func _process(delta: float):
 		shake_strength = lerp(shake_strength, 0.0, shake_fade * delta);
 		offset = Vector2(randf_range(-shake_strength, shake_strength), randf_range(-shake_strength, shake_strength)) * shake_direction;
 
+func _set_zoom(v: Vector2) -> void:
+	zoom = v
+	phantom_camera_2d.zoom = v
+
 func trigger_shake(strength: float, direction:Vector2 = Vector2.ONE):
 	if (strength <= shake_strength): return ;
 	shake_strength = strength;

@@ -22,7 +22,7 @@ stream_0/stream = ExtResource("7_ohsym")
 [sub_resource type="Resource" id="Resource_5tsli"]
 script = ExtResource("6_vl3o2")
 audio_stream = SubResource("AudioStreamRandomizer_hwgfj")
-volume = -32.0
+volume = -25.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ii1p6"]
@@ -85,14 +85,15 @@ script = ExtResource("1_pcjnu")
 heads_colors = Array[Color]([Color(0.660156, 0.278503, 0.278503, 1), Color(0.350708, 0.863281, 0.528401, 1), Color(0.69375, 0.422073, 0.777344, 1)])
 spawn_head_each_hp_lost = 60
 heads_projectiles = Array[PackedScene]([ExtResource("2_b8h4t"), ExtResource("3_wbc4p"), ExtResource("4_vxkip")])
-projectiles_scales = Array[float]([1.5, 0.6, 0.9])
+projectiles_scales = Array[float]([1.5, 0.6, 0.8])
 heads_shoot_delay = Array[float]([0.7, 0.5, 1.8])
 head_prefab = ExtResource("4_u6ls7")
 heads_root = NodePath("Heads")
 head_offset = 50.0
-heads_angle = 40.0
+heads_angle = 65.0
 sfxs_shoot = Array[ExtResource("6_vl3o2")]([SubResource("Resource_5tsli"), SubResource("Resource_t1e8h"), SubResource("Resource_4oocv")])
 sfxs_hit = Array[ExtResource("6_vl3o2")]([SubResource("Resource_xha4k"), SubResource("Resource_h56q7"), SubResource("Resource_g6fwj")])
+bounce_shake = 3.0
 sprite_2d = NodePath("Sprite2D")
 custom_damage = true
 custom_sfx = true

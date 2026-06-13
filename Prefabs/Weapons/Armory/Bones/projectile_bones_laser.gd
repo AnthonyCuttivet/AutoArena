@@ -5,7 +5,7 @@ class_name ProjectileBonesLaser extends Projectile
 @export var railgun_width:float = 10.0;
 @export var laser_thick_duration:float = 0.2;
 @export var lifetime:float = 0.5;
-@export var railgun_tick_time:float = 0.1;
+@export var railgun_tick_time:float = 0.1; #0.04
 
 @export var railgun_laser:Node2D;
 @export var collider:CollisionShape2D;

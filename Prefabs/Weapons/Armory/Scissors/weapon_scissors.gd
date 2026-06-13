@@ -238,11 +238,13 @@ func clear_opened():
 	toggle_opened(false);
 
 func reset():
-	dash_damage = base_dash_damage;
-	super.reset();
 
-func set_battleblock_modifiers():
-	super.set_battleblock_modifiers();
+	if(!ball_owner.main.no_reset_mode):
+		dash_damage = base_dash_damage;
+		super.reset();
 
-	ball_owner.gravity_strength /= 3.5;
+func set_battleblock_modifiers(weapon_index:int):
+	super.set_battleblock_modifiers(weapon_index);
+
+	#ball_owner.gravity_strength /= 3.5;
 	ball_owner.relative_bounce_boost = 0.3;

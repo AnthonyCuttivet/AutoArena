@@ -1,8 +1,8 @@
 shader_type canvas_item;
 
-uniform float stripes = 4.82; 
+uniform float stripes = 4.82;
 uniform float stripe_thickness = 1.33;
-uniform vec3 stripe_color : source_color = vec3(0.59, .98, .69); 
+uniform vec3 stripe_color : source_color = vec3(0.59, .98, .69);
 uniform vec3 background_color : source_color = vec3(0, 0, 0);
 uniform float uv_offset = 0.5;
 uniform float warp_strength = 50.0;
@@ -34,6 +34,6 @@ void fragment() {
 	mask -= smoothstep(0.5 + stripe_thickness, 0.55 + stripe_thickness, uv.y);
 	vec3 final_color = mix(background_color.rgb, stripe_color.rgb, mask);
 	COLOR = vec4(final_color, 1.0);
-	
+
 	COLOR.rgb = mix(COLOR.rgb, flash_color.rgb, flash_intensity);
 }

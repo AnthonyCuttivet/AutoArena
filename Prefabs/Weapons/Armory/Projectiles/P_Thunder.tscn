@@ -16,6 +16,13 @@ absolute = true
 hitbox = NodePath("Sprite2D/ProjectileHitbox")
 sprite_2d = NodePath("Sprite2D")
 
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+self_modulate = Color(1, 0, 0, 0.2)
+texture_filter = 1
+rotation = -1.5708
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("2_evsry")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 rotation = -1.5708

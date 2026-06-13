@@ -39,8 +39,9 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [resource]
 script = ExtResource("1_mqpld")
-name = "B.SWORD"
+name = "BLOOD SWORD"
 spr = ExtResource("3_8xgnx")
+use_settings_spr = false
 melee = true
 ranged = false
 flip = false
@@ -72,6 +73,7 @@ weapon_prefab = ExtResource("4_mqpld")
 bg_projectile = false
 details = "Heal + Scale in 2 hits"
 white_details = false
+custom_name_size_scale = 0.8
 sfx_clash = SubResource("Resource_qktne")
 sfx_hit = SubResource("Resource_ax4pp")
 leaderboard_offset = 45.0

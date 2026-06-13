@@ -30,6 +30,10 @@ class_name BattleBall extends RigidBody2D
 @export var dual_wield_mask:Sprite2D;
 @export var dual_wield_sprite:Sprite2D;
 
+@export var bb_damage_multiplier:float = 1.0;
+
+@export var no_visual_hp_update:bool = false;
+
 # --- Tweakable settings ---
 
 @export var ghost:bool = false;
@@ -49,6 +53,11 @@ class_name BattleBall extends RigidBody2D
 @export var sfx_scale:SFX;
 @export var use_white_name_color:bool = false;
 
+# --- Effects ---
+@export var random_glitch:bool = false;
+@export var random_glitch_max:float = 20.0;
+@export var random_glitch_reduction:Vector2 = Vector2.ZERO;
+
 @onready var hp_text: RichTextLabel = $Root/HP_Text;
 @onready var circle: Sprite2D = $Root/Circle
 @onready var circle_bg: Sprite2D = $Root/CircleBG
@@ -59,6 +68,7 @@ class_name BattleBall extends RigidBody2D
 @onready var hurtbox: Hurtbox = $Root/Hurtbox
 @onready var additional_element: Node2D = $Root/AdditionalElement
 @onready var bg_parent: Node2D = $Root/BGParent
+@onready var glitch: Sprite2D = $BackBufferCopy/Glitch
 
 var main:Main = null;
 var is_init:bool = false;
@@ -73,6 +83,7 @@ var weapons:Array[Weapon];
 
 var base_weapon_rotation:float = 0.0;
 var color:Color;
+var custom_color:bool = false;
 var max_speed: float = 0.0;
 var min_horizontal: float = 0.0;
 var gravity_strength: float = 0.0;
@@ -103,6 +114,7 @@ var block_weapon_rot:bool = false;
 var base_root_scale:float = 0.0;
 var nerfed_speed:float = 0.0;
 
+
 var claimed_blocks:Dictionary[Texture, bool] = {};
 var bb_blocks_ui:GridContainer = null;
 var can_respawn:bool = false;
@@ -122,8 +134,16 @@ var cheat_weapon_rotation_angle: float = 20.0;
 var use_cheat_underdog_clash:bool = false;
 var cheat_underdog_clash_mult: float = 0.2;
 
+var no_clash_gamefeel:bool = false;
+
+var base_hp_pos:Vector2 = Vector2.ZERO;
+var glitching:bool = false;
+
+var glitch_timer:Timer = Timer.new();
+var before_glitch_remaining:float = random_glitch_max;
+
 func ready() -> void:
-	
+
 	if(!use_dual_wield):
 		fill_values_from_weapon_settings();
 
@@ -135,7 +155,7 @@ func ready() -> void:
 			weapon_settings_dual[1].base_rotation_direction = -weapon_settings_dual[0].base_rotation_direction;
 
 		spawn_weapon(weapon_settings_dual[1], weapon_slots[1], 1);
-		
+
 		fill_values_from_weapon_settings();
 	else:
 		spawn_weapon(weapon_settings, weapon_slots[0], 0);
@@ -174,6 +194,9 @@ func ready() -> void:
 
 	if(replace_health):
 		hp_text.text = custom_ball_name;
+
+	base_hp_pos = hp_text.position;
+
 
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	if(stop): return;
@@ -226,8 +249,6 @@ func _physics_process(delta: float) -> void:
 			if(use_cheat_weapon_rotation && !weapon.align_weapon_to_velocity):
 				adjust_weapon_rotation(delta, weapon);
 
-	# max_speed += 2 * delta;
-
 func _process(delta: float) -> void:
 	if(hitstop_remaining > 0.0):
 		hitstop_remaining -= delta;
@@ -238,7 +259,7 @@ func _process(delta: float) -> void:
 
 func fill_values_from_weapon_settings():
 	base_weapon_rotation = weapon_settings.base_weapon_rotation;
-	color = weapon_settings.color;
+	color = weapon_settings.color if !custom_color else color;
 	max_speed = weapon_settings.max_speed;
 	min_horizontal = weapon_settings.min_horizontal;
 	gravity_strength = weapon_settings.gravity_strength;
@@ -257,6 +278,12 @@ func fill_values_from_weapon_settings():
 		relative_bounce_boost = (weapon_settings_dual[0].relative_bounce_boost + weapon_settings_dual[1].relative_bounce_boost) / 2.0;
 		acceleration = (weapon_settings_dual[0].acceleration + weapon_settings_dual[1].acceleration) / 2.0;
 		knockback_resistance = (weapon_settings_dual[0].knockback_resistance + weapon_settings_dual[1].knockback_resistance) / 2.0;
+
+	if(main.use_physicky_physics):
+		max_speed *= 0.85;
+		# bounce_boost *= 1.5;
+		# relative_bounce_boost *= 1.5;
+		# gravity_strength *= 1.5;
 
 func start(m:Main, dir:Vector2):
 	if(debug_mode):return;
@@ -308,6 +335,7 @@ func init_health(v:float):
 
 func update_health_text():
 	if(hp_text == null): return;
+	if(no_visual_hp_update): return;
 	hp_text.text = str(health);
 
 func affect_health(v:int, from:BattleBall, weapon_slot_id:int, silent:bool = false, force:bool = false):
@@ -336,6 +364,8 @@ func start_hitstop_clash(t:float, duration: float, knockback:Vector2, other:Node
 func start_hitstop(t:float, duration: float, knockback:Vector2 = Vector2.ZERO, override:bool = true, absolute:bool = false):
 	#Add override bool
 	# if(freeze && !debug_mode): return;
+
+	knockback *= main.global_knockback_boost;
 
 	if(override && hitstop_remaining > 0.0):
 		override_hitstop(t,duration, knockback);
@@ -490,7 +520,7 @@ func raw_respawn():
 	for weapon in weapons:
 		weapon.bb_mult_text.modulate = Color.WHITE;
 
-	linear_velocity = Vector2.ZERO
+	linear_velocity = Vector2.ZERO if !can_respawn else Vector2.ONE.rotated(deg_to_rad(randf_range(0.0,360.0))) * max_speed / 2.0;
 	prev_linear_velocity = Vector2.ZERO;
 	accumulated_forces = Vector2.ZERO;
 
@@ -525,7 +555,8 @@ func respawn(pos:Vector2, h:int = -1):
 	update_health_text();
 
 	for weapon in weapons:
-		weapon.init(weapon_settings, self);
+		if(!main.no_reset_mode):
+			weapon.init(weapon_settings, self);
 
 		for hitbox:Hitbox in weapon.hitboxes:
 			hitbox.set_deferred("monitorable", true);
@@ -541,7 +572,7 @@ func respawn(pos:Vector2, h:int = -1):
 
 func lose_hp_timeout():
 	if(self.health == 1): return;
-	affect_health(-1, self, 0, true);
+	affect_health(-1, self, 0, false);
 
 func show_trail_for(d:float, additionnal_length:int = 0):
 	trail_2d.length += additionnal_length;
@@ -634,7 +665,10 @@ func reset_rigidbody():
 	accumulated_forces = Vector2.ZERO;
 	physics_time_scale = 1.0;
 	time_scale = 1.0;
-	max_speed = base_max_speed;
+
+	if(!main.no_reset_mode && name != "Unarmed" && name != "Sandevistan"):
+		max_speed = base_max_speed;
+
 	drag_force = base_drag_force;
 	hitstop_remaining = 0.0;
 
@@ -705,7 +739,7 @@ func load_dual_wield_weapon_settings():
 	weapon_settings_dual[0].base_rotation_speed *= 0.75;
 	weapon_settings_dual[1].base_rotation_speed *= 0.75;
 
-func get_weapon(id:int):
+func get_weapon(id:int) -> Weapon:
 	return weapons[id];
 
 func get_weapon_settings(w:Enums.WEAPONS) -> WeaponSettings:
@@ -744,3 +778,67 @@ func adjust_weapon_rotation(delta: float, weapon:Weapon) -> void:
 		# Small bias rotation, scaled by delta
 		var bias_speed: float = 5.0  # radians per second
 		weapon.weapon_slot.rotation += sign(angle_diff) * bias_speed * delta
+
+func init_fake_infinite_health_mode(hp:float):
+	init_health(hp);
+	hyper.visible = true;
+	toggle_fake_infinite_health_mode(true);
+
+func toggle_fake_infinite_health_mode(s:bool):
+	no_visual_hp_update = s;
+
+	hp_text.text = "∞" if s else str(health);
+	hp_text.position = Vector2(-368.0, -600.0) if s else base_hp_pos;
+	hp_text.add_theme_font_size_override("normal_font_size", 650 if s else 450);
+
+
+func trigger_glitch() -> void:
+	if(glitching): return;
+
+	glitch.scale = root.scale * 1.2;
+
+	var mat: ShaderMaterial = glitch.material
+	#var increase_duration = 0.3;
+	#var decrease_duration: float = increase_duration / 3.0
+
+	glitch.visible = true;
+	glitching = true;
+
+	# Peak values
+	#var peak_intensity    := 0.02
+	#var peak_glitch       := 2.0
+
+	mat.set_shader_parameter("intensity", 0.01);
+	mat.set_shader_parameter("glitch_strength", 1.0);
+	mat.set_shader_parameter("time_scale", 10.0);
+	mat.set_shader_parameter("glitch_rotation_degrees", 90.0);
+	mat.set_shader_parameter("band_count", 100.0);
+
+
+	var tween := create_tween()
+	#tween.set_parallel(true)
+#
+	## Ramp up
+	#tween.tween_method(func(v): mat.set_shader_parameter("intensity",      v), 0.0, peak_intensity,  increase_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	#tween.tween_method(func(v): mat.set_shader_parameter("glitch_strength", v), 0.0, peak_glitch,     increase_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+#
+	## Hold, then ramp down
+	#tween.chain().tween_interval(1.0)
+#
+	#tween.chain().set_parallel(true)
+	#tween.tween_method(func(v): mat.set_shader_parameter("intensity",      v), peak_intensity,  0.0, decrease_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	#tween.tween_method(func(v): mat.set_shader_parameter("glitch_strength", v), peak_glitch,     0.0, decrease_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+	tween.tween_property(glitch, "visible", false, 0.0).set_delay(0.5);
+	tween.tween_property(self, "glitching", false, 0.0);
+
+	tween.finished.connect(restart_glitch_timer);
+
+
+func on_glitch_timer():
+	toggle_fake_infinite_health_mode(false);
+	trigger_glitch();
+
+func restart_glitch_timer():
+	toggle_fake_infinite_health_mode(true);
+	before_glitch_remaining = random_glitch_max;

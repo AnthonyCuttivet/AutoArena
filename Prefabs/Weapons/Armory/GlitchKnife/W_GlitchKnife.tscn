@@ -1,0 +1,130 @@
+[gd_scene load_steps=24 format=3 uid="uid://dad3dmsxcnkl8"]
+
+[ext_resource type="Script" uid="uid://cyqhxdw5p2i14" path="res://Prefabs/Weapons/Armory/GlitchKnife/weapon_glitchknife.gd" id="1_3p4vy"]
+[ext_resource type="Texture2D" uid="uid://dqg7fotgsmlmn" path="res://Graphics/_Addons/Icons/fc6999.png" id="2_3p4vy"]
+[ext_resource type="PackedScene" uid="uid://vaij2inge02n" path="res://Prefabs/FX/fx_slash_hit_glitch.tscn" id="2_w8kxt"]
+[ext_resource type="AudioStream" uid="uid://chh35sjv1w1p3" path="res://Audio/SFX/BattleBalls/se_metaknight_appeal_H03_spd_inv.wav" id="3_a6dyj"]
+[ext_resource type="AudioStream" uid="uid://c0uj26pimn3q7" path="res://Audio/SFX/BattleBalls/se_chrom_special_S04L.wav" id="3_r3avb"]
+[ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="3_w8kxt"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="4_r3avb"]
+[ext_resource type="Shader" uid="uid://ctyv272txa8jx" path="res://Graphics/Shaders/glitch.gdshader" id="4_rfl75"]
+[ext_resource type="AudioStream" uid="uid://c64wd60cuswvc" path="res://Audio/SFX/BattleBalls/se_metaknight_appeal_H03_spd.wav" id="5_o726e"]
+[ext_resource type="AudioStream" uid="uid://bv73jknn423xu" path="res://Audio/SFX/BattleBalls/se_palutena_final04_spd_reverb.mp3" id="5_r3avb"]
+[ext_resource type="AudioStream" uid="uid://cui62p62ka010" path="res://Audio/SFX/BattleBalls/se_jack_smash_S01.wav" id="7_7jldq"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_o726e"]
+random_pitch = 2.0
+streams_count = 1
+stream_0/stream = ExtResource("3_a6dyj")
+
+[sub_resource type="Resource" id="Resource_a6dyj"]
+script = ExtResource("4_r3avb")
+audio_stream = SubResource("AudioStreamRandomizer_o726e")
+volume = -25.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7jldq"]
+random_pitch = 2.0
+streams_count = 1
+stream_0/stream = ExtResource("5_o726e")
+
+[sub_resource type="Resource" id="Resource_o726e"]
+script = ExtResource("4_r3avb")
+audio_stream = SubResource("AudioStreamRandomizer_7jldq")
+volume = -25.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_a6dyj"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("3_r3avb")
+
+[sub_resource type="Resource" id="Resource_dhvp7"]
+script = ExtResource("4_r3avb")
+audio_stream = SubResource("AudioStreamRandomizer_a6dyj")
+volume = -25.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ew6gk"]
+random_pitch = 1.05
+streams_count = 1
+stream_0/stream = ExtResource("7_7jldq")
+
+[sub_resource type="Resource" id="Resource_lvoyq"]
+script = ExtResource("4_r3avb")
+audio_stream = SubResource("AudioStreamRandomizer_ew6gk")
+volume = -25.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_dhvp7"]
+random_pitch = 1.35
+streams_count = 1
+stream_0/stream = ExtResource("5_r3avb")
+
+[sub_resource type="Resource" id="Resource_r3avb"]
+script = ExtResource("4_r3avb")
+audio_stream = SubResource("AudioStreamRandomizer_dhvp7")
+volume = -10.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rfl75"]
+shader = ExtResource("4_rfl75")
+shader_parameter/glitch_intensity = 0.0
+shader_parameter/tear_block_size = 12.0
+shader_parameter/tear_power = 0.3
+shader_parameter/tear_speed = 5.0
+shader_parameter/rgb_split = 0.05
+shader_parameter/flicker_speed = 30.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
+radius = 14.0
+height = 62.0
+
+[node name="WeaponGlitchKnife" type="Node2D" node_paths=PackedStringArray("fx_spawn_point", "sprite_2d", "hitboxes")]
+script = ExtResource("1_3p4vy")
+free_nullslash_chance = 0.15
+glitch_duration_base = 0.6
+glitch_duration_min = 0.2
+attack_speed_nerf = 2.0
+progressive_unstable_attack_speed_nerf_multiplier = 2.0
+base_glitch_cd = 3.3
+unstable_duration = 0.5
+glitch_random_speed_range = Vector2(15, 20)
+unstable_rot_delay = 0.01
+fx_spawn_point = NodePath("FXSpawnPoint")
+fx_nullslash = ExtResource("2_w8kxt")
+sfx_glitch_in = SubResource("Resource_a6dyj")
+sfx_glitch_out = SubResource("Resource_o726e")
+sfx_normal_hit = SubResource("Resource_dhvp7")
+sfx_nullslash_hit = SubResource("Resource_lvoyq")
+sfx_nullslash_hit_muga = SubResource("Resource_r3avb")
+accent_color = Color(0.574219, 0.890228, 1, 1)
+idle_glitch_effect_duration = 0.3
+sprite_2d = NodePath("Sprite2D")
+hitboxes = [NodePath("Sprite2D/WeaponHitbox")]
+custom_damage = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_rfl75")
+position = Vector2(31, -3)
+rotation = 0.785398
+texture = ExtResource("2_3p4vy")
+
+[node name="WeaponHitbox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("weapon", "collider")]
+position = Vector2(0.707106, 4.94975)
+rotation = 0.785398
+script = ExtResource("3_w8kxt")
+weapon = NodePath("../..")
+collider = NodePath("CollisionShape2D")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
+position = Vector2(1.19209e-07, -9.53674e-07)
+shape = SubResource("CapsuleShape2D_1fhci")
+
+[node name="FXSpawnPoint" type="Node2D" parent="."]
+position = Vector2(48, 2)
+
+[connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_entered"]
+[connection signal="area_exited" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_exited"]

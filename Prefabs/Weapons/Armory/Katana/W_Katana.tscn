@@ -6,7 +6,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
 radius = 5.0
-height = 58.0
+height = 46.0
 
 [node name="WeaponKatana" type="Node2D" node_paths=PackedStringArray("sprite_2d", "hitboxes")]
 script = ExtResource("1_wmo0m")
@@ -27,7 +27,7 @@ collider = NodePath("CollisionShape2D")
 metadata/owner = NodePath("../../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
-position = Vector2(3.93391e-06, -11)
+position = Vector2(5.36442e-06, -15)
 shape = SubResource("CapsuleShape2D_1fhci")
 
 [node name="SpriteCharged" type="Sprite2D" parent="Sprite2D"]

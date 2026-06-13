@@ -44,8 +44,10 @@ script = ExtResource("1_imm4n")
 thunderstrike_hitbox = NodePath("Sprite2D/ProjectileHitbox/CollisionShape2D")
 thunderstrike_line = NodePath("ThunderStrikeLine")
 pierce_count = 999
+rotation_speed = 0.1
 absolute = true
 hitbox = NodePath("Sprite2D/ProjectileHitbox")
+destroy_on_hit_delay = 0.5
 sprite_2d = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

@@ -32,6 +32,13 @@ func init_scaling_stat():
 func scale_stat(force:bool = false):
 	if(no_stat_scale && !force): return;
 
+	if(force):
+		var rand:int = randi_range(0,1);
+		if(rand == 0):
+			damage += 1;
+		else:
+			railgun_duration += railgun_duration_scale;
+
 	if(active_coin != null):
 		if(active_coin.gravity_force == 0.0):
 			damage += 1;
@@ -95,11 +102,11 @@ func on_bb_death():
 func get_custom_stat_format() -> String:
 	return str(damage) + " ⟐ " + str(railgun_duration) + " s";
 
-func set_battleblock_modifiers():
-	super.set_battleblock_modifiers();
+func set_battleblock_modifiers(weapon_index:int):
+	super.set_battleblock_modifiers(weapon_index);
 
 	railgun_duration = 0.1;
 	railgun_width_modifier = 0.5;
 
-	ball_owner.gravity_strength /= 3.5;
+	#ball_owner.gravity_strength /= 3.5;
 	ball_owner.relative_bounce_boost = 0.3;

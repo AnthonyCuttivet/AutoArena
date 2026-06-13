@@ -21,11 +21,15 @@ func init(o:BattleBall, w:Weapon, s:float, p:int = -1, b:int = -1):
 func _on_weapon_hitbox_area_entered(other: Area2D) -> void:
 	if(!other is Hurtbox && !other is Hitbox && !other is ProjectileHitbox): return;
 
-	if(other is Hitbox || other is ProjectileHitbox || (other is Hurtbox && other.hurtbox_is_hitbox)):
+	if(other is Hitbox || other is ProjectileHitbox):
 		on_block_hit(other.weapon);
+	
+	if(other is Hurtbox && other.hurtbox_is_hitbox):
+		on_block_hit(other.ball_owner.weapons[0]);
 
 func on_block_hit(from:Weapon):
 	from.on_weapon_clash(self, self.global_position, false, false, true);
+	if(from.ball_owner != ball_owner && from.ball_owner.team == weapon_pickaxe.ball_owner.team): return;
 	hit_health();
 	weapon_pickaxe.on_block_destroyed(from.ball_owner == ball_owner, self);
 

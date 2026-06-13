@@ -8,7 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://bmre0584plxqj" path="res://Graphics/_Addons/Icons/fc198.png" id="5_47uhu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_24125"]
+resource_local_to_scene = true
 shader = ExtResource("2_jyw2j")
+shader_parameter/alpha = 1.0
 shader_parameter/strength = 0.6
 shader_parameter/speed = 0.5
 shader_parameter/angle = 0.0

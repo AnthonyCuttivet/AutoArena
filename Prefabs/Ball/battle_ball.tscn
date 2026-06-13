@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dq1w5q1d2hbls"]
+[gd_scene load_steps=21 format=3 uid="uid://dq1w5q1d2hbls"]
 
 [ext_resource type="Script" uid="uid://cp82leg5g74mt" path="res://Prefabs/Ball/battle_ball.gd" id="1_0l4tw"]
 [ext_resource type="Texture2D" uid="uid://bfvdgok43dr2p" path="res://Graphics/Images/circle-svgrepo-com.svg" id="1_lj2f6"]
@@ -19,6 +19,7 @@ radius = 370.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gn5uy"]
 shader = ExtResource("3_ecnwd")
+shader_parameter/alpha = 1.0
 shader_parameter/strength = 0.5
 shader_parameter/speed = 0.5
 shader_parameter/angle = 0.0
@@ -59,6 +60,62 @@ colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 0.286275)
 [sub_resource type="Gradient" id="Gradient_ecnwd"]
 offsets = PackedFloat32Array(0, 0.33, 0.66, 1)
 colors = PackedColorArray(1, 0.109375, 0.109375, 1, 1, 0.709473, 0.335938, 1, 0.734467, 0.414, 0.92, 1, 0.408, 0.842633, 0.85, 1)
+
+[sub_resource type="Shader" id="Shader_gn5uy"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+uniform float intensity : hint_range(0.0, 0.1) = 0.005;
+uniform float glitch_strength : hint_range(0.0, 2.0) = 0.3;
+uniform float time_scale : hint_range(0.0, 10.0) = 3.0;
+uniform float glitch_rotation_degrees : hint_range(0.0, 360.0) = 0.0;
+uniform float band_count : hint_range(1.0, 100.0) = 20.0;
+
+uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
+
+float rand(vec2 co) {
+    return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+void fragment() {
+    vec2 uv = SCREEN_UV;
+
+    float angle = radians(glitch_rotation_degrees);
+
+    // Direction of movement
+    vec2 dir = vec2(cos(angle), sin(angle));
+
+    // Direction used to generate bands
+    vec2 band_dir = vec2(-dir.y, dir.x);
+
+    float t = TIME * time_scale;
+
+    // Compute which band we're in
+    float band_coord = dot(uv, band_dir);
+    float band_id = floor(band_coord * band_count) / band_count;
+
+    float slice_rand = rand(vec2(band_id, floor(t * 8.0)));
+    float glitch_offset = (slice_rand - 0.5) * glitch_strength * 0.05;
+    float glitch_on = step(0.85, rand(vec2(band_id, floor(t * 5.0))));
+
+    uv += dir * glitch_offset * glitch_on;
+
+    float r = texture(screen_texture, uv + dir * intensity).r;
+    float g = texture(screen_texture, uv).g;
+    float b = texture(screen_texture, uv - dir * intensity).b;
+
+    vec4 self = texture(TEXTURE, UV);
+    COLOR = vec4(r, g, b, self.a);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cvhij"]
+resource_local_to_scene = true
+shader = SubResource("Shader_gn5uy")
+shader_parameter/intensity = 0.02
+shader_parameter/glitch_strength = 2.0
+shader_parameter/time_scale = 10.0
+shader_parameter/glitch_rotation_degrees = 90.0
+shader_parameter/band_count = 20.0
 
 [node name="BattleBall" type="RigidBody2D" node_paths=PackedStringArray("weapon_slots", "dual_wield_mask", "dual_wield_sprite")]
 collision_layer = 2
@@ -125,9 +182,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -350.0
-offset_top = -190.0
+offset_top = -542.0
 offset_right = 350.0
-offset_bottom = 190.0
+offset_bottom = 542.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/default_color = Color(0, 0, 0, 1)
@@ -169,5 +226,15 @@ spawn_interval = 0.01
 gradient = SubResource("Gradient_ecnwd")
 
 [node name="AdditionalElement" type="Node2D" parent="Root"]
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="."]
+scale = Vector2(1.2, 1.2)
+copy_mode = 2
+
+[node name="Glitch" type="Sprite2D" parent="BackBufferCopy"]
+visible = false
+material = SubResource("ShaderMaterial_cvhij")
+scale = Vector2(0.21, 0.21)
+texture = ExtResource("1_lj2f6")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
