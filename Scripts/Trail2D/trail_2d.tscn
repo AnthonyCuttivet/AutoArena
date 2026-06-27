@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dcuheqtvbds3a"]
 
-[ext_resource type="Script" uid="uid://oic7duarbva3" path="res://Scripts/Trail2D/ex_trail_2d.gd" id="1"]
+[ext_resource type="Script" uid="uid://d1dckoirgmnnq" path="res://Scripts/Trail2D/trail_2d_smooth.gd" id="1_34cf4"]
 
 [sub_resource type="Curve" id="1"]
 _data = [Vector2(0, 0), 0.0, 1.0, 0, 1, Vector2(1, 1), 1.0, 0.0, 1, 0]
@@ -14,4 +14,9 @@ points = PackedVector2Array(0, 0, 32, 0)
 width_curve = SubResource("1")
 gradient = SubResource("2")
 joint_mode = 2
-script = ExtResource("1")
+script = ExtResource("1_34cf4")
+is_emitting = false
+resolution = 5.0
+lifetime = 0.5
+max_points = 100
+target_path = NodePath("")

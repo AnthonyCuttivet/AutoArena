@@ -10,9 +10,13 @@ func _init():
 	base_length = length;
 
 func _process(_delta: float) -> void:
-	add_point(pos_reference.global_position);
+	global_position = Vector2.ZERO
+	global_rotation = 0.0
+	global_scale = Vector2.ONE
+
+	add_point(pos_reference.global_position)
 	while (get_point_count() > length):
-		remove_point(0);
+		remove_point(0)
 
 func set_active(s:bool):
 	active = s;

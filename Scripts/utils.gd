@@ -308,3 +308,34 @@ static func typewriter_effect(label: RichTextLabel, text: String, duration: floa
 		if c == "]":
 			inside_tag = false
 			label.text = visible_text
+
+static func _shake_sprite(tween: Tween, sprite: Sprite2D, intensity: float, duration: float, frequency: float):
+	var steps = int(duration * frequency)
+	var step_duration = duration / steps
+
+	tween.parallel()  # this sprite's shake sequence runs alongside other sprites
+
+	for i in steps:
+		var offset = Vector2(
+			randf_range(-intensity, intensity),
+			randf_range(-intensity, intensity)
+		)
+		var eased_intensity = intensity * (1.0 - float(i) / steps)
+		offset = offset.normalized() * eased_intensity
+
+		# NOT parallel relative to each other — sequential steps for this sprite
+		tween.tween_property(sprite, "position", offset, step_duration).set_delay(i * step_duration)
+
+	tween.tween_property(sprite, "position", Vector2.ZERO, step_duration).set_delay(steps * step_duration)
+
+static func spawn_smooth_trail(prefab:PackedScene, ball_owner:BattleBall, weapon_anchor:Weapon, offset:float, length:int, trail_shader:ShaderMaterial) -> Trail2DSmooth:
+	var trail:Trail2DSmooth = prefab.instantiate();
+	ball_owner.add_child.call_deferred(trail);
+
+	trail.ball = ball_owner;
+	trail.weapon = weapon_anchor;
+	trail.blade_offset = offset;
+	trail.length = length;
+	trail.material = trail_shader;
+
+	return trail;

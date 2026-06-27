@@ -16,5 +16,5 @@ func setup_new_challenger(b:BattleBall):
 	circle.self_modulate = c;
 	text.modulate = c;
 	
-	sprite_2d.texture = b.weapon.sprite_2d.texture;
+	sprite_2d.texture = b.weapons[0].sprite_2d.texture;
 	text.text = "[wave amp=100.0 freq=3 connected=1] 『 " + b.weapon_settings.name + " 』[/wave]"

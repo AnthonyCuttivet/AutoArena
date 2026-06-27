@@ -1,0 +1,290 @@
+[gd_scene load_steps=51 format=3 uid="uid://wlvomnuk56f8"]
+
+[ext_resource type="Script" uid="uid://b6mtkj0dlhun4" path="res://Prefabs/Weapons/Armory/Sealed/weapon_sealed.gd" id="1_2lp5q"]
+[ext_resource type="Texture2D" uid="uid://16carswypc5x" path="res://Graphics/_Addons/Icons/fc888667.png" id="2_qqcwe"]
+[ext_resource type="PackedScene" uid="uid://bq7ogkmlsvuw3" path="res://Prefabs/FX/fx_chains.tscn" id="3_eyxia"]
+[ext_resource type="Texture2D" uid="uid://d4cpynk51iahy" path="res://Graphics/_Addons/Icons/fc888666.png" id="3_qqcwe"]
+[ext_resource type="Script" uid="uid://d3hphc6ltgw2g" path="res://Prefabs/Ball/hitbox.gd" id="3_s5uv1"]
+[ext_resource type="AudioStream" uid="uid://bqw1f6th33r5j" path="res://Audio/SFX/BattleBalls/se_richter_Whip_Holding.wav" id="4_3b1jw"]
+[ext_resource type="Script" uid="uid://ck0u3re3wx5a1" path="res://Scripts/AudioManager/sfx.gd" id="4_o3euv"]
+[ext_resource type="AudioStream" uid="uid://5pl820l3fl2n" path="res://Audio/SFX/BattleBalls/se_brave_smash_H01.wav" id="4_wkq47"]
+[ext_resource type="PackedScene" uid="uid://da7y0kpka55ip" path="res://Scripts/Trail2D/trail_2d_smooth.tscn" id="4_woy7t"]
+[ext_resource type="Texture2D" uid="uid://dbgig0sh7mdua" path="res://Graphics/_Addons/Icons/fc888666_1.png" id="5_ky340"]
+[ext_resource type="Shader" uid="uid://vjw6dsrwbynw" path="res://Graphics/Shaders/aura.gdshader" id="6_0ipsd"]
+[ext_resource type="Texture2D" uid="uid://cpjxsyhlyig4q" path="res://Graphics/_Addons/Icons/fc888666_2.png" id="6_1mhyh"]
+[ext_resource type="AudioStream" uid="uid://daue718df5fxp" path="res://Audio/SFX/BattleBalls/se_eflame_special_S06_reflect.wav" id="6_3b1jw"]
+[ext_resource type="Texture2D" uid="uid://dia6qlavhyd6r" path="res://Graphics/_Addons/Icons/fc888666_3.png" id="7_1mhyh"]
+[ext_resource type="AudioStream" uid="uid://dnfymlkpcntoq" path="res://Audio/SFX/BattleBalls/se_eflame_special_S03_01.wav" id="7_dxtg3"]
+[ext_resource type="Shader" uid="uid://oov78i86onov" path="res://Graphics/Shaders/godrays.gdshader" id="7_sbvsr"]
+[ext_resource type="AudioStream" uid="uid://dxsb1a4oo755i" path="res://Audio/SFX/BattleBalls/se_cloud_smash_L02.wav" id="8_3ola4"]
+[ext_resource type="Shader" uid="uid://c4jiyhgdsto18" path="res://Graphics/Shaders/slash.gdshader" id="8_unl1w"]
+[ext_resource type="Texture2D" uid="uid://bfvdgok43dr2p" path="res://Graphics/Images/circle-svgrepo-com.svg" id="9_eyxia"]
+[ext_resource type="AudioStream" uid="uid://cj7284066yyyo" path="res://Audio/SFX/BattleBalls/se_eflame_attackdash01.wav" id="10_i571f"]
+[ext_resource type="Script" uid="uid://c0yo17knk84wp" path="res://Prefabs/Ball/trail.gd" id="12_2ttvy"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_yfpec"]
+streams_count = 1
+stream_0/stream = ExtResource("4_wkq47")
+
+[sub_resource type="Resource" id="Resource_8nbjj"]
+script = ExtResource("4_o3euv")
+audio_stream = SubResource("AudioStreamRandomizer_yfpec")
+volume = -20.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_wkq47"]
+streams_count = 1
+stream_0/stream = ExtResource("4_3b1jw")
+
+[sub_resource type="Resource" id="Resource_3ola4"]
+script = ExtResource("4_o3euv")
+audio_stream = SubResource("AudioStreamRandomizer_wkq47")
+volume = -15.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_scwen"]
+random_pitch = 1.2
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("8_3ola4")
+
+[sub_resource type="Resource" id="Resource_i571f"]
+script = ExtResource("4_o3euv")
+audio_stream = SubResource("AudioStreamRandomizer_scwen")
+volume = -24.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ctvmv"]
+random_pitch = 1.02
+streams_count = 1
+stream_0/stream = ExtResource("8_3ola4")
+
+[sub_resource type="Resource" id="Resource_0wav3"]
+script = ExtResource("4_o3euv")
+audio_stream = SubResource("AudioStreamRandomizer_ctvmv")
+volume = -28.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_i571f"]
+random_pitch = 1.02
+streams_count = 1
+stream_0/stream = ExtResource("10_i571f")
+
+[sub_resource type="Resource" id="Resource_yfpec"]
+script = ExtResource("4_o3euv")
+audio_stream = SubResource("AudioStreamRandomizer_i571f")
+volume = -8.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8nbjj"]
+random_pitch = 1.05
+streams_count = 1
+stream_0/stream = ExtResource("6_3b1jw")
+
+[sub_resource type="Resource" id="Resource_thivr"]
+script = ExtResource("4_o3euv")
+audio_stream = SubResource("AudioStreamRandomizer_8nbjj")
+volume = -25.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4vps4"]
+random_pitch = 1.05
+streams_count = 1
+stream_0/stream = ExtResource("7_dxtg3")
+
+[sub_resource type="Resource" id="Resource_flwnq"]
+script = ExtResource("4_o3euv")
+audio_stream = SubResource("AudioStreamRandomizer_4vps4")
+volume = -25.0
+metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_woy7t"]
+resource_local_to_scene = true
+shader = ExtResource("7_sbvsr")
+shader_parameter/angle = -1.0
+shader_parameter/position = 0.13
+shader_parameter/spread = 0.577
+shader_parameter/cutoff = -0.21
+shader_parameter/falloff = 0.269
+shader_parameter/edge_fade = 0.607
+shader_parameter/speed = 10.0
+shader_parameter/ray1_density = 8.385
+shader_parameter/ray2_density = 30.68
+shader_parameter/ray2_intensity = 0.697
+shader_parameter/color = Color(1, 0.3385, 0.19, 0.317647)
+shader_parameter/hdr = true
+shader_parameter/seed = 5.0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0ipsd"]
+noise_type = 3
+fractal_lacunarity = 1.78
+fractal_gain = 14.0
+cellular_distance_function = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2ttvy"]
+height = 128
+invert = true
+noise = SubResource("FastNoiseLite_0ipsd")
+
+[sub_resource type="Gradient" id="Gradient_sbvsr"]
+offsets = PackedFloat32Array(0, 0.255435, 0.554348, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 0.624756, 0.09375, 1, 0.847059, 0.294118, 0.12549, 1, 1, 0.22449, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hm73f"]
+gradient = SubResource("Gradient_sbvsr")
+
+[sub_resource type="Gradient" id="Gradient_woy7t"]
+offsets = PackedFloat32Array(0.51087, 0.565217, 0.608696)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tl6mv"]
+gradient = SubResource("Gradient_woy7t")
+
+[sub_resource type="Gradient" id="Gradient_o3euv"]
+offsets = PackedFloat32Array(0.0597826, 0.201087, 0.581522, 0.929348, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.498039, 0.498039, 0.498039, 1, 0, 0, 0, 1, 0.498039, 0.498039, 0.498039, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3t3is"]
+gradient = SubResource("Gradient_o3euv")
+
+[sub_resource type="Gradient" id="Gradient_tmyhw"]
+offsets = PackedFloat32Array(0, 0.543478, 0.929348)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ls47o"]
+gradient = SubResource("Gradient_tmyhw")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ut54b"]
+resource_local_to_scene = true
+shader = ExtResource("8_unl1w")
+shader_parameter/progress = 0.0
+shader_parameter/time_scale = 0.0
+shader_parameter/use_time = false
+shader_parameter/emission_strength = 0.1
+shader_parameter/base_noise = SubResource("NoiseTexture2D_2ttvy")
+shader_parameter/width_gradient_mask = SubResource("GradientTexture1D_ls47o")
+shader_parameter/length_gradient_mask = SubResource("GradientTexture1D_3t3is")
+shader_parameter/highlight = SubResource("GradientTexture1D_tl6mv")
+shader_parameter/color_lookup = SubResource("GradientTexture1D_hm73f")
+shader_parameter/zoom = 0.682
+shader_parameter/rotate_all = 360.0
+shader_parameter/anim_rot_amt = 1.0
+shader_parameter/angular_breakup = 0.348
+
+[sub_resource type="Curve" id="Curve_sbvsr"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2ttvy"]
+shader = ExtResource("6_0ipsd")
+shader_parameter/outline_width = 1.0
+shader_parameter/color_a = Color(1, 0.3, 0, 1)
+shader_parameter/color_b = Color(1, 0.9, 0.2, 1)
+shader_parameter/scroll_speed = 1.5
+shader_parameter/gradient_scale = 10.0
+shader_parameter/pulse_speed = 2.0
+shader_parameter/pulse_strength = 0.3
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1fhci"]
+radius = 14.0
+height = 78.0
+
+[node name="WeaponSealed" type="Node2D" node_paths=PackedStringArray("fx_fire_slash", "chains", "unsealed_aura", "sprite_2d", "hitboxes")]
+script = ExtResource("1_2lp5q")
+unsealed_sprite = ExtResource("2_qqcwe")
+clashes_to_unseal = 4
+unseal_hitstop_duration = 0.3
+unsealed_color = Color(1, 0.65284, 0.511719, 1)
+fx_fire_slash = NodePath("FireSlash")
+fx_chain_break = ExtResource("3_eyxia")
+sfx_seal = SubResource("Resource_8nbjj")
+sfx_chain_unseal = SubResource("Resource_3ola4")
+sfx_sealed_clash = SubResource("Resource_i571f")
+sfx_sealed_hit = SubResource("Resource_0wav3")
+sfx_unseal_skill = SubResource("Resource_yfpec")
+sfx_unsealed_clash = SubResource("Resource_thivr")
+sfx_unsealed_hit = SubResource("Resource_flwnq")
+chains = [NodePath("Sprite2D/Chains/Seal1"), NodePath("Sprite2D/Chains/Seal2"), NodePath("Sprite2D/Chains/Seal3")]
+unsealed_aura = NodePath("UnsealedAura")
+shake_duration = 0.1
+shake_base_intensity = 10.0
+shake_intensity_multiplier = 2.5
+shake_frequency = 50.0
+unsealed_knockback = 3000.0
+unsealed_rot_speed = 0.85
+unsealed_max_speed = 1800.0
+unsealed_gravity_strength = 2000.0
+smooth_trail_prefab = ExtResource("4_woy7t")
+trail_offset = 250.0
+trail_length = 30
+trail_shader = SubResource("ShaderMaterial_woy7t")
+sprite_2d = NodePath("Sprite2D")
+hitboxes = [NodePath("Sprite2D/WeaponHitbox")]
+
+[node name="FireSlash" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_ut54b")
+position = Vector2(-13, 0)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("9_eyxia")
+
+[node name="Trail" type="Line2D" parent="." node_paths=PackedStringArray("pos_reference")]
+visible = false
+show_behind_parent = true
+material = SubResource("ShaderMaterial_woy7t")
+width = 100.0
+width_curve = SubResource("Curve_sbvsr")
+texture_mode = 2
+joint_mode = 2
+begin_cap_mode = 2
+round_precision = 32
+antialiased = true
+script = ExtResource("12_2ttvy")
+length = 20
+pos_reference = NodePath("../UnsealedTip")
+
+[node name="UnsealedAura" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_2ttvy")
+position = Vector2(40, 0)
+rotation = 0.785398
+texture = ExtResource("2_qqcwe")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(40, 0)
+rotation = 0.785398
+texture = ExtResource("3_qqcwe")
+
+[node name="Chains" type="Node2D" parent="Sprite2D"]
+
+[node name="Seal1" type="Sprite2D" parent="Sprite2D/Chains"]
+texture_filter = 1
+texture = ExtResource("5_ky340")
+
+[node name="Seal2" type="Sprite2D" parent="Sprite2D/Chains"]
+texture_filter = 1
+texture = ExtResource("6_1mhyh")
+
+[node name="Seal3" type="Sprite2D" parent="Sprite2D/Chains"]
+texture_filter = 1
+texture = ExtResource("7_1mhyh")
+
+[node name="WeaponHitbox" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("weapon", "collider")]
+rotation = 0.785398
+script = ExtResource("3_s5uv1")
+weapon = NodePath("../..")
+collider = NodePath("CollisionShape2D")
+metadata/owner = NodePath("../../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/WeaponHitbox"]
+position = Vector2(2, -5)
+shape = SubResource("CapsuleShape2D_1fhci")
+
+[node name="UnsealedTip" type="Node2D" parent="."]
+position = Vector2(64, 0)
+
+[node name="TrailAnchor" type="Node2D" parent="."]
+
+[connection signal="area_entered" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_entered"]
+[connection signal="area_exited" from="Sprite2D/WeaponHitbox" to="Sprite2D/WeaponHitbox" method="_on_area_exited"]

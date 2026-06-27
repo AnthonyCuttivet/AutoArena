@@ -25,24 +25,24 @@ void fragment() {
         // --- UV Tearing ---
         float slice = floor(UV.y * (1.0 / TEXTURE_PIXEL_SIZE.y) / tear_block_size);
         float time_seed = floor(TIME * tear_speed);
-        
+
         float slice_rand = rand(slice + time_seed * 0.1);
         float should_tear = step(1.0 - glitch_intensity, slice_rand);
-        
+
         float offset = (rand(slice + time_seed) - 0.5) * tear_power * should_tear * glitch_intensity;
         vec2 torn_uv = clamp(UV + vec2(offset, 0.0), vec2(0.0), vec2(1.0));
-        
+
         // --- RGB Split ---
         float split = rgb_split * glitch_intensity;
         float flicker = rand(floor(TIME * flicker_speed)) * 2.0 - 1.0;
         vec2 r_offset = vec2(split * flicker, 0.0);
         vec2 b_offset = vec2(-split * flicker, 0.0);
-        
+
         float r = texture(TEXTURE, clamp(torn_uv + r_offset, vec2(0.0), vec2(1.0))).r;
         float g = texture(TEXTURE, torn_uv).g;
         float b = texture(TEXTURE, clamp(torn_uv + b_offset, vec2(0.0), vec2(1.0))).b;
         float a = texture(TEXTURE, torn_uv).a;
-        
+
         COLOR = vec4(r, g, b, a);
     }
 }

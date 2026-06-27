@@ -1,4 +1,4 @@
-[gd_scene load_steps=238 format=4 uid="uid://cmsck3y43hvak"]
+[gd_scene load_steps=235 format=4 uid="uid://cmsck3y43hvak"]
 
 [ext_resource type="Script" uid="uid://llbx2bxdfjwy" path="res://Scenes/main.gd" id="1_nmkph"]
 [ext_resource type="Shader" uid="uid://m275kdb8v68b" path="res://Graphics/Shaders/balatro.gdshader" id="1_y2yxb"]
@@ -53,21 +53,16 @@
 [ext_resource type="PackedScene" uid="uid://cusidgv7v4vpc" path="res://Prefabs/Weapons/Armory/Unarmed/W_Unarmed.tscn" id="34_pegen"]
 [ext_resource type="Texture2D" uid="uid://5w30wj6j3tig" path="res://Graphics/_Addons/Icons/fc88888.png" id="35_k7ahf"]
 [ext_resource type="AudioStream" uid="uid://ddx8pstv0i4qf" path="res://Audio/SFX/BattleBalls/se_demon_hit_catchattack.wav" id="35_qtgyu"]
-[ext_resource type="Texture2D" uid="uid://cj3174c1vhaci" path="res://Graphics/_Addons/Icons/fc17040.png" id="36_76u2v"]
 [ext_resource type="PackedScene" uid="uid://dj8vboys4os4r" path="res://Prefabs/Weapons/Armory/Sandevistan/W_SANDEVISTAN.tscn" id="36_d4oku"]
 [ext_resource type="Texture2D" uid="uid://cfwyhor4kqo4c" path="res://Graphics/_Addons/Icons/fc888881.png" id="38_sy8k4"]
 [ext_resource type="AudioStream" uid="uid://dvwha33q6lueh" path="res://Audio/SFX/BattleBalls/fahhhhh.mp3" id="39_573uv"]
 [ext_resource type="Resource" uid="uid://b2572latobo8u" path="res://Resources/Weapons/W_BloodBow.tres" id="40_nsujd"]
-[ext_resource type="AudioStream" uid="uid://d2bnlqgliw7wx" path="res://Audio/SFX/BattleBalls/Announcer/ElevenLabs_2026-06-13T08_37_07_Announcer2_gen_sp100_s50_sb75_v3.mp3" id="40_smxj1"]
-[ext_resource type="AudioStream" uid="uid://bw5er1redyifu" path="res://Audio/BGM/065. CORE (UNDERTALE Soundtrack) - Toby Fox.mp3" id="41_ifuis"]
-[ext_resource type="AudioStream" uid="uid://ckc4erai7d0u1" path="res://Audio/BGM/Battle Against A True Hero.mp3" id="42_7biqa"]
-[ext_resource type="AudioStream" uid="uid://04ja3fccq70d" path="res://Audio/BGM/58. Hammer of Justice (DELTARUNE Chapter 3+4 Soundtrack) - Toby Fox.mp3" id="43_dmhy3"]
+[ext_resource type="AudioStream" uid="uid://630l2vgvfdsf" path="res://Audio/SFX/BattleBalls/Announcer/ElevenLabs_2026-06-27T18_37_24_Announcer2_gen_sp100_s50_sb75_v3.mp3" id="40_yashm"]
+[ext_resource type="AudioStream" uid="uid://cmirt736cd66y" path="res://Audio/BGM/midnight_questing.mp3" id="41_yashm"]
 [ext_resource type="Resource" uid="uid://odj7lywcd7tq" path="res://Resources/Weapons/W_PLUME.tres" id="43_qtgyu"]
 [ext_resource type="Script" uid="uid://bv40hjciy84bb" path="res://Scenes/mover.gd" id="43_shkiq"]
-[ext_resource type="AudioStream" uid="uid://b4smkhpljd73g" path="res://Audio/BGM/Ruder Buster_34.mp3" id="44_0b1ky"]
 [ext_resource type="Resource" uid="uid://uipnvvfsno8" path="res://Resources/Weapons/W_Pipe.tres" id="44_vebv7"]
 [ext_resource type="Resource" uid="uid://l78au6pri21q" path="res://Resources/Weapons/W_VORTEX.tres" id="45_k7ahf"]
-[ext_resource type="AudioStream" uid="uid://b3se4twftc8b3" path="res://Audio/BGM/undertale-megalovania.mp3" id="45_rvl06"]
 [ext_resource type="PackedScene" uid="uid://co37vbnh5d0l7" path="res://Prefabs/HUD/podium_slot.tscn" id="46_w5ut2"]
 [ext_resource type="Texture2D" uid="uid://d24rekvi3bj41" path="res://Graphics/_Addons/Icons/fc15.png" id="47_7gphk"]
 [ext_resource type="PackedScene" uid="uid://bxajeluf8set7" path="res://Prefabs/HUD/ranking_line.tscn" id="47_d4iat"]
@@ -150,9 +145,11 @@
 [ext_resource type="Texture2D" uid="uid://2lhd2x1lrlww" path="res://Graphics/_Addons/Icons/fc1694.png" id="111_ajexl"]
 [ext_resource type="Texture2D" uid="uid://b3raxmeyc3cxi" path="res://Graphics/_Addons/Icons/fc8888.png" id="112_tifgg"]
 [ext_resource type="Texture2D" uid="uid://lbtcr3rw5sw6" path="res://Graphics/_Addons/Icons/fc77777.png" id="114_a4n88"]
+[ext_resource type="Resource" uid="uid://bc4yv3c6y5h3" path="res://Resources/Weapons/W_Sealed.tres" id="115_7biqa"]
 [ext_resource type="Texture2D" uid="uid://bt3ogvpb85cbm" path="res://Graphics/_Addons/Icons/fc9999.png" id="115_7ndj3"]
 [ext_resource type="Texture2D" uid="uid://cglwc37jcx1vg" path="res://Graphics/_Addons/Icons/fc127.png" id="116_p180d"]
 [ext_resource type="Shader" uid="uid://dhfuc74njny40" path="res://addons/PaletteTools/Shaders/rainbow_border.gdshader" id="125_573uv"]
+[ext_resource type="Texture2D" uid="uid://btysok18nrp52" path="res://Graphics/_Addons/Icons/fc888666_full.png" id="136_yashm"]
 [ext_resource type="Shader" uid="uid://bu0jfumdwybm" path="res://Graphics/Shaders/distortion.gdshader" id="148_qrdy0"]
 [ext_resource type="Script" uid="uid://cl3ek6w202shj" path="res://Scripts/distortion.gd" id="149_c2bga"]
 [ext_resource type="Texture2D" uid="uid://bwv0q78p2wwdg" path="res://Audio/SFX/BattleBalls/Announcer/social-proof-tiktok-light-1781338387905.png" id="152_ifuis"]
@@ -202,7 +199,7 @@ metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
 [sub_resource type="Resource" id="Resource_p1oyv"]
 script = ExtResource("5_1v8r1")
-audio_stream = ExtResource("40_smxj1")
+audio_stream = ExtResource("40_yashm")
 volume = -17.0
 metadata/_custom_type_script = "uid://ck0u3re3wx5a1"
 
@@ -1208,14 +1205,13 @@ rotation = 1.5708
 script = ExtResource("1_nmkph")
 record = true
 patchnote_s_per_page = 42.0
-new_challenger_ball = NodePath("Balls/Fighters/Reaper")
+new_challenger_ball = NodePath("Balls/Fighters/Sealed")
 display_damage_dealt = true
 time_attack_leaderboards = Dictionary[String, ExtResource("2_poh84")]({
 "HYDRA": ExtResource("3_cr7au"),
 "WARLOCK": ExtResource("4_g7d4c")
 })
 _2v2_colors = Array[Color]([Color(0.5, 0.666667, 1, 1), Color(0.5, 0.583333, 1, 1), Color(1, 0.5, 0.5, 1), Color(1, 0.583333, 0.5, 1)])
-ordeal_mode = true
 battleblock_controller = NodePath("BlockBreaker/MinecraftDig")
 battleblock_start_delay = 0.0
 hypermatch_hp = 300
@@ -1223,7 +1219,7 @@ hypermatch_scales = Array[int]([0, 60])
 use_physicky_physics = true
 forced_start_dir = Vector2(0, -1)
 dead_ui_color = Color(0.242188, 0.242188, 0.242188, 1)
-balls = [NodePath("Balls/Fighters/Perfect"), NodePath("Balls/Fighters/GlitchKnife")]
+balls = [NodePath("Balls/Fighters/Sealed"), NodePath("Balls/Fighters/Katana")]
 all_weapons = Dictionary[int, ExtResource("24_3p5r5")]({
 0: ExtResource("11_per8v"),
 1: ExtResource("40_nsujd"),
@@ -1264,18 +1260,17 @@ sfx_death = SubResource("Resource_go1jf")
 sfx_faaaah = SubResource("Resource_u1in0")
 ve_announcer = SubResource("Resource_p1oyv")
 announcer_delay = 0.6
-bgms = Array[AudioStream]([ExtResource("41_ifuis"), ExtResource("42_7biqa"), ExtResource("43_dmhy3"), ExtResource("44_0b1ky"), ExtResource("45_rvl06")])
+bgms = Array[AudioStream]([ExtResource("41_yashm")])
 bgm_volume = -27.0
 startup_sfx = ExtResource("15_gcqa4")
 startup_sfx_volume = -22.0
 obs_delay = 4.0
 white_mode = true
 dark_mode = true
-rainbow_borders = true
 _1v1_hp = 100
 _1v2_hp = 60
 attraction_point = NodePath("AttractionPoint")
-global_knockback_boost = 1.25
+global_knockback_boost = 1.1
 use_cheat_hitbox = true
 cheat_hitbox_max_hitbox_bonus = 0.4
 use_cheat_weapon_rotation = true
@@ -1310,6 +1305,7 @@ _preview_noise = false
 metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
 
 [node name="BG_White" type="ColorRect" parent="."]
+z_index = -2
 custom_minimum_size = Vector2(1664, 2756)
 offset_left = -288.001
 offset_top = -337.999
@@ -1330,7 +1326,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-color = Color(1, 1, 1, 0.0784314)
+color = Color(1, 1, 1, 0.00784314)
 
 [node name="CRT" type="ColorRect" parent="."]
 visible = false
@@ -2502,7 +2498,7 @@ theme_override_constants/shadow_outline_size = 0
 theme_override_fonts/normal_font = ExtResource("12_p1oyv")
 theme_override_font_sizes/normal_font_size = 30
 bbcode_enabled = true
-text = "[wave amp=25.0 freq=8 connected=1]
+text = "[wave amp=25.0 freq=4 connected=1]
 [color=#75FFDF]@[/color][color=#6FFBE3]m[/color][color=#6AF8E8]a[/color][color=#64F5EC]g[/color][color=#5FF1F1]i[/color][color=#59EEF5]c[/color][color=#54EBFA]c[/color][color=#4EE8FF]i[/color][color=#68DEFE]r[/color][color=#81D5FE]c[/color][color=#9ACBFD]u[/color][color=#B3C2FD]i[/color][color=#CCB8FC]t[/color][color=#E5AFFC]5[/color]
 [/wave]"
 fit_content = true
@@ -2913,9 +2909,9 @@ health = 4
 no_weapon = true
 team = 1
 stop = true
-lock = true
 debug_immobile = true
 debug_no_kb = true
+debug_no_shoot = true
 debug_no_rot = true
 
 [node name="Dummy2" parent="Balls/Training" groups=["BALL"] instance=ExtResource("4_ya2e4")]
@@ -3022,6 +3018,13 @@ stop = true
 [node name="Sword" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
 position = Vector2(2370.47, 297.991)
 weapon_settings = ExtResource("23_76u2v")
+health = 50
+dead = true
+stop = true
+
+[node name="Sealed" parent="Balls/Fighters" groups=["BALL"] instance=ExtResource("4_ya2e4")]
+position = Vector2(2370.47, 297.991)
+weapon_settings = ExtResource("115_7biqa")
 health = 50
 dead = true
 stop = true
@@ -4418,7 +4421,6 @@ fit_content = true
 horizontal_alignment = 1
 
 [node name="NewChallenger" type="Control" parent="."]
-process_mode = 4
 visible = false
 custom_minimum_size = Vector2(1080, 1920)
 layout_mode = 3
@@ -4482,7 +4484,7 @@ scale = Vector2(12, 12)
 [node name="Sprite2D" type="Sprite2D" parent="NewChallenger/BattleBall/Root/WeaponSlot"]
 texture_filter = 1
 position = Vector2(46.0319, -45.2373)
-texture = ExtResource("36_76u2v")
+texture = ExtResource("136_yashm")
 
 [node name="CircleBG" type="Sprite2D" parent="NewChallenger/BattleBall/Root"]
 modulate = Color(0, 0, 0, 1)

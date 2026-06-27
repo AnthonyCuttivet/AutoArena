@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://da7y0kpka55ip"]
+
+[ext_resource type="Script" uid="uid://d1dckoirgmnnq" path="res://Scripts/Trail2D/trail_2d_smooth.gd" id="1_m3lh5"]
+
+[sub_resource type="Curve" id="Curve_m3lh5"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Trail2D" type="Line2D"]
+z_index = -1
+z_as_relative = false
+points = PackedVector2Array(0, 0, 32, 0)
+width = 20.0
+width_curve = SubResource("Curve_m3lh5")
+texture_mode = 2
+joint_mode = 2
+end_cap_mode = 2
+round_precision = 32
+antialiased = true
+script = ExtResource("1_m3lh5")
+smoothing_samples = 5
+min_point_distance = 3.0

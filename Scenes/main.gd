@@ -9,6 +9,7 @@ class_name Main extends Node2D
 @export var new_challenger_camera_fade:float = 15.0;
 @export var new_challenger_ball:BattleBall;
 @export var time_attack_mode:bool = false;
+@export var timer_only:bool = false;
 @export var use_leaderboard:bool = false;
 @export var display_damage_dealt:bool = false;
 @export var _1v1_scale_up:bool = false;
@@ -323,8 +324,8 @@ func _ready() -> void:
 		for ball in balls:
 			ball.stop = true;
 
-		balls[0].weapon.rotation_speed = 0.0;
-		balls[0].weapon_slot.global_rotation_degrees = 60.0;
+		balls[0].weapons[0].rotation_speed = 0.0;
+		balls[0].weapons[0].global_rotation_degrees = 60.0;
 
 		no_announcer = true;
 		new_challenger.visible = true;
@@ -406,7 +407,6 @@ func set_dark_mode():
 	author.self_modulate = Color.WHITE;
 	damage_done_header.self_modulate = Color.WHITE;
 	bg_earclacks.self_modulate = Color("#333333");
-	balatro_effect.color.a = 0.02;
 
 	if(!rainbow_borders):
 		walltop.material = null;
@@ -476,7 +476,7 @@ func start_game():
 
 	init_fight_text();
 
-	if(time_attack_mode):
+	if(time_attack_mode || timer_only):
 		process_timer = true;
 
 func play_announcer():
@@ -653,9 +653,9 @@ func init_ui():
 		battleblock_controller.init_bb_blocks_ui(balls[0]);
 		battleblock_controller.init_bb_blocks_ui(balls[1]);
 
-	time_attack_container.visible = time_attack_mode;
+	time_attack_container.visible = time_attack_mode || timer_only;
 	ta_progress_bar.visible = time_attack_mode && survive_mode;
-	ta_record.visible = time_attack_mode && !survive_mode;
+	ta_record.visible = time_attack_mode && !survive_mode && !timer_only;
 	damage_dealt_container.visible = display_damage_dealt;
 	if(time_attack_mode && use_leaderboard):
 		if(time_attack_leaderboards[balls[0].weapon_settings.name.to_upper()].rankings.size() == 0):
@@ -893,9 +893,8 @@ func start_new_challenger():
 func new_challenger_over(_n:StringName):
 	new_challenger.visible = false;
 	camera.shake_fade = 10.0;
-	balls[0].weapon.rotation_speed = balls[0].weapon_settings.base_rotation_speed;
+	balls[0].weapons[0].rotation_speed = balls[0].weapons[0].settings.base_rotation_speed;
 	start_game();
-
 
 func setup_fight():
 
